@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.adminMapper">
+
+<select id="adminlogin" parameterType="admin" resultType="Map">
+select * from assess_admin where isadmin=1 and gemsid=0 and ssm_id=0 and username=#{username} and userpass=md5(md5(#{userpass}))
+</select>
+
+
+ <select id="adminbyid" parameterType="admin" resultType="admin">
+   select * from assess_admin where id=#{id}
+ </select>
+  <select id="adminbygems_id" parameterType="admin" resultType="admin">
+   select * from assess_admin  where fs_type=1 and gemsid=#{gems_id}
+ </select>
+</mapper>

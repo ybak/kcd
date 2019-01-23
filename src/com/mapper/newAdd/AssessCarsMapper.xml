@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.newAdd.AssessCarsMapper">
+
+<!-- 修改单条数据 -->
+<update id="updateOneACarsById"  parameterType="AssessCars">
+   update assess_cars
+ <trim prefix="set" suffixOverrides=",">
+  <if test="code!=null and code!=''">code=#{code},</if>
+  <if test="vincode!=null and vincode!=''">vincode=#{vincode},</if>
+  <if test="dt_add!=null and dt_add!=''">dt_add=#{dt_add},</if>
+  <if test="mem_id!=null and mem_id!=''">mem_id=#{mem_id},</if>
+  <if test="mem_name!=null and mem_name!=''"> mem_name=#{mem_name},</if>
+  <if test="mem_tel!=null and mem_tel!=''">mem_tel=#{mem_tel}, </if>
+  <if test="mem_states!=null and mem_states!=''"> mem_states=#{mem_states},</if>
+  <if test="mem_citys!=null and mem_citys!=''"> mem_citys=#{mem_citys},</if>
+  <if test="brid!=null and brid!=''"> brid=#{brid},</if>
+  <if test="seid!=null and seid!=''">seid=#{seid},</if>
+  <if test="carid!=null and carid!=''">carid=#{carid},</if> 
+  <if test="car_days!=null and car_days!=''">car_days=#{car_days},</if>
+  <if test="car_km!=null and car_km!=''">car_km=#{car_km},</if>   
+  <if test="color_id!=null and color_id!=''"> color_id=#{color_id},</if>
+  <if test="price_new!=null and price_new!=''">price_new=#{price_new}, </if>
+  <if test="model_score!=null and model_score!=''">model_score=#{model_score},</if> 
+  <if test="parts_score!=null and parts_score!=''">parts_score=#{parts_score},</if>
+  <if test="gaso_score!=null and gaso_score!=''">gaso_score=#{gaso_score},</if>
+  <if test="color_score!=null and color_score!=''">color_score=#{color_score},</if>
+  <if test="items_score!=null and items_score!=''">items_score=#{items_score}, </if> 
+  <if test="hide_score!=null and hide_score!=''">hide_score=#{hide_score},</if>
+  <if test="score!=null and score!=''">score=#{score},</if>
+  <if test="price_result!=null and price_result!=''">price_result=#{price_result},</if>   
+  <if test="gems_id!=null and gems_id!=''">gems_id=#{gems_id},</if>
+  <if test="gems_code!=null and gems_code!=''">gems_code=#{gems_code},</if>
+  <if test="imgurl!=null and imgurl!=''">imgurl=#{imgurl},</if>
+  <if test="gems_fs_id!=null and gems_fs_id!=''">gems_fs_id=#{gems_fs_id},</if>
+  <if test="vincode2!=null and vincode2!=''">vincode2=#{vincode2},</if>
+  <if test="ico_1!=null and ico_1!=''">ico_1=#{ico_1},</if>
+  <if test="ico_2!=null and ico_2!=''">ico_2=#{ico_2},</if>
+  <if test="ico_3!=null and ico_3!=''">ico_3=#{ico_3},</if>
+  <if test="ico_4!=null and ico_4!=''">ico_4=#{ico_4},</if>
+  <if test="ico_5!=null and ico_5!=''">ico_5=#{ico_5},</if>
+  <if test="ico_6!=null and ico_6!=''">ico_6=#{ico_6},</if>
+  <if test="ico_7!=null and ico_7!=''">ico_7=#{ico_7},</if>
+  <if test="ico_8!=null and ico_8!=''">ico_8=#{ico_8},</if>
+  <if test="ico_9!=null and ico_9!=''">ico_9=#{ico_9},</if>
+  <if test="ico_10!=null and ico_10!=''">ico_10=#{ico_10},</if>
+  <if test="ico_11!=null and ico_11!=''">ico_11=#{ico_11},</if>
+  <if test="ico_12!=null and ico_12!=''">ico_12=#{ico_12},</if>
+  <if test="ico_13!=null and ico_13!=''">ico_13=#{ico_13},</if>
+  <if test="ico_14!=null and ico_14!=''">ico_14=#{ico_14},</if>
+  <if test="ico_15!=null and ico_15!=''">ico_15=#{ico_15},</if>
+  <if test="ico_16!=null and ico_16!=''">ico_16=#{ico_16},</if>
+  <if test="ico_17!=null and ico_17!=''">ico_17=#{ico_17},</if>
+  <if test="ico_18!=null and ico_18!=''">ico_18=#{ico_18},</if>
+  <if test="ico_19!=null and ico_19!=''">ico_19=#{ico_19},</if>
+  <if test="ico_20!=null and ico_20!=''">ico_20=#{ico_20},</if>
+  <if test="ico_21!=null and ico_21!=''">ico_21=#{ico_21},</if>
+  <if test="bc_status!=null and bc_status!=''">bc_status=#{bc_status},</if>
+  <if test="bc_type!=null and bc_type!=''">bc_type=#{bc_type},</if>
+  <if test="motorcode!=null and motorcode!=''">motorcode=#{motorcode},</if>
+  <if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+  <if test="c_tel!=null and c_tel!=''">c_tel=#{c_tel},</if>
+  <if test="c_carno!=null and c_carno!=''">c_carno=#{c_carno},</if>
+  <if test="cbs_orderid!=null and cbs_orderid!=''">cbs_orderid=#{cbs_orderid},</if>
+  <if test="cbs_result!=null and cbs_result!=''">cbs_result=#{cbs_result},</if>
+  <if test="qryid_bx!=null and qryid_bx!=''">qryid_bx=#{qryid_bx},</if>
+  <if test="qryid_by!=null and qryid_by!=''">qryid_by=#{qryid_by},</if>
+  <if test="qryid_qryid!=null and qryid_qryid!=''">qryid_qryid=#{qryid_qryid},</if>
+  <if test="orderid!=null and orderid!=''">orderid=#{orderid},</if>
+  </trim> 
+  where id=#{id}                  
+</update> 
+    
+<!-- 删除单条数据 -->    
+<delete id="deleteOneACarsById" parameterType="AssessCars">
+delete from assess_cars where id=#{1}
+</delete>    
+    
+<!-- 查询单条数据 -->
+<select id="selectOneACarsById" parameterType="AssessCars"  resultType="AssessCars">
+select * from assess_cars where id=#{1}
+</select>   
+    
+<!-- 查询总数 -->    
+<select id="getSumAssessCars" parameterType="int"  resultType="int">
+select count(*) from assess_cars
+</select>   
+   
+<!-- 查询全部数据 -->
+<select id="selectAllAssessCars" resultType="AssessCars" parameterType="AssessCars">
+select * from assess_cars order by dt_edit desc limit #{0},#{1}
+</select>      
+    
+<!-- 添加 -->
+<insert id="addAssessCars"  parameterType="AssessCars" keyProperty="id">
+insert into assess_cars(
+id,
+code,
+vincode,
+dt_add,
+mem_id,
+mem_name,
+mem_tel,
+mem_states,
+mem_citys,
+brid,
+seid,
+carid,
+car_days,
+car_km,
+color_id,
+price_new,
+model_score,
+parts_score,
+gaso_score,
+color_score,
+items_score,
+hide_score,
+score,
+price_result,
+gems_id,
+gems_code,
+imgurl,
+gems_fs_id,
+vincode2,
+ico_1,
+ico_2,
+ico_3,
+ico_4,
+ico_5,
+ico_6,
+ico_7,
+ico_8,
+ico_9,
+ico_10,
+ico_11,
+ico_12,
+ico_13,
+ico_14,
+ico_15,
+ico_16,
+ico_17,
+ico_18,
+ico_19,
+ico_20,
+ico_21,
+bc_status,
+bc_type,
+motorcode,
+dt_edit,
+c_tel,
+c_carno,
+cbs_orderid,
+cbs_result,
+qryid_bx,
+qryid_by,
+qryid_qryid,
+orderid
+)values(
+#{id},
+#{code},
+#{vincode},
+#{dt_add},
+#{mem_id},
+#{mem_name},
+#{mem_tel},
+#{mem_states},
+#{mem_citys},
+#{brid},
+#{seid},
+#{carid},
+#{car_days},
+#{car_km},
+#{color_id},
+#{price_new},
+#{model_score},
+#{parts_score},
+#{gaso_score},
+#{color_score},
+#{items_score},
+#{hide_score},
+#{score},
+#{price_result},
+#{gems_id},
+#{gems_code},
+#{imgurl},
+#{gems_fs_id},
+#{vincode2},
+#{ico_1},
+#{ico_2},
+#{ico_3},
+#{ico_4},
+#{ico_5},
+#{ico_6},
+#{ico_7},
+#{ico_8},
+#{ico_9},
+#{ico_10},
+#{ico_11},
+#{ico_12},
+#{ico_13},
+#{ico_14},
+#{ico_15},
+#{ico_16},
+#{ico_17},
+#{ico_18},
+#{ico_19},
+#{ico_20},
+#{ico_21},
+#{bc_status},
+#{bc_type},
+#{motorcode},
+#{dt_edit},
+#{c_tel},
+#{c_carno},
+#{cbs_orderid},
+#{cbs_result},
+#{qryid_bx},
+#{qryid_by},
+#{qryid_qryid},
+#{orderid}
+)
+</insert>
+
+</mapper>

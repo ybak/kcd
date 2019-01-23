@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.erp_icbc.fs_detailsMapper">
+
+<insert id="save" parameterType="pd" useGeneratedKeys="true" keyProperty="id">
+   <if test="dn=='assess_fs_details'">
+   insert into assess_fs_details
+   <trim prefix="(" suffix=")" suffixOverrides=",">
+   <if test="id != null and id!=''">id,</if>
+   <if test="mid_add != null and mid_add!=''">mid_add,</if>
+   <if test="mid_edit != null and mid_edit!=''">mid_edit,</if>
+   <if test="dt_add != null and dt_add!=''">dt_add,</if>
+   <if test="dt_edit != null and dt_edit!=''">dt_edit,</if>
+   <if test="company_jc != null and company_jc!=''">company_jc,</if>
+   <if test="qy_company != null and qy_company!=''">qy_company,</if>
+   <if test="contract_code != null and contract_code!=''">contract_code,</if>
+   <if test="hz_date1 != null and hz_date1!=''">hz_date1,</if>
+   <if test="hz_date2 != null and hz_date2!=''">hz_date2,</if>
+   <if test="fr_name != null and fr_name!=''">fr_name,</if>
+   <if test="fr_tel != null and fr_tel!=''">fr_tel,</if>
+   <if test="fr_card != null and fr_card!=''">fr_card,</if>
+   <if test="sjkgr != null and sjkgr!=''">sjkgr,</if>
+   <if test="sjkgr_name != null and sjkgr_name!=''">sjkgr_name,</if>
+   <if test="sjkgr_card != null and sjkgr_card!=''">sjkgr_card,</if>
+   <if test="sjkgr_tel != null and sjkgr_tel!=''">sjkgr_tel,</if>
+   <if test="company_date != null and company_date!=''">company_date,</if>
+   <if test="register_capital != null and register_capital!=''">register_capital,</if>
+   <if test="sj_capital != null and sj_capital!=''">sj_capital,</if>
+   <if test="company_num != null and company_num!=''">company_num,</if>
+   <if test="company_province != null and company_province!=''">company_province,</if>
+   <if test="company_city != null and company_city!=''">company_city,</if>
+   <if test="company_section != null and company_section!=''">company_section,</if>
+   <if test="company_address != null and company_address!=''">company_address,</if>
+   <if test="register_province != null and register_province!=''">register_province,</if>
+   <if test="register_city != null and register_city!=''">register_city,</if>
+   <if test="register_section != null and register_section!=''">register_section,</if>
+   <if test="register_address != null and register_address!=''">register_address,</if>
+   <if test="account_type != null and account_type!=''">account_type,</if>
+   <if test="account_name != null and account_name!=''">account_name,</if>
+   <if test="bank_account != null and bank_account!=''">bank_account,</if>
+   <if test="open_bank != null and open_bank!=''">open_bank,</if>
+   <if test="dbr_map != null and dbr_map!=''">dbr_map,</if>
+   <if test="dbrpo_map != null and dbrpo_map!=''">dbrpo_map,</if>
+   <if test="yw_lxr != null and yw_lxr!=''">yw_lxr,</if>
+   <if test="yw_tel != null and yw_tel!=''">yw_tel,</if>
+   <if test="yw_email != null and yw_email!=''">yw_email,</if>
+   <if test="yw_fgdqjl != null and yw_fgdqjl!=''">yw_fgdqjl,</if>
+   <if test="showtag != null and showtag!=''">showtag,</if>
+   <if test="systemtag != null and systemtag!=''">systemtag,</if>
+   <if test="code_pre != null and code_pre!=''">code_pre,</if>
+   <if test="name_py != null and name_py!=''">name_py,</if>
+   <if test="money_tag != null and money_tag!=''">money_tag,</if>
+   <if test="money_num != null and money_num!=''">money_num,</if>
+   <if test="money_type != null and money_type!=''">money_type,</if>
+   <if test="money_bz != null and money_bz!=''">money_bz,</if>
+   <if test="zy_bank != null and zy_bank!=''">zy_bank,</if>
+   <if test="zy_province != null and zy_province!=''">zy_province,</if>
+   <if test="zy_city != null and zy_city!=''">zy_city,</if>
+   <if test="hz_type != null and hz_type!=''">hz_type,</if>
+   <if test="ywhz_type != null and ywhz_type!=''">ywhz_type,</if>
+   <if test="dlspj != null and dlspj!=''">dlspj,</if>
+   <if test="new_grfx_price != null and new_grfx_price!=''">new_grfx_price,</if>
+   <if test="new_carpg_price != null and new_carpg_price!=''">new_carpg_price,</if>
+   <if test="new_cardk_price != null and new_cardk_price!=''">new_cardk_price,</if>
+   <if test="new_gps_price != null and new_gps_price!=''">new_gps_price,</if>
+   <if test="new_qt_price != null and new_qt_price!=''">new_qt_price,</if>
+   <if test="old_grfx_price != null and old_grfx_price!=''">old_grfx_price,</if>
+   <if test="old_carpg_price != null and old_carpg_price!=''">old_carpg_price,</if>
+   <if test="old_cardk_price != null and old_cardk_price!=''">old_cardk_price,</if>
+   <if test="old_gps_price != null and old_gps_price!=''">old_gps_price,</if>
+   <if test="old_qt_price != null and old_qt_price!=''">old_qt_price,</if>
+   <if test="jc_bzj != null and jc_bzj!=''">jc_bzj,</if>
+   <if test="jc_bzjdate != null and jc_bzjdate!=''">jc_bzjdate,</if>
+   <if test="jc_bzjbl != null and jc_bzjbl!=''">jc_bzjbl,</if>
+   <if test="sx_price != null and sx_price!=''">sx_price,</if>
+   <if test="sx_yyprice != null and sx_yyprice!=''">sx_yyprice,</if>
+   <if test="sx_syprice != null and sx_syprice!=''">sx_syprice,</if>
+   <if test="jc_jsfl != null and jc_jsfl!=''">jc_jsfl,</if>
+   <if test="yw_nzjfl != null and yw_nzjfl!=''">yw_nzjfl,</if>
+   <if test="sc_maxprice != null and sc_maxprice!=''">sc_maxprice,</if>
+   <if test="zzxx_code != null and zzxx_code!=''">zzxx_code,</if>
+   <if test="jcbzxth != null and jcbzxth!=''">jcbzxth,</if>
+   <if test="jcbzjth_price != null and jcbzjth_price!=''">jcbzjth_price,</if>
+   <if test="jcbzjth_date != null and jcbzjth_date!=''">jcbzjth_date,</if>
+   <if test="fs_id!= null and fs_id!=''">fs_id,</if>
+   </trim>
+   values
+   <trim prefix="(" suffix=")" suffixOverrides=",">
+   <if test="id != null and id!=''">#{id},</if>
+   <if test="mid_add != null and mid_add!=''">#{mid_add},</if>
+   <if test="mid_edit != null and mid_edit!=''">#{mid_edit},</if>
+   <if test="dt_add != null and dt_add!=''">#{dt_add},</if>
+   <if test="dt_edit != null and dt_edit!=''">#{dt_edit},</if>
+   <if test="company_jc != null and company_jc!=''">#{company_jc},</if>
+   <if test="qy_company != null and qy_company!=''">#{qy_company},</if>
+   <if test="contract_code != null and contract_code!=''">#{contract_code},</if>
+   <if test="hz_date1 != null and hz_date1!=''">#{hz_date1},</if>
+   <if test="hz_date2 != null and hz_date2!=''">#{hz_date2},</if>
+   <if test="fr_name != null and fr_name!=''">#{fr_name},</if>
+   <if test="fr_tel != null and fr_tel!=''">#{fr_tel},</if>
+   <if test="fr_card != null and fr_card!=''">#{fr_card},</if>
+   <if test="sjkgr != null and sjkgr!=''">#{sjkgr},</if>
+   <if test="sjkgr_name != null and sjkgr_name!=''">#{sjkgr_name},</if>
+   <if test="sjkgr_card != null and sjkgr_card!=''">#{sjkgr_card},</if>
+   <if test="sjkgr_tel != null and sjkgr_tel!=''">#{sjkgr_tel},</if>
+   <if test="company_date != null and company_date!=''">#{company_date},</if>
+   <if test="register_capital != null and register_capital!=''">#{register_capital},</if>
+   <if test="sj_capital != null and sj_capital!=''">#{sj_capital},</if>
+   <if test="company_num != null and company_num!=''">#{company_num},</if>
+   <if test="company_province != null and company_province!=''">#{company_province},</if>
+   <if test="company_city != null and company_city!=''">#{company_city},</if>
+   <if test="company_section != null and company_section!=''">#{company_section},</if>
+   <if test="company_address != null and company_address!=''">#{company_address},</if>
+   <if test="register_province != null and register_province!=''">#{register_province},</if>
+   <if test="register_city != null and register_city!=''">#{register_city},</if>
+   <if test="register_section != null and register_section!=''">#{register_section},</if>
+   <if test="register_address != null and register_address!=''">#{register_address},</if>
+   <if test="account_type != null and account_type!=''">#{account_type},</if>
+   <if test="account_name != null and account_name!=''">#{account_name},</if>
+   <if test="bank_account != null and bank_account!=''">#{bank_account},</if>
+   <if test="open_bank != null and open_bank!=''">#{open_bank},</if>
+   <if test="dbr_map != null and dbr_map!=''">#{dbr_map},</if>
+   <if test="dbrpo_map != null and dbrpo_map!=''">#{dbrpo_map},</if>
+   <if test="yw_lxr != null and yw_lxr!=''">#{yw_lxr},</if>
+   <if test="yw_tel != null and yw_tel!=''">#{yw_tel},</if>
+   <if test="yw_email != null and yw_email!=''">#{yw_email},</if>
+   <if test="yw_fgdqjl != null and yw_fgdqjl!=''">#{yw_fgdqjl},</if>
+   <if test="showtag != null and showtag!=''">#{showtag},</if>
+   <if test="systemtag != null and systemtag!=''">#{systemtag},</if>
+   <if test="code_pre != null and code_pre!=''">#{code_pre},</if>
+   <if test="name_py != null and name_py!=''">#{name_py},</if>
+   <if test="money_tag != null and money_tag!=''">#{money_tag},</if>
+   <if test="money_num != null and money_num!=''">#{money_num},</if>
+   <if test="money_type != null and money_type!=''">#{money_type},</if>
+   <if test="money_bz != null and money_bz!=''">#{money_bz},</if>
+   <if test="zy_bank != null and zy_bank!=''">#{zy_bank},</if>
+   <if test="zy_province != null and zy_province!=''">#{zy_province},</if>
+   <if test="zy_city != null and zy_city!=''">#{zy_city},</if>
+   <if test="hz_type != null and hz_type!=''">#{hz_type},</if>
+   <if test="ywhz_type != null and ywhz_type!=''">#{ywhz_type},</if>
+   <if test="dlspj != null and dlspj!=''">#{dlspj},</if>
+   <if test="new_grfx_price != null and new_grfx_price!=''">#{new_grfx_price},</if>
+   <if test="new_carpg_price != null and new_carpg_price!=''">#{new_carpg_price},</if>
+   <if test="new_cardk_price != null and new_cardk_price!=''">#{new_cardk_price},</if>
+   <if test="new_gps_price != null and new_gps_price!=''">#{new_gps_price},</if>
+   <if test="new_qt_price != null and new_qt_price!=''">#{new_qt_price},</if>
+   <if test="old_grfx_price != null and old_grfx_price!=''">#{old_grfx_price},</if>
+   <if test="old_carpg_price != null and old_carpg_price!=''">#{old_carpg_price},</if>
+   <if test="old_cardk_price != null and old_cardk_price!=''">#{old_cardk_price},</if>
+   <if test="old_gps_price != null and old_gps_price!=''">#{old_gps_price},</if>
+   <if test="old_qt_price != null and old_qt_price!=''">#{old_qt_price},</if>
+   <if test="jc_bzj != null and jc_bzj!=''">#{jc_bzj},</if>
+   <if test="jc_bzjdate != null and jc_bzjdate!=''">#{jc_bzjdate},</if>
+   <if test="jc_bzjbl != null and jc_bzjbl!=''">#{jc_bzjbl},</if>
+   <if test="sx_price != null and sx_price!=''">#{sx_price},</if>
+   <if test="sx_yyprice != null and sx_yyprice!=''">#{sx_yyprice},</if>
+   <if test="sx_syprice != null and sx_syprice!=''">#{sx_syprice},</if>
+   <if test="jc_jsfl != null and jc_jsfl!=''">#{jc_jsfl},</if>
+   <if test="yw_nzjfl != null and yw_nzjfl!=''">#{yw_nzjfl},</if>
+   <if test="sc_maxprice != null and sc_maxprice!=''">#{sc_maxprice},</if>
+   <if test="zzxx_code != null and zzxx_code!=''">#{zzxx_code},</if>
+   <if test="jcbzxth != null and jcbzxth!=''">#{jcbzxth},</if>
+   <if test="jcbzjth_price != null and jcbzjth_price!=''">#{jcbzjth_price},</if>
+   <if test="jcbzjth_date != null and jcbzjth_date!=''">#{jcbzjth_date},</if>
+   <if test="fs_id!= null and fs_id!=''">#{fs_id},</if>
+   </trim>
+   </if>
+
+
+
+</insert>
+
+<update id="update" parameterType="pd">
+
+<!-- 更新fs 副本 -->
+<if test="dn=='assess_fs_details'">
+update assess_fs_details 
+<trim prefix="set" suffixOverrides=",">
+<if test="mid_add!=null and mid_add!=''">mid_add=#{mid_add},</if>
+<if test="mid_edit!=null and mid_edit!=''">mid_edit=#{mid_edit},</if>
+<if test="dt_add!=null and dt_add!=''">dt_add=#{dt_add},</if> 	
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if> 	
+<if test="company_jc!=null and company_jc!=''">company_jc=#{company_jc},</if> 
+<if test="qy_company!=null and qy_company!=''">qy_company=#{qy_company},</if>
+<if test="hz_date1!=null and hz_date1!=''">hz_date1=#{hz_date1},</if>
+<if test="hz_date2!=null and hz_date2!=''">hz_date2=#{hz_date2},</if> 	
+<if test="fr_name!=null and fr_name!=''">fr_name=#{fr_name},</if>
+<if test="fr_tel!=null and fr_tel!=''">fr_tel=#{fr_tel},</if> 
+<if test="fr_card!=null and fr_card!=''">fr_card=#{fr_card},</if>
+<if test="sjkgr!=null and sjkgr!=''">sjkgr=#{sjkgr},</if>
+<if test="sjkgr_name!=null and sjkgr_name!=''">sjkgr_name=#{sjkgr_name},</if> 	
+<if test="sjkgr_card!=null and sjkgr_card!=''">sjkgr_card=#{sjkgr_card},</if>
+<if test="sjkgr_tel!=null and sjkgr_tel!=''">sjkgr_tel=#{sjkgr_tel},</if>
+
+<if test="company_date!=null and company_date!=''">company_date=#{company_date},</if> 
+<if test="register_capital!=null and register_capital!=''">register_capital=#{register_capital},</if>
+<if test="sj_capital!=null and sj_capital!=''">sj_capital=#{sj_capital},</if>
+<if test="company_num!=null and company_num!=''">company_num=#{company_num},</if> 	
+<if test="company_province!=null and company_province!=''">company_province=#{company_province},</if> 	
+<if test="company_city!=null and company_city!=''">company_city=#{company_city},</if> 
+<if test="company_section!=null and company_section!=''">company_section=#{company_section},</if>
+<if test="company_address!=null and company_address!=''">company_address=#{company_address},</if>
+<if test="register_province!=null and register_province!=''">register_province=#{register_province},</if> 	
+<if test="register_city!=null and register_city!=''">register_city=#{register_city},</if>
+<if test="register_section!=null and register_section!=''">register_section=#{register_section},</if> 
+<if test="register_address!=null and register_address!=''">register_address=#{register_address},</if>
+<if test="account_type!=null and account_type!=''">account_type=#{account_type},</if>
+<if test="account_name!=null and account_name!=''">account_name=#{account_name},</if> 	
+<if test="bank_account!=null and bank_account!=''">bank_account=#{bank_account},</if>
+<if test="open_bank!=null and open_bank!=''">open_bank=#{open_bank},</if>
+
+<if test="dbr_map!=null and dbr_map!=''">dbr_map=#{dbr_map},</if> 
+<if test="dbrpo_map!=null and dbrpo_map!=''">dbrpo_map=#{dbrpo_map},</if>
+<if test="yw_lxr!=null and yw_lxr!=''">yw_lxr=#{yw_lxr},</if>
+<if test="yw_tel!=null and yw_tel!=''">yw_tel=#{yw_tel},</if> 	
+<if test="yw_email!=null and yw_email!=''">yw_email=#{yw_email},</if> 	
+<if test="yw_fgdqjl!=null and yw_fgdqjl!=''">yw_fgdqjl=#{yw_fgdqjl},</if> 
+<if test="showtag!=null and showtag!=''">showtag=#{showtag},</if>
+<if test="systemtag!=null and systemtag!=''">systemtag=#{systemtag},</if>
+<if test="code_pre!=null and code_pre!=''">code_pre=#{code_pre},</if> 	
+<if test="name_py!=null and name_py!=''">name_py=#{name_py},</if>
+<if test="money_tag!=null and money_tag!=''">money_tag=#{money_tag},</if> 
+<if test="money_num!=null and money_num!=''">money_num=#{money_num},</if>
+<if test="money_type!=null and money_type!=''">money_type=#{money_type},</if>
+<if test="money_bz!=null and money_bz!=''">money_bz=#{money_bz},</if> 	
+<if test="zy_bank!=null and zy_bank!=''">zy_bank=#{zy_bank},</if>
+<if test="zy_province!=null and zy_province!=''">zy_province=#{zy_province},</if>
+
+<if test="zy_city!=null and zy_city!=''">zy_city=#{zy_city},</if> 
+<if test="hz_type!=null and hz_type!=''">hz_type=#{hz_type},</if>
+<if test="ywhz_type!=null and ywhz_type!=''">ywhz_type=#{ywhz_type},</if>
+<if test="dlspj!=null and dlspj!=''">dlspj=#{dlspj},</if> 	
+<if test="new_grfx_price!=null and new_grfx_price!=''">new_grfx_price=#{new_grfx_price},</if> 	
+<if test="new_carpg_price!=null and new_carpg_price!=''">new_carpg_price=#{new_carpg_price},</if> 
+<if test="new_cardk_price!=null and new_cardk_price!=''">new_cardk_price=#{new_cardk_price},</if>
+<if test="new_gps_price!=null and new_gps_price!=''">new_gps_price=#{new_gps_price},</if>
+<if test="new_qt_price!=null and new_qt_price!=''">new_qt_price=#{new_qt_price},</if> 	
+<if test="old_grfx_price!=null and old_grfx_price!=''">old_grfx_price=#{old_grfx_price},</if>
+<if test="old_carpg_price!=null and old_carpg_price!=''">old_carpg_price=#{old_carpg_price},</if> 
+<if test="old_cardk_price!=null and old_cardk_price!=''">old_cardk_price=#{old_cardk_price},</if>
+<if test="old_gps_price!=null and old_gps_price!=''">old_gps_price=#{old_gps_price},</if>
+<if test="old_qt_price!=null and old_qt_price!=''">old_qt_price=#{old_qt_price},</if> 	
+<if test="jc_bzj!=null and jc_bzj!=''">jc_bzj=#{jc_bzj},</if>
+<if test="jc_bzjdate!=null and jc_bzjdate!=''">jc_bzjdate=#{jc_bzjdate},</if>
+
+<if test="jc_bzjbl!=null and jc_bzjbl!=''">jc_bzjbl=#{jc_bzjbl},</if> 
+<if test="sx_price!=null and sx_price!=''">sx_price=#{sx_price},</if>
+<if test="sx_yyprice!=null and sx_yyprice!=''">sx_yyprice=#{sx_yyprice},</if>
+<if test="sx_syprice!=null and sx_syprice!=''">sx_syprice=#{sx_syprice},</if> 	
+<if test="jc_jsfl!=null and jc_jsfl!=''">jc_jsfl=#{jc_jsfl},</if>
+<if test="yw_nzjfl!=null and yw_nzjfl!=''">yw_nzjfl=#{yw_nzjfl},</if>
+
+<if test="sc_maxprice!=null and sc_maxprice!=''">sc_maxprice=#{sc_maxprice},</if> 
+<if test="zzxx_code!=null and zzxx_code!=''">zzxx_code=#{zzxx_code},</if>
+<if test="jcbzxth!=null and jcbzxth!=''">jcbzxth=#{jcbzxth},</if>
+<if test="jcbzjth_price!=null and jcbzjth_price!=''">jcbzjth_price=#{jcbzjth_price},</if> 	
+<if test="jcbzjth_date!=null and jcbzjth_date!=''">jcbzjth_date=#{jcbzjth_date},</if>
+<if test="fs_id!=null and fs_id!=''">fs_id=#{fs_id},</if>
+</trim>
+where id=#{id}
+</if>
+</update>
+
+</mapper>

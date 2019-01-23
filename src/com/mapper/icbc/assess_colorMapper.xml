@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.icbc.assess_colorMapper" >
+
+
+<insert id="addcarscolor" parameterType="assess_color" useGeneratedKeys="true"  keyProperty="id">
+insert into assess_color(
+id,
+brid,
+seid,
+carid,
+color,
+name,
+color_rgb,
+score
+)values(
+#{id},
+#{brid},
+#{seid},
+#{carid},
+#{color},
+#{name},
+#{color_rgb},
+#{score}
+)
+
+</insert>
+
+
+</mapper>

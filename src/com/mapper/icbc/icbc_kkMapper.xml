@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.icbc.icbc_kkMapper" >
+<select id="findicbc_kkbyorder" parameterType="icbc_kk" resultType="icbc_kk">
+select * from kjs_icbc_kk where icbc_id=#{icbc_id}
+</select>
+<update id="upicbc_kk" parameterType="icbc_kk">
+update kjs_icbc_kk
+<trim prefix="set" suffixOverrides=","> 
+<if test="gems_code!=null and gems_code!=''">gems_code=#{gems_code},</if>
+<if test="c_name!=null and c_name!=''">c_name=#{c_name},</if>
+<if test="c_del!=null and c_del!=''">c_del=#{c_del},</if>
+<if test="cars_type!=null and cars_type!=''">cars_type=#{cars_type},</if>
+<if test="kp_price!=null and kp_price!=''">kp_price=#{kp_price},</if>
+<if test="dk_price!=null and dk_price!=''">dk_price=#{dk_price},</if>
+<if test="jrfw_price!=null and jrfw_price!=''">jrfw_price=#{jrfw_price},</if>
+<if test="dk_total_price!=null and dk_total_price!=''">dk_total_price=#{dk_total_price},</if>
+<if test="aj_type!=null and aj_type!=''">aj_type=#{aj_type},</if>
+<if test="aj_date!=null and aj_date!=''">aj_date=#{aj_date},</if>
+<if test="aj_bank!=null and aj_bank!=''">aj_bank=#{aj_bank},</if>
+<if test="dk_lv!=null and dk_lv!=''">dk_lv=#{dk_lv},</if>
+<if test="dz_type!=null and dz_type!=''">dz_type=#{dz_type},</if>
+<if test="sp_address!=null and sp_address!=''">sp_address=#{sp_address},</if>
+<if test="yw_address!=null and yw_address!=''">yw_address=#{yw_address},</if>
+<if test="img_1!=null and img_1!=''">img_1=#{img_1},</if>
+<if test="img_2!=null and img_2!=''">img_2=#{img_2},</if>
+<if test="img_3!=null and img_3!=''">img_3=#{img_3},</if>
+<if test="img_4!=null and img_4!=''">img_4=#{img_4},</if>
+<if test="img_5!=null and img_5!=''">img_5=#{img_5},</if>
+<if test="img_6!=null and img_6!=''">img_6=#{img_6},</if>
+<if test="img_1s!=null and img_1s!=''">img_1s=#{img_1s},</if>
+<if test="up_time!=null and up_time!=''">up_time=#{up_time},</if>
+<if test="bc_status!=null and bc_status!=''">bc_status=#{bc_status},</if>
+<if test="md_edit!=null and md_edit!=''">md_edit=#{md_edit},</if>
+<if test="api_edit!=null and api_edit!=''">api_edit=#{api_edit},</if>
+<if test="sh_edit!=null and sh_edit!=''">sh_edit=#{sh_edit},</if>
+<if test="result!=null and result!=''">result=#{result},</if>
+<if test="result_time!=null and result_time!=''">result_time=#{result_time},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="dt_sub!=null and dt_sub!=''">dt_sub=#{dt_sub},</if>
+<if test="dt_fin!=null and dt_fin!=''">dt_fin=#{dt_fin},</if>
+<if test="query_type!=null and query_type!=''">query_type=#{query_type},</if>
+</trim>
+where id=#{id}
+</update>
+
+<insert id="addicbc_kk" parameterType="icbc_kk" useGeneratedKeys="true"  keyProperty="id">
+insert into kjs_icbc_kk(
+id,
+c_name,
+c_del,
+cars_type,
+kp_price,
+dk_price,
+jrfw_price,
+dk_total_price,
+aj_type,
+aj_date,
+aj_bank,
+dk_lv,
+dz_type,
+sp_address,
+yw_address,
+img_1,
+img_2,
+img_3,
+img_4,
+img_5,
+img_6,
+img_1s,
+add_time,
+up_time,
+icbc_id,
+md_add,
+md_edit,
+api_add,
+api_edit,
+sh_edit,
+result,
+result_time,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+dt_sub,
+dt_fin,
+gems_code,
+bc_status,
+query_type,
+gems_fs_id,
+gems_id
+)values(
+#{id},
+#{c_name},
+#{c_del},
+#{cars_type},
+#{kp_price},
+#{dk_price},
+#{jrfw_price},
+#{dk_total_price},
+#{aj_type},
+#{aj_date},
+#{aj_bank},
+#{dk_lv},
+#{dz_type},
+#{sp_address},
+#{yw_address},
+#{img_1},
+#{img_2},
+#{img_3},
+#{img_4},
+#{img_5},
+#{img_6},
+#{img_1s},
+#{add_time},
+#{up_time},
+#{icbc_id},
+#{md_add},
+#{md_edit},
+#{api_add},
+#{api_edit},
+#{sh_edit},
+#{result},
+#{result_time},
+#{mid_add},
+#{mid_edit},
+#{dt_add},
+#{dt_edit},
+#{dt_sub},
+#{dt_fin},
+#{gems_code},
+#{bc_status},
+#{query_type},
+#{gems_fs_id},
+#{gems_id}
+
+
+)
+
+</insert>
+
+</mapper>

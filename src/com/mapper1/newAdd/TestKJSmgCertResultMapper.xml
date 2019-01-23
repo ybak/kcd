@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.newAdd.TestKJSmgCertResultMapper">
+    
+<!-- 查询操作审批记录 -->    
+<select id="TestKJSselectCaoZuoResult" parameterType="mgcert_result" resultType="mgcert_result">
+select 
+	*
+from 
+	assess_mgcert_result
+where 
+	qryid=#{amid}
+</select>   
+   
+</mapper>

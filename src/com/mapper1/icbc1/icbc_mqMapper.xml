@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper1.icbc1.icbc_mqMapper" >
+
+<delete id="del_icbc_mq" parameterType="icbc_mq">
+
+DELETE FROM kjs_icbc_mq WHERE icbc_id=#{id}
+
+</delete>
+<select id="kjs_mq_count" resultType="int">
+select count(*) from kjs_icbc_mq where icbc_id>0 and bc_status=2
+</select>
+
+<select id="kjs_mq"  parameterType="icbc_mq" resultType="icbc_mq">
+select mq.* 
+,fs.`name` as gname,
+gems.`name` as pname,
+ki.c_name as c_name
+from kjs_icbc_mq mq
+LEFT JOIN assess_fs fs on mq.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on mq.gems_id=gems.id
+LEFT JOIN kj_icbc ki on ki.id=mq.icbc_id
+where 1=1 and mq.icbc_id>0 and mq.bc_status>1
+<if test="bc_status!=null and bc_status!=''"> 
+ and mq.bc_status=#{bc_status}
+</if>
+ORDER BY mq.dt_edit DESC
+</select>
+
+
+<select id="findmqbyicbc" parameterType="icbc_mq" resultType="icbc_mq">
+select ki.*,fs.name as gname,gems.name as pname from kjs_icbc_mq ki,assess_fs fs,assess_gems gems where ki.gems_fs_id=fs.id 
+and ki.gems_id=gems.id and ki.icbc_id=#{icbc_id} order by ki.dt_add desc limit 1
+</select>
+
+<select id="findmqbyicbc2" parameterType="icbc_mq" resultType="icbc_mq">
+select bc_status from kjs_icbc_mq where icbc_id=#{icbc_id} order by dt_add desc limit 1
+</select>
+
+<select id="allfindmq" parameterType="icbc_mq" resultType="icbc_mq">
+ select * from ( SELECT a.icbc_id as icbc_id,a.bc_status as bc_status,a.dt_add as dt_add FROM 
+(SELECT * FROM kjs_icbc_mq ORDER BY dt_add DESC) as a 
+ GROUP BY icbc_id ) as b where b.icbc_id!=0
+</select>
+
+<select id="findlastid"  resultType="icbc_mq">
+select * from kjs_icbc_mq where id=(select max(id) from kjs_icbc_mq)
+</select>
+
+<select id="findmqbyid" parameterType="icbc_mq"  resultType="icbc_mq">
+select * from kjs_icbc_mq where id=#{id}
+</select>
+
+<select id="mqshbyid" parameterType="icbc_mq"  resultType="icbc_mq">
+select mq.*,fs.name as gname,gems.name as pname
+from kjs_icbc_mq mq
+LEFT JOIN assess_fs fs on mq.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on mq.gems_id=gems.id
+where mq.id=#{id}
+</select>
+<update id="upmq" parameterType="icbc_mq">
+update kjs_icbc_mq
+<trim prefix="set" suffixOverrides=","> 
+<if test="gems_code!=null and gems_code!=''">gems_code=#{gems_code},</if>
+<if test="mid_edit!=null and mid_edit!=''">mid_edit=#{mid_edit},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="dt_fin!=null and dt_fin!=''">dt_fin=#{dt_fin},</if>
+<if test="bc_status!=null and bc_status!=''">bc_status=#{bc_status},</if>
+<if test="result!=null and result!=''">result=#{result},</if>
+<if test="result_time!=null and result_time!=''">result_time=#{result_time},</if>
+<if test="mid_add!=null and mid_add!=''">mid_add=#{mid_add},</if>
+<if test="gems_fs_id!=null and gems_fs_id!=''">gems_fs_id=#{gems_fs_id},</if>
+<if test="gems_id!=null and gems_id!=''">gems_id=#{gems_id},</if>
+<if test="imgstep8_1v!=null and imgstep8_1v!=''">imgstep8_1v=#{imgstep8_1v},</if>
+<if test="imgstep8_2v!=null and imgstep8_2v!=''">imgstep8_2v=#{imgstep8_2v},</if>
+<if test="imgstep8_3v!=null and imgstep8_3v!=''">imgstep8_3v=#{imgstep8_3v},</if>
+<if test="imgstep8_4v!=null and imgstep8_4v!=''">imgstep8_4v=#{imgstep8_4v},</if>
+</trim>
+where id=#{id}
+</update>
+
+<insert id="savemq" parameterType="icbc_mq" useGeneratedKeys="true"  keyProperty="id">
+insert into kjs_icbc_mq
+(
+id,
+add_time,
+up_time,
+icbc_id,
+result,
+result_time,
+api_add,
+api_edit,
+bc_status,
+gems_code,
+query_type,
+dt_fin,
+dt_sub,
+dt_edit,
+dt_add,
+mid_edit,
+mid_add,
+gems_fs_id,
+gems_id,
+imgstep8_1v,
+imgstep8_2v,
+imgstep8_3v,
+imgstep8_4v
+)values(
+#{id},
+#{add_time},
+#{up_time},
+#{icbc_id},
+#{result},
+#{result_time},
+#{api_add},
+#{api_edit},
+#{bc_status},
+#{gems_code},
+#{query_type},
+#{dt_fin},
+#{dt_sub},
+#{dt_edit},
+#{dt_add},
+#{mid_edit},
+#{mid_add},
+#{gems_fs_id},
+#{gems_id},
+#{imgstep8_1v},
+#{imgstep8_2v},
+#{imgstep8_3v},
+#{imgstep8_4v}
+
+)
+</insert>
+
+
+</mapper>

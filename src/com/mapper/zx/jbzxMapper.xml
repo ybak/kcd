@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.zx.jbzxMapper">
+<select id="findzxjb" parameterType="zxjb" resultType="zxjb">
+select * from kj_zxjb where gems_code=#{gems_code}
+</select>
+
+<select id="findjbzxbyid" parameterType="zxjb" resultType="zxjb">
+select * from kj_zxjb where id=#{id}
+</select>
+
+<select id="jbzxlist" parameterType="zxjb" resultType="zxjb">
+select * from kj_zxjb
+</select>
+
+<insert id="addjbzx" useGeneratedKeys="true"  parameterType="zxjb" keyProperty="id">
+insert into kj_zxjb(
+ id,
+ mid_add,
+ mid_edit,
+ dt_add,
+ dt_edit,
+ loginname,
+ api_resultcode,
+ api_resultmsg,
+ bc_status,
+ gems_id,
+ gems_fs_id,
+ gems_code,
+ smscode,
+ query_type,
+ c_name,
+ c_tel,
+ c_cardno,
+ api_result 
+)values(
+ #{id},
+ #{mid_add},
+ #{mid_edit},
+ #{dt_add},
+ #{dt_edit},
+ #{loginname},
+ #{api_resultcode},
+ #{api_resultmsg},
+ #{bc_status},
+ #{gems_id},
+ #{gems_fs_id},
+ #{gems_code},
+ #{smscode},
+ #{query_type},
+ #{c_name},
+ #{c_tel},
+ #{c_cardno},
+ #{api_result} 
+)
+</insert>
+
+<update id="upzxjb"  parameterType="zxjb">
+update kj_zxjb
+<trim prefix="set" suffixOverrides=","> 
+<if test="gems_code!=null and gems_code!=''">gems_code=#{gems_code},</if>
+<if test="c_tel!=null and c_tel!=''">c_tel=#{c_tel},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="loginname!=null and loginname!=''">loginname=#{loginname},</if>
+<if test="api_resultcode!=null and api_resultcode!=''">api_resultcode=#{api_resultcode},</if>
+<if test="api_resultmsg!=null and api_resultmsg!=''">api_resultmsg=#{api_resultmsg},</if>
+<if test="bc_status!=null and bc_status!=''">bc_status=#{bc_status},</if>
+<if test="smscode!=null and smscode!=''">smscode=#{smscode},</if>
+<if test="api_result!=null and api_result!=''">api_result=#{api_result},</if>
+</trim>
+where 
+id=#{id}
+</update>
+</mapper>

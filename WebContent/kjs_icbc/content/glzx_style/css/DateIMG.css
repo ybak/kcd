@@ -1,0 +1,222 @@
+*{
+	-webkit-text-size-adjust: none;
+}
+button{
+	border: 0;
+}
+p{
+	padding: 0;
+	margin: 0;
+}
+.graph_big{
+	width:100%;
+	height: 900px;
+	background: #090917; 
+	padding:20px 35px;
+	margin: auto;
+}
+.graph_container{
+	height: 40%;
+}
+.graph_container_bottom{
+	height: 60%;
+}
+.graph_box{
+	width: 48%;
+	height: 100%;
+	float: left;
+}
+.graph_box div{
+	display: inline-block;
+}
+.graph_right{
+	height: 100%;float: right;width: 40%;
+}
+.graph_left{
+	 height: 100%;width: 60%;
+}
+.graph_statistics_top{
+	height: 12%;
+	width: 100%;
+}
+.graph_statistics_centre{
+	margin-top:5%;
+	width: 100%;
+}
+.graph_statistics_content{
+	height: 55px;
+	background: #121738;
+	border: 1px solid #4667f2;
+	text-align: center;
+	border-radius:4px;
+}
+.graph_statistics_number{
+	    font-size: 23px;
+	    font-weight: 600;
+	    line-height: 23px;
+	    margin-top: 5px;
+}
+.graph_statistics_number font{
+	font-size: 12px;
+	padding-left: 5px; 
+}
+.font_color_1{
+	color: #4667f2;
+}
+.font_color_2{
+	color: #f48203;
+}
+.font_color_3{
+	color: #6c79a0;
+}
+.font_size_1{
+	font-size: 15px;
+	font-weight: 550;
+}
+.font_size_2{
+	font-size: 14px;
+}
+.graph_button{
+	 background: #4667f2;
+    float: right;
+    color: white;
+    margin-right: 19%;
+    font-size: 13px;
+    border-radius: 2px;
+    padding: 3px 8px;
+}
+/*±í¸ñ¿ªÊ¼*/
+.graph_table{
+	width: 90%;
+	margin: auto;
+}
+.graph_table th{
+	font-size: 13px;
+}
+.graph_table tr{
+	height: 35px;
+}
+.graph_table th:last-child,th:first-child{
+	color:#ffffff;
+	font-weight:400;
+}
+.graph_table td:last-child,td:first-child{
+	font-size: 14px;
+}
+.graph_table th:last-child,td:last-child{
+	text-align:left;
+}
+.graph_table th:first-child,td:first-child{
+	text-align: right;
+}
+.graph_table .font_color_1{
+	text-align: center;
+	width: 35px;
+}
+/*Ð¡Ô²µã tr*/
+.graph_table tr td:nth-child(3){
+	width: 32px;
+	text-align: center;
+}
+/*Ð¡Ô²µã*/
+.graph_rank{
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	color: white;
+	background:#ff8700;
+	text-align: center;
+	line-height: 20px;
+	font-size: 13px;
+	margin: auto;
+}
+.graph_title{
+    font-size: 23px;
+    line-height: 28px;
+    color: white;
+    margin-left: 5px;
+}
+.condition1{
+	width: 100%; 
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+li{
+	list-style-type: none;
+}
+.condition1 li{
+	margin: 0;
+	float: left;
+	width: 32%;
+	text-align: center;
+}
+.condition1 li div{
+	padding-top: 2px;
+}
+.condition1 li div i{
+	margin-left: -2px;
+    font-weight: 550;
+    font-size: 20px;
+    width: 20px;
+    line-height: 20px;
+    float: right;
+}
+.condition1 li input{
+	width: 90%;
+	background: none;
+	border: 2px solid #24347a;
+	padding-left: 5px;
+	border-radius: 2px; 
+	color:#fff;
+}
+
+/*ÓâÆÚÂÊ*/
+.graph_overdue_center{
+	height: 60%;
+	width: 90%;
+	margin-left: 5%;
+	font-size: 13px;
+}
+.graph_overdue_center th{
+	color:#d2d2d3;
+}
+.graph_overdue_center td{
+	text-align: center;
+}
+.graph_overdue_center td:first-child{
+	color: #424a66;
+	padding-right: 2px;
+}
+.graph_overdue_center td:last-child{
+	color: #f41269;
+	padding-left: 2px;
+}
+.graph_overdue_right{
+	width: 100%;
+	height: 25px;
+}
+.graph_overdue_right .font_color_3{
+	padding-top: 5px;
+}
+.graph_overdue_right li{
+	display: inline-block;
+	float: left;
+	font-size: 12px;
+	width: 24%;
+}
+/*ÇÐ»»*/
+.graph_transform{
+	position: fixed;
+	font-weight: 500; 
+	right: 20px;
+	top: 40%;
+	width: 32px;
+	height:54px;
+	border-radius:3px; 
+	text-align:center;
+	background:#4667f2; 
+	line-height: 27px; 
+	font-size: 16px;
+	color: #fff;
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.gskhMapper">
+<select id="fgsbyid" parameterType="gskh" resultType="Map">
+select * from kcd_gskh where id=#{id}
+</select>
+<select id="fgsname" parameterType="gskh" resultType="gskh">
+select * from kcd_gskh order by ctime desc
+</select>
+<select id="fgsname1" parameterType="gskh" resultType="Map">
+select * from kcd_gskh where name=#{name}
+</select>
+<select id="sltgskh" parameterType="gskh" resultType="Map">
+select * from kcd_gskh where name=#{0} and ncode=#{1}
+
+</select>
+ <update id="upgskhkd" parameterType="gskh">
+ update kcd_gskh set
+ kd=#{kd}
+ where
+ id=#{id} 
+ </update>
+
+ <insert id="addgskh" useGeneratedKeys="true" parameterType="gskh"  keyProperty="id" >
+ insert into kcd_gskh 
+ (
+ id,
+ name,
+ address,
+ ctime,
+ utime,
+ ncode,
+ kd,
+ qyname,
+ qykhname,
+ khrname ,
+ czrid,
+ api_ckey
+ )values(
+ #{id},
+ #{name},
+ #{address},
+ #{ctime},
+ #{utime},
+ #{ncode},
+ #{kd},
+ #{qyname},
+ #{qykhname},
+ #{khrname},
+ #{czrid},
+ #{api_ckey}
+ )
+ 
+ </insert>
+
+
+</mapper>

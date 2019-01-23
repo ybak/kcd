@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.newAdd.PDFdownloadMapper">
+
+<!-- 打包下载文件编号 -->
+<select id="getFileCode" parameterType="int"  resultType="String">
+select acode from kcd_apply where aid=#{0} and apply_address=#{1} limit #{2},#{3}
+</select>
+
+<!-- 打包下载个数 -->
+<select id="getFileName" parameterType="int"  resultType="String">
+select applyurl from kcd_apply where aid=#{0} and apply_address=#{1} limit #{2},#{3}
+</select>
+
+<!-- 条件查询 -->
+<select id="selectByCompanyOrCode" parameterType="int"  resultType="pdfdownload">
+select * from kcd_pdfdownload where status=#{0} and downloadCompany=#{1} order by downloadTime desc
+</select>
+
+<!-- 修改未回收件和已回收件的状态 -->
+<update id="updatePDFdownload" parameterType="pdfdownload" >
+update kcd_pdfdownload set status=#{status} where PDFdownload_id=#{PDFdownload_id}
+</update>
+
+<!-- 查询 "未回收件" 总数 -->
+<select id="PDFCounts" resultType="int" parameterType="pdfdownload">
+select count(*) from kcd_pdfdownload where status=#{0}
+</select>
+
+<!-- 查询 "未已回收件" -->
+<select id="NoPDFdownload" resultType="pdfdownload" parameterType="int">
+select * from kcd_pdfdownload where status=#{0} order by downloadTime desc limit #{1},#{2} 
+</select>
+
+<insert id="addPDFdownload"  parameterType="pdfdownload" keyProperty="PDFdownload_id">
+insert into kcd_pdfdownload(
+PDFdownload_id,
+PDFcode,
+downloadCompany,
+downloadNum,
+downloadCzr,
+status,
+PDFurl,
+downloadTime,
+updateTime,
+addtype
+)values(
+#{PDFdownload_id},
+#{PDFcode},
+#{downloadCompany},
+#{downloadNum},
+#{downloadCzr},
+#{status},
+#{PDFurl},
+#{downloadTime},
+#{updateTime},
+#{addtype}
+)
+</insert>
+
+</mapper>

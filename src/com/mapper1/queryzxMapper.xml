@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper1.queryzxMapper">
+
+ <select id="findqueryzx" parameterType="queryzx" resultType="Map">
+ select * from assess_queryzx  where gems_fs_id=528 and c_name=#{c_name} and c_card_no=#{c_card_no} ORDER BY dt_edit desc limit 1
+ </select>
+ 
+    <select id="findqueryzxlist"  resultType="queryzx">
+    
+    select * from assess_queryzx where gems_fs_id=528 and
+    <foreach collection="list" item="item" index="index" separator="or" >
+    
+    c_card_no=#{item.c_card_no}
+    
+    </foreach>
+      ORDER BY dt_edit desc    
+    </select>
+    
+    
+    <select id="querybydate" parameterType="java.util.HashMap" resultType="queryzx">
+    select * from assess_queryzx 
+    <where>
+    
+    gems_fs_id=528
+    
+    <if test="sdate!=null and sdate!=''">
+    and dt_add &gt;= #{sdate} 
+    </if>
+    <if test="sdate!=null  and sdate!='' and edate!=null and edate!=''">
+     and
+    </if>
+    <if test="edate!=null and edate!=''">
+    dt_add &lt;= #{edate}
+    </if>
+    </where>
+
+    </select>
+
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.gemsMapper">
+
+ <select id="selectname"   parameterType="gems" resultType="Map">
+ select * from assess_gems where id=#{id};
+ </select>
+ 
+ 
+<select id="find_api"   parameterType="gems" resultType="gems">
+select gems.*,fs.id as fs_id,admin.id as admin_id 
+from assess_gems gems 
+LEFT JOIN assess_fs fs on gems.fsid=fs.id
+LEFT JOIN assess_admin admin on gems.id=admin.gemsid
+where gems.appkey=#{appkey};
+</select>
+
+</mapper>

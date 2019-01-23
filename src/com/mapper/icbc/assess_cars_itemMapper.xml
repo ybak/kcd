@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.icbc.assess_cars_itemMapper" >
+
+<update id="upcarsitem" parameterType="assess_cars_item" >
+update assess_cars_item 
+<trim prefix="set" suffixOverrides=",">
+<if test="bcimg!='' and bcimg!=null">bcimg=#{bcimg},</if>
+<if test="imgbase64!='' and imgbase64!=null">imgbase64=#{imgbase64},</if>
+<if test="imgurl!='' and imgurl!=null">imgurl=#{imgurl},</if>
+</trim>
+where points_id=#{points_id}
+</update>
+
+
+<insert id="addcarsitem" parameterType="assess_cars_item" >
+insert into assess_cars_item(
+cars_id,
+points_id,
+points_tp,
+items_id,
+score,
+imgurl,
+bcimg,
+imgbase64
+)values(
+#{cars_id},
+#{points_id},
+#{points_tp},
+#{items_id},
+#{score},
+#{imgurl},
+#{bcimg},
+#{imgbase64}
+)
+
+</insert>
+
+</mapper>

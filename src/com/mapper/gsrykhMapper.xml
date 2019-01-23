@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.gsrykhMapper">
+ <select id="findgsrykh" parameterType="gsrykh" resultType="Map">
+ select * from kcd_gsrykh where 
+ khgsname=#{0} and
+ khlevel=#{1} and
+ khrname=#{2} and
+ khsfznum=#{3} and
+ khphonenum=#{4} 
+ </select>
+ 
+ <select id="fgsrykh" parameterType="gsrykh" resultType="Map">
+ select * from kcd_gsrykh where ckey=#{0}
+ </select>
+
+ 
+  <select id="fkhbyid" parameterType="gsrykh" resultType="Map">
+ select * from kcd_gsrykh where khid=#{khid}
+ </select>
+ <select id="fgsrykhtogsrykh" parameterType="gsrykh" resultType="gsrykh">
+ select * from kcd_gsrykh order by khtime desc
+ </select>
+ 
+  <select id="fgsrykhname" parameterType="gsrykh" resultType="gsrykh">
+ select DISTINCT khgsname from kcd_gsrykh
+ </select>
+ 
+ <select id="fgsrykhtoid1" parameterType="gsrykh" resultType="gsrykh">
+ select * from kcd_gsrykh where khgsname=#{khgsname}
+ </select>
+ 
+ <select id="fgsrykhtoid" parameterType="gsrykh" resultType="Map">
+ select * from kcd_gsrykh where khgsname=#{khgsname}
+ </select>
+ 
+ <update id="upkd" parameterType="gsrykh">
+ update kcd_gsrykh set kd=#{kd} where ckey=#{ckey}
+ </update>
+
+<insert id="addgsrykh" parameterType="gsrykh" keyProperty="khid">
+insert into kcd_gsrykh(
+khid,
+khgsname,
+khlevel,
+khrname,
+khsfznum,
+khphonenum,
+khtime,
+ckey,
+kd,
+username,
+password,
+uptime,
+czrid,
+gsid,
+api_reurl
+)values(
+#{khid},
+#{khgsname},
+#{khlevel},
+#{khrname},
+#{khsfznum},
+#{khphonenum},
+#{khtime},
+#{ckey},
+#{kd},
+#{username},
+#{password},
+#{uptime},
+#{czrid},
+#{gsid},
+#{api_reurl}
+)
+</insert>
+
+
+</mapper>

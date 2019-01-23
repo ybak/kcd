@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.newAdd.ssmMapper">
+
+<!-- 添加 -->
+<insert id="addSSM"  parameterType="ssm" keyProperty="id">
+insert into assess_ssm(
+id,
+dt_add,
+dt_edit,
+mid_add,
+mid_edit,
+name,
+mobile,
+cp,
+upid
+)values(
+#{id},
+#{dt_add},
+#{dt_edit},
+#{mid_add},
+#{mid_edit},
+#{name},
+#{mobile},
+#{cp},
+#{upid}
+)
+</insert>
+
+</mapper>

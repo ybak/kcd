@@ -1,0 +1,1084 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" href="css/main.css" />
+	<link rel="stylesheet" href="css/rangeslider.css" /> <!-- 范围滑动 -->
+	<link rel="stylesheet" href="css/pure-min.css">
+	<link rel="icon" href="images/icon.ico" type="image/x-icon" />
+	<!--主界面 -->
+	<script src="../3rd/jquery-1.11.3.min.js"></script>
+	<link href="../kjs_icbc/kjs_icbc_style/bootstraptable/bootstrap-table.css" rel="stylesheet" type="text/css">
+	<script src="../kjs_icbc/kjs_icbc_style/bootstraptable/bootstrap-table.js" type="text/javascript"></script>
+	<script src="../kjs_icbc/kjs_icbc_style/bootstraptable/bootstrap-table-zh-CN.js" type="text/javascript"></script>
+	<link href="../kjs_icbc/kjs_icbc_style/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="css/base.css" />
+	<link rel="stylesheet" href="../kjs_icbc/kjs_icbc_style/developerLwStyle/index.css">
+	<!-- 日期格式转化 -->
+	<script src="../kjs_icbc/kjs_icbc_style/developerLwStyle/convertDate.js"></script>
+	<!-- 四则运算 -->
+	<script src="../kjs_icbc/kjs_icbc_style/developerLwStyle/jsArithmetic.js"></script>
+	<!-- 点播 -->
+	<link href="./dist/neplayer.min.css" rel="stylesheet">
+	<script src="./dist/neplayer.min.js"></script>
+</head>
+<body>
+	<div class="wrapper box-sizing" >
+		<div id="becall-content"  style="height: 100%; margin:20px; ">
+			<!-- 主界面开始 -->
+			<!-- 头部搜索开始-->
+			<div class="my-container">
+		        <label class="myLabel-content">姓名：</label>
+		        <div class="myText-content">
+		            <input id="namevalue"  autocomplete="off"   type="text" class="form-control" >
+		        </div>
+		    </div>
+		    <div class="my-container">
+		        <label class="myLabel-content">身份证号：</label>
+		        <div class="myText-content">
+		            <input id="idNumbervalue"  autocomplete="off"   type="text" class="form-control" >
+		        </div>
+		    </div> 
+		     <div class="my-container">
+		        <label class="myLabel-content">机构：</label>
+		        <div class="myText-content1 myText-content-down">
+		            <input id="organization" onfocus="funFocus()"  autocomplete="off"  type="text" class="form-control" />
+		            <input id="organizationval" type="hidden">
+		            <ul  class="myText-content-select"></ul>
+		        </div>
+		    </div>
+		  <!-- 第二行 -->
+		  <div class="my-container my-container-nextline">
+		  	<div class="my-container">
+		        <label class="myLabel-content">审核状态：</label>
+		        <div class="myText-content">
+					<select id="viedostartsvalue" class="form-control">
+					<option id="selected" value=''>--全部--</option>
+					 <option value="1">已审核</option>
+					 <option  value="2">未审核</option>
+					</select>	
+		        </div>
+		    </div>
+		    <div class="my-container">
+		        <label class="myLabel-content">视频类型：</label>
+		        <div class="myText-content">
+					<select id="viedotypevalue" class="form-control">
+					<option id="selected" value=''>--全部--</option>
+					 <option value="1">视频面签</option>
+					 <option value="0" >视频录制</option>
+					</select>	
+		        </div>
+		    </div>
+		    <div class="my-container">
+		        <label class="myLabel-content">签约状态：</label>
+		         <div class="myText-content">
+					<select id="contractvalue" class="form-control">
+					<option id="selected" value=''>--全部--</option>
+					 <option value="1">完成</option>
+					 <option value="3">回退</option>
+					</select>	
+		        </div>
+		    </div>
+		 </div>
+		
+		 <div class="mq_viedoplay hide" >
+		 	<!-- 录制播放开始 -->
+			 <div id="viedo-view—examine" style="margin: 0 auto;width:100%;height: 100%; ">
+				 <div style="width: 100%;height: 100%; position: relative; margin: 0 auto;">
+					<div class="mq_title">面签报告--明细</div>
+					<div class="mq_subject mq_m_b">
+							<div class="mq_left">
+								<div class="mq_l_top">
+									<div class="mq_l_t_content" >
+										<div>
+											<div id="namedivB" class="l_content"></div>
+											<div id="idnumberAdivB" class="r_contetn"></div>
+										</div>
+										<div>
+											<div class="l_content">人脸识别:</div>
+											<div class="r_contetn" id="manB"></div>
+										</div>
+										<div>
+											<div class="l_content">意向金额:</div>
+											<div class="r_contetn" id="totalpriceB"></div>
+										</div>
+										<div>
+											<div class="l_content">GPS定位:</div>
+											<div class="r_contetn" id="addressB"></div>
+										</div>
+										<div>
+											<div class="l_content">
+												<img id="positiveB" class="mq_img" />
+												<p class="mq_p">身份证照片</p>
+											</div>
+											<div class="r_contetn">
+												<img id="visaB" class="mq_img" />
+												<p class="mq_p">人脸照片</p>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div style="height: 1px; background: #CCCCCC;"></div>
+								<div class="mq_l_bottom">
+									<div style="height: 85%;">
+										<video style="margin: auto" id="my-video" class="video-js vjs-big-play-centered " x-webkit-airplay="allow" webkit-playsinline controls preload="auto" width="100%" height="100%" >
+										  
+										</video>
+									</div>
+									<input type="hidden" id="icbcid">
+									<input type="hidden" id="channelid" />
+									<div class="mq_viedo_bottom">
+													
+									</div>
+								</div>
+							</div>
+							<div class="mq_right">
+								<div class="mq_m_b" style="height: 98%; overflow-y: auto;">
+									<table class="mq_tabl"  cellspacing="0" style="border: 1px solid #CCCCCC; ">
+										<!--<tr>
+										  <th>序号</th>
+										  <th>内容</th>
+										  <th>操作</th>
+										</tr>-->
+										<tr>
+										  <td>1、</td>
+										  <td>
+										  	<p>您好，这里是工商银行浙江分行杭州武林支行，请问您现在是否需要在我行申请一笔信用卡购车分期付款业务？</p>
+										  	  <div class="r_row">
+										  		<div>&nbsp;</div>
+										  		<input value="是" disabled="disabled"/>
+										  	</div> 
+										  </td>
+										</tr>
+										<tr>
+										  <td>2、</td>
+										  <td>
+										  	  <p>您的名字是什么？</p>
+										  	  <div class="r_row">
+										  		<div>姓名:</div>
+										  		<input id="nameB"  disabled="disabled"></input>
+										  	</div>
+										  </td>
+										</tr>
+										<tr>
+										  <td>3、</td>
+										  <td>
+										  	<p>请问您的身份证号码是多少？您的手机号码是多少？请问您的工作单位是？您的月收入是多少？您的送达地址是哪里？</p>
+										  	<div class="r_row">
+										  		<div>身份证号:</div>
+										  		<input id="idnumberB" disabled="disabled"/>
+										  	</div> 
+										  	 </div>
+										  	 	<div class="r_row">
+										  		<div>手机号:</div>
+										  		<input id="telB" disabled="disabled"/>
+										  	</div>
+										  	 <div class="r_row">
+										  		<div>工作单位:</div>
+										  		<textarea id="workB" type="text"  disabled="disabled"></textarea>
+										  	</div>
+										  	 <div class="r_row">
+										  		<div>月收入:</div>
+										  		<input id="incomeB"  disabled="disabled"/>
+											</div>
+											  <div class="r_row">
+										  		<div>送达地址:</div>
+										  		<textarea id="deliveryB"  disabled="disabled"></textarea>
+										  	</div>
+										 </td>
+										</tr>
+										<tr>
+										  <td>4、</td>
+										  <td>
+										  	  <p>请问您购买的的汽车品牌是什么？车架号是多少？</p>
+										  	  <div class="r_row">
+										  		<div>汽车品牌型号:</div>
+										  		<input id="pxB"  disabled="disabled">
+										  	  </div>
+										  	   <div class="r_row">
+										  		<div>车价:</div>
+										  		<input id="priceresultB"  disabled="disabled">
+										  	  </div>
+										  </td>
+										</tr>
+										<tr>
+										  <td>5、</td>
+										  <td>
+										  	  <p>您了解该笔贷款是由安联汽车服务有限公司担保的吗？</p>
+										  	  <div class="r_row">
+										  		<div>担保:</div>
+										  		<input  value="了解,明白等" disabled="disabled"/>
+										  	 </div>
+										  </td>
+										</tr>
+										<tr>
+										  <td>6、</td>
+										  <td>
+										  	  <p>每月还款额是多少？</p>
+										  	  <div class="r_row">
+										  		<div>月还金额:</div>
+										  		<input id="monthmontyB"  disabled="disabled"/>
+										  	 </div>
+										  </td>
+										</tr>
+										<tr>
+										  <td>7、</td>
+										  <td>
+										  	  <p>请您翻开《牡丹信用卡分期付款/抵押合同》第2页第一部分第二条，核对您申请的分期付款业务购车分期金额是多少？</p>
+										  	  <div class="r_row">
+										  		<div>购车分期金额:</div>
+										  		<input id="dkpriceB" disabled="disabled"/>
+										  	 </div>
+										  </td>
+										</tr>
+										<tr>
+										  <td>8、</td>
+										  <td>
+										  	  <p>汽车金融服务费分期金额是多少？</p>
+										  	  <div class="r_row">
+										  		<div>金融服务费分期金额:</div>
+										  		<input id="serveB" value="3000元" disabled="disabled"/>
+										  	 </div>
+										  </td>
+										</tr>
+										<tr>
+										  <td>9、</td>
+										  <td>
+										  	  <p>期限是多少年？</p>
+										  	  <div class="r_row">
+										  		<div>期限:</div>
+										  		<input id="daeB"  disabled="disabled"/>
+										  	 </div>
+										  </td>
+										</tr>	
+									</table>
+								</div>
+							</div>
+					</div>
+				</div>
+			</div>
+			<style>
+				.mq_arrows_box{
+					position: fixed;
+				    width: 24px;
+				    height: 24px;
+				    overflow: hidden;
+				   	top: 27px;
+				    right: 225px;
+				    background-image: url(./js/img/close3.png);
+				    background-size: 24px;
+				    border-radius: 50%;
+				}
+			</style>
+			<!-- 录制播放结束 -->
+			<div class="mq_arrows_box">
+			  <!-- <div class="mq_arrows"></div> -->
+			</div>
+		
+		 </div>
+		<!-- 第三行 -->
+		<div class="my-container my-container-nextline">
+		        <button id="search_btn" type="button" class="btn btn-primary">搜索</button>
+		        <button id="reset" type="button" class="btn btn-info">重置</button>
+		</div>
+		<!-- 头部搜索结束-->
+		<!--bootstrap table存放工具栏的盒子 -->
+		<div id="toolbar"></div>
+		<!--bootstrap table 存放数据的盒子 -->
+		<table   id="mytab" style=" word-break: keep-all;"> 
+		
+		</table>	
+		
+			<div class="right-panel hide" id="rightPanel">
+				<!-- 聊天面板 -->
+				<div class="chat-box show-netcall-box becall-view " id="chatBox"><!-- 对话框 -->
+					<div class="netcall-box" id="netcallBox"><!-- 网络回话盒子 -->
+						<!-- 被叫界面 -->
+						<div class="netcall-becalling-box show">
+							<img alt="用户头像" class="avatar">
+							<div class="nick"></div>
+							<p id="becallingText" class="tip"></p>
+							<div class="op">
+								<div class="normal">
+									<div class="checking-tip">检查插件中...
+										<span class="netcall-icon-checking"></span>
+									</div>
+									<button class="netcall-button blue beCallingAcceptButton" id="beCallingAcceptButton">
+										<span class="txt">接听</span>
+										<span class="netcall-icon-checking"></span>
+									</button>
+									<button class="netcall-button red beCallingRejectButton" id="beCallingRejectButton">
+										拒绝
+									</button>
+								</div>
+								<div class="exception">
+									<button class="netcall-button blue" id="downloadAgentButton">下载音视频插件</button>
+									<br/>
+									<button class="netcall-button red beCallingRejectButton">拒绝</button>
+									<div class="exception-tip">拒绝调用插件申请会导致无法唤起插件,需重启浏览器</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 技术方案弹框 -->
+			<div class="dialog-team-container radius5px hide" id="dialogCallMethod"></div>
+			<div id="mask" class="mask hide"></div>	
+		</div>
+	
+		<!-- BBB -->
+		<div id="viedo-view" class="hide" style="margin: 0 auto;width:100%;height: 100%; ">
+			<div style="width: 100%;height: 100%; position: relative; margin: 0 auto;">
+			<div class="mq_title">面签报告--明细</div>
+			<div class="mq_subject mq_m_b">
+					<div class="mq_left">
+						<div class="mq_l_top">
+							<div class="mq_l_t_content" >
+								<div>
+									<div id="namedivA" class="l_content"></div>
+									<div id="idnumberAdivA" class="r_contetn"></div>
+								</div>
+								<div>
+									<div class="l_content">人脸识别:</div>
+									<div class="r_contetn" id="manA"></div>
+								</div>
+								<!-- <div>
+									<div class="l_content">意向车型:</div>
+									<div class="r_contetn">别克GL8</div>
+								</div> -->
+								<div>
+									<div class="l_content">意向金额:</div>
+									<div class="r_contetn" id="totalpriceA"></div>
+								</div>
+								<div>
+									<div class="l_content">GPS定位:</div>
+									<div class="r_contetn" id="addressA"></div>
+								</div>
+								<div>
+									<div class="l_content">
+										<img id="positiveA" class="mq_img" />
+										<p class="mq_p">身份证照片</p>
+									</div>
+									<div class="r_contetn">
+										<img id="visaA" class="mq_img" />
+										<p class="mq_p">人脸照片</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div style="height: 1px; background: #CCCCCC;width: 100%;"></div>
+						<div class="mq_l_bottom">
+							<div style="height: 85%;">
+									<div class="right-panel-1 " id="rightPanel">
+									<!-- 聊天面板 -->
+									<div class="chat-box" id="chatBox"><!-- 对话框 -->	
+										<div class="netcall-box " id="netcallBox1"><!-- 网络回话盒子 -->
+											<div class="netcall-mask hide">
+												<div class="netcallTip"></div>
+											</div>
+											<div class="top ">
+												<span class="fullScreenIcon toggleFullScreenButton" id="toggleFullScreenButton" title="切换全屏">&nbsp;</span>
+											</div>
+											<!-- 视频对话 -->
+											<div class="netcall-show-video">
+												<div class="netcall-video-left">
+													<div class="netcall-video-remote bigView empty">
+														<div class="message"></div>
+														<!-- 切换视图位置按钮 -->
+														<span class="switchViewPositionButton"></span>
+													</div>
+												</div>
+										
+												<div class="netcall-video-right">
+													<div class="netcall-video-local smallView">
+														<div class="message"></div>
+														<span class="switchViewPositionButton"></span>
+													</div>
+													<div class="operation">
+														<div class="control">
+															<div class="microphone control-item">
+																<div class="slider hide">
+																	<div class="txt">10</div>
+																	<input class="microSliderInput" id="microSliderInput1" type="range" min="0" max="10" step="1" value="10" data-orientation="vertical">
+																</div>
+																<span class="icon-micro"></span>
+															</div>
+															<div class="volume control-item">
+																<div class="slider hide">
+																	<div class="txt">10</div>
+																	<input class="volumeSliderInput" id="volumeSliderInput1" type="range" min="0" max="10" step="1" value="10" data-orientation="vertical">
+																</div>
+																<span class="icon-volume"></span>
+															</div>
+															<div class="camera control-item">
+																<span class="icon-camera"></span>
+															</div>
+														</div>
+														<div class="op">
+															<button class="hangupButton netcall-button red">挂断</button>
+														</div>
+														<div class="tip">00 : 00</div>
+													</div>
+												</div>
+											</div> 
+										</div>
+									</div>
+							</div>
+									
+							</div>
+						</div>
+					</div>
+					<div class="mq_right">
+						<div class="mq_m_b" style="height: 98%; overflow-y: auto;">
+							<table class="mq_tabl"  cellspacing="0" style="border: 1px solid #CCCCCC; ">
+								<!--<tr>
+								  <th>序号</th>
+								  <th>内容</th>
+								  <th>操作</th>
+								</tr>-->
+								<tr>
+								  <td>1、</td>
+								  <td>
+								  	<p>您好，这里是工商银行浙江分行杭州武林支行，请问您现在是否需要在我行申请一笔信用卡购车分期付款业务？</p>
+								  	  <div class="r_row">
+								  		<div>&nbsp;</div>
+								  		<input value="是" disabled="disabled"/>
+								  	</div> 
+								  </td>
+								</tr>
+								<tr>
+								  <td>2、</td>
+								  <td>
+								  	  <p>您的名字是什么？</p>
+								  	  <div class="r_row">
+								  		<div>姓名:</div>
+								  		<input id="nameA"  disabled="disabled"></input>
+								  	</div>
+								  </td>
+								</tr>
+								<tr>
+								  <td>3、</td>
+								  <td>
+								  	<p>请问您的身份证号码是多少？您的手机号码是多少？请问您的工作单位是？您的月收入是多少？您的送达地址是哪里？</p>
+								  	<div class="r_row">
+								  		<div>身份证号:</div>
+								  		<input id="idnumberA"  disabled="disabled"/>
+								  	</div> 
+								  	 </div>
+								  	 	<div class="r_row">
+								  		<div>手机号:</div>
+								  		<input id="telA" disabled="disabled"/>
+								  	</div>
+								  	 <div class="r_row">
+								  		<div>工作单位:</div>
+								  		<textarea id="workA" type="text"  disabled="disabled"></textarea>
+								  	</div>
+								  	 <div class="r_row">
+								  		<div>月收入:</div>
+								  		<input id="incomeA"  disabled="disabled"/>
+									</div>
+									  <div class="r_row">
+								  		<div>送达地址:</div>
+								  		<textarea id="deliveryA"  disabled="disabled"></textarea>
+								  	</div>
+								 </td>
+								</tr>
+								<tr>
+								  <td>4、</td>
+								  <td>
+								  	  <p>请问您购买的的汽车品牌是什么？车架号是多少？</p>
+								  	  <div class="r_row">
+								  		<div>汽车品牌型号:</div>
+								  		<input id="pxA"  disabled="disabled">
+								  	  </div>
+								  	   <div class="r_row">
+								  		<div>车价:</div>
+								  		<input id="priceresultA" disabled="disabled">
+								  	  </div>
+								  </td>
+								</tr>
+								<tr>
+								  <td>5、</td>
+								  <td>
+								  	  <p>您了解该笔贷款是由安联汽车服务有限公司担保的吗？</p>
+								  	  <div class="r_row">
+								  		<div>担保:</div>
+								  		<input  value="了解,明白等" disabled="disabled"/>
+								  	 </div>
+								  </td>
+								</tr>
+								<tr>
+								  <td>6、</td>
+								  <td>
+								  	  <p>每月还款额是多少？</p>
+								  	  <div class="r_row">
+								  		<div>月还金额:</div>
+								  		<input id="monthmontyA" disabled="disabled"/>
+								  	 </div>
+								  </td>
+								</tr>
+								<tr>
+								  <td>7、</td>
+								  <td>
+								  	  <p>请您翻开《牡丹信用卡分期付款/抵押合同》第2页第一部分第二条，核对您申请的分期付款业务购车分期金额是多少？</p>
+								  	  <div class="r_row">
+								  		<div>购车分期金额:</div>
+								  		<input id="dkpriceA" value="33000元" disabled="disabled"/>
+								  	 </div>
+								  </td>
+								</tr>
+								<tr>
+								  <td>8、</td>
+								  <td>
+								  	  <p>汽车金融服务费分期金额是多少？</p>
+								  	  <div class="r_row">
+								  		<div>金融服务费分期金额:</div>
+								  		<input id="serveA" value="3000元" disabled="disabled"/>
+								  	 </div>
+								  </td>
+								</tr>
+								
+								<tr>
+								  <td>9、</td>
+								  <td>
+								  	  <p>期限是多少年？</p>
+								  	  <div class="r_row">
+								  		<div>期限:</div>
+								  		<input id="daeA" value="36年" disabled="disabled"/>
+								  	 </div>
+								  </td>
+								</tr>
+								<tr style="height: auto">
+								  <td>10、</td>
+								  <td > 
+								  	  <p>A:上述信息核对无误，请在合同第6页债务人及抵押人栏目签字。</p>
+								  	  <p>B:打开信用卡申请表第3页，抄录部分内容是否为您本人填写，如是请在申请人处签名。</p>
+								  	  <p>C:客户告知书相关内容是否已阅知，如是请在签字人处签名。</p>
+								  	  <p>D:感谢您的配合，业务办理成功后，我行会向您邮寄合同和客户告知书，请您注意查收并仔细阅读，后续如有问题，欢迎致电客户告知书上的汽车分期服务专线电话。
+请您认真阅读您与担保方签订的相关协议，该协议内容以及协议中约定的在您未按时、足额清偿债务时担保方可采取的措施等，均与工商银行无关。您办理该笔分期业务无需向我行和担保公司缴纳任何保证金和押金。
+请您务必下载和使用工银融E联，通过申请时预留手机号注册登录后，即可享受相应服务。</p>
+								  </td>
+								</tr>
+							</table>
+						</div>
+					</div>
+			</div>
+		</div>
+	</div>
+</div>
+	
+	<script>
+		// IE 11 polify
+		if (!Object.assign) {
+			Object.assign = function () {
+				var list = arguments
+				for (var i = 1; i < list.length; i++) {
+					list[0] = extend(list[0], list[i])
+				}
+				return list[0]
+			}
+
+			function extend(obj1, obj2) {
+				for (var i in obj2) {
+					obj1[i] = obj2[i]
+				}
+				return obj1
+			}
+		}
+	</script>
+	<script src="../3rd/nim_server_conf.js"></script>
+	<script src="../3rd/NIM_Web_SDK_v5.4.0.js"></script>
+	<script src="../3rd/NIM_Web_Netcall_v5.4.0.js"></script>
+	<script src="../3rd/NIM_Web_WebRTC_v5.4.0.js"></script>
+	<!-- <script src="../3rd/NIM_Web_WhiteBoard_v5.4.0.js"></script>
+	<script src="../3rd/DrawPlugin.js"></script>
+	<script src="./js/3rd/whiteboard.js"></script> -->
+	<!--<script src="../3rd/zepto.min.js"></script>-->
+	<script>
+		// FastClick.attach(document.body);
+		/* window.onerror = function (errorMessage, source, lineno, colno, error) {
+			var info = "错误信息：" + errorMessage + "\n" +
+				"出错文件：" + source + "\n " +
+				"出错行号：" + lineno + "\n" +
+				"出错列号：" + colno + "\n" +
+				"错误详情：" + error + "\n";
+				console.error(JSON.stringify(info));
+		} */
+	</script>
+
+	<script src="../3rd/platform.js"></script>
+	<script src="../3rd/rtcSupport.js"></script>
+	<script src="js/3rd/jquery-ui.min.js"></script>
+	<script src="../3rd/rangeslider.min.js"></script>
+	<!-- 右键菜单-->
+	<script src="js/3rd/contextMenu/jquery.ui.position.js"></script>
+	<script src="js/3rd/contextMenu/jquery.contextMenu.js"></script>
+
+	<script src="js/config.js"></script> <!-- 配置文件 -->
+	<!-- <script src="js/emoji.js"></script> --> <!-- 表情符号 -->
+	<script src="js/util.js?v=2"></script> <!-- 工具类 包括了readcookie delcookie -->
+	<script src="js/cache.js?v=2"></script>
+	<script src="js/link.js"></script> <!-- 登陆IM等 -->
+	<script src="js/ui.js?v=2"></script> <!-- 聊天回话云记录面板 -->
+	<script src="js/widget/uiKit.js?v=2"></script> <!-- widget/uiKit.js 云信的ui组件库，开发这可以使用该组件来快速开发工程 -->
+	<script src="js/widget/minAlert.js"></script> <!-- 弹框 -->
+	<script src="js/module/base.js"></script>
+	 <!-- <script src="js/module/message.js"></script>  --> <!-- 消息逻辑 -->
+	<!-- <script src="js/module/sysMsg.js"></script> --> <!-- 系统消息  -->
+	<!-- <script src="js/module/personCard.js"></script> --> <!-- 个人名片 -->
+	<!-- <script src="js/module/session.js"></script><!-- 会话模块  -->
+	<!-- <script src="js/module/friend.js"></script> --> <!-- 好友相关 -->
+ 
+	 <!-- <script src="js/module/team.js"></script> --> <!-- 群组相关 -->
+	 <!-- <script src="js/module/dialog_team.js"></script> --><!-- 选择/添加成员的弹框组件 -->
+	 <!-- <script src="js/module/cloudMsg.js"></script>  --> <!-- 云记录 -->
+	<!-- <script src="js/module/notification.js"></script>  --><!-- 群通知管理器  视频聊天时长信息-->
+	<script src="js/module/netcall.js"></script> <!-- 点对点音视频通话控制逻辑 -->
+	<script src="js/module/netcall_meeting.js"></script> <!-- 网络电话会议 多人音视频控制 -->
+	<script src="js/module/netcall_ui.js"></script> <!-- 点对点音视频通话中对应的ui相关逻辑 -->
+	<script src="js/module/dialog_call_method.js"></script> <!-- 技术方案选择的弹框 -->
+	<script src="js/main.js?v=2"></script>
+	<script src="../3rd/vue.min.js"></script>
+	
+	<script type="text/javascript" src="../kjs_icbc/kjs_icbc_style/layer/layer.js"></script>
+	<script>
+	//设置面前问题表格样式
+	$(".mq_tabl tr td:first-child").css({"color":"white","font-size":"14px"});
+	$(".mq_tabl tr td:first-child:odd").css("background-color","#596790");
+	$(".mq_tabl tr td:first-child:even").css("background-color","#7a89b5");
+	$(".mq_tabl tr td:last-child:even").css("background-color","#e7e9f1");
+	$(".mq_tabl tr td:last-child:odd").css("background-color","#d5d8df");
+	 /* var custom='{"id":"420","latitude":26.056487,"longitude":119.336294,"address":"福建省福州市台江区曙光路126号宇洋中央金座"}';
+	var channelId="123456"; 
+	//在历史中审核
+ 	  layer.confirm('是否通过？', {
+		  btn: ['通过','回退'] //按钮
+		}, function(index){
+			window.viedoAudit('1');
+			layer.close(index);
+		}, function(){
+		  window.viedoAudit('3');
+		});  */
+		//alert($("#my-video").parent().width())
+	
+	function mqViedooBttom(code){
+			$(".mq_viedo_bottom").html("");
+		  	if(code=='1'){
+		  		$(".mq_viedo_bottom").html('<p id="through" class="through" style="background-color: #5cb85c"> 通过</p>');
+		  	}else if(code=='3'){
+		  		$(".mq_viedo_bottom").html('<p id="through" class="through" style="background-color: #d9534f;"> 不通过</p>');
+		  	}
+	}
+	/* viewdate('{"id":"420","latitude":26.056487,"longitude":119.336294,"address":"福建省福州市台江区曙光路126号宇洋中央金座"}','A','420');
+	 */var myPlayer;//点播对象
+	//这里使用vue有问题所以换成ajax 和jquery
+	function viewdate(value,dom,code,index){
+	if(!!value){
+		$("#address"+dom).text("");
+	  	if(dom=="A"){//如果是视频对话触发的
+	  		var jso=JSON.parse(value.replace("\\",""));//处理一个小bug
+	  		value=jso.id;
+	  		$("#address"+dom).text(jso.address); //gps
+	  	}
+	  	$(".mq_viedo_bottom").html("");
+	  	if(code=='1' || code=='3'){
+	  		mqViedooBttom(code);	
+	  	}else{
+	  		$(".mq_viedo_bottom").html('<div>面签状态</div><input id="viedoOpinionIndex" value="'+index+'" type="hidden"><div id="poition" class="viedo_opinion"><input id="item1B" type="radio" name="item" value="1" ><label for="item1B"></label><span>通过</span></div><div id="poition" class="viedo_opinion"><input id="item2B" type="radio" name="item" value="3"><label for="item2B"></label><span>不通过</span></div> ');
+	  		$("#poition input[type='radio']").on('click',function(e){
+	  			var id=$("#icbcid").val();
+	  			var channelid=$("#channelid").val();
+	  			var auditsvalue=$(this).val();
+	  			var viedoOpinionIndex=$("#viedoOpinionIndex").val();
+	  			if(!!auditsvalue && !!id && channelid){
+	  			 mqViedooBttom(auditsvalue);
+	  			 $.post("../yx/sutitstatus.do",{icbcid:id,auditstatus:auditsvalue,channel:channelid});
+	  			/* 	alert(viedoOpinionIndex)
+	  			  $("#mytab").bootstrapTable('removeByUniqueId',viedoOpinionIndex) */
+	  			}else{
+	  				alert('参数错误！');
+	  			}
+  			});
+	  	}
+	  	$("#man"+dom).val(""); 
+	  	$("#icbcid").val("");
+		//先清空内容
+		$(" #namediv"+dom).text(""); //姓名
+		$("#idnumberAdiv"+dom).text("");//身份证号
+		$("#positive"+dom).attr("src","");//照片
+		$("#visa"+dom).attr("src","");//照片
+		$("#name"+dom).val("")//姓名
+		$("#px"+dom).val("")//品牌型号
+		$("#tel"+dom).val("") //电话
+		$("#idnumber"+dom).val("") //身份证号
+		$("#delivery"+dom).text("")//送达地址
+		$("#income"+dom).val("") //月收入
+		$("#work"+dom).text("") //工作单位
+		$("#priceresult"+dom).val("") //评估价
+		$("#date"+dom).val("") //期限
+		$("#serve"+dom).val("") //金融服务费
+		$("#dkprice"+dom).val("") //购车分期金额
+		$("#totalprice"+dom).text("")//意向金额
+		$("#monthmonty"+dom).val("") //每月还款金额
+			$.ajax({
+	            url:'../yx/viedoinfo.do',
+	            type:'POST',
+	            data:{id:value,domvalue:dom},
+	            dataType:'json',
+	            success: function (data) {
+	            		$("#namediv"+dom).text(data.name);
+		        		$("#idnumberAdiv"+dom).text(data.idnumber);
+						if(data.positive!=undefined){//身份证正面
+		        			$("#positive"+dom).attr("src",data.positive);
+		        		}else{//显示默认的
+		        			$("#positive"+dom).attr("src","../kjs_icbc/kjs_icbc_style/images/error.png");
+		        		}
+		            	if(data.visa!=undefined){//面签照
+		            		$("#visa"+dom).attr("src",data.visa);
+		            	}else{
+		            		$("#visa"+dom).attr("src","../kjs_icbc/kjs_icbc_style/images/error.png");
+		            	}
+		            	$("#man"+dom).text(data.man);//人脸识别
+		        		$("#name"+dom).val(data.name)
+		        		$("#total"+dom).val(data.total)
+		        		$("#tel"+dom).val(data.tel)
+		        		$("#idnumber"+dom).val(data.idnumber)
+		        		$("#delivery"+dom).text(data.delivery)
+		        		$("#income"+dom).val(data.income)
+		        		$("#work"+dom).text(data.work)
+		        		$("#priceresult"+dom).val(data.priceresult)
+		        		$("#total"+dom).val(data.total)
+		        		$("#date"+dom).val(data.date)
+		        		$("#serve"+dom).val(data.serve)
+		        		$("#px"+dom).val(data.px)
+		        		$("#dkprice"+dom).val(data.dkprice)
+		        		$("#address"+dom).text(data.address);
+		        		if(dom=="B"){//查看历史
+		        	  		$("#icbcid").val(data.icbcid);//隐藏域 存放审核id 在历史审核的提交的时候用
+		        	  		$("#channelid").val(data.channelId);
+		        	  		if(!myPlayer){
+		        	  			//初始化播放器
+		        	  			myPlayer = neplayer('my-video');
+		        	  		}	
+		        	  		myPlayer.resize( 400, 320);
+							myPlayer.setDataSource({src:data.url,type:"video/mp4"});
+							myPlayer.play();
+		        	  	}
+		        		if(data.date && data.totalprice){//期限和总额存在
+		        			var interest={'36':1.0855,'24':1.065,'12':1.0358}[data.date] ||1.0855;
+		        			//计算月还金额
+		        			var monthmonty=number1(accDiv(number1(accMul(data.totalprice,interest)),data.date));
+		        			$("#monthmonty"+dom).val(monthmonty);
+		        		}
+		        		$("#totalprice"+dom).text(data.totalprice);
+		        	
+	            },
+	            error: function(d){
+	               console.log(d.status)
+	            }
+	        });
+		}else{
+			alert("此custom为空！")
+		}
+	}
+  	window.onload=function(){
+		refreshTime();
+	} 
+ 	//关闭浏览器之前的js动作 兼容多浏览器
+	window.onbeforeunload = function(e) {
+	var evt = e ? e : (window.event ? window.event : null); //此方法专门兼容firefox的解决方案
+		evt.returnValue = destroysession();//这是可以使js函数
+	}
+ 	//释放登陆的accid
+	function destroysession(){
+		var tim=readCookie("mark");
+		$.ajax({
+            url:'../yx/outlogin.do',
+            type:'POST',
+            data:{mark:tim},
+            dataType:'json',
+            success: function () {
+            	console.log('退出');
+            },
+            error: function(d){
+               console.log(d.status)
+            }
+        });
+	} 
+	
+	/* ---------开始 -------*/
+	//根据窗口调整表格高度
+    $(window).resize(function() {
+        $('#mytab').bootstrapTable('resetView', {
+            height: tableHeight()
+        })
+    })
+	 /*------ 机构开始 */
+     var jsonObj;//用来存储全局数据集
+	 var b=true;//记录是否进行一次请求
+  	 var c=false;//记录下拉框中是否已经存在数据
+  	 var u="";
+  	 var selec=$(".myText-content-select");//获得document对象 
+  	 var organizationval=$("#organizationval"); 
+  	 var organization=$("#organization");
+  	//失去焦点的时候
+	function funblur(){
+  		 if(!organizationval.val()){//没有点击下拉框
+  			organization.val("");//清空输入框
+  			selec.hide();//隐藏下拉框
+  			c=false;
+  		 }
+  	 }
+	//得到焦点的时候
+	function  funFocus(){
+		if(c){
+			selec.show();
+		}
+	}
+	
+	//input 改变的时候
+	organization.bind('input propertychange keyup', function(even) {
+		if(event.target==this){
+			if(b){//json没有初始化
+				$.post('../yx/cl.do',function(data){
+					jsonObj=data;
+					b=false;//表示已经初始化成功了
+				},'json');
+			}
+			//查到数据集 并且搜索框里面有值
+			if(jsonObj && organization.val() && organization.val()!=""){
+				var v=organization.val();
+				u="";//用来存储html代码
+				selec.html("");
+				$.each(jsonObj, function(index,value) {
+					var tit=value.name;
+			  		var dom=value.id;
+					//存在
+			  		if(tit.toString().indexOf(v)!=-1){
+			  			u+='<li class="myText-content-option" value='+dom
+			  				+'>'
+							+tit
+							+'</li>';
+			  		}
+				});
+				if(u!=""){//查找到内容
+					c=true;//表示已经存在数据了
+					selec.html(u);
+					selec.show();
+					/* 绑定点击事件 */
+					selec.on("click","li",function(){
+						  organization.val($(this).text());
+						  organizationval.val($(this).val())
+						  selec.hide();//隐藏
+					});
+				}else{//表示没有查到数据
+					c=false;//下拉框没有数据
+					return
+				}
+				
+			}else{//当搜索框里面内容进行人为的清空时
+				selec.hide();//隐藏下拉列表
+				organizationval.val("");//清空值
+				c=false;//输入框被清空 则下拉框也不会存在数据
+			}
+		}
+	});
+
+	/*------ 机构结束*/
+		//查询按钮事件
+    $('#search_btn').click(function(){
+        $('#mytab').bootstrapTable('refresh');
+    })
+    //重置按钮
+    $("#reset").click(function(){
+    	$('#namevalue').val("");//姓名
+    	$('#idNumbervalue').val("");
+    	$('#organization').val("");//机构
+    	$('#organizationval').val("");
+    	$('#viedotypevalue').find('option[id="selected"]').prop("selected",true);
+    	$('#contractvalue').find('option[id="selected"]').prop("selected",true);
+    	$('#viedostartsvalue').find('option[id="selected"]').prop("selected",true);
+    })
+	/* 查看详情 */
+	var b=-1;
+	//点击关闭历史播放界面
+	$(".mq_arrows_box").click(function(){
+		$(this).parent(".mq_viedoplay").toggleClass("hide",true);
+		 if(!!myPlayer){
+    		 myPlayer.pause();//暂停播放
+    	 }
+	})
+	
+ 	function mq_viedoplay(value,index,code){
+	    //是否第一次打开	
+	     if(b==index){//如果是再次点击
+	    	 $(".mq_viedoplay").toggleClass("hide");//连续点击 显示或者隐藏
+	    	 if(!!myPlayer){
+	    		 myPlayer.pause();//暂停播放
+	    	 }
+	    	 return;
+	     }else{
+	     	 viewdate(value,"B",code,index);
+	    	 b=index;//标记一下点击的索引
+	    	 $(".mq_viedoplay").toggleClass("hide",false);
+	    	/*  $(".mq_arrows_box").animate({top:175+index*38+'px'},'fast',function(){
+	
+			 });	 */
+	    	 
+	     }
+	}
+    //请求服务数据时所传参数
+    function queryParams(params){
+        return{
+            //页面的大小
+            pagesize: params.limit,
+            //请求第几页
+            pageIndex:params.pageNumber,
+            name:$('#namevalue').val(),//姓名
+            idNumber:$('#idNumbervalue').val(),//身份证号
+            organization:$('#organizationval').val(),//机构
+            viedotype:$('#viedotypevalue').val(),//视频类型
+            contract:$('#contractvalue').val(),//签约状态
+            viedostartsvalue:$("#viedostartsvalue").val()
+        }
+    }
+    //操作栏的格式化
+    function actionFormatter(value, row, index) {
+    	if(!!value){//存在播放url
+    		var result="";
+            result += "<a href='javascript:;' class='btn btn-xs green' onclick=\"mq_viedoplay('"+row.yid+"','"+index+"','"+row.code+"')\" title='查看'><span style='color:#5bc0de;font-size:16px' class='glyphicon glyphicon-off'></span></a>";
+           	return result;
+    	}else{//不存在播放url
+    		return "<p style='color:#ccc;font-size:16px' class='glyphicon glyphicon-off' title='暂且没有视频'></p>";
+    	}
+    }
+	//生成用户数据
+    $('#mytab').bootstrapTable({
+        url:"../yx/selectOperatingFalse.do",//要请求数据的文件路径  
+        method: 'post', //请求方式（*）
+        toolbar: '#toolbar', //工具按钮用哪个容器
+        contentType : "application/x-www-form-urlencoded",//js初始化加上这句 ，如果不加：在java后台（使用springMvc）使用@RequestParam（）或者request.getparameter(),都是拿不到数据的
+        striped: true, //是否显示行间隔色
+        cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+        pagination: true, //是否显示分页（*）
+        sortable: false, //是否启用排序
+        sortOrder: "asc", //排序方式
+        queryParams: queryParams,//请求服务器时所传的参数
+        sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+        pageNumber:1, //初始化加载第一页，默认第一页
+        pageSize: 4, //每页的记录行数（*）
+        pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+        showColumns: false, //是否显示所有的列
+        showRefresh: false, //是否显示刷新按钮
+        //minimumCountColumns: 2, //最少允许的列数
+        //clickToSelect: true, //是否启用点击选中行
+        height: 500, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+        uniqueId: "kkid", //每一行的唯一标识，一般为主键列
+        columns:[
+            {
+                title:'姓名',
+                field:'cname',
+                width:145,
+                align:'center'
+            },
+            {
+                title:'所属机构',
+                field:'name',
+                align:'center',
+                width:145
+                //sortable:true //是否启用排序 
+            },
+             {
+                title:'视频类型',
+                field:'viedotype',
+                align:'center',
+                width:200,
+                formatter: viedotypeFormatter
+            },
+            {
+                title:'签约状态',
+                field:'code',
+                align:'center',
+                width:200,
+                formatter: ContractstatusFormatter
+            },
+            {
+                title:'最后更新时间',
+                field:'editime',
+                align:'center',
+                width:200,
+                formatter: timeFormatter
+            },
+            {
+                title:'抄送信息',
+                field:'yid',
+                align:'center',
+                width:200,
+                visible:false
+            },
+            {
+                title:'抄送信息',
+                field:'code',
+                align:'center',
+                width:200,
+                visible:false
+            },
+            {
+                title:'GPS',
+                field:'address',
+                align:'center',
+                width:200
+            },
+		    {
+                field:'url',
+                title: '查看详情',
+                width: 200,
+                align: 'center',
+                formatter: actionFormatter
+            }
+
+        ],
+        locale:'zh-CN',//中文支持,
+        responseHandler:function(res){//请求到数据
+            //在ajax获取到数据，渲染表格之前，修改数据源
+            return res;
+        }
+    });
+	//视频审核状态
+	function ContractstatusFormatter(value, row, index){
+		if(value==undefined){//没有状态表示还没有审核
+			if(row.url==undefined){
+				return '<p style="font-size: 12px;color: #ccc;">视频还未抄送</p>'
+			}else{
+				return '<p style="font-size: 12px;color: #ccc;">视频未审核</p>'
+			}
+		}else if(value=='1'){
+			return '<p style="font-size: 12px;color: #5cb85c;">面签成功</p>'
+		}else if(value=='3'){
+			return '<p style="font-size: 12px;color: #f0ad4e;">回退</p>'
+		}
+		return value;
+	}
+	//视频类型
+	function viedotypeFormatter(value, row, index){
+		if(value=='0'){
+			return '<p style="font-size: 13px;background-color:#286090;color: white;width: 70px;display: block;margin: auto;border-radius: 5px;line-height: 21px;">录制</p>';
+		}else if(value=='1'){
+			return '<p style="font-size: 13px;background-color: #5bc0de;color: white;width: 70px;display: block;margin: auto;border-radius: 5px;line-height: 21px;">实时面签</p>';
+		}
+	}
+	//日期格式转化
+	function timeFormatter(value, row, index){
+		return getSmpFormatDateByLong(value,true);
+	}
+    //tableHeight函数
+    function tableHeight(){
+        //可以根据自己页面情况进行调整
+        return $(window).height() -150;
+    }
+    /* --------- 结束-------*/
+</script>	
+	<!-- <script src="js/module/whiteboard.js"></script> -->
+</body>
+</html>

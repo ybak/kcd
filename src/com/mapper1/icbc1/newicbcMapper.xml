@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.icbc1.newicbcMapper">
+
+<delete id="del_icbc" parameterType="icbc">
+DELETE FROM kj_icbc WHERE id=#{id}
+</delete>
+
+<select id="findlastid"  resultType="icbc">
+select * from kj_icbc where id=(select max(id) from kj_icbc)
+</select>
+
+<select id="findicbcbyorderid" parameterType="icbc" resultType="icbc">
+ select * from kj_icbc where gems_code=#{gems_code}
+</select>
+
+<select id="kjs_zx_count" resultType="int">
+select count(*) from kj_icbc where bc_status=2
+</select>
+
+<select  id="kjs_zx" resultType="icbc" parameterType="icbc">
+select ki.*,fs.`name` as gname,
+gems.`name` as pname 
+from 
+kj_icbc ki
+LEFT JOIN assess_fs fs on ki.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on ki.gems_id=gems.id
+where 1=1 and ki.bc_status>1
+<if test="bc_status!=null and bc_status!=''"> 
+ and ki.bc_status=#{bc_status}
+</if>
+ORDER BY ki.dt_edit DESC
+</select>
+
+<select id="findicbcbyorderid2" parameterType="icbc" resultType="icbc">
+select 
+icbc.*,
+kk.id as kkid,
+dk.id as dkid,
+mq.id as mqid 
+from 
+kj_icbc icbc 
+LEFT JOIN kjs_icbc_kk kk on kk.icbc_id=icbc.id
+LEFT JOIN kjs_icbc_cardk dk on dk.icbc_id=icbc.id
+LEFT JOIN kjs_icbc_mq mq on mq.icbc_id=icbc.id
+where icbc.gems_code=#{gems_code}
+</select>
+
+ <select id="findicbcbyid" parameterType="icbc" resultType="icbc">
+select ki.*,
+fs.name as gname,
+gems.name as pname 
+from kj_icbc ki
+LEFT JOIN assess_fs fs on ki.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on ki.gems_id=gems.id
+where ki.id=#{id}
+ </select>
+ 
+ 
+<!-- 搜索 -->
+<select id="searchicbc" parameterType="icbc" resultType="icbc">
+select 
+ki.*,
+dk.icbc_id,
+ac.icbc_id,
+kk.icbc_id,
+mq.icbc_id,
+dk.id as dkid,
+ac.id as acid,
+kk.id as kkid,
+mq.id as mqid,
+dk.bc_status as bc_status2,
+kk.bc_status as bc_status3,
+mq.bc_status as bc_status4,
+ac.bc_status as bc_status5,
+fs.`name` as gname,
+gems.`name` as pname 
+from 
+kj_icbc ki
+LEFT JOIN kjs_icbc_cardk dk on ki.id=dk.icbc_id
+LEFT JOIN kjs_icbc_kk kk on ki.id=kk.icbc_id
+LEFT JOIN kjs_icbc_mq mq on ki.id=mq.icbc_id
+LEFT JOIN assess_cars ac on ki.id=ac.icbc_id
+LEFT JOIN assess_fs fs on ki.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on ki.gems_id=gems.id
+where 1=1 and ki.bc_status!=1
+ <if test="time1!=null and time1!=''">
+ and ki.dt_add &gt;= #{time1}
+ </if>
+ <if test="time2!=null and time2!=''">
+ and ki.dt_add &lt;= #{time2}
+ </if>
+ <if test="querytype!=null and querytype!=''">
+  <choose>
+  <when test="querytype==1">
+  and ki.query_type =0 
+  </when>
+  <otherwise>
+  and ki.query_type =#{querytype} 
+  </otherwise>
+  </choose>
+ </if>
+ <if test="bc_status!=null and bc_status!=''">
+ and ki.bc_status =#{bc_status} 
+ </if>
+  <if test="gems_fs_id!=null and gems_fs_id!=''">
+ and ki.gems_fs_id =#{gems_fs_id} 
+ </if>
+ <if test="bc_status!=null and bc_status!=''">
+ and (ki.bc_status =#{bc_status}
+ or dk.bc_status =#{bc_status}
+ or kk.bc_status =#{bc_status}
+ or mq.bc_status =#{bc_status}
+ or ac.bc_status =#{bc_status}
+ )
+ </if>
+ <if test="card_status!=null and card_status!=''">
+ and ki.card_status =#{card_status} 
+ </if>
+ <if test="icbcname!=null and icbcname!=''">
+ and  (ki.c_name like concat('%',#{icbcname},'%')
+   or ki.c_cardno like concat('%',#{icbcname},'%')
+   or fs.name like concat('%',#{icbcname},'%')
+   or gems.name like concat('%',#{icbcname},'%')
+ )
+ </if>
+GROUP BY ki.id
+ORDER BY ki.dt_edit DESC
+</select>
+ 
+ 
+ <select id="findicbccount"  resultType="int">
+ select count(*) from kj_icbc 
+ </select>
+ 
+<select id="findicbc" parameterType="icbc" resultType="icbc">
+select 
+ki.*,
+dk.icbc_id,
+ac.icbc_id,
+kk.icbc_id,
+mq.icbc_id,
+dk.id as dkid,
+ac.id as acid,
+kk.id as kkid,
+mq.id as mqid,
+dk.bc_status as bc_status2,
+kk.bc_status as bc_status3,
+mq.bc_status as bc_status4,
+ac.bc_status as bc_status5,
+fs.`name` as gname,
+gems.`name` as pname 
+from 
+kj_icbc ki
+LEFT JOIN kjs_icbc_cardk dk on ki.id=dk.icbc_id
+LEFT JOIN kjs_icbc_kk kk on ki.id=kk.icbc_id
+LEFT JOIN kjs_icbc_mq mq on ki.id=mq.icbc_id
+LEFT JOIN assess_cars ac on ki.id=ac.icbc_id
+LEFT JOIN assess_fs fs on ki.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on ki.gems_id=gems.id
+where 1=1 and ki.bc_status!=1
+ <if test="querytype!=null and querytype!=''">
+  <choose>
+  <when test="querytype==1">
+  and ki.query_type =0 
+  </when>
+  <otherwise>
+  and ki.query_type =#{querytype} 
+  </otherwise>
+  </choose>
+ </if>
+ <if test="bc_status!=null and bc_status!=''"> 
+ and (ki.bc_status =#{bc_status}
+ or dk.bc_status =#{bc_status}
+ or kk.bc_status =#{bc_status}
+ or mq.bc_status =#{bc_status}
+ or ac.bc_status =#{bc_status}
+ )
+ </if>
+GROUP BY ki.id
+ORDER BY ki.dt_edit DESC
+ </select>
+ 
+ <update id="upicbc_tag" parameterType="icbc" >
+ update kj_icbc set adminop_tag=#{adminop_tag}
+ where id=#{id}
+ </update>
+ 
+ <update id="up_fk" parameterType="icbc">
+  update kj_icbc 
+  set
+  fk_status=#{fk_status},
+  dt_edit=#{dt_edit}
+  where id=#{id}
+ </update>
+ 
+ <update id="upicbc" parameterType="icbc" >
+ update kj_icbc
+ <trim prefix="set" suffixOverrides=",">
+  <if test="mid_add!=null and mid_add!=''">mid_add=#{mid_add}  ,  </if>
+  <if test="mid_edit!=null and mid_edit!=''">mid_edit=#{mid_edit},   </if>
+  <if test="dt_add!=null and dt_add!=''">dt_add=#{dt_add} ,  </if>
+  <if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit}  ,  </if>
+  <if test="bc_status!=null and bc_status!=''">bc_status =#{bc_status},  </if>
+  <if test="gems_id!=null and gems_id!=''">gems_id =#{gems_id}  ,</if>
+  <if test="gems_fs_id!=null and gems_fs_id!=''"> gems_fs_id =#{gems_fs_id} , </if>
+  <if test="gems_code!=null and gems_code!=''"> gems_code=#{gems_code} , </if>
+  <if test="query_type!=null and query_type!=''"> query_type=#{query_type} , </if>
+  <if test="c_name!=null and c_name!=''">c_name=#{c_name},  </if>
+  <if test="c_tel!=null and c_tel!=''">c_tel=#{c_tel} , </if>
+  <if test="c_cardno!=null and c_cardno!=''"> c_cardno=#{c_cardno} , </if>
+  <if test="bank_id!=null and bank_id!=''">bank_id=#{bank_id},    </if>
+  <if test="loan_tpid!=null and loan_tpid!=''">loan_tpid=#{loan_tpid} ,  </if>
+  <if test="loan_level!=null and loan_level!=''"> loan_level=#{loan_level}, </if>
+  <if test="c_name_mts!=null and c_name_mts!=''">c_name_mts=#{c_name_mts}  ,  </if>
+  <if test="c_tel_mts!=null and c_tel_mts!=''"> c_tel_mts=#{c_tel_mts},  </if>
+  <if test="c_cardno_mts!=null and c_cardno_mts!=''"> c_cardno_mts=#{c_cardno_mts},  </if>
+  <if test="kk_kpj!=null and kk_kpj!=''"> kk_kpj=#{kk_kpj}  , </if>
+  <if test="kk_loan_amount!=null and kk_loan_amount!=''"> kk_loan_amount=#{kk_loan_amount}  ,</if>
+  <if test="kk_loan_amount_s!=null and kk_loan_amount_s!=''"> kk_loan_amount_s=#{kk_loan_amount_s},  </if>
+  <if test="kk_loan_amount_total!=null and kk_loan_amount_total!=''"> kk_loan_amount_total=#{kk_loan_amount_total} ,  </if>
+  <if test="kk_loan_ajms!=null and kk_loan_ajms!=''">kk_loan_ajms=#{kk_loan_ajms} ,  </if>
+  <if test="kk_loan_ajqx!=null and kk_loan_ajqx!=''">kk_loan_ajqx=#{kk_loan_ajqx}  , </if>
+  <if test="kk_loan_ajyh!=null and kk_loan_ajyh!=''">kk_loan_ajyh=#{kk_loan_ajyh}  ,  </if>
+  <if test="kk_loan_rate!=null and kk_loan_rate!=''">kk_loan_rate=#{kk_loan_rate},   </if>
+  <if test="kk_car_stateid!=null and kk_car_stateid!=''">kk_car_stateid=#{kk_car_stateid} ,  </if>
+  <if test="kk_car_cityid!=null and kk_car_cityid!=''">kk_car_cityid=#{kk_car_cityid} ,  </if>
+  <if test="kk_loan_stateid!=null and kk_loan_stateid!=''">kk_loan_stateid=#{kk_loan_stateid} ,  </if>
+  <if test="kk_loan_cityid!=null and kk_loan_cityid!=''">kk_loan_cityid=#{kk_loan_cityid},   </if>
+  <if test="imgstep2_1!=null and imgstep2_1!=''">imgstep2_1=#{imgstep2_1} ,  </if>
+  <if test="imgstep2_2!=null and imgstep2_2!=''">imgstep2_2=#{imgstep2_2} ,  </if>
+  <if test="imgstep2_3!=null and imgstep2_3!=''">imgstep2_3=#{imgstep2_3},   </if>
+  <if test="imgstep2_4!=null and imgstep2_4!=''">imgstep2_4=#{imgstep2_4},   </if>
+  <if test="imgstep2_5!=null and imgstep2_5!=''">imgstep2_5=#{imgstep2_5} ,  </if>
+  <if test="imgstep2_5s!=null and imgstep2_5s!=''">imgstep2_5s=#{imgstep2_5s},   </if>
+  <if test="imgstep3_1!=null and imgstep3_1!=''">imgstep3_1=#{imgstep3_1} ,  </if>
+  <if test="imgstep3_2!=null and imgstep3_2!=''">imgstep3_2=#{imgstep3_2} ,  </if>
+  <if test="imgstep3_3!=null and imgstep3_3!=''">imgstep3_3=#{imgstep3_3} , </if>
+  <if test="imgstep3_4!=null and imgstep3_4!=''">imgstep3_4=#{imgstep3_4} ,  </if>
+  <if test="imgstep3_5!=null and imgstep3_5!=''">imgstep3_5=#{imgstep3_5} ,  </if>
+  <if test="imgstep3_6!=null and imgstep3_6!=''">imgstep3_6=#{imgstep3_6} ,  </if>
+  <if test="imgstep3_7!=null and imgstep3_7!=''">imgstep3_7=#{imgstep3_7} ,  </if>
+  <if test="imgstep2_8s!=null and imgstep2_8s!=''">imgstep2_8s=#{imgstep2_8s},   </if>
+  <if test="imgstep4_1!=null and imgstep4_1!=''">imgstep4_1=#{imgstep4_1} ,  </if>
+  <if test="imgstep4_2!=null and imgstep4_2!=''">imgstep4_2=#{imgstep4_2} ,  </if>
+  <if test="imgstep4_3!=null and imgstep4_3!=''">imgstep4_3=#{imgstep4_3} , </if>
+  <if test="imgstep4_4!=null and imgstep4_4!=''">imgstep4_4=#{imgstep4_4} ,  </if>
+  <if test="imgstep4_5!=null and imgstep4_5!=''">imgstep4_5=#{imgstep4_5} ,  </if>
+  <if test="imgstep4_6!=null and imgstep4_6!=''">imgstep4_6=#{imgstep4_6} ,  </if>
+  <if test="imgstep4_7!=null and imgstep4_7!=''">imgstep4_7=#{imgstep4_7} ,  </if>
+  <if test="imgstep4_9!=null and imgstep4_9!=''">imgstep4_9=#{imgstep4_9} ,  </if>
+  <if test="imgstep4_10!=null and imgstep4_10!=''">imgstep4_10 =#{imgstep4_10} , </if>
+  <if test="imgstep4_11!=null and imgstep4_11!=''">imgstep4_11=#{imgstep4_11} ,  </if>
+  <if test="imgstep5_1s!=null and imgstep5_1s!=''">imgstep5_1s=#{imgstep5_1s} ,  </if>
+  <if test="imgstep5_2s!=null and imgstep5_2s!=''">imgstep5_2s=#{imgstep5_2s},   </if>
+  <if test="imgstep5_3s!=null and imgstep5_3s!=''">imgstep5_3s =#{imgstep5_3s},  </if>
+  <if test="imgstep5_4v!=null and imgstep5_4v!=''">imgstep5_4v =#{imgstep5_4v} , </if>
+  <if test="imgstep6_1!=null and imgstep6_1!=''">imgstep6_1 =#{imgstep6_1} , </if>
+  <if test="imgstep6_2!=null and imgstep6_2!=''">imgstep6_2 =#{imgstep6_2} , </if>
+  <if test="imgstep6_3!=null and imgstep6_3!=''">imgstep6_3 =#{imgstep6_3},  </if>
+  <if test="imgstep6_4!=null and imgstep6_4!=''">imgstep6_4 =#{imgstep6_4},  </if>
+  <if test="imgstep6_5s!=null and imgstep6_5s!=''" >imgstep6_5s =#{imgstep6_5s} , </if>
+  <if test="c_sex!=null and c_sex!=''">c_sex=#{c_sex},   </if>
+  <if test="zx_result!=null and zx_result!=''" >zx_result =#{zx_result},  </if>
+  <if test="dt_zxresult!=null and dt_zxresult!=''">dt_zxresult=#{dt_zxresult},   </if>
+  <if test="dt_zxsub!=null and dt_zxsub!=''">dt_zxsub=#{dt_zxsub},   </if>
+  <if test="api_edit!=null and api_edit!=''">api_edit=#{api_edit},   </if>
+  <if test="zxok_tag!=null and zxok_tag!=''">zxok_tag=#{zxok_tag},   </if>
+  <if test="dt_fin!=null and dt_fin!=''">dt_fin=#{dt_fin},   </if>
+  <if test="dt_backtofin!=null and dt_backtofin!=''">dt_backtofin=#{dt_backtofin}, </if> 
+  <if test="book_status!=null and book_status!=''">book_status=#{book_status}, </if>
+  <if test="card_status!=null and card_status!=''">card_status=#{card_status}, </if>
+  <if test="tr_status!=null and tr_status!=''">tr_status=#{tr_status}, </if>
+  <if test="tr_tag!=null and tr_tag!=''">tr_tag=#{tr_tag}, </if>
+  <if test="dsj_result!=null and dsj_result!=''">dsj_result=#{dsj_result}, </if>
+  <if test="dsj_report_id!=null and dsj_report_id!=''">dsj_report_id=#{dsj_report_id}, </if>
+  <if test="dsj_result_time!=null and dsj_result_time!=''">dsj_result_time=#{dsj_result_time}, </if>
+  <if test="c_name_mt!=null and c_name_mt!=''">c_name_mt=#{c_name_mt}, </if>
+  <if test="c_tel_mt!=null and c_tel_mt!=''">c_tel_mt=#{c_tel_mt}, </if>
+  <if test="c_cardno_mt!=null and c_cardno_mt!=''">c_cardno_mt=#{c_cardno_mt}, </if>
+  <if test="c_name_gj1!=null and c_name_gj1!=''">c_name_gj1=#{c_name_gj1}, </if>
+  <if test="c_name_gj2!=null and c_name_gj2!=''">c_name_gj2=#{c_name_gj2}, </if>
+  <if test="c_tel_gj1!=null and c_tel_gj1!=''">c_tel_gj1=#{c_tel_gj1}, </if>
+  <if test="c_tel_gj2!=null and c_tel_gj2!=''">c_tel_gj2=#{c_tel_gj2}, </if>
+  <if test="c_cardno_gj1!=null and c_cardno_gj1!=''">c_cardno_gj1=#{c_cardno_gj1}, </if>
+  <if test="c_cardno_gj2!=null and c_cardno_gj2!=''">c_cardno_gj2=#{c_cardno_gj2}, </if>
+  <if test="fk_status!=null and fk_status!=''">fk_status=#{fk_status}, </if>
+  <if test="fromid!=null and fromid!=''">fromid=#{fromid}, </if>
+  <if test="gems_id_first!=null and gems_id_first!=''">gems_id_first=#{gems_id_first}, </if>
+  <if test="po_zx_result!=null and po_zx_result!=''">po_zx_result=#{po_zx_result}, </if>
+  <if test="gjr_zx_result1!=null and gjr_zx_result1!=''">gjr_zx_result1=#{gjr_zx_result1}, </if>
+  <if test="gjr_zx_result2!=null and gjr_zx_result2!=''">gjr_zx_result2=#{gjr_zx_result2}, </if>
+  <if test="po_dsj_report_id!=null and po_dsj_report_id!=''">po_dsj_report_id=#{po_dsj_report_id}, </if>
+  <if test="gjr_dsj_report_id1!=null and gjr_dsj_report_id1!=''">gjr_dsj_report_id1=#{gjr_dsj_report_id1}, </if>
+  <if test="gjr_dsj_report_id2!=null and gjr_dsj_report_id2!=''">gjr_dsj_report_id2=#{gjr_dsj_report_id2}, </if>
+  </trim>
+  where id=#{id}
+ </update>
+  
+ <insert id="addicbc" parameterType="icbc" useGeneratedKeys="true"  keyProperty="id">
+ insert into kj_icbc(
+id,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+bc_status,
+gems_id,
+gems_fs_id,
+gems_code,
+query_type,
+c_name,
+c_tel,
+c_cardno,
+bank_id,
+loan_tpid,
+loan_level,
+c_name_mt,
+c_tel_mt,
+c_cardno_mt,
+kk_kpj,
+kk_loan_amount,
+kk_loan_amount_s,
+kk_loan_amount_total,
+kk_loan_ajms,
+kk_loan_ajqx,
+kk_loan_ajyh,
+kk_loan_rate,
+kk_car_stateid,
+kk_car_cityid,
+kk_loan_stateid,
+kk_loan_cityid,
+imgstep2_1,
+imgstep2_2,
+imgstep2_3,
+imgstep2_4,
+imgstep2_5,
+imgstep2_5s,
+c_sex,
+zx_result,
+dt_zxresult,
+dt_zxsub,
+zxok_tag,
+api_add,
+api_edit,
+querytype,
+dt_fin,
+adminop_tag,
+dt_backtofin,
+book_status,
+card_status,
+tr_status,
+tr_msg,
+tr_tag,
+dsj_result,
+dsj_report_id,
+dsj_result_time,
+c_name_gj1,
+c_name_gj2,
+c_tel_gj1,
+c_tel_gj2,
+c_cardno_gj1,
+c_cardno_gj2,
+dt_sub,
+fromid,
+fk_status,
+gems_id_first,
+zjlx,
+po_zx_result,
+gjr_zx_result1,
+gjr_zx_result2,
+po_dsj_report_id,
+gjr_dsj_report_id1,
+gjr_dsj_report_id2,
+imgstep8_1ss
+ )values(
+#{id},
+#{mid_add},
+#{mid_edit},
+#{dt_add},
+#{dt_edit},
+#{bc_status},
+#{gems_id},
+#{gems_fs_id},
+#{gems_code},
+#{query_type},
+#{c_name},
+#{c_tel},
+#{c_cardno},
+#{bank_id},
+#{loan_tpid},
+#{loan_level},
+#{c_name_mt},
+#{c_tel_mt},
+#{c_cardno_mt},
+#{kk_kpj},
+#{kk_loan_amount},
+#{kk_loan_amount_s},
+#{kk_loan_amount_total},
+#{kk_loan_ajms},
+#{kk_loan_ajqx},
+#{kk_loan_ajyh},
+#{kk_loan_rate},
+#{kk_car_stateid},
+#{kk_car_cityid},
+#{kk_loan_stateid},
+#{kk_loan_cityid},
+#{imgstep2_1},
+#{imgstep2_2},
+#{imgstep2_3},
+#{imgstep2_4},
+#{imgstep2_5},
+#{imgstep2_5s},
+#{c_sex},
+#{zx_result},
+#{dt_zxresult},
+#{dt_zxsub},
+#{zxok_tag},
+#{api_add},
+#{api_edit},
+#{querytype},
+#{dt_fin},
+#{adminop_tag},
+#{dt_backtofin},
+#{book_status},
+#{card_status},
+#{tr_status},
+#{tr_msg},
+#{tr_tag},
+#{dsj_result},
+#{dsj_report_id},
+#{dsj_result_time},
+#{c_name_gj1},
+#{c_name_gj2},
+#{c_tel_gj1},
+#{c_tel_gj2},
+#{c_cardno_gj1},
+#{c_cardno_gj2},
+#{dt_sub},
+#{fromid},
+#{fk_status},
+#{gems_id_first},
+#{zjlx},
+#{po_zx_result},
+#{gjr_zx_result1},
+#{gjr_zx_result2},
+#{po_dsj_report_id},
+#{gjr_dsj_report_id1},
+#{gjr_dsj_report_id2},
+#{imgstep8_1ss}
+
+ )
+ </insert>
+
+</mapper>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+   <mapper namespace="com.mapper.guazi.GuaziRecordsMapper" >
+   <!--  数据库字段 -->
+   <sql id="Base_Column_List" >
+    gzid, gz_vin, gz_apiuser_id, null, gz_addtime, gz_uptime, gz_start
+  </sql>
+  
+  <sql id="apiuser_Column_List">
+  	id, appkey, api_name, api_tel, api_card, api_companyname, api_companyaddress, api_uptime,
+  	api_addtime,api_money,api_type
+  </sql>
+ 
+    <insert id="insert" parameterType="com.model.guazi.GuaziRecords" >
+    insert into guazi_records (gzid, gz_vin, gz_apiuser_id, 
+      gz_message, gz_addtime, gz_uptime, 
+      gz_start)
+    values (#{gzid,jdbcType=INTEGER}, #{gzVin,jdbcType=VARCHAR}, #{gzApiuserId,jdbcType=INTEGER}, 
+      #{gzMessage,jdbcType=LONGVARCHAR}, #{gzAddtime,jdbcType=VARCHAR}, #{gzUptime,jdbcType=VARCHAR}, 
+      #{gzStart,jdbcType=INTEGER})
+  </insert>
+  
+    <sql id="apiuser_Where_Clause" >
+		 <if test="map != null" >
+			   <if test="map.conditionOne !=null and  map.conditionOne !=''">
+			   	  and  gz.gz_addtime <![CDATA[ >= ]]> #{map.timeFirst}  and  gz.gz_addtime <![CDATA[ <= ]]> #{map.timeLast}  
+			   </if>
+			   <if test="map.conditionThree !=null and map.conditionThree !=''">
+			   	  and gz.gz_vin like '%${map.conditionThree}%'
+			   </if>
+			   <if test="map.conditionFour !=null and map.conditionFour !='' and map.conditionFour != '0'.toString()">
+			   	 and  gz.gz_start=#{map.conditionFour}
+			   </if>
+			   <if test="map.conditionTwo !=null and map.conditionTwo !=''">
+			      and (jk.appKey like CONCAT('%','${map.conditionTwo}','%') or jk.api_name like CONCAT('%','${map.conditionTwo}','%'))
+			   </if>
+	  </if>
+	</sql>
+  
+  <!-- 分页双表联立，条件查询  count-->
+  <select id="OneToArrCountSelective" resultType="int" parameterType="com.util.Page">
+	  select count(*) from kj_jbzxapiuser jk,
+				 guazi_Records gz
+				 where   jk.id=gz.gz_apiuser_id
+  	  <include refid="apiuser_Where_Clause"></include>    
+  	  AND gz.gz_start = 2
+  </select>
+  
+  <select id="selectbyid" resultType="String" parameterType="String">
+  	 select gz_message from  guazi_records where gzid=#{gzid}
+  </select>
+  
+    <!-- 双表联立，条件查询-数据-->
+   <select id="OneToArr" parameterType="com.util.Page" resultMap="A">  
+    select 
+   	<include refid="Base_Column_List" />
+   	,
+   	<include refid="apiuser_Column_List"/>
+    from kj_jbzxapiuser jk,
+		 guazi_Records gz
+				 where   jk.id=gz.gz_apiuser_id
+			 <include refid="apiuser_Where_Clause"></include> AND gz.gz_start = 2
+			 limit #{offSet,jdbcType=INTEGER},#{pageSize} 
+   </select>
+     
+    <resultMap type="jbzxapiuser" id="A" >  
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="appkey" property="appkey" jdbcType="VARCHAR" />
+	    <result column="api_name" property="api_name" jdbcType="VARCHAR" />
+	    <result column="api_tel" property="api_tel" jdbcType="VARCHAR" />
+	    <result column="api_card" property="api_card" jdbcType="VARCHAR" />
+	    <result column="api_companyname" property="api_companyname" jdbcType="VARCHAR" />
+	    <result column="api_companyaddress" property="api_companyaddress" jdbcType="VARCHAR" />
+	    <result column="api_uptime" property="api_uptime" jdbcType="VARCHAR" />
+	    <result column="api_addtime" property="api_addtime" jdbcType="VARCHAR" />
+	    <result column="api_money" property="api_money" jdbcType="VARCHAR" />
+	 <!--    <result column="api_type" property="api_type" jdbcType="INTEGER" /> -->
+      	<!-- ofType指定struts集合中的对象类型   -->
+        <collection property="clist"  column="gz_apiuser_id" ofType="com.model.guazi.GuaziRecords"  >
+        	<id column="gzid" property="gzid" jdbcType="INTEGER" />
+		    <result column="gz_vin" property="gzVin" jdbcType="VARCHAR" />
+		    <result column="gz_apiuser_id" property="gzApiuserId" jdbcType="INTEGER" />
+		    <result column="gz_message" property="gzMessage" jdbcType="LONGVARCHAR" />
+		    <result column="gz_addtime" property="gzAddtime" jdbcType="VARCHAR" />
+		    <result column="gz_uptime" property="gzUptime" jdbcType="VARCHAR" />
+		    <result column="gz_start" property="gzStart" jdbcType="INTEGER" />
+        </collection>  
+    </resultMap>   
+</mapper>

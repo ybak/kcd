@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.ylqyMapper">
+
+		<select id="findylqybyname" parameterType="ylqy" resultType="ylqy">        
+        select * from yl_qy
+        where ACCOUNT_NAME=#{ACCOUNT_NAME}
+        </select>  
+              
+        <select id="findylqy" parameterType="ylqy" resultType="ylqy">       
+        select * from yl_qy       
+        </select>
+        
+       	<select id="ylqymap" parameterType="ylqy" resultType="ylqy">        
+        select * from yl_qy
+        where ACCOUNT_NAME=#{ACCOUNT_NAME} order by dt_edit desc limit 1
+        </select> 
+        
+        <select id="findylqybycardid" parameterType="ylqy" resultType="ylqy">        
+        select * from yl_qy where c_cardid=#{c_cardid}	group by c_cardid
+        </select>  
+        
+        
+</mapper>

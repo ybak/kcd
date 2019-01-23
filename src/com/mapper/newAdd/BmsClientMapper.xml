@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.newAdd.BmsClientMapper">
+    
+<!-- 登陆用户下(业务经历或者业务员)所看到的信息 -->
+<!-- 模糊查询(业务经理或业务员) -->    
+<select id="selectClientLikeManager"  resultType="Map" parameterType="BmsUser">
+select * from bms_cpyclient where ucid=#{0} and tname like #{1}
+</select>           
+    
+<!-- 查询登陆用户(业务经理或业务员)下的客户 -->
+<select id="selectLoginUserClient"  resultType="Map" parameterType="BmsUser">
+select * from bms_cpyclient where ucid=#{ucid}
+</select>    
+    
+
+<!-- 最大权限(主管)下看到的全部信息 -->    
+<!-- 修改某客户到管理员下面 -->
+<update id="updateClientToUserUp" parameterType="BmsCpyclient" >
+update bms_cpyclient set ucid=#{0} where tid=#{1}
+</update> 
+
+<!-- 模糊查询 -->    
+<select id="selectClientLike"  resultType="Map" parameterType="BmsUser">
+select * from bms_cpyclient where tname like #{0}
+</select>    
+
+<!-- 修改用户跟进情况 -->    
+<update id="updateClientInfo" parameterType="BmsCpyclient" >
+update bms_cpyclient set ta=#{0},tb=#{1},tc=#{2},td=#{3} where tid=#{4}
+</update>    
+    
+<!-- 修改用户  是否可用  -->
+<update id="updateClientStatus" parameterType="BmsCpyclient" >
+update bms_cpyclient set status=#{0} where tid=#{1}
+</update>
+    
+<!-- 删除用户 -->    
+<delete id="deleteClientByTid" parameterType="BmsCpyclient">
+delete from bms_cpyclient where tid=#{0}
+</delete>        
+    
+<!-- 查询单个用户的跟进情况  -->    
+<select id="selectOneClientByTid"  resultType="BmsCpyclient" parameterType="BmsCpyclient">
+select * from bms_cpyclient where tid=#{0}
+</select>    
+
+<!-- 查询所有客户 -->
+<select id="selectAllClient"  resultType="Map" parameterType="BmsCpyclient">
+select * from bms_cpyclient
+</select>
+
+
+<!-- 添加客户 开户 -->
+<insert id="addBMSClient"  parameterType="BmsCpyclient" keyProperty="tid">
+insert into bms_cpyclient(
+tid,
+tname,
+sex,
+tsumMany,
+cname,
+username,
+password,
+caddTime,
+cupdateTime,
+clientPhone,
+clientAddress,
+ta,
+tb,
+tc,
+td,
+te,
+tf,
+tg,
+th,
+ucid,
+ctid,
+infoId,
+status
+)values(
+#{tid},
+#{tname},
+#{sex},
+#{tsumMany},
+#{cname},
+#{username},
+#{password},
+#{caddTime},
+#{cupdateTime},
+#{clientPhone},
+#{clientAddress},
+#{ta},
+#{tb},
+#{tc},
+#{td},
+#{te},
+#{tf},
+#{tg},
+#{th},
+#{ucid},
+#{ctid},
+#{infoId},
+#{status}
+)
+</insert>
+
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.customerMapper">
+   <select id="keypeople" resultType="int">
+   select count(*) from kcd_customer where ckey=#{ckey}
+   
+   </select>
+   
+   <select id="ckymap1" parameterType="customer" resultType="Map">
+   select * from kcd_customer where ckey=#{ckey}
+   </select>
+  
+   <select id="login"  resultType="Map">   
+   select * from kcd_customer   
+   where 
+   account=#{0}
+   and
+   password=#{1}             
+   </select>
+   
+   <select id="findbycompany"  parameterType="customer"  resultType="customer">
+   
+   select * from kcd_customer where owencompany=#{owencompany}
+   
+   </select>
+   
+   <select id="findbylevel"  parameterType="customer"  resultType="customer">   
+    select * from kcd_customer where level &gt; #{0} and owencompany=#{1}  
+   </select>
+   
+   
+   <insert id="addperson" parameterType="customer" keyProperty="id">   
+   insert into kcd_customer
+   (
+   id,
+   name,
+   account,
+   password,
+   level,
+   owencompany,
+   login_time,
+   ckey
+   )values(
+   #{id},
+   #{name},
+   #{account},
+   #{password},
+   #{level},
+   #{owencompany},
+   #{login_time},
+   #{ckey}   
+   )         
+   </insert>
+
+
+
+</mapper>

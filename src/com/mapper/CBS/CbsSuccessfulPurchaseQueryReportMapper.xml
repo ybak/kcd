@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.CBS.CbsSuccessfulPurchaseQueryReportMapper" >
+  <resultMap id="BaseResultMap" type="com.model.CBS.CbsSuccessfulPurchaseQueryReport" >
+    <id column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="cbs_vin" property="cbsVin" jdbcType="VARCHAR" />
+    <result column="cbs_enginno" property="cbsEnginno" jdbcType="VARCHAR" />
+    <result column="cbs_licenseplate" property="cbsLicenseplate" jdbcType="VARCHAR" />
+    <result column="cbs_apiuser_id" property="cbsApiuserId" jdbcType="INTEGER" />
+    <result column="cbs_orderid" property="cbsOrderid" jdbcType="VARCHAR" />
+    <result column="cbs_message" property="cbsMessage" jdbcType="VARCHAR" />
+    <result column="cbs_addtime" property="cbsAddtime" jdbcType="TIMESTAMP" />
+    <result column="cbs_uptime" property="cbsUptime" jdbcType="TIMESTAMP" />
+    <result column="cbs_start" property="cbsStart" jdbcType="INTEGER" />
+    <result column="cbs_report_details" property="cbsReportDetails"  jdbcType="LONGVARCHAR"/>
+  </resultMap>
+  
+   <sql id="Base_Column_List" >
+    cid, cbs_vin, cbs_enginno, cbs_licenseplate, cbs_apiuser_id, cbs_orderid, cbs_message, 
+    cbs_addtime, cbs_uptime, cbs_start ,cbs_report_details
+  </sql>
+  
+  <sql id="apiuser_Column_List">
+  	id, appkey, api_name, api_tel, api_card, api_companyname, api_companyaddress, api_uptime,
+  	api_addtime,api_money,api_type
+  </sql>
+  
+    <sql id="apiuser_Where_Clause" >
+		 <if test="map != null" >
+			   <if test="map.conditionOne !=null and  map.conditionOne !=''">
+			   	  and  cs.cbs_addtime <![CDATA[ >= ]]> #{map.timeFirst}  and  cs.cbs_addtime <![CDATA[ <= ]]> #{map.timeLast}  
+			   </if>
+			   <if test="map.conditionThree !=null and map.conditionThree !=''">
+			   	  and cs.cbs_vin like '%${map.conditionThree}%'
+			   </if>
+			   <if test="map.conditionFour !=null and map.conditionFour !='' and map.conditionFour != '0'.toString()">
+			   	 and  cs.cbs_start=#{map.conditionFour}
+			   </if>
+			   <if test="map.conditionTwo !=null and map.conditionTwo !=''">
+			      and (jk.appKey like CONCAT('%','${map.conditionTwo}','%') or jk.api_name like CONCAT('%','${map.conditionTwo}','%'))
+			   </if>
+	  </if>
+</sql>
+  
+<!--   <select id="OneToArrCount" resultType="int">
+  	 select count(*) from kj_jbzxapiuser jk,
+			 cbs_successful_purchase_query_report cs
+			 where   jk.id=cs.cbs_apiuser_id
+  </select> -->
+  
+  <select id="OneToArrCountSelective" resultType="int" parameterType="com.util.Page">
+	  select count(*) from kj_jbzxapiuser jk,
+				 cbs_successful_purchase_query_report cs
+				 where   jk.id=cs.cbs_apiuser_id
+  	  <include refid="apiuser_Where_Clause"></include>    
+  </select>
+  
+
+  
+   <select id="OneToArr" parameterType="com.util.Page" resultMap="A">  
+   select 
+   	<include refid="Base_Column_List" />
+   	,
+   	<include refid="apiuser_Column_List"/>
+   from kj_jbzxapiuser jk,
+			 cbs_successful_purchase_query_report cs
+			 where   jk.id=cs.cbs_apiuser_id
+			 <include refid="apiuser_Where_Clause"></include>
+			 limit #{offSet,jdbcType=INTEGER},#{pageSize} 
+   </select>  
+    <resultMap type="jbzxapiuser" id="A" >  
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="appkey" property="appkey" jdbcType="VARCHAR" />
+	    <result column="api_name" property="api_name" jdbcType="VARCHAR" />
+	    <result column="api_tel" property="api_tel" jdbcType="VARCHAR" />
+	    <result column="api_card" property="api_card" jdbcType="VARCHAR" />
+	    <result column="api_companyname" property="api_companyname" jdbcType="VARCHAR" />
+	    <result column="api_companyaddress" property="api_companyaddress" jdbcType="VARCHAR" />
+	    <result column="api_uptime" property="api_uptime" jdbcType="VARCHAR" />
+	    <result column="api_addtime" property="api_addtime" jdbcType="VARCHAR" />
+	    <result column="api_money" property="api_money" jdbcType="VARCHAR" />
+	 <!--    <result column="api_type" property="api_type" jdbcType="INTEGER" /> -->
+      	<!-- ofType指定struts集合中的对象类型   -->
+        <collection property="clist"  column="cbs_apiuser_id" ofType="com.model.CBS.CbsSuccessfulPurchaseQueryReport"  >
+        	<id column="cid" property="cid" jdbcType="INTEGER" /> 
+         	<result column="cbs_apiuser_id" property="cbsApiuserId" jdbcType="INTEGER" /> 
+		    <result column="cbs_vin" property="cbsVin" jdbcType="VARCHAR" />
+		    <result column="cbs_start" property="cbsStart" jdbcType="INTEGER" />
+		    <result column="cbs_enginno" property="cbsEnginno" jdbcType="VARCHAR" />
+		    <result column="cbs_licenseplate" property="cbsLicenseplate" jdbcType="VARCHAR" />
+		    <result column="cbs_orderid" property="cbsOrderid" jdbcType="VARCHAR" />
+		    <result column="cbs_message" property="cbsMessage" jdbcType="VARCHAR" />
+		    <result column="cbs_addtime" property="cbsAddtime" jdbcType="TIMESTAMP" />
+		    <result column="cbs_uptime" property="cbsUptime" jdbcType="TIMESTAMP" />
+		    <result column="cbs_report_details" property="cbsReportDetails"  jdbcType="LONGVARCHAR"/>
+        </collection>  
+    </resultMap>   
+    
+    
+    
+ 
+   <update id="updateByOrderIdSelective" parameterType="com.model.CBS.CbsSuccessfulPurchaseQueryReport" >
+    update cbs_successful_purchase_query_report
+    <set >
+      <if test="cbsUptime != null" >
+        cbs_uptime = #{cbsUptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cbsStart != null" >
+        cbs_start = #{cbsStart,jdbcType=INTEGER},
+      </if>
+      <if test="cbsReportDetails != null" >
+        cbs_report_details = #{cbsReportDetails,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where  cbs_orderid= #{cbsOrderid,jdbcType=VARCHAR}
+  </update>
+  
+  <resultMap id="ResultMapWithBLOBs" type="com.model.CBS.CbsSuccessfulPurchaseQueryReport" extends="BaseResultMap" >
+    <result column="cbs_report_details" property="cbsReportDetails" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+ 
+  <sql id="Blob_Column_List" >
+    cbs_report_details
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.model.CBS.CbsSuccessfulPurchaseQueryReportExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cbs_successful_purchase_query_report
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultType="String" parameterType="com.model.CBS.CbsSuccessfulPurchaseQueryReportExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    cbs_report_details
+    from cbs_successful_purchase_query_report
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cbs_successful_purchase_query_report
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cbs_successful_purchase_query_report
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.model.CBS.CbsSuccessfulPurchaseQueryReportExample" >
+    delete from cbs_successful_purchase_query_report
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.model.CBS.CbsSuccessfulPurchaseQueryReport" >
+    insert into cbs_successful_purchase_query_report (cid, cbs_vin, cbs_enginno, 
+      cbs_licenseplate, cbs_apiuser_id, cbs_orderid, 
+      cbs_message, cbs_addtime, cbs_uptime, 
+      cbs_start, cbs_report_details)
+    values (#{cid,jdbcType=INTEGER}, #{cbsVin,jdbcType=VARCHAR}, #{cbsEnginno,jdbcType=VARCHAR}, 
+      #{cbsLicenseplate,jdbcType=VARCHAR}, #{cbsApiuserId,jdbcType=INTEGER}, #{cbsOrderid,jdbcType=VARCHAR}, 
+      #{cbsMessage,jdbcType=VARCHAR}, #{cbsAddtime,jdbcType=TIMESTAMP}, #{cbsUptime,jdbcType=TIMESTAMP}, 
+      #{cbsStart,jdbcType=INTEGER}, #{cbsReportDetails,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.model.CBS.CbsSuccessfulPurchaseQueryReport" >
+    insert into cbs_successful_purchase_query_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="cbsVin != null" >
+        cbs_vin,
+      </if>
+      <if test="cbsEnginno != null" >
+        cbs_enginno,
+      </if>
+      <if test="cbsLicenseplate != null" >
+        cbs_licenseplate,
+      </if>
+      <if test="cbsApiuserId != null" >
+        cbs_apiuser_id,
+      </if>
+      <if test="cbsOrderid != null" >
+        cbs_orderid,
+      </if>
+      <if test="cbsMessage != null" >
+        cbs_message,
+      </if>
+      <if test="cbsAddtime != null" >
+        cbs_addtime,
+      </if>
+      <if test="cbsUptime != null" >
+        cbs_uptime,
+      </if>
+      <if test="cbsStart != null" >
+        cbs_start,
+      </if>
+      <if test="cbsReportDetails != null" >
+        cbs_report_details,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="cbsVin != null" >
+        #{cbsVin,jdbcType=VARCHAR},
+      </if>
+      <if test="cbsEnginno != null" >
+        #{cbsEnginno,jdbcType=VARCHAR},
+      </if>
+      <if test="cbsLicenseplate != null" >
+        #{cbsLicenseplate,jdbcType=VARCHAR},
+      </if>
+      <if test="cbsApiuserId != null" >
+        #{cbsApiuserId,jdbcType=INTEGER},
+      </if>
+      <if test="cbsOrderid != null" >
+        #{cbsOrderid,jdbcType=VARCHAR},
+      </if>
+      <if test="cbsMessage != null" >
+        #{cbsMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="cbsAddtime != null" >
+        #{cbsAddtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cbsUptime != null" >
+        #{cbsUptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cbsStart != null" >
+        #{cbsStart,jdbcType=INTEGER},
+      </if>
+      <if test="cbsReportDetails != null" >
+        #{cbsReportDetails,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.model.CBS.CbsSuccessfulPurchaseQueryReportExample" resultType="java.lang.Integer" >
+    select count(*) from cbs_successful_purchase_query_report
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cbs_successful_purchase_query_report
+    <set >
+      <if test="record.cid != null" >
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cbsVin != null" >
+        cbs_vin = #{record.cbsVin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cbsEnginno != null" >
+        cbs_enginno = #{record.cbsEnginno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cbsLicenseplate != null" >
+        cbs_licenseplate = #{record.cbsLicenseplate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cbsApiuserId != null" >
+        cbs_apiuser_id = #{record.cbsApiuserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cbsOrderid != null" >
+        cbs_orderid = #{record.cbsOrderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cbsMessage != null" >
+        cbs_message = #{record.cbsMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cbsAddtime != null" >
+        cbs_addtime = #{record.cbsAddtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cbsUptime != null" >
+        cbs_uptime = #{record.cbsUptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cbsStart != null" >
+        cbs_start = #{record.cbsStart,jdbcType=INTEGER},
+      </if>
+      <if test="record.cbsReportDetails != null" >
+        cbs_report_details = #{record.cbsReportDetails,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update cbs_successful_purchase_query_report
+    set cid = #{record.cid,jdbcType=INTEGER},
+      cbs_vin = #{record.cbsVin,jdbcType=VARCHAR},
+      cbs_enginno = #{record.cbsEnginno,jdbcType=VARCHAR},
+      cbs_licenseplate = #{record.cbsLicenseplate,jdbcType=VARCHAR},
+      cbs_apiuser_id = #{record.cbsApiuserId,jdbcType=INTEGER},
+      cbs_orderid = #{record.cbsOrderid,jdbcType=VARCHAR},
+      cbs_message = #{record.cbsMessage,jdbcType=VARCHAR},
+      cbs_addtime = #{record.cbsAddtime,jdbcType=TIMESTAMP},
+      cbs_uptime = #{record.cbsUptime,jdbcType=TIMESTAMP},
+      cbs_start = #{record.cbsStart,jdbcType=INTEGER},
+      cbs_report_details = #{record.cbsReportDetails,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cbs_successful_purchase_query_report
+    set cid = #{record.cid,jdbcType=INTEGER},
+      cbs_vin = #{record.cbsVin,jdbcType=VARCHAR},
+      cbs_enginno = #{record.cbsEnginno,jdbcType=VARCHAR},
+      cbs_licenseplate = #{record.cbsLicenseplate,jdbcType=VARCHAR},
+      cbs_apiuser_id = #{record.cbsApiuserId,jdbcType=INTEGER},
+      cbs_orderid = #{record.cbsOrderid,jdbcType=VARCHAR},
+      cbs_message = #{record.cbsMessage,jdbcType=VARCHAR},
+      cbs_addtime = #{record.cbsAddtime,jdbcType=TIMESTAMP},
+      cbs_uptime = #{record.cbsUptime,jdbcType=TIMESTAMP},
+      cbs_start = #{record.cbsStart,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.CBS.CbsSuccessfulPurchaseQueryReport" >
+    update cbs_successful_purchase_query_report
+    <set >
+      <if test="cbsVin != null" >
+        cbs_vin = #{cbsVin,jdbcType=VARCHAR},
+      </if>
+      <if test="cbsEnginno != null" >
+        cbs_enginno = #{cbsEnginno,jdbcType=VARCHAR},
+      </if>
+      <if test="cbsLicenseplate != null" >
+        cbs_licenseplate = #{cbsLicenseplate,jdbcType=VARCHAR},
+      </if>
+      <if test="cbsApiuserId != null" >
+        cbs_apiuser_id = #{cbsApiuserId,jdbcType=INTEGER},
+      </if>
+      <if test="cbsOrderid != null" >
+        cbs_orderid = #{cbsOrderid,jdbcType=VARCHAR},
+      </if>
+      <if test="cbsMessage != null" >
+        cbs_message = #{cbsMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="cbsAddtime != null" >
+        cbs_addtime = #{cbsAddtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cbsUptime != null" >
+        cbs_uptime = #{cbsUptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cbsStart != null" >
+        cbs_start = #{cbsStart,jdbcType=INTEGER},
+      </if>
+      <if test="cbsReportDetails != null" >
+        cbs_report_details = #{cbsReportDetails,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.model.CBS.CbsSuccessfulPurchaseQueryReport" >
+    update cbs_successful_purchase_query_report
+    set cbs_vin = #{cbsVin,jdbcType=VARCHAR},
+      cbs_enginno = #{cbsEnginno,jdbcType=VARCHAR},
+      cbs_licenseplate = #{cbsLicenseplate,jdbcType=VARCHAR},
+      cbs_apiuser_id = #{cbsApiuserId,jdbcType=INTEGER},
+      cbs_orderid = #{cbsOrderid,jdbcType=VARCHAR},
+      cbs_message = #{cbsMessage,jdbcType=VARCHAR},
+      cbs_addtime = #{cbsAddtime,jdbcType=TIMESTAMP},
+      cbs_uptime = #{cbsUptime,jdbcType=TIMESTAMP},
+      cbs_start = #{cbsStart,jdbcType=INTEGER},
+      cbs_report_details = #{cbsReportDetails,jdbcType=LONGVARCHAR}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.model.CBS.CbsSuccessfulPurchaseQueryReport" >
+    update cbs_successful_purchase_query_report
+    set cbs_vin = #{cbsVin,jdbcType=VARCHAR},
+      cbs_enginno = #{cbsEnginno,jdbcType=VARCHAR},
+      cbs_licenseplate = #{cbsLicenseplate,jdbcType=VARCHAR},
+      cbs_apiuser_id = #{cbsApiuserId,jdbcType=INTEGER},
+      cbs_orderid = #{cbsOrderid,jdbcType=VARCHAR},
+      cbs_message = #{cbsMessage,jdbcType=VARCHAR},
+      cbs_addtime = #{cbsAddtime,jdbcType=TIMESTAMP},
+      cbs_uptime = #{cbsUptime,jdbcType=TIMESTAMP},
+      cbs_start = #{cbsStart,jdbcType=INTEGER}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper1.car.icbc_cars_resultMapper" >
+
+<select id="findassess_msg" parameterType="bclient_check" resultType="bclient_check">
+select * from assess_bclient_check where 
+status=#{status} and assessid=#{assessid} limit 1
+</select>
+
+<select id="findicbc_cars" parameterType="bclient_check" resultType="bclient_check">
+select * from assess_bclient_check where 
+assessid=#{assessid}
+</select>
+
+<select id="lastfindicbc_cars" parameterType="bclient_check" resultType="bclient_check">
+select * from assess_bclient_check where 
+assessid=#{assessid} order by dt_add desc limit 1
+</select>
+
+<insert id="addbclient_check"  parameterType="bclient_check" useGeneratedKeys="true"  keyProperty="id">
+insert into assess_bclient_check(
+id,
+assessid,
+status,
+dt_add,
+dt_edit,
+mid_add,
+del_tag,
+mid_edit,
+remark
+)values(
+#{id},
+#{assessid},
+#{status},
+#{dt_add},
+#{dt_edit},
+#{mid_add},
+#{del_tag},
+#{mid_edit},
+#{remark}
+)
+
+</insert>
+
+</mapper>

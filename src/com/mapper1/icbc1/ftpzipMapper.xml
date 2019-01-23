@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper1.icbc1.ftpzipMapper" >
+
+
+<select id="findftpzipbyzip_name" parameterType="ftpzip" resultType="ftpzip">
+select * from kjs_ftpzip where zip_name=#{zip_name}
+</select>
+
+<select id="findftpzipbyicbc_id" parameterType="ftpzip" resultType="ftpzip">
+select * from kjs_ftpzip where icbc_id=#{icbc_id}
+</select>
+
+<update id="upftpzip" parameterType="ftpzip">
+update kjs_ftpzip
+<trim prefix="set" suffixOverrides=","> 
+<if test="zip_name!=null and zip_name!=''">zip_name=#{zip_name},</if>
+<if test="zip_path!=null and zip_path!=''">zip_path=#{zip_path},</if>
+<if test="zip_tag!=null and zip_tag!=''">zip_tag=#{zip_tag},</if>
+<if test="icbc_id!=null and icbc_id!=''">icbc_id=#{icbc_id},</if>
+<if test="dt_add!=null and dt_add!=''">dt_add=#{dt_add},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="gems_id!=null and gems_id!=''">gems_id=#{gems_id},</if>
+<if test="gems_fs_id!=null and gems_fs_id!=''">gems_fs_id=#{gems_fs_id},</if>
+<if test="mid_add!=null and mid_add!=''">mid_add=#{mid_add},</if>
+<if test="mid_edit!=null and mid_edit!=''">mid_edit=#{mid_edit},</if>
+</trim>
+where id=#{id}
+</update>
+
+<insert id="addftpzip" parameterType="ftpzip" useGeneratedKeys="true"  keyProperty="id">
+insert into kjs_ftpzip(
+id,
+zip_name,
+zip_path,
+zip_tag,
+icbc_id,
+dt_add,
+dt_edit,
+gems_id,
+gems_fs_id,
+mid_add,
+mid_edit
+)values(
+#{id},
+#{zip_name},
+#{zip_path},
+#{zip_tag},
+#{icbc_id},
+#{dt_add},
+#{dt_edit},
+#{gems_id},
+#{gems_fs_id},
+#{mid_add},
+#{mid_edit}
+)
+
+</insert>
+
+
+
+
+
+
+</mapper>

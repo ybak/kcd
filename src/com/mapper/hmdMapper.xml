@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.hmdMapper">
+
+<select id="hmdlist" resultType="hmd">
+select * from kcd_hmd
+</select>
+
+
+<insert id="addhmd" parameterType="hmd" keyProperty="id">
+insert into kcd_hmd 
+(
+id,
+lx,
+name,
+phonenum,
+idcard,
+khid,
+addtime,
+uptime
+)values(
+#{id},
+#{lx},
+#{name},
+#{phonenum},
+#{idcard},
+#{khid},
+#{addtime},
+#{uptime}
+)
+
+</insert>
+
+
+
+
+
+
+</mapper>

@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.erp_icbc.erp_userrootMapper">
+
+
+<insert id="save" parameterType="pd" useGeneratedKeys="true" keyProperty="id" >
+
+<if test="dn=='assess_gems'" >
+insert into assess_gems
+<trim prefix="(" suffix=")" suffixOverrides=",">
+<if test="id != null and id!=''">id,</if>
+<if test="name != null">name,</if>
+<if test="fsid != null">fsid,</if>
+<if test="mem_id != null">mem_id,</if>
+<if test="create_time != null">create_time,</if>
+<if test="update_time != null">update_time,</if>
+<if test="showtag != null">showtag,</if>
+<if test="mobile != null">mobile,</if>
+cp,
+<if test="fs_type != null">fs_type,</if>
+<if test="bc_numtotal != null">bc_numtotal,</if>
+<if test="username != null">username,</if>
+<if test="aid != null">aid,</if>
+<if test="purview_map != null">purview_map,</if>
+<if test="dt_add != null">dt_add,</if>
+<if test="dt_edit != null">dt_edit,</if>
+<if test="api_tag != null">api_tag,</if>
+<if test="idcard != null">idcard,</if>
+<if test="moneycan_tag != null">moneycan_tag,</if>
+<if test="upac_id != null">upac_id,</if>
+<if test="deltag != null">deltag,</if>
+<if test="aid_ssm != null">aid_ssm,</if>
+<if test="imgurl != null">imgurl,</if>
+<if test="hometag != null">hometag,</if>
+<if test="appkey != null">appkey,</if>
+<if test="imgstep1_1 != null">imgstep1_1,</if>
+<if test="zx_result != null">zx_result,</if>
+<if test="imgstep2_1 != null">imgstep2_1,</if>
+<if test="imgstep3_1 != null">imgstep3_1,</if>
+<if test="imgstep4_1 != null">imgstep4_1,</if>
+<if test="icbc_id != null">icbc_id,</if>
+<if test="ssbm != null and ssbm!=''">ssbm,</if>
+</trim>
+values
+<trim prefix="(" suffix=")" suffixOverrides=",">
+<if test="id != null and id!=''">#{id},</if>
+<if test="name != null">#{name},</if>
+<if test="fsid != null">#{fsid},</if>
+<if test="mem_id != null">#{mem_id},</if>
+<if test="create_time != null">#{create_time},</if>
+<if test="update_time != null">#{update_time},</if>
+<if test="showtag != null">#{showtag},</if>
+<if test="mobile != null">#{mobile},</if>
+#{cp},
+<if test="fs_type != null">#{fs_type},</if>
+<if test="bc_numtotal != null">#{bc_numtotal},</if>
+<if test="username != null">#{username},</if>
+<if test="aid != null">#{aid},</if>
+<if test="purview_map != null">#{purview_map},</if>
+<if test="dt_add != null">#{dt_add},</if>
+<if test="dt_edit != null">#{dt_edit},</if>
+<if test="api_tag != null">#{api_tag},</if>
+<if test="idcard != null">#{idcard},</if>
+<if test="moneycan_tag != null">#{moneycan_tag},</if>
+<if test="upac_id != null">#{upac_id},</if>
+<if test="deltag != null">#{deltag},</if>
+<if test="aid_ssm != null">#{aid_ssm},</if>
+<if test="imgurl != null">#{imgurl},</if>
+<if test="hometag != null">#{hometag},</if>
+<if test="appkey != null">#{appkey},</if>
+<if test="imgstep1_1 != null">#{imgstep1_1},</if>
+<if test="zx_result != null">#{zx_result},</if>
+<if test="imgstep2_1 != null">#{imgstep2_1},</if>
+<if test="imgstep3_1 != null">#{imgstep3_1},</if>
+<if test="imgstep4_1 != null">#{imgstep4_1},</if>
+<if test="icbc_id != null">#{icbc_id},</if>
+<if test="ssbm != null and ssbm!=''">#{ssbm},</if>
+</trim>
+</if>
+
+<!-- 加盟店 fs -->
+<if test="dn=='assess_fs'" >
+insert into assess_fs
+<trim prefix="(" suffix=")" suffixOverrides=",">
+<if test="id != null and id!=''">id,</if>
+<if test="name != null">name,</if>
+<if test="state_id != null">state_id,</if>
+<if test="city_id != null">city_id,</if>
+<if test="zone_id != null">zone_id,</if>
+<if test="address != null">address,</if>
+<if test="create_time != null">create_time,</if>
+<if test="update_time != null">update_time,</if>
+<if test="showtag != null">showtag,</if>
+<if test="code_pre != null">code_pre,</if>
+<if test="fs_type != null">fs_type,</if>
+<if test="oem != null">oem,</if>
+<if test="oemimgurl != null">oemimgurl,</if>
+<if test="rec_id != null">rec_id,</if>
+<if test="support != null">support,</if>
+<if test="sup_tel != null">sup_tel,</if>
+<if test="namepy != null">namepy,</if>
+<if test="apptitle != null">apptitle,</if>
+<if test="url_apk != null">url_apk,</if>
+<if test="dt_add != null">dt_add,</if>
+<if test="dt_edit != null">dt_edit,</if>
+<if test="purview_map != null">purview_map,</if>
+<if test="mid_add != null">mid_add,</if>
+<if test="mid_edit != null">mid_edit,</if>
+<if test="appid != null">appid,</if>
+<if test="appkey != null">appkey,</if>
+<if test="ip != null">ip,</if>
+<if test="url_ios != null">url_ios,</if>
+<if test="zx_mbg != null">zx_mbg,</if>
+<if test="mg_tag != null">mg_tag,</if>
+<if test="name_qy != null">name_qy,</if>
+<if test="deltag != null">deltag,</if>
+<if test="books_id != null">books_id,</if>
+<if test="ssm_gj_nowtype != null">ssm_gj_nowtype,</if>
+<if test="ssm_id != null">ssm_id,</if>
+<if test="super_queryarchives_tag != null">super_queryarchives_tag,</if>
+<if test="purview_map_kjs != null">purview_map_kjs,</if>
+<if test="mgicbc_tag != null">mgicbc_tag,</if>
+<if test="up_id != null and up_id!=''">up_id,</if>
+<if test="icbc_erp_tag!= null and icbc_erp_tag!=''">icbc_erp_tag,</if>
+</trim>
+values
+<trim prefix="(" suffix=")" suffixOverrides=",">
+<if test="id != null and id!=''">#{id},</if>
+<if test="name != null">#{name},</if>
+<if test="state_id != null">#{state_id},</if>
+<if test="city_id != null">#{city_id},</if>
+<if test="zone_id != null">#{zone_id},</if>
+<if test="address != null">#{address},</if>
+<if test="create_time != null">#{create_time},</if>
+<if test="update_time != null">#{update_time},</if>
+<if test="showtag != null">#{showtag},</if>
+<if test="code_pre != null">#{code_pre},</if>
+<if test="fs_type != null">#{fs_type},</if>
+<if test="oem != null">#{oem},</if>
+<if test="oemimgurl != null">#{oemimgurl},</if>
+<if test="rec_id != null">#{rec_id},</if>
+<if test="support != null">#{support},</if>
+<if test="sup_tel != null">#{sup_tel},</if>
+<if test="namepy != null">#{namepy},</if>
+<if test="apptitle != null">#{apptitle},</if>
+<if test="url_apk != null">#{url_apk},</if>
+<if test="dt_add != null">#{dt_add},</if>
+<if test="dt_edit != null">#{dt_edit},</if>
+<if test="purview_map != null">#{purview_mapv},</if>
+<if test="mid_add != null">#{mid_add},</if>
+<if test="mid_edit != null">#{mid_edit},</if>
+<if test="appid != null">#{appid},</if>
+<if test="appkey != null">#{appkey},</if>
+<if test="ip != null">#{ip},</if>
+<if test="url_ios != null">#{url_ios},</if>
+<if test="zx_mbg != null">#{zx_mbg},</if>
+<if test="mg_tag != null">#{mg_tag},</if>
+<if test="name_qy != null">#{name_qy},</if>
+<if test="deltag != null">#{deltag},</if>
+<if test="books_id != null">#{books_id},</if>
+<if test="ssm_gj_nowtype != null">#{ssm_gj_nowtype},</if>
+<if test="ssm_id != null">#{ssm_id},</if>
+<if test="super_queryarchives_tag != null">#{super_queryarchives_tag},</if>
+<if test="purview_map_kjs != null">#{purview_map_kjs},</if>
+<if test="mgicbc_tag != null">#{mgicbc_tag},</if>
+<if test="up_id != null and up_id!=''">#{up_id},</if>
+<if test="icbc_erp_tag!= null and icbc_erp_tag!=''">#{icbc_erp_tag},</if>
+</trim>
+</if>
+
+<if test="dn=='assess_admin'">
+insert into assess_admin
+<trim prefix="(" suffix=")" suffixOverrides=",">
+<if test="id != null and id!=''">id,</if>
+<if test="mid_add != null">mid_add,</if>
+<if test="mid_edit != null">mid_edit,</if>
+<if test="dt_add != null">dt_add,</if>
+<if test="dt_edit != null">dt_edit,</if>
+<if test="deltag != null">deltag,</if>
+<if test="isadmin != null">isadmin,</if>
+<if test="issupplier != null">issupplier,</if>
+<if test="showtag != null">showtag,</if>
+<if test="username != null">username,</if>
+<if test="userpass != null">userpass,</if>
+<if test="tel != null">tel,</if>
+<if test="email != null">email,</if>
+<if test="name != null">name,</if>
+<if test="sex != null">sex,</if>
+<if test="logindt != null">logindt,</if>
+<if test="logincode != null">logincode,</if>
+<if test="limit_list != null">limit_list,</if>
+<if test="imgurl != null">imgurl,</if>
+<if test="stateid != null">stateid,</if>
+<if test="cityid != null">cityid,</if>
+<if test="eeid != null">eeid,</if>
+<if test="note != null">note,</if>
+<if test="wx_openid != null">wx_openid,</if>
+<if test="gemsid != null">gemsid,</if>
+<if test="bc_title != null">bc_title,</if>
+<if test="fs_type != null">fs_type,</if>
+<if test="jgid != null">jgid,</if>
+agpid,
+<if test="loginip != null">loginip,</if>
+<if test="ssm_id != null">ssm_id,</if>
+<if test="icbc_erp_tag != null">icbc_erp_tag,</if>
+<if test="icbc_erp_fsid != null">icbc_erp_fsid,</if>
+<if test="upac_id!= null and upac_id!=''">upac_id,</if>
+cp,
+erp_agpid,
+</trim>
+values
+<trim prefix="(" suffix=")" suffixOverrides=",">
+<if test="id != null and id!=''">#{id},</if>
+<if test="mid_add != null">#{mid_add},</if>
+<if test="mid_edit != null">#{mid_edit},</if>
+<if test="dt_add != null">#{dt_add},</if>
+<if test="dt_edit != null">#{dt_edit},</if>
+<if test="deltag != null">#{deltag},</if>
+<if test="isadmin != null">#{isadmin},</if>
+<if test="issupplier != null">#{issupplier},</if>
+<if test="showtag != null">#{showtag},</if>
+<if test="username != null">#{username},</if>
+<if test="userpass != null">#{userpass},</if>
+<if test="tel != null">#{tel},</if>
+<if test="email != null">#{email},</if>
+<if test="name != null">#{name},</if>
+<if test="sex != null">#{sex},</if>
+<if test="logindt != null">#{logindt},</if>
+<if test="logincode != null">#{logincode},</if>
+<if test="limit_list != null">#{limit_list},</if>
+<if test="imgurl != null">#{imgurl},</if>
+<if test="stateid != null">#{stateid},</if>
+<if test="cityid != null">#{cityid},</if>
+<if test="eeid != null">#{eeid},</if>
+<if test="note != null">#{note},</if>
+<if test="wx_openid != null">#{wx_openid},</if>
+<if test="gemsid != null">#{gemsid},</if>
+<if test="bc_title != null">#{bc_title},</if>
+<if test="fs_type != null">#{fs_type},</if>
+<if test="jgid != null">#{jgid},</if>
+#{agpid},
+<if test="loginip != null">#{loginip},</if>
+<if test="ssm_id != null">#{ssm_id},</if>
+<if test="icbc_erp_tag != null">#{icbc_erp_tag},</if>
+<if test="icbc_erp_fsid != null">#{icbc_erp_fsid},</if>
+<if test="upac_id!= null and upac_id!=''">#{upac_id},</if>
+#{cp},
+#{erp_agpid},
+</trim>
+</if>
+<if test="dn=='icbc_erp_admin_agp'">
+insert into icbc_erp_admin_agp
+<trim prefix="(" suffix=")" suffixOverrides=",">
+<if test="id != null and id!=''">id,</if>
+<if test="name != null">name,</if>
+<if test="dt_add != null">dt_add,</if>
+<if test="purview_map != null">purview_map,</if>
+showtag,
+<if test="mid_add != null">mid_add,</if>
+<if test="gems_fs_id != null">gems_fs_id,</if>
+<if test="mid_edit != null">mid_edit,</if>
+<if test="dt_edit != null">dt_edit,</if>
+modal_tag,
+<if test="qx_type != null">qx_type,</if>
+</trim>
+values
+<trim prefix="(" suffix=")" suffixOverrides=",">
+<if test="id != null and id!=''">#{id},</if>
+<if test="name != null">#{name},</if>
+<if test="dt_add != null">#{dt_add},</if>
+<if test="purview_map != null">#{purview_map},</if>
+#{showtag},
+<if test="mid_add != null">#{mid_add},</if>
+<if test="gems_fs_id != null">#{gems_fs_id},</if>
+<if test="mid_edit != null">#{mid_edit},</if>
+<if test="dt_edit != null">#{dt_edit},</if>
+#{modal_tag},
+<if test="qx_type != null">#{qx_type},</if>
+</trim>
+
+</if>
+<if test="dn=='skins'">
+insert into erp_icbc_skins(
+id,skins_name,admin_id
+)values(
+#{id},#{skins_name},#{admin_id}
+)
+</if>
+
+</insert>
+<!-- 多个查询  -->
+<select id="findtolist"  parameterType="pd" resultType="pd">
+
+<!-- 根据等级查询 gems账户名字 -->
+<if test="dn=='assess_gems_cp'">
+select  * from assess_gems where cp=#{cp} and fsid=#{fsid} and id!=#{id} 
+and deltag=0 and fs_type=2 and showtag=1
+</if>
+
+
+<if test="dn=='zx'">
+select icbc.*,
+fs.name as fsname,
+gems.name as gemsname
+from kj_icbc icbc
+LEFT JOIN assess_fs fs on fs.id=icbc.gems_fs_id
+LEFT JOIN assess_gems gems on gems.id=icbc.gems_id
+</if> 
+     
+<if test="dn=='assess_admin'">
+select * from assess_admin where fs_type=2 and icbc_erp_tag>0 and fs.deltag=0
+</if> 
+     
+     
+<if test="dn=='assess_gems'">
+
+<if test="cn=='4001'">
+select * from
+(select 
+admin.*,
+t3.name as fsname,
+gems.cp as gemscp,
+gems.imgurl as gemsimgurl,
+gems.ssbm as gemsssbm,
+t3.up_id as fs_up_id,
+fs1.name as up_name,
+gems.mobile as mobile
+ from (
+              select t1.*,
+              if(find_in_set(up_id, @pids) > 0, @pids := concat(@pids, ',', id), 0) as ischild
+              from (
+                   select * from assess_fs fs where fs.fs_type=2 and fs.deltag=0 order by fs.up_id,fs.id
+                  ) t1,
+              (select @pids :=#{fsid} ) t2
+) t3 
+LEFT JOIN assess_admin admin ON t3.id=admin.icbc_erp_fsid
+LEFT JOIN assess_gems gems ON gems.id=admin.gemsid
+LEFT JOIN assess_fs fs1 ON fs1.id=t3.up_id
+where (admin.id and t3.ischild != 0) or t3.id=#{fsid} 
+order by admin.dt_edit desc) t4
+where t4.deltag=0
+<if test="assess_fs_msg!=null and assess_fs_msg!=''">
+and (
+t4.name like concat('%',#{assess_fs_msg},'%')
+or t4.tel like concat('%',#{assess_fs_msg},'%')
+or t4.username like concat('%',#{assess_fs_msg},'%')
+)
+</if>
+<if test="assess_ssgs!=null and assess_ssgs!=''">
+and t4.fsname like concat('%',#{assess_ssgs},'%')
+</if>
+<if test="assess_ssjg!=null and assess_ssjg!=''">
+and t4.up_name like concat('%',#{assess_ssjg},'%')
+</if>
+<if test="assess_cp!=null and assess_cp!=''">
+and t4.gemscp=#{assess_cp}
+</if>
+<if test="date1!=null and date1!=''">
+ and t4.dt_add &gt;= #{date1}
+ </if>
+ <if test="date2!=null and date2!=''">
+ and t4.dt_add &lt;= #{date2}
+ </if>
+</if>
+<if test="cn=='4002'">
+select 
+g.cp as gemscp,
+g.mobile as mobile,
+f.name as fsname,
+admin.*
+from 
+assess_admin admin 
+LEFT JOIN assess_gems g on g.id=admin.gemsid
+LEFT JOIN assess_fs f on f.id=admin.icbc_erp_fsid
+where admin.deltag=0 and admin.fs_type=2 and  admin.icbc_erp_fsid=#{fsid} 
+</if>
+</if> 
+
+     
+<!-- 验证公司名称 -->
+<if test="dn=='assess_fs_name'">
+select * from assess_fs where name like concat('%',#{name},'%')
+</if>
+
+<!-- 公司管理 1 -->
+<if test="dn=='assess_fs_ssss'">
+select fs.*,
+admin.name as adminname,
+(select count(*) from assess_admin where icbc_erp_fsid=fs.id) as num
+from assess_fs fs
+LEFT JOIN assess_admin admin ON admin.id=fs.mid_add 
+where fs.fs_type=2 and fs.mgicbc_tag>0 and fs.deltag=0
+<if test="mid_add!=null and mid_add!=''">
+and fs.mid_add=#{mid_add}
+</if>
+</if>
+<!--公司管理2  -->
+<if test="dn=='assess_fs'">
+select t4.* from (select t3.*,
+admin.name as adminname,
+f1.name as fsname,
+(select count(*) from assess_admin where icbc_erp_fsid=t3.id and deltag=0 and fs_type=2) as num
+ from (
+              select t1.*,
+              if(find_in_set(up_id, @pids) > 0, @pids := concat(@pids, ',', id), 0) as ischild
+              from (
+                   select * from assess_fs fs where fs.fs_type=2 and fs.deltag=0 order by fs.up_id,fs.id
+                  ) t1,
+              (select @pids :=#{fsid} ) t2
+) t3 
+LEFT JOIN assess_admin admin ON admin.id=t3.mid_add
+LEFT JOIN assess_fs f1 ON admin.icbc_erp_fsid=f1.id
+where t3.ischild != 0 or t3.id=#{fsid} 
+order by t3.dt_edit desc
+) t4
+where 1=1 
+<if test="assess_fs_id!=null and assess_fs_id!=''">
+and t4.id=#{assess_fs_id}
+</if>
+<if test="assess_fs_msg!=null and assess_fs_msg!=''">
+and (
+   t4.fsname like concat('%',#{assess_fs_msg},'%')
+or t4.adminname like concat('%',#{assess_fs_msg},'%')
+)
+</if>
+<if test="date1!=null and date1!=''">
+ and t4.dt_add &gt;= #{date1}
+ </if>
+ <if test="date2!=null and date2!=''">
+ and t4.dt_add &lt;= #{date2}
+ </if>
+</if>  
+     
+<if test="dn=='icbc_erp_admin_agp'">
+select 
+agp.*
+<!-- (select GROUP_CONCAT(a.name) from assess_admin a where a.fs_type=2  and a.deltag=0 and a.agpid=agp.id) as namelist -->
+from icbc_erp_admin_agp agp 
+where 
+(agp.gems_fs_id=0
+or
+agp.gems_fs_id=#{fsid}) 
+<if test="showtag!=null and showtag!=''">
+and agp.showtag=#{showtag}
+</if>
+<if test="qx_type!=null and qx_type!=''">
+and agp.qx_type=#{qx_type}
+</if>
+<if test="modal_tag!=null and modal_tag!=''">
+and agp.modal_tag=#{modal_tag}
+</if>
+<if test="assess_fs_msg!=null and assess_fs_msg!=''">
+and agp.name like concat('%',#{assess_fs_msg},'%')
+</if>
+<if test="date1!=null and date1!=''">
+ and agp.dt_add &gt;= #{date1}
+ </if>
+ <if test="date2!=null and date2!=''">
+ and agp.dt_add &lt;= #{date2}
+ </if>
+<!-- group by agp.id -->
+order by agp.dt_edit desc
+</if>
+     
+     
+</select>
+
+<!-- 单个查询id  -->
+<select id="findbyid" parameterType="pd" resultType="pd">
+    
+<if test="dn=='assess_fs'">
+select *,
+det.id as fs_details_id
+from assess_fs fs
+LEFT JOIN assess_fs_details det ON det.fs_id=fs.id
+where fs.id=#{id}
+</if>
+<if test="dn=='skins'">
+select * from erp_icbc_skins where admin_id=#{admin_id}
+</if>
+
+<if test="dn=='assess_gems'">
+select admin.*,
+gems.name as gemsname,
+gems.mobile as mobile,
+gems.cp as gemscp,
+gems.imgurl as gemsimgurl,
+gems.ssbm as gemsssbm,
+fs.name as fsname,
+gems.idcard as idcard,
+fs.id as fsid 
+from assess_admin admin
+LEFT JOIN assess_gems gems ON gems.id=admin.gemsid
+LEFT JOIN assess_fs fs ON fs.id=admin.icbc_erp_fsid
+where admin.id=#{id}
+</if>
+<!-- 权限组查询 -->
+<if test="dn=='icbc_erp_admin_agp'">
+select * from icbc_erp_admin_agp where id=#{id} 
+</if>
+     
+<!--登录验证  -->  
+<if test="dn=='login'">
+select admin.*,
+fs.icbc_erp_tag as erp_tag,
+fs.name as fsname,
+agp.purview_map as purview_map,
+skins.skins_name as skins_name,
+admin.gemsid as gems_id,
+gems.imgurl as gems_imgurl,
+gems.ssbm as gems_ssbm,
+fs.id as fs_id,
+agp.modal_tag as modal_tag,
+agp.qx_type as qx_type,
+fs_ds.zy_bank as fs_zy_bank
+from assess_admin admin
+LEFT JOIN assess_fs fs ON fs.id=admin.icbc_erp_fsid
+LEFT JOIN assess_gems gems ON gems.id=admin.gemsid
+LEFT JOIN icbc_erp_admin_agp agp ON agp.id=admin.erp_agpid
+LEFT JOIN erp_icbc_skins skins ON skins.admin_id=admin.id
+LEFT JOIN assess_fs_details fs_ds ON fs_ds.fs_id=admin.icbc_erp_fsid
+where admin.username=#{username} and admin.userpass=#{password}
+and admin.fs_type=2 
+and admin.showtag=1 
+and admin.deltag=0  
+and admin.icbc_erp_tag=1 
+and fs.showtag=1 
+and fs.deltag=0  
+limit 1
+</if>
+<!-- 验证用户名是否可用 -->
+<if test="dn=='signusername'">
+select * from assess_admin where username=#{username} limit 1
+</if>
+
+</select>
+
+<!-- 删除通过id  -->
+<delete id="deletebyid" parameterType="pd" >
+     
+     <if test="dn=='assess_fs'">
+     delete from assess_fs where id=#{id}
+     </if>
+     <if test="dn=='icbc_erp_admin_agp'">
+     delete from icbc_erp_admin_agp where id=#{id}
+     </if>
+     
+</delete>
+
+<update id="updatebyid" parameterType="pd">
+<!-- 更新公司 -->
+<if test="dn=='assess_fs'">
+update assess_fs
+<trim prefix="set" suffixOverrides=",">
+<if test="name!=null and name!=''">name=#{name},</if>
+<if test="name_qy!=null and name_qy!=''">name_qy=#{name_qy},</if>
+showtag=#{showtag},
+<if test="state_id!=null and state_id!=''">state_id=#{state_id},</if>
+<if test="city_id!=null and city_id!=''">city_id=#{city_id},</if>
+<if test="address!=null and address!=''">address=#{address},</if>
+<if test="code_pre!=null and code_pre!=''">code_pre=#{code_pre},</if>
+<if test="namepy!=null and namepy!=''">namepy=#{namepy},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="mid_edit!=null and mid_edit!=''">mid_edit=#{mid_edit},</if>
+icbc_erp_tag=#{icbc_erp_tag},
+</trim>
+where id=#{id}
+</if>
+
+<if test="dn=='user_del'">
+update ${dbname} set deltag=#{deltag} where id=#{id}
+</if>
+
+<if test="dn=='user_pb'">
+update ${dbname} set showtag=#{showtag} where id=#{id}
+</if>
+
+<if test="dn=='assess_gems'">
+update assess_gems
+<trim prefix="set" suffixOverrides=",">
+<if test="fsid!=null and fsid!=''">fsid=#{fsid},</if>
+<if test="name!=null and name!=''">name=#{name},</if>
+<if test="mobile!=null and mobile!=''">mobile=#{mobile},</if>
+<if test="update_time!=null and update_time!=''">update_time=#{update_time},</if>
+cp=#{cp},
+<if test="username!=null and username!=''">username=#{username},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="idcard!=null and idcard!=''">idcard=#{idcard},</if>
+<if test="upac_id!=null and upac_id!=''">upac_id=#{upac_id},</if>
+<if test="imgurl!=null and imgurl!=''">imgurl=#{imgurl},</if>
+<if test="ssbm!=null and ssbm!=''">ssbm=#{ssbm},</if>
+</trim>
+where id=#{id}
+</if>
+<if test="dn=='assess_admin'">
+update assess_admin  
+<trim prefix="set" suffixOverrides=",">
+<if test="mid_edit!=null and dt_edit!=''">mid_edit=#{mid_edit},</if> 
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="username!=null and username!=''">username=#{username},</if>
+<if test="userpass!=null and userpass!=''">userpass=#{userpass},</if>
+<if test="tel!=null and tel!=''">tel=#{tel},</if>
+<if test="email!=null and email!=''">email=#{email},</if>
+<if test="name!=null and name!=''">name=#{name},</if>
+agpid=#{agpid},
+<if test="icbc_erp_fsid!=null and icbc_erp_fsid!=''">icbc_erp_fsid=#{icbc_erp_fsid},</if>
+<if test="bc_title!=null and bc_title!=''">bc_title=#{bc_title},</if>
+<if test="upac_id!=null and upac_id!=''">upac_id=#{upac_id},</if>
+cp=#{cp},
+erp_agpid=#{erp_agpid},
+</trim>
+where id=#{id}
+</if>
+<!-- 编辑权限组  -->
+<if test="dn=='icbc_erp_admin_agp'">
+update icbc_erp_admin_agp  
+<trim prefix="set" suffixOverrides=",">
+<if test="name!=null and name!=''">name=#{name},</if> 
+<if test="purview_map!=null and purview_map!=''">purview_map=#{purview_map},</if>
+<if test="mid_edit!=null and mid_edit!=''">mid_edit=#{mid_edit},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if> 	
+<if test="showtag!=null and showtag!=''">showtag=#{showtag},</if> 
+modal_tag=#{modal_tag},
+gems_fs_id=#{gems_fs_id},
+<if test="qx_type!=null and qx_type!=''">qx_type=#{qx_type},</if>
+</trim>
+where id=#{id}
+</if>
+
+<if test="dn=='skins'">
+update erp_icbc_skins
+set skins_name=#{skins_name} where id=#{id}
+</if>
+
+</update>
+
+
+</mapper>

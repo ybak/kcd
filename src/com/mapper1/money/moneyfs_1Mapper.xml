@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.money.moneyfs_1Mapper">
+<insert id="addmoneyfs_1" parameterType="moneyfs_1" useGeneratedKeys="true"  keyProperty="id">
+insert into moneyfs_1(
+id,
+mid,
+fsid,
+gemsid,
+amount,
+dt_add,
+dt_edit,
+remark,
+moneyid,
+status,
+bintype,
+fctype
+)values(
+#{id},
+#{mid},
+#{fsid},
+#{gemsid},
+#{amount},
+#{dt_add},
+#{dt_edit},
+#{remark},
+#{moneyid},
+#{status},
+#{bintype},
+#{fctype}
+)
+</insert>
+
+<insert id="addmoneyfs_2" parameterType="moneyfs_1" useGeneratedKeys="true"  keyProperty="id">
+insert into moneyfs_2(
+id,
+mid,
+fsid,
+gemsid,
+amount,
+dt_add,
+dt_edit,
+remark,
+moneyid,
+status,
+bintype,
+bc_type,
+orderid,
+type
+)values(
+#{id},
+#{mid},
+#{fsid},
+#{gemsid},
+#{amount},
+#{dt_add},
+#{dt_edit},
+#{remark},
+#{moneyid},
+#{status},
+#{bintype},
+#{bc_type},
+#{orderid},
+#{type}
+)
+</insert>
+</mapper>

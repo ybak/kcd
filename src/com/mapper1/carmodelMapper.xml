@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.carmodelMapper">
+
+	    <select id="findcarmodelbyid" parameterType="carmodel" resultType="carmodel">
+        select * from car_model
+        where id=#{id} limit
+        </select>
+        <select id="modelmap" parameterType="carmodel" resultType="carmodel">
+        select * from car_model
+        where id=#{id} limit 1
+        </select>
+         
+        <select id="findcarbyid" parameterType="carmodel" resultType="carmodel">
+        select * from car_model where id=#{id}
+        </select>
+        
+        <select id="findcarmodel" parameterType="carmodel" resultType="carmodel">
+        select * from car_model        
+        </select>
+        
+ </mapper>

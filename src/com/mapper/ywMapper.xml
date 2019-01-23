@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.ywMapper">
+
+<select id="fywlist" resultType="yw" parameterType="yw">
+select * from kcd_yw
+
+
+</select>
+<insert id="saveyw" parameterType="yw" keyProperty="id">
+
+insert into kcd_yw(
+   id,
+   sname,
+   czr,
+   czrdj,
+   czrssmd,
+   czzt,
+   orderid,
+   sxkd,
+   cztime
+   )values(
+   #{id},
+   #{sname},
+   #{czr},
+   #{czrdj},
+   #{czrssmd},
+   #{czzt},
+   #{orderid},
+   #{sxkd},
+   #{cztime}
+   )
+
+
+</insert>
+
+</mapper>

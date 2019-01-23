@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.icbc1.icbc_mq_resultMapper">
+
+<select id="findicbc_mq_result" parameterType="icbc_mq_result" resultType="icbc_mq_result">
+select * from kjs_icbc_mq_result where qryid=#{qryid}
+</select>
+<select id="lasticbc_mq_result" parameterType="icbc_mq_result" resultType="icbc_mq_result">
+select * from kjs_icbc_mq_result where qryid=#{qryid} order by dt_add desc limit 1
+</select>
+<insert id="addmq_result" parameterType="icbc_mq_result" useGeneratedKeys="true"  keyProperty="id">
+insert into kjs_icbc_mq_result
+(
+id,
+qryid,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+status,
+remark
+)values(
+#{id},
+#{qryid},
+#{mid_add},
+#{mid_edit},
+#{dt_add},
+#{dt_edit},
+#{status},
+#{remark}
+
+)
+</insert>
+
+</mapper>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.imgMapper">
+ <select id="fimg" parameterType="img" resultType="Map">
+ select * from kcd_img where uid=#{uid}
+ </select>
+ 
+ 
+ <update id="upimg" parameterType="img">
+ update kcd_img 
+  <trim prefix="set" suffixOverrides=",">
+  <if test="imgpath!=null">imgpath=#{imgpath},</if>
+  
+  <if test="frontimg!=null">frontimg=#{frontimg},</if>
+
+  <if test="oppositeimg!=null">oppositeimg=#{oppositeimg},</if>
+
+  <if test="applyimg!=null">applyimg=#{applyimg},</if>
+
+  <if test="authorizeimg!=null">authorizeimg=#{authorizeimg},</if>
+
+  <if test="hzimg!=null">hzimg=#{hzimg},</if>
+  
+  <if test="cjfront!=null">cjfront=#{cjfront},</if>
+  
+  <if test="cjopposite!=null">cjopposite=#{cjopposite},</if>
+
+  <if test="cjapply!=null">cjapply=#{cjapply},</if>
+
+  <if test="cjauthorize!=null">cjauthorize=#{cjauthorize},</if>
+
+  <if test="cjhz!=null">cjhz=#{cjhz},</if>
+
+  <if test="uptime!=null">uptime=#{uptime},</if>
+  
+  <if test="httppath!=null">httppath=#{httppath},</if>
+  
+
+  </trim>
+  where uid=#{uid}
+ </update>
+
+
+<insert id="addimg" parameterType="img" keyProperty="imgid" >
+insert into kcd_img(
+ imgid,
+ imgpath,
+ frontimg,
+ oppositeimg,
+ applyimg,
+ authorizeimg,
+ hzimg,
+ uid,
+ addtime,
+ httppath,
+ uptime 
+)values(
+#{imgid},
+#{imgpath},
+#{frontimg},
+#{oppositeimg},
+#{applyimg},
+#{authorizeimg},
+#{hzimg},
+#{uid},
+#{addtime},
+#{httppath},
+#{uptime}
+)
+</insert>
+
+</mapper>

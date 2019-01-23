@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.newAdd.CarBrandMapper">
+    
+<!-- 查询汽车详细品牌 -->    
+<select id="selectAllCarBrand" parameterType="CarBrand" resultType="CarBrand">
+select 
+	*
+from 
+	car_brand
+</select>   
+   
+   
+   
+</mapper>

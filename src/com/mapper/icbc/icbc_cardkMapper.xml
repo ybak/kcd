@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.icbc.icbc_cardkMapper" >
+
+<select id="findicbc_cardk" parameterType="icbc_cardk" resultType="icbc_cardk">
+select * from kjs_icbc_cardk where icbc_id=#{icbc_id} 
+</select>
+
+<update id="upicbc_cardk" parameterType="icbc_cardk">
+update kjs_icbc_cardk
+<trim prefix="set" suffixOverrides=","> 
+<if test="img_1!=null and img_1!=''">img_1=#{img_1},</if>
+<if test="img_2!=null and img_2!=''">img_2=#{img_2},</if>
+<if test="img_3!=null and img_3!=''">img_3=#{img_3},</if>
+<if test="img_4!=null and img_4!=''">img_4=#{img_4},</if>
+<if test="img_5!=null and img_5!=''">img_5=#{img_5},</if>
+<if test="img_6!=null and img_6!=''">img_6=#{img_6},</if>
+<if test="img_7!=null and img_7!=''">img_7=#{img_7},</if>
+<if test="img_8!=null and img_8!=''">img_8=#{img_8},</if>
+<if test="img_9!=null and img_9!=''">img_9=#{img_9},</if>
+<if test="img_10!=null and img_10!=''">img_10=#{img_10},</if>
+<if test="img_1s!=null and img_1s!=''">img_1s=#{img_1s},</if>
+<if test="img_2s!=null and img_2s!=''">img_2s=#{img_2s},</if>
+<if test="img_3s!=null and img_3s!=''">img_3s=#{img_3s},</if>
+<if test="img_1v!=null and img_1v!=''">img_1v=#{img_1v},</if>
+<if test="img_11!=null and img_11!=''">img_11=#{img_11},</if>
+<if test="img_12!=null and img_12!=''">img_12=#{img_12},</if>
+<if test="img_13!=null and img_13!=''">img_13=#{img_13},</if>
+<if test="img_14!=null and img_14!=''">img_14=#{img_14},</if>
+<if test="img_4s!=null and img_4s!=''">img_4s=#{img_4s},</if>
+<if test="up_time!=null and up_time!=''">up_time=#{up_time},</if>
+<if test="result!=null and result!=''">result=#{result},</if>
+<if test="result_time!=null and result_time!=''">result_time=#{result_time},</if>
+<if test="api_edit!=null and api_edit!=''">api_edit=#{api_edit},</if>
+<if test="bc_status!=null and bc_status!=''">bc_status=#{bc_status},</if>
+<if test="gems_code!=null and gems_code!=''">gems_code=#{gems_code},</if>
+<if test="query_type!=null and query_type!=''">query_type=#{query_type},</if>
+<if test="dt_fin!=null and dt_fin!=''">dt_fin=#{dt_fin},</if>
+<if test="dt_sub!=null and dt_sub!=''">dt_sub=#{dt_sub},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="dt_add!=null and dt_add!=''">dt_add=#{dt_add},</if>
+<if test="mid_edit!=null and mid_edit!=''">mid_edit=#{mid_edit},</if>
+<if test="mid_add!=null and mid_add!=''">mid_add=#{mid_add},</if>
+<if test="dt_fin!=null and dt_fin!=''">dt_fin=#{dt_fin},</if>
+<if test="dt_sub!=null and dt_sub!=''">dt_sub=#{dt_sub},</if>
+</trim>
+where id=#{id}
+</update>
+
+<insert id="addicbc_cardk" parameterType="icbc_cardk" useGeneratedKeys="true"  keyProperty="id">
+insert into kjs_icbc_cardk(
+id,
+img_1,
+img_2,
+img_3,
+img_4,
+img_5,
+img_6,
+img_7,
+img_8,
+img_9,
+img_10,
+img_1s,
+img_2s,
+img_3s,
+img_1v,
+img_11,
+img_12,
+img_13,
+img_14,
+img_4s,
+add_time,
+up_time,
+icbc_id,
+result,
+result_time,
+api_add,
+api_edit,
+bc_status,
+gems_code,
+query_type,
+dt_fin,
+dt_sub,
+dt_edit,
+dt_add,
+mid_edit,
+mid_add,
+gems_fs_id,
+gems_id
+)values(
+#{id},
+#{img_1},
+#{img_2},
+#{img_3},
+#{img_4},
+#{img_5},
+#{img_6},
+#{img_7},
+#{img_8},
+#{img_9},
+#{img_10},
+#{img_1s},
+#{img_2s},
+#{img_3s},
+#{img_1v},
+#{img_11},
+#{img_12},
+#{img_13},
+#{img_14},
+#{img_4s},
+#{add_time},
+#{up_time},
+#{icbc_id},
+#{result},
+#{result_time},
+#{api_add},
+#{api_edit},
+#{bc_status},
+#{gems_code},
+#{query_type},
+#{dt_fin},
+#{dt_sub},
+#{dt_edit},
+#{dt_add},
+#{mid_edit},
+#{mid_add},
+#{gems_fs_id},
+#{gems_id}
+)
+</insert>
+</mapper>

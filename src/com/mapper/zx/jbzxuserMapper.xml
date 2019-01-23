@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.zx.jbzxuserMapper">
+<select id="findjbzxuser" parameterType="jbzxuser" resultType="jbzxuser">
+select* from kj_jbzxuser where loginname=#{loginname}
+</select>
+
+<insert id="addjbzxuser" useGeneratedKeys="true" parameterType="jbzxuser" keyProperty="id">
+insert into kj_jbzxuser
+(
+id,
+name,
+tel,
+cardno,
+loginname,
+addtime,
+uptime
+)values(
+#{id},
+#{name},
+#{tel},
+#{cardno},
+#{loginname},
+#{addtime},
+#{uptime}
+)
+</insert>
+
+</mapper>

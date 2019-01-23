@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.authorizeMapper">
+
+   <select id="fauthorize" resultType="authorize" parameterType="authorize">
+	   select * from kcd_authorize where aid=#{aid}
+   </select>
+   
+   <update id="upaid" parameterType="authorize">
+       update kcd_authorize set aid=#{aid} where authorize_id=#{authorize_id}
+   </update>
+
+</mapper>

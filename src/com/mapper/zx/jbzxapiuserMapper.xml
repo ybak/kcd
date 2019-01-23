@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.zx.jbzxapiuserMapper">
+
+<select id="apiuserlist" parameterType="jbzxapiuser" resultType="jbzxapiuser">
+select * from kj_jbzxapiuser
+</select>
+
+<select id="findapiuserbyid" parameterType="jbzxapiuser" resultType="jbzxapiuser">
+select * from kj_jbzxapiuser where id=#{id}
+</select>
+
+<select id="findapiuserbyappkey" parameterType="jbzxapiuser" resultType="jbzxapiuser">
+select * from kj_jbzxapiuser where appkey=#{appkey}
+</select>
+<update id="upmoney" parameterType="jbzxapiuser">
+update 
+kj_jbzxapiuser 
+set
+api_money=#{api_money},
+api_uptime=#{api_uptime}
+where 
+id=#{id}
+</update>
+<update id="upjbzxapiuser" parameterType="jbzxapiuser">
+update kj_jbzxapiuser 
+<trim prefix="set" suffixOverrides=",">
+<if test="api_name!=null and api_name!=''">api_name=#{api_name},</if>
+<if test="api_tel!=null and api_tel!=''">api_tel=#{api_tel},</if>
+<if test="api_card!=null and api_card!=''">api_card=#{api_card},</if>
+<if test="api_companyname!=null and api_companyname!=''">api_companyname=#{api_companyname},</if>
+<if test="api_companyaddress!=null and api_companyaddress!=''">api_companyaddress=#{api_companyaddress},</if>
+<if test="api_uptime!=null and api_uptime!=''">api_type=#{api_type},</if>
+<if test="api_uptime!=null and api_uptime!=''">api_uptime=#{api_uptime},</if>
+<if test="api_money!=null and api_money!=''">api_money=#{api_money},</if>
+</trim>
+where id=#{id}
+</update>
+<insert id="addapiuser"  parameterType="jbzxapiuser" keyProperty="id">
+insert into kj_jbzxapiuser
+(
+id,
+appkey,
+api_name,
+api_tel,
+api_card,
+api_companyname,
+api_companyaddress,
+api_uptime,
+api_addtime,
+api_money,
+api_type
+)values(
+#{id},
+#{appkey},
+#{api_name},
+#{api_tel},
+#{api_card},
+#{api_companyname},
+#{api_companyaddress},
+#{api_uptime},
+#{api_addtime},
+#{api_money},
+#{api_type}
+)
+</insert>
+
+
+</mapper>

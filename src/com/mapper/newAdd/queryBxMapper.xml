@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.newAdd.queryBxMapper">
+    
+<!-- 查询总数 --> 
+<select id="BxCounts" resultType="int" parameterType="int">
+select count(*) from assess_querybx where assess_querybx.appkey
+</select>    
+    
+<!-- hzj  assess_querybx-->    
+<select id="showBxAndKey" parameterType="Map" resultType="Map">    
+select 
+	*
+from
+	assess_querybx aq,kj_jbzxapiuser kj
+where 
+	aq.appkey=kj.appkey 
+order by aq.dt_add desc
+limit #{0},#{1}
+</select>  
+    
+<!-- hzj 得到主键 -->
+<select id="getNewId" parameterType="int" resultType="int">    
+select 
+	auto_increment 
+from 
+	information_schema.`TABLES` 
+where 
+	table_name=#{0}   and TABLE_SCHEMA=#{1}   
+</select>
+    
+<select id="findbxbyc_name" parameterType="bx" resultType="bx">
+   	select * from assess_querybx
+    where c_carno=#{c_carno}
+</select>
+        
+<select id="findbx" parameterType="bx" resultType="bx">
+	select * from assess_querybx
+</select>
+        
+<!-- hzj 添加数据 -->
+<insert id="addBX"  parameterType="bx"  keyProperty="bx">
+insert into assess_querybx(
+id,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+imgurl,
+bc_status,
+query_type,
+gems_id,
+gems_fs_id,
+gems_code,
+c_carvin,
+c_carfdjh,
+c_carno,
+c_cardno,
+result_imgurl1,
+result_imgurl2,
+result_imgurl3,
+result_imgurl4,
+result_imgurl5,
+result_imgurl6,
+result_imgurl7,
+result_imgurl8,
+result_imgurl9,
+result_imgurl10,
+result_imgurl11,
+result_imgurl12,
+result_imgurl13,
+result_imgurl14,
+result_imgurl15,
+result_imgurl16,
+result_imgurl17,
+result_imgurl18,
+result_imgurl19,
+result_imgurl20,
+result_imgurl21,
+result_imgurl22,
+result_imgurl23,
+result_imgurl24,
+result_imgurl25,
+result_imgurl26,
+result_imgurl27,
+result_imgurl28,
+result_imgurl29,
+result_imgurl30,
+api_result,
+api_msg,
+api_code,
+appkey
+)values(
+#{id},
+#{mid_add},
+#{mid_edit},
+#{dt_add},
+#{dt_edit},
+#{imgurl},
+#{bc_status},
+#{query_type},
+#{gems_id},
+#{gems_fs_id},
+#{gems_code},
+#{c_carvin},
+#{c_carfdjh},
+#{c_carno},
+#{c_cardno},
+#{result_imgurl1},
+#{result_imgurl2},
+#{result_imgurl3},
+#{result_imgurl4},
+#{result_imgurl5},
+#{result_imgurl6},
+#{result_imgurl7},
+#{result_imgurl8},
+#{result_imgurl9},
+#{result_imgurl10},
+#{result_imgurl11},
+#{result_imgurl12},
+#{result_imgurl13},
+#{result_imgurl14},
+#{result_imgurl15},
+#{result_imgurl16},
+#{result_imgurl17},
+#{result_imgurl18},
+#{result_imgurl19},
+#{result_imgurl20},
+#{result_imgurl21},
+#{result_imgurl22},
+#{result_imgurl23},
+#{result_imgurl24},
+#{result_imgurl25},
+#{result_imgurl26},
+#{result_imgurl27},
+#{result_imgurl28},
+#{result_imgurl29},
+#{result_imgurl30},
+#{api_result},
+#{api_msg},
+#{api_code},
+#{appkey}
+)
+</insert>       
+        
+</mapper>

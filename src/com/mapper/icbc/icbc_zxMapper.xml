@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.icbc.icbc_zxMapper" >
+
+<select id="findicbc_zx" parameterType="icbc_zx" resultType="icbc_zx">
+select * from kjs_icbc_zx where gems_code=#{gems_code}
+</select>
+<select id="findicbc" parameterType="icbc_zx" resultType="icbc_zx">
+select * from kjs_icbc_zx where 1=1 
+<if test="bc_status!null and bc_status!=''">and bc_status=#{bc_status}
+</if> 
+</select>
+
+<update id="upicbc_zxorder" parameterType="icbc_zx">
+update kjs_icbc_zx
+<trim prefix="set" suffixOverrides=","> 
+<if test="c_name!=null and c_name!=''">c_name=#{c_name},</if>
+<if test="c_cardno!=null and c_cardno!=''">c_cardno=#{c_cardno},</if>
+<if test="c_del!=null and c_del!=''">c_del=#{c_del},</if>
+<if test="sex!=null and sex!=''">sex=#{sex},</if>
+<if test="icbc_ajbank_id!=null and icbc_ajbank_id!=''">icbc_ajbank_id=#{icbc_ajbank_id},</if>
+<if test="dk_produce_id!=null and dk_produce_id!=''">dk_produce_id=#{dk_produce_id},</if>
+<if test="yw_id!=null and yw_id!=''">yw_id=#{yw_id},</if>
+<if test="po_name!=null and po_name!=''">po_name=#{po_name},</if>
+<if test="po_cardno!=null and po_cardno!=''">po_cardno=#{po_cardno},</if>
+<if test="po_phoneno!=null and po_phoneno!=''">po_phoneno=#{po_phoneno},</if>
+<if test="g_name1!=null and g_name1!=''">g_name1=#{g_name1},</if>
+<if test="g_cardno1!=null and g_cardno1!=''">g_cardno1=#{g_cardno1},</if>
+<if test="g_phoneno1!=null and g_phoneno1!=''">g_phoneno1=#{g_phoneno1},</if>
+<if test="g_name2!=null and g_name2!=''">g_name2=#{g_name2},</if>
+<if test="g_cardno2!=null and g_cardno2!=''">g_cardno2=#{g_cardno2},</if>
+<if test="g_phoneno2!=null and g_phoneno2!=''">g_phoneno2=#{g_phoneno2},</if>
+<if test="img_1!=null and img_1!=''">img_1=#{img_1},</if>
+<if test="img_2!=null and img_2!=''">img_2=#{img_2},</if>
+<if test="img_3!=null and img_3!=''">img_3=#{img_3},</if>
+<if test="img_4!=null and img_4!=''">img_4=#{img_4},</if>
+<if test="img_1s!=null and img_1s!=''">img_1s=#{img_1s},</if>
+<if test="bc_status!=null and bc_status!=''">bc_status=#{bc_status},</if>
+<if test="zx_result!=null and zx_result!=''">zx_result=#{zx_result},</if>
+<if test="up_dt!=null and up_dt!=''">up_dt=#{up_dt},</if>
+<if test="result_dt!=null and result_dt!=''">result_dt=#{result_dt},</if>
+<if test="md_edit!=null and md_edit!=''">md_edit=#{md_edit},</if>
+<if test="api_edit!=null and api_edit!=''">api_edit=#{api_edit},</if>
+<if test="sh_edit!=null and sh_edit!=''">sh_edit=#{sh_edit},</if>
+<if test="mid_edit!=null and mid_edit!=''">mid_edit=#{mid_edit},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="dt_sub!=null and dt_sub!=''">dt_sub=#{dt_sub},</if>
+<if test="dt_fin!=null and dt_fin!=''">dt_fin=#{dt_fin},</if>
+<if test="gems_code!=null and gems_code!=''">gems_code=#{gems_code},</if>
+<if test="query_type!=null and query_type!=''">query_type=#{query_type},</if>
+</trim>
+where id=#{id}
+</update>
+
+<insert id="addicbc_zx" parameterType="icbc_zx" useGeneratedKeys="true"  keyProperty="id">
+insert into kjs_icbc_zx(
+id,
+c_name,
+c_cardno,
+c_del,
+sex,
+icbc_ajbank_id,
+dk_produce_id,
+yw_id,
+po_name,
+po_cardno,
+po_phoneno,
+g_name1,
+g_cardno1,
+g_phoneno1,
+g_name2,
+g_cardno2,
+g_phoneno2,
+img_1,
+img_2,
+img_3,
+img_4,
+img_1s,
+bc_status,
+zx_result,
+add_dt,
+up_dt,
+result_dt,
+md_add,
+md_edit,
+api_add,
+api_edit,
+sh_edit,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+dt_sub,
+dt_fin,
+gems_code,
+query_type
+
+)values(
+#{id},
+#{c_name},
+#{c_cardno},
+#{c_del},
+#{sex},
+#{icbc_ajbank_id},
+#{dk_produce_id},
+#{yw_id},
+#{po_name},
+#{po_cardno},
+#{po_phoneno},
+#{g_name1},
+#{g_cardno1},
+#{g_phoneno1},
+#{g_name2},
+#{g_cardno2},
+#{g_phoneno2},
+#{img_1},
+#{img_2},
+#{img_3},
+#{img_4},
+#{img_1s},
+#{bc_status},
+#{zx_result},
+#{add_dt},
+#{up_dt},
+#{result_dt},
+#{md_add},
+#{md_edit},
+#{api_add},
+#{api_edit},
+#{sh_edit},
+#{mid_add},
+#{mid_edit},
+#{dt_add},
+#{dt_edit},
+#{dt_sub},
+#{dt_fin},
+#{gems_code},
+#{query_type}
+)
+</insert>
+
+</mapper>

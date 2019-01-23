@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.newAdd.TestKJSmgcarMapper">
+    
+<!-- 查询 "操作" -->
+<select id="TestKJSselectCaoZuo" parameterType="mgcar" resultType="mgcar">
+select 
+	*
+from 
+	assess_mgcar am,assess_fs af,assess_gems ag 
+where 
+	am.gems_fs_id=af.id and am.gems_id=ag.id and am.id=#{0}
+</select>       
+    
+<!-- 查询modelTwo -->   
+<select id="TestKJSselectModelTwoByMomeny" parameterType="mgcar" resultType="ylqy">
+select * from yl_qy where id=#{0}   
+</select> 
+<select id="TestKJSselectModelTwo" parameterType="mgcar" resultType="ylds">
+select 
+	*
+from 
+	yl_ds
+where 
+	qryid=#{0} order by yy_dt asc
+</select>     
+    
+<!-- 查询 modelOne -->    
+<select id="TestKJSselectModelOne" parameterType="mgcar" resultType="ylqy">
+select 
+	*
+from 
+	yl_qy
+where 
+	c_cardid=#{0}
+</select>  
+   
+<!-- 查询全部的数据 -->  
+<select id="TestKJSselectAll" parameterType="mgcar" resultType="Map">
+select 
+	am.dt_edit,am.c_cardno,am.id,am.c_name,af.name,ag.name namee
+from 
+	assess_mgcar am,assess_fs af,assess_gems ag 
+where 
+	am.c_cardno
+	and am.gems_fs_id=af.id and am.gems_id=ag.id and am.bc_status=#{0} limit #{1},#{2} 
+</select>   
+
+<!-- 查询个数 -->
+<select id="TestKJSselectAllCounts" parameterType="mgcar" resultType="int">
+select 
+	count(*)
+from 
+	assess_mgcar am,assess_fs af,assess_gems ag 
+where 
+	am.gems_fs_id=af.id and am.gems_id=ag.id 
+</select>   
+
+</mapper>

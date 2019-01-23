@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.userMapper">
+
+   <select id="userfind" resultType="user" parameterType="user">
+   select * from kcd_user
+   </select>
+   <select id="finduserbyid" resultType="Map" parameterType="user">
+   select * from kcd_user where uid=#{uid}
+   </select>
+
+   <select id="finduser" resultType="Map">
+   select * from kcd_user where username=#{0} and password=#{1}          
+   </select>
+  
+   <select id="finduser1" resultType="Map">
+   select * from kcd_user where username=#{username}       
+   </select>
+   
+   <insert id="adduser" parameterType="user"  useGeneratedKeys="true" keyProperty="uid" >
+    insert into kcd_user
+    (
+    uid,
+    username,
+    password,
+    idcard,
+    phonenum,
+    qx,
+    email,
+    addtime,
+    id
+    )values(
+    #{uid},
+    #{username},
+    #{password},
+    #{idcard},
+    #{phonenum},
+    #{qx},
+    #{email},
+    #{addtime},
+    #{id}
+    )      
+   </insert>
+
+
+
+</mapper>

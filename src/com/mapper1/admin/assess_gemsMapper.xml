@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.admin.assess_gemsMapper">
+
+<select id="getgemslist" parameterType="java.util.HashMap"  resultType="java.util.HashMap">
+select gems.*,fs.name as fsname from 
+assess_gems gems 
+LEFT JOIN  assess_fs fs on fs.id=gems.fsid
+where 1=1 
+and (gems.`name`!='' or gems.`name`!=null)
+<if test="time1!=null and time1!=''">
+ and gems.dt_add &gt;= #{time1}
+</if>
+<if test="time2!=null and time2!=''">
+ and gems.dt_add &lt;= #{time2}
+</if>
+<if test="keyword!=null and keyword!=''">
+ and  (gems.username like concat('%',#{keyword},'%')
+   or gems.mobile like concat('%',#{keyword},'%')
+   or fs.name like concat('%',#{keyword},'%')
+   or gems.name like concat('%',#{keyword},'%')
+ )
+</if>
+<if test="gems_fs_id!=null and gems_fs_id!=''">
+ and gems.fsid =#{gems_fs_id} 
+</if>
+ORDER BY gems.dt_add DESC
+</select>
+
+
+<select id="getgemslist1" parameterType="java.util.HashMap"  resultType="java.util.HashMap">
+select gems.*,fs.name as fsname from 
+assess_gems gems 
+LEFT JOIN  assess_fs fs on fs.id=gems.fsid
+where 1=1 
+and (gems.`name`!='' or gems.`name`!=null)
+ORDER BY gems.dt_add DESC
+</select>
+
+
+<select id="getgemsmap"  parameterType="java.util.HashMap" resultType="java.util.HashMap">
+select gems.*,fs.name as fsname,admin.* from 
+assess_gems gems 
+LEFT JOIN  assess_fs fs on fs.id=gems.fsid
+LEFT JOIN  assess_admin admin on admin.id=gems.mem_id
+where gems.id=#{id}
+</select>
+
+
+<select id="getgemsmapbyicbc_id"  parameterType="java.util.HashMap" resultType="java.util.HashMap">
+select gems.*,fs.name as fsname,admin.* from 
+assess_gems gems 
+LEFT JOIN  assess_fs fs on fs.id=gems.fsid
+LEFT JOIN  assess_admin admin on admin.id=gems.mem_id
+where gems.icbc_id=#{icbc_id}
+</select>
+
+<select id="getgemsmapbyfsid"  parameterType="java.util.HashMap" resultType="java.util.HashMap">
+select gems.* from 
+assess_gems gems 
+where gems.fsid=#{id}
+</select>
+
+
+
+<update id="upgems_zx" parameterType="java.util.HashMap">
+update assess_gems 
+<trim prefix="set" suffixOverrides=","> 
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="imgstep1_1!=null and imgstep1_1!=''">imgstep1_1=#{imgstep1_1},</if>
+<if test="imgstep2_1!=null and imgstep2_1!=''">imgstep2_1=#{imgstep2_1},</if>
+<if test="imgstep3_1!=null and imgstep3_1!=''">imgstep3_1=#{imgstep3_1},</if>
+<if test="imgstep4_1!=null and imgstep4_1!=''">imgstep4_1=#{imgstep4_1},</if>
+<if test="zx_result!=null and zx_result!=''">zx_result=#{zx_result},</if>
+<if test="icbc_id!=null and icbc_id!=''">icbc_id=#{icbc_id},</if>
+
+</trim>
+where id=#{id}
+</update>
+
+</mapper>

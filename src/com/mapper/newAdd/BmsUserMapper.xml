@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.newAdd.BmsUserMapper">
+ 
+<!-- 团队管理 -->   
+<!-- 查询登陆用户的团队人员  --> 
+<select id="selectLoginUserTeam"  resultType="Map" parameterType="BmsUser">
+select * from bms_user where upid=#{0}
+</select>    
+    
+    
+<!-- 用户管理  -->   
+<!-- 修改用户级别（权限） -->    
+<update id="updateUserDeptno" parameterType="BmsUser" >
+update bms_user set deptno=#{0} where uid=#{1}
+</update>
+    
+<!-- 模糊查询 -->    
+<select id="selectUserLike"  resultType="Map" parameterType="BmsUser">
+select * from bms_user where uname like #{0}
+</select>
+    
+<!-- 删除用户 -->    
+<delete id="deleteUserByUid" parameterType="BmsUser">
+delete from bms_user where uid=#{0}
+</delete>    
+    
+<!-- 修改用户  是否可用  -->
+<update id="updateUserStatus" parameterType="BmsUser" >
+update bms_user set status=#{0} where uid=#{1}
+</update>
+
+<!-- BMS 登陆并验证权限 -->
+<select id="checkUser"  resultType="Map" parameterType="BmsUser">
+select * from bms_user where username=#{0} and password=#{1}
+</select>
+    
+<!-- 三级分别查询 -->
+<select id="selectOtherUser"  resultType="Map" parameterType="BmsUser">
+select * from bms_user where deptno=#{0}
+</select>
+
+<!-- 查询本系统所有的用户 -->
+<select id="selectAllUser"  resultType="Map" parameterType="BmsUser">
+select * from bms_user
+</select>
+
+<!-- 添加用户时查询是否重复 -->
+<select id="addUserBySelect"  resultType="BmsUser" parameterType="BmsUser">
+select * from bms_user where username=#{0}
+</select>
+ 
+<!-- 添加系统用户 -->
+<insert id="addBMSUser"  parameterType="BmsUser" keyProperty="uid">
+insert into bms_user(
+uid,
+uname,
+username,
+password,
+userPhone,
+regTime,
+updateTime,
+upid,
+mid,
+deptno,
+ucid,
+status
+)values(
+#{uid},
+#{uname},
+#{username},
+#{password},
+#{userPhone},
+#{regTime},
+#{updateTime},
+#{upid},
+#{mid},
+#{deptno},
+#{ucid},
+#{status}
+)
+</insert>
+</mapper>

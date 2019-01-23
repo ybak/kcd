@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.erp_icbc.YXMapper">
+	<!-- 查询云信账户  没有用到-->
+<!-- 	<select id="query_YX_account" resultType="java.util.HashMap" parameterType="java.lang.String">
+		select token,accid from assess_gems where id=#{0}
+	</select> -->
+	<!-- 没有用到 -->
+<!-- 	<update id="update_YX_account" parameterType="java.util.HashMap">
+		UPDATE  assess_gems SET token=#{token},accid=#{accid} WHERE id=#{id};
+	</update> -->
+	<!-- 添加云信账户  -->
+	<insert id="add_YX_account" parameterType="java.util.HashMap" >
+		insert into icbc_erp_token(token,accid,employcode) values(#{token},#{accid},#{employcode})
+	</insert>
+	<!-- 查询所有云信账户 没有用到 -->
+	<select id="query_token" resultType="java.util.HashMap" parameterType="java.lang.String">
+		select token,accid,employcode from icbc_erp_token where employcode=#{code} 
+		<if test="size>=0">
+			limit 0,${size}
+		</if>
+	</select> 
+	
+	<select id="query_tokenbyid" resultType="scanpool" parameterType="java.lang.String">
+		select a.id mark,a.accid auditAccid ,a.token auditToken,b.accid clientAccid,b.token clientToken from  icbc_erp_token a,icbc_erp_token b where a.id=b.parentid  and a.uid=#{0}
+	</select>
+	<!-- 记录上传回调信息 -->
+	<insert id="addcallback" parameterType="map">
+		insert into icbc_erp_video_info(viedotype,url,ext,address,channelid,te) values(#{viedotype},#{origAddr},#{user_defined.id},#{user_defined.address},#{channelid},#{te})
+	</insert>
+	<!-- 查询上传回调信息 没有用到 -->
+	<!-- <select id="selectcallback" resultType="callBacK">
+		 select id,type,vid,name,origAddr,warnning,user_defined from yx_callback
+	</select> -->
+	<!-- 云信视频录制问题详情 -->
+	<select id="select_YX_video" resultType="map">
+		select ievw.index,concat('http://a.kcway.net/assess/',videourl) videourl,text from icbc_erp_videorec_wt ievw
+	</select>
+	<!-- 添加时长通话记录抄送 -->
+	<insert id="insert_infocopy_duration" parameterType="infocopy" >
+		insert into icbc_erp_video_info(channelId,createtime,duration,accid,faccid,status,ext) VALUES(#{channelId},#{createtime},#{duration},#{accid},#{faccid},#{status},#{ext})
+	</insert>
+	<!-- 添加下载抄送 -->
+	<insert id="insert_infocopy_download" parameterType="infocopy" >
+		insert into icbc_erp_video_info(filename,url,vid,channelid) values(#{fi.filename},#{fi.url},#{fi.vid},#{fi.channelid})
+	</insert>
+	<!-- 查询通道id是否存在 -->
+	<select id="select_infocopy" parameterType="java.lang.String" resultType="java.lang.String">
+		select channelId from icbc_erp_video_info where channelId=#{0}
+	</select>
+	<!-- 更新时长通话记录抄送 -->
+	<update id="update_infocopy_duration" parameterType="infocopy">
+		update icbc_erp_video_info set createtime=#{createtime},duration=#{duration},accid=#{accid},faccid=#{faccid},status=#{status},ext=#{ext} where channelId=#{channelId}
+	</update>
+	<!-- 更新时长通话记录抄送 -->
+	<update id="update_infocopy_download" parameterType="infocopy">
+		update icbc_erp_video_info set filename=#{fi.filename},url=#{fi.url},vid=#{fi.vid} where channelId=#{fi.channelid}
+	</update>
+	<!-- 视频关联-->
+	<update id="update_infocopy_viedo_vid"  parameterType="map">
+		update icbc_erp_video_info set vid=#{id} where channelId=#{channel}
+	</update>
+	<!-- 实时免签更新地址 和g关联result表的id -->
+	<update id="update_infocopy_viedo">
+		update icbc_erp_video_info set address=#{address},vid=#{id} where channelId=#{channel}
+	</update>
+	<!-- 实时免签添加通道信息 -->
+	<insert id="insert_infocopy_viedo"> <!-- 视频面签为1 -->
+		insert into icbc_erp_video_info(ext,vid,viedotype,address,channelId) values(#{icbcid},#{id},'1',#{address},#{channel})
+	</insert>
+	
+	<!-- map类型的输入参数 -->
+	<!-- 添加时长通话记录抄送 -->
+	<insert id="insert_infocopy_durationM" parameterType="java.util.HashMap"  keyProperty="id" useGeneratedKeys="true">
+		insert into icbc_erp_video_info(channelId,createtime,duration,faccid,ext,address,viedotype,duration_time) VALUES(#{channelId},#{createtime},#{duration},#{faccid},#{ext.id},#{ext.address},#{viedotype},#{duration_time})
+	</insert>
+	<!-- 添加下载抄送 -->
+	<insert id="insert_infocopy_downloadM" parameterType="java.util.HashMap" >
+		insert into icbc_erp_video_info(url,channelid,viedotype,download_info) values(#{fi.url},#{fi.channelid},#{viedotype},#{download_info})
+	</insert>
+	<!-- 查询通道id是否存在 -->
+	<select id="select_infocopyM" parameterType="java.lang.String" resultType="java.lang.String">
+		select channelId from icbc_erp_video_info where channelId=#{0}
+	</select>
+	<!-- 更新时长通话记录抄送 -->
+	<update id="update_infocopy_durationM" parameterType="java.util.HashMap">
+		update icbc_erp_video_info set createtime=#{createtime},duration=#{duration},faccid=#{faccid},ext=#{ext.id},address=#{ext.address},duration_time=#{duration_time} where channelId=#{channelId}
+	</update>
+	<!-- 更新时长通话记录抄送 -->
+	<update id="update_infocopy_downloadM" parameterType="java.util.HashMap">
+		update icbc_erp_video_info set url=#{fi.url},download_info=#{download_info} where channelId=#{fi.channelid}
+	</update>
+
+	<insert id="insert_M" parameterType="java.lang.String">
+		insert into icbc_erp_video_info(te) values(#{0})
+	</insert>
+	<!-- 来电客户信息 征信表（正面照片 车牌 姓名） 开卡表 开票价 总额 期限 金融服务费 面签表 相似度 评估表 车辆品牌型号   意向金额 等-->
+	<select id="select_viedo_byid" resultType="java.util.HashMap" parameterType="java.lang.String" >
+	select concat('http://a.kcway.net/assess/',ki.imgstep2_1) positive,ki.c_name name,ki.c_cardno  idnumber,ki.c_tel tel,kik.zdr_wsdz delivery,kik.zdr_grsr income,
+kik.zdr_gzdw work,kik.dk_price dkprice, kik.kp_price carprice,kik.dk_total_price totalprice, ac.price_result priceresult,kik.aj_date date,kik.jrfw_price serve,ac.ppxh px,ac.icbc_pricecs want
+from kj_icbc ki 
+JOIN assess_cars ac on ki.id =ac.icbc_id and ki.id=#{0} 
+JOIN kjs_icbc_kk kik  on ki.id=kik.icbc_id 
+	</select>
+	<select id="select_mq_info" resultType="java.util.HashMap" parameterType="java.lang.String">
+		select concat('http://a.kcway.net/assess/',kim.imgurl_sfzyz) visa,kim.api_result2 man from kjs_icbc_mq kim where icbc_id=#{0}  order by id desc
+	</select>
+	<!-- 点击历史视频的时候   -->
+	<select id="select_viedo_byid2" resultType="java.util.HashMap" parameterType="java.lang.String" >	
+	select concat('http://a.kcway.net/assess/',ki.imgstep2_1) positive,ki.c_name name,ki.c_cardno  idnumber,ki.c_tel tel,kik.zdr_wsdz delivery,kik.zdr_grsr income,
+	kik.zdr_gzdw work,kik.dk_price dkprice, kik.kp_price carprice,kik.dk_total_price totalprice, ac.price_result priceresult,kik.aj_date date,kik.jrfw_price serve,ac.ppxh px,ac.icbc_pricecs want,yvi.address address,yvi.url,ki.id icbcid,yvi.channelId
+	from icbc_erp_video_info yvi   
+	join kj_icbc ki on yvi.ext=ki.id and yvi.id=#{0}
+	left JOIN assess_cars ac on ki.id =ac.icbc_id 
+	JOIN kjs_icbc_kk kik  on ki.id=kik.icbc_id 
+	</select>
+
+<!-- 查看历史   大状态表 公司表  视频表 左链接 小状态-->
+<select id="select_operating" resultType="java.util.HashMap" parameterType="pageinfo" >
+	 select b.* from ( select yvi.address,yvi.url,yvi.id yid,fs.name,ieki.icbc_id icbcid,ieki.id iekiid,ieki.c_name cname,ieki.dt_edit editime, yvi.vid vid,iekir.result_1_code code,yvi.viedotype 
+from icbc_erp_video_info yvi 
+join icbc_erp_kj_icbc ieki on yvi.ext=ieki.icbc_id  and ieki.type_id=6
+join assess_fs fs on ieki.gems_fs_id=fs.id  
+<include refid="condition-viedo"></include>
+left JOIN icbc_erp_kj_icbc_result iekir ON iekir.id=yvi.vid ) b  
+<include refid="condition-viedo1"></include>
+order by yid desc
+limit ${from},${size}
+</select>
+<!-- 查看历史分页 -->
+<select id="select_operating_count" resultType="int" parameterType="pageinfo" >
+	 select count(*) from ( select yvi.address,yvi.url,yvi.id yid,fs.name,ieki.icbc_id icbcid,ieki.id iekiid,ieki.c_name cname,ieki.dt_edit editime, yvi.vid vid,iekir.result_1_code code
+from icbc_erp_video_info yvi 
+join icbc_erp_kj_icbc ieki on yvi.ext=ieki.icbc_id  and ieki.type_id=6
+join assess_fs fs on ieki.gems_fs_id=fs.id  
+<include refid="condition-viedo"></include>
+left JOIN icbc_erp_kj_icbc_result iekir ON iekir.id=yvi.vid ) b  
+<include refid="condition-viedo1"></include>
+</select>
+<sql id="condition-viedo1">
+	 <if test="condition != null" >
+	 		where 1=1
+	 		<!-- 签约状态 -->
+		 	<if test="condition.contract !=null and  condition.contract !=''">
+			   	  and b.code=#{condition.contract}
+			</if>
+			<!-- 审核状态 -->
+			<if test="condition.viedostartsvalue !=null and condition.viedostartsvalue!='' ">
+				<if test="condition.viedostartsvalue=='1'.toString()">
+					and b.code is not null
+				</if>
+				<if test="condition.viedostartsvalue=='2'.toString()">
+					and b.code is null
+				</if>
+			</if>
+	</if>
+</sql>
+
+<!-- 查询的sql -->
+<sql id="condition-viedo">
+	 <if test="condition != null" >
+	 		<if test="condition.name !=null and  condition.name !=''">
+		   	  and ieki.c_name like #{condition.name}
+		   </if>
+			<if test="condition.idNumber !=null and condition.idNumber!='' ">
+		   	 and ieki.c_cardno like #{condition.idNumber}
+		   </if>
+		   	<if test="condition.organization !=null and condition.organization !='' ">
+		   	 and ieki.gems_fs_id=#{condition.organization}
+		   </if>
+		   <if test="condition.viedotype !=null and condition.viedotype !='' ">
+		   	 and yvi.viedotype=#{condition.viedotype}
+		   </if>
+  	</if>
+</sql>
+
+<!-- 查询icbc表的信息 -->
+<select id="select_icbc_byid" resultType="map" parameterType="string" >
+	select c_name,c_cardno,gems_id,gems_fs_id from kj_icbc where id=#{0}
+</select>
+<!-- 查询车辆信息 -->
+<select id="select_car_byid" resultType="map" parameterType="string">
+	select vincode,code from assess_cars where icbc_id=#{0}
+</select>
+<!-- 查询大状态是否存在 -->
+<select id="select_kjicbc_byid" resultType="String">
+	select id from icbc_erp_kj_icbc where type_id=#{typeid} and icbc_id=#{icbcid}
+</select>
+<!-- 添加小状态 -->
+<insert id="insert_kjicbcresult" parameterType="map"  keyProperty="id" useGeneratedKeys="true">
+	insert into icbc_erp_kj_icbc_result(qryid,mid_add,mid_edit,dt_add,dt_edit,status,remark,result_1_code,result_1_msg,dt_sub,type_id,icbc_id) 
+	values(#{parentid},#{addadmin},#{editadmin},#{addtime},#{editime},#{status},#{remark},#{resultcode},#{resultmsg},#{sub},#{typeid},#{icbcid})
+</insert>
+<!-- 添加一个大状态 -->
+<insert id="insert_kjicbc" parameterType="map" keyProperty="id" useGeneratedKeys="true"> 
+	insert into icbc_erp_kj_icbc(mid_add,mid_edit,dt_add,dt_edit,dt_sub,status,icbc_id,gems_id,gems_fs_id,type_id,c_name,c_carno,c_carvin,c_cardno) 
+	values(#{addadmin},#{editadmin},#{addtime},#{editime},#{sub},#{status},#{icbcid},#{gems_id},#{gems_fs_id},#{typeid},#{c_name},#{code},#{vincode},#{c_cardno})
+</insert>
+<!-- 更新一下打状态吧 -->
+<update id="update_kjicbc" parameterType="map" >
+	update icbc_erp_kj_icbc set dt_edit=#{editime},status=#{status},mid_edit=#{editadmin} where type_id=#{typeid} and icbc_id=#{icbcid}
+</update>
+<!-- 修改icbc面签表 -->
+<update id="updata_mq_status" parameterType="string">
+	update kjs_icbc_mq set bc_status=#{bcstatus} where icbc_id=#{icbcid}
+</update>
+</mapper>

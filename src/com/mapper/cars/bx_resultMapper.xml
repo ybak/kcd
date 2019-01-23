@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.cars.bx_resultMapper">
+
+<insert id="addbx_result" parameterType="bx_result" useGeneratedKeys="true"  keyProperty="id">
+insert into assess_querybx_result(
+id,
+qryid,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+status,
+remark
+)values(
+#{id},
+#{qryid},
+#{mid_add},
+#{mid_edit},
+#{dt_add},
+#{dt_edit},
+#{status},
+#{remark}
+)
+</insert>
+
+</mapper>

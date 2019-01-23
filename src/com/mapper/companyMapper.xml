@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.companyMapper">
+
+<select id="ckynum" resultType="int">
+select count(*) from kcd_company where ckey=#{ckey}
+</select>
+
+<select id="ckymap" parameterType="company" resultType="Map">
+select * from kcd_company where ckey=#{ckey}
+</select>
+
+<select id="login"  resultType="Map">
+ select * from kcd_company
+ where
+ pusername=#{0}
+ and
+ ppassword=#{1}
+
+</select>
+
+
+<select id="findbycompany"  resultType="company" parameterType="company">
+ select * from kcd_company
+ where company=#{company}
+
+</select >
+
+<select id="findcompany"  resultType="Map">
+ select * from kcd_company
+ where company=#{company}
+</select>
+
+
+<insert id="addcompany" parameterType="company" keyProperty="cid">
+ insert into kcd_company(
+   cid,
+   company,   
+   pusername,
+   ppassword,
+   login_time,
+   ckey
+  )values(
+   #{cid},
+   #{company},
+   #{pusername},
+   #{ppassword},
+   #{login_time},
+   #{ckey}
+  )
+
+</insert>
+ <update id="upcompany" parameterType="company">
+   update kcd_company 
+   set
+   <if test="beans!=null">beans=#{beans}</if>   
+   where company=#{company}
+ </update>
+
+</mapper>

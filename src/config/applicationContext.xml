@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+     xmlns:p="http://www.springframework.org/schema/p"
+     xmlns:aop="http://www.springframework.org/schema/aop"
+     xmlns:context="http://www.springframework.org/schema/context"
+     xmlns:tx="http://www.springframework.org/schema/tx"
+     xmlns:task="http://www.springframework.org/schema/task"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/task  
+        http://www.springframework.org/schema/task/spring-task-3.2.xsd"> 
+        
+       <!-- 启用注解 -->
+    <context:annotation-config />
+    <!-- 启动组件扫描，排除@Controller组件，该组件由SpringMVC配置文件扫描 -->
+    <context:component-scan base-package="com">
+        <context:exclude-filter type="annotation"
+            expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
+    <!-- task自动任务注解 -->
+    <task:annotation-driven />
+    <!-- 扫描任务 -->
+    <context:component-scan base-package="com.controller.erp_icbc.TimedTask" />
+
+    
+    <bean id="imageCheck" class="com.util.ImageCheck"/>
+ 
+    <!-- 1. 数据源 : DriverManagerDataSource --> 
+    <bean id="dataSource"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        
+          <property name="url">  
+	      <value>
+	      jdbc:mysql://localhost:3306/kcdapitest?relaxAutoCommit=true&amp;zeroDateTimeBehavior=convertToNull&amp;characterEncoding=UTF-8&amp;useUnicode=true&amp;autoReconnect=true
+	      
+	      </value>  
+	
+	     </property> 
+	    
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+    </bean>
+<!-- kcdapitest   cwuEn4xutESWpPFj -->
+    <!--
+        2. mybatis的SqlSession的工厂: SqlSessi onFactoryBean dataSource:引用数据源
+
+        MyBatis定义数据源,同意加载配置
+    -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>        
+        <property name="configLocation" value="classpath:config/mybatis-config.xml" /> 
+    </bean>
+    <!--
+        3. mybatis自动扫描加载Sql映射文件/接口 : MapperScannerConfigurer sqlSessionFactory
+
+        basePackage:指定sql映射文件/接口所在的包（自动扫描）
+    -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.mapper"></property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>
+   
+    <!--
+        4. 事务管理 : DataSourceTransactionManager dataSource:引用上面定义的数据源
+    -->
+    <bean id="txManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>  
+        <qualifier value="kcdweb" ></qualifier>
+    </bean>
+    <!-- 5. 使用声明式事务
+         transaction-manager：引用上面定义的事务管理器
+     -->
+    <tx:annotation-driven transaction-manager="txManager" />
+    
+<!-- 2. 数据源 : DriverManagerDataSource --> 
+    <bean id="dataSource1" 
+    class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        
+          <property name="url">  
+	      <value>
+	      jdbc:mysql://localhost:3306/kcway2?relaxAutoCommit=true&amp;zeroDateTimeBehavior=convertToNull&amp;characterEncoding=UTF-8&amp;useUnicode=true&amp;autoReconnect=true
+	      
+	      </value>  
+	
+	     </property> 
+	    
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+    </bean>
+<!-- 'user'=>'kcway',
+		'pass'=>'NDXppG2qUNB6pXcA',
+		'dbname'=>'kcway2' -->
+    <!--
+        2. mybatis的SqlSession的工厂: SqlSessionFactoryBean dataSource:引用数据源
+
+        MyBatis定义数据源,同意加载配置
+    -->
+    <bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource1"></property>        
+        <property name="configLocation" value="classpath:config/mybatis-config.xml" /> 
+    </bean>
+    <!--
+        3. mybatis自动扫描加载Sq
+        l映射文件/接口 : MapperScannerConfigurer sqlSessionFactory
+
+        basePackage:指定sql映射文件/接口所在的包（自动扫描）
+    -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.mapper1,com.mapper">
+        </property>
+        <property name="sqlSessionFactory" ref="sqlSessionFactory1"></property>
+        
+    </bean>
+        <!--
+        4. 事务管理 : DataSourceTransactionManager dataSource:引用上面定义的数据源
+    -->
+    <bean id="txManager1"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource1"></property>  
+        <qualifier value="kcway2" ></qualifier>        
+    </bean>
+        <!-- 5. 使用声明式事务
+         transaction-manager：引用上面定义的事务管理器
+     -->
+    <tx:annotation-driven transaction-manager="txManager1" />
+    <!-- 事务隔离 级别
+    <tx:advice id="txAdvice" transaction-manager="txManager1">
+        <tx:attributes>
+            <tx:method name="find*" propagation="REQUIRED" read-only="false"
+                       rollback-for="java.lang.Exception"/>
+            <tx:method name="insert*" propagation="REQUIRED" read-only="false"
+                       rollback-for="java.lang.Exception" />
+            <tx:method name="up*" propagation="REQUIRED" read-only="false"
+                       rollback-for="java.lang.Exception" />
+            <tx:method name="save*" propagation="REQUIRED" read-only="false"
+                       rollback-for="java.lang.Exception" />
+            <tx:method name="add*" propagation="REQUIRED" read-only="false"
+                       rollback-for="java.lang.Exception" />
+            <tx:method name="execute_*" propagation="REQUIRED" read-only="false"
+                       rollback-for="java.lang.Exception" />
+        </tx:attributes>
+    </tx:advice>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    -->
+    <!-- 事物处理 
+    <aop:config>
+        <aop:pointcut id="pc" expression="execution(* com.service1.duoying..*(..))" />
+        <aop:advisor pointcut-ref="pc" advice-ref="txAdvice" />
+    </aop:config>
+    -->
+    <!-- 
+    <bean id="schedJob" class="com.sched.schedjob"></bean>
+    <bean id="duoyingJob" class="com.sched.duoyingJob"></bean>
+ -->
+    <!--向ES数据库插入数据
+    <bean id="Job_hello" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="schedJob" />
+        </property>
+        <property name="targetMethod">
+            
+            <value>dysync</value>
+        </property>
+    </bean>
+    -->
+    <!--  要执行的方法名称  -->
+    <!--向ES数据库插入数据
+    <bean id="cron_hello"  class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="Job_hello" />
+        </property>
+        <property name="cronExpression">
+            <value>0/10 * * * * ?</value>
+        </property>
+    </bean>
+    -->
+    <!--  <ref bean="cron_findzs" />-->
+    <!--  管理触发器  
+    <bean autowire="no"
+          class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>             
+            
+            </list>
+    </property>
+    </bean>
+     
+    -->
+
+</beans>

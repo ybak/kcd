@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.mdxxMapper">
+ <select id="mdxxsize" parameterType="mdxx" resultType="int">
+ select count(*) from kcd_mdxx where ckey=#{ckey} 
+ </select>  
+ <select id="mdxxsize1" parameterType="mdxx" resultType="int">
+ select count(*) from kcd_mdxx where sname=#{0} and
+ pname=#{1} and pIDcard=#{2}
+ </select>
+  <select id="mdxxmap" parameterType="mdxx" resultType="Map">
+ select * from kcd_mdxx where ckey=#{ckey}
+ </select>
+ <select id="mdxxlist" parameterType="int" resultType="mdxx" >
+ select * from kcd_mdxx where 1=1 limit #{0},#{1}
+ </select>
+ 
+ <select id="mdxxnum"  resultType="int" >
+ select count(*) from kcd_mdxx
+ </select>
+  
+  <select id="mdxxbyname"  resultType="mdxx" >
+  select DISTINCT sname from kcd_mdxx
+ </select>
+ 
+ 
+ <select id="mdxxckey"  resultType="mdxx" >
+ select * from kcd_mdxx
+ </select>
+ 
+<insert id="addmdxx" parameterType="mdxx" keyProperty="id">
+insert into kcd_mdxx(
+id,
+sname,
+alevel,
+pname,
+pIDcard,
+pcall,
+ckey,
+kd,
+czcode,
+addtime,
+uptime
+)values
+    <foreach collection="list" item="mdxxs" index="index"
+            separator=",">
+(
+#{mdxxs.id},
+#{mdxxs.sname},
+#{mdxxs.alevel},
+#{mdxxs.pname},
+#{mdxxs.pIDcard},
+#{mdxxs.pcall},
+#{mdxxs.ckey},
+#{mdxxs.kd},
+#{mdxxs.czcode},
+#{mdxxs.addtime},
+#{mdxxs.uptime}
+)
+</foreach>
+
+
+</insert>
+
+<update id="upmdxx">
+update kcd_mdxx set 
+kd=#{kd}
+where
+ckey=#{ckey}
+</update>
+
+</mapper>

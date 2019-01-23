@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.zjf.zjferrmsgMapper">
+
+<insert id="savezjferrmsg" parameterType="zjferrmsg" keyProperty="id">
+insert into assess_zjferrmsg
+(
+id,
+msg,
+gems_code,
+failIds,
+kjs_type,
+addtime,
+uptime
+)values(
+#{id},
+#{msg},
+#{gems_code},
+#{failIds},
+#{kjs_type},
+#{addtime},
+#{uptime}
+)
+</insert>
+
+</mapper>

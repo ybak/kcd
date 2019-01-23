@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.creditMapper">
+
+  <update id="editzx" parameterType="credit">
+  update kcd_credit 
+  <trim prefix="set" suffixOverrides=",">
+  <if test="shzt!=null"> shzt=#{shzt},</if>
+  <if test="sum_bit!=null"> sum_bit=#{sum_bit},</if>
+  <if test="up_time!=null"> up_time=#{up_time},</if>
+  </trim>
+  where id=#{id}
+     </update>
+   
+     <select id="search" resultType="credit" >
+     
+     select * from kcd_credit order by add_time desc  
+  
+     </select>
+   
+     <select id="zxbysum_bit" parameterType="credit" resultType="credit">
+     select * from kcd_credit where 
+     1=1
+    <if test="sum_bit!=null and sum_bit !=''">
+    and sum_bit=#{sum_bit}
+    </if>     
+    order by add_time desc
+     </select>
+   
+    <select id="findover"  resultType="credit">
+    
+    select * from kcd_credit where
+    <foreach collection="list" item="item" index="index" separator="or" >
+    
+    name=#{item.name} and IDcard_num=#{item.IDcard_num}
+    
+    </foreach>           
+    </select>
+    
+    <delete id="delcredit" parameterType="int">
+  
+    delete from kcd_credit where id=#{id}
+   
+    </delete>
+    
+       <select id="countnum" parameterType="string" resultType="int">
+        select count(*) from kcd_credit
+        where 1=1 
+        <if test="_parameter!=null">
+        and sum_bit=#{_parameter}
+        </if>        
+        </select>
+    <select id="ztlist" parameterType="string" resultType="credit">
+        select * from kcd_credit
+        where 1=1
+        <if test="_parameter!=null">
+        and sum_bit=#{_parameter}
+        </if>        
+        limit #{st},#{ps}
+    </select>
+      <select id="dshcount" parameterType="credit" resultType="int">
+        select count(*) from kcd_credit
+        where sum_bit=4        
+    </select>
+    <select id="dshtable" parameterType="credit" resultType="credit">
+        select * from kcd_credit
+        where sum_bit=4
+        limit #{st},#{ps}
+    </select>
+      <select id="ecount" parameterType="credit" resultType="int">
+        select count(*) from kcd_credit
+        where sum_bit=5 and shzt=5     
+    </select>
+    <select id="etable" parameterType="credit" resultType="credit">
+        select * from kcd_credit
+        where sum_bit=5 and shzt=5
+        limit #{st},#{ps}
+    </select>
+    
+    <select id="htcount" parameterType="credit" resultType="int">
+        select count(*) from kcd_credit
+        where sum_bit=6 or sum_bit=7      
+    </select>
+    <select id="httable" parameterType="credit" resultType="credit">
+        select * from kcd_credit
+        where sum_bit=6 or sum_bit=7
+        limit #{st},#{ps}
+    </select>
+    <select id="findcredit" parameterType="credit" resultType="credit">
+        select * from kcd_credit
+        where 1=1
+        limit #{st},#{ps}
+    </select>
+    
+     <select id="findcredit1" parameterType="credit" resultType="credit">
+        select * from kcd_credit
+        where  1=1 and mdid=#{mdid}
+        limit #{st},#{ps}
+    </select>
+    <select id="findcreditbyid" parameterType="credit" resultType="Map">
+        select * from kcd_credit
+        where id=#{id}
+    </select>
+    <select id="findcreditbyname" parameterType="credit" resultType="credit">
+        select * from kcd_credit
+        where 
+        name=#{0}
+        and IDcard_num=#{1}
+        and phone_num=#{2}
+    </select>
+    <select id="findbysfz" parameterType="credit" resultType="Map">    
+    select * from kcd_credit where IDcard_num=#{IDcard_num}
+    </select>
+    <select id="findmdid" resultType="credit" parameterType="credit">    
+    select * from kcd_credit where mdid=#{mdid} 
+    <if test="sum_bit!=null">
+     and sum_bit=#{sum_bit} 
+    </if>
+   
+    </select>
+    <select id="findcount" resultType="int" parameterType="credit">    
+    select count(*) from kcd_credit where 1=1 
+    </select>
+
+    <select id="findcount1" resultType="int" parameterType="credit">    
+    select count(*) from kcd_credit where 1=1 and mdid=#{mdid}
+    </select>
+    
+    <update id="hyimg" parameterType="credit" >
+    update kcd_credit set    
+      front=#{front} or 
+      opposite=#{opposite} or
+      apply=#{apply} or 
+      authorize=#{authorize} or
+      hz=#{hz}
+      where id=#{id}
+    </update>
+    
+    <update id="upsubmit" parameterType="credit">
+    update kcd_credit set sum_bit=#{sum_bit}     
+    where id=#{id}
+    </update>
+    
+    <update id="upcredit"  parameterType="credit" >
+       update kcd_credit 
+     <trim prefix="set" suffixOverrides=",">
+      <if test="name!=null and name!=''"> name=#{name},</if>
+     
+      <if test="IDcard_num!=null and IDcard_num!=''">IDcard_num=#{IDcard_num},</if>
+
+      <if test="phone_num!=null and phone_num!=''">  phone_num=#{phone_num},</if>
+     
+      <if test="authorize_num!=null and authorize_num!=''"> authorize_num=#{authorize_num},</if>
+      
+      <if test="front!=null and front!=''"> front=#{front},</if>
+ 
+      <if test="opposite!=null and opposite!=''">opposite=#{opposite}, </if>
+
+      <if test="apply!=null and apply!=''"> apply=#{apply},</if>
+ 
+      <if test="authorize!=null and authorize!=''"> authorize=#{authorize},</if>
+
+      <if test="hz!=null and hz!=''"> hz=#{hz},</if>
+
+      <if test="sum_bit!=null and sum_bit!=''">sum_bit=#{sum_bit},</if>
+
+      <if test="add_time!=null and add_time!=''">add_time=#{add_time}, </if> 
+      <if test="up_time!=null and up_time!=''">up_time=#{up_time},</if>
+      <if test="shzt!=null and shzt!=''">shzt=#{shzt},</if>   
+      <if test="c_nation!=null and c_nation!=''"> c_nation=#{c_nation},</if>
+      <if test="c_address!=null and c_address!=''">c_address=#{c_address}, </if>
+      <if test="c_card_outdate!=null and c_card_outdate!=''"> c_card_outdate=#{c_card_outdate},</if> 
+      <if test="c_card_office!=null and c_card_office!=''"> c_card_office=#{c_card_office},</if>
+      <if test="c_card_type!=null and c_card_type!=''"> c_card_type=#{c_card_type},</if>
+      <if test="c_sex!=null and c_sex!=''">c_sex=#{c_sex},</if>
+      <if test="c_bs!=null and c_bs!=''">c_bs=#{c_bs}, </if> 
+      <if test="c_oldname!=null and c_oldname!=''">c_oldname=#{c_oldname},</if>
+      <if test="c_yb!=null and c_yb!=''">c_yb=#{c_yb},</if>
+      <if test="return_type!=null and return_type!=''">return_type=#{return_type},</if>   
+      <if test="imgbase_1!=null and imgbase_1!=''">imgbase_1=#{imgbase_1},</if>
+      <if test="imgbase_2!=null and imgbase_2!=''">imgbase_2=#{imgbase_2},</if>
+      <if test="imgbase_3!=null and imgbase_3!=''">imgbase_3=#{imgbase_3},</if>
+      <if test="imgbase_4!=null and imgbase_4!=''">imgbase_4=#{imgbase_4},</if>
+      <if test="imgbase_5!=null and imgbase_5!=''">imgbase_5=#{imgbase_5},</if>
+      </trim> 
+      where id=#{id}                  
+    </update>
+    
+    <insert id="save" useGeneratedKeys="true"  parameterType="credit" keyProperty="id">  
+        insert into kcd_credit(
+        id,
+        name,
+        IDcard_num,
+        phone_num,
+        authorize_num,
+        front,
+        opposite,
+        apply,
+        authorize,
+        hz,
+        sum_bit,
+        add_time,
+        url,
+        mdid,
+        up_time,
+        shzt,
+        c_nation,
+        c_address,
+        c_card_outdate,
+        c_card_office,
+        c_card_type,
+        c_sex,
+        c_bs,
+        c_oldname,
+        c_yb,
+        return_type,
+        imgbase_1,
+        imgbase_2,
+        imgbase_3,
+        imgbase_4,
+        imgbase_5 
+        ) 
+        values(
+        #{id},
+        #{name},
+        #{IDcard_num},
+        #{phone_num},
+        #{authorize_num},
+        #{front},
+        #{opposite},
+        #{apply},
+        #{authorize},
+        #{hz},
+        #{sum_bit},
+        #{add_time},
+        #{url},
+        #{mdid},
+        #{up_time},
+        #{shzt},
+        #{c_nation},
+        #{c_address},
+        #{c_card_outdate},
+        #{c_card_office},
+        #{c_card_type},
+        #{c_sex},
+        #{c_bs},
+        #{c_oldname},
+        #{c_yb},
+        #{return_type},
+        #{imgbase_1},
+        #{imgbase_2},
+        #{imgbase_3},
+        #{imgbase_4},
+        #{imgbase_5}
+        )  
+    </insert>
+    
+    
+</mapper>

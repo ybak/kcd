@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.erp_icbc.erp_wdrwMapper">
+
+<!--单个查询 -->
+<select id="icbc_form" parameterType="pd" resultType="pd">
+<!-- 我的参与总数  -->
+<if test="dn=='wdcy_count'">
+select count(*) as totalsize
+from 
+(
+ select
+ ki.*,
+ admin.name as adminname,
+ gems.name as gemsname,
+ fs.name as fsname,
+ icbc.c_name as icbcname,
+ nt.name as tname,
+ kn.name as knname, 
+ icbc.dt_add as icbc_dt_add,
+ kir.mid_add as kir_mid_add,
+ admin1.name as add_name
+ from icbc_erp_kj_icbc_result kir  
+ LEFT JOIN icbc_erp_kj_icbc ki ON ki.id=kir.qryid
+ LEFT JOIN assess_admin admin ON admin.id=ki.mid_add
+ LEFT JOIN assess_gems gems ON gems.id=admin.gemsid
+ LEFT JOIN assess_fs fs ON fs.id=gems.fsid 
+ LEFT JOIN kj_icbc icbc ON icbc.id=ki.icbc_id
+ LEFT JOIN icbc_erp_commtaskname kn ON kn.status=ki.status
+ LEFT JOIN icbc_erp_commontype nt ON nt.id=ki.type_id
+ LEFT JOIN assess_admin admin1 ON admin1.id=icbc.mid_add
+ where  kir.mid_add=${admin_id} and kir.qryid and ki.id 
+ <if test="ywlx_id!=null and ywlx_id!=''">
+and ki.type_id=#{ywlx_id}
+</if>
+<if test="icbc_id!=null and icbc_id!=''">
+and ki.icbc_id=#{icbc_id}
+</if> 		
+<if test="c_name!=null and c_name!=''">
+  and (ki.c_name like concat('%',#{c_name},'%')
+  or ki.c_carno like concat('%',#{c_name},'%')
+  or ki.c_carvin like concat('%',#{c_name},'%')
+  or ki.c_cardno like concat('%',#{c_name},'%'))
+</if>
+ GROUP BY kir.qryid
+ ORDER BY ki.dt_edit desc
+ ) wdcy
+</if>
+<!-- 我的任务总数  -->
+<if test="dn=='wdrw_count'">
+select
+count(*) as totalsize
+from 
+( 
+select 
+ki.*,
+kir.result_1_code as kir_code,
+kir.result_1_value as kir_value,
+kir.dt_edit as kir_dt_edit
+from icbc_erp_kj_icbc ki
+LEFT JOIN icbc_erp_kj_icbc_result kir ON kir.qryid=ki.id
+where kir.qryid=ki.id and ki.status=kir.status and ki.type_id=kir.type_id
+) w1 
+LEFT JOIN assess_admin admin ON admin.id=w1.mid_add
+LEFT JOIN assess_gems gems ON gems.id=admin.gemsid
+LEFT JOIN assess_fs fs ON fs.id=gems.fsid 
+LEFT JOIN kj_icbc icbc ON icbc.id=w1.icbc_id
+LEFT JOIN icbc_erp_commtaskname kn ON kn.status=w1.status
+LEFT JOIN icbc_erp_commontype nt ON nt.id=w1.type_id
+LEFT JOIN assess_admin admin1 ON admin1.id=w1.operate_id
+LEFT JOIN assess_admin admin2 ON admin2.id=icbc.mid_add
+LEFT JOIN kjs_icbc_kk kk ON kk.icbc_id=icbc.id
+where
+w1.kir_dt_edit=
+(
+select MAX(w2.kir_dt_edit) 
+from ( 
+select 
+ki.*,
+kir.result_1_code as kir_code,
+kir.result_1_value as kir_value,
+kir.dt_edit as kir_dt_edit
+from icbc_erp_kj_icbc ki
+LEFT JOIN icbc_erp_kj_icbc_result kir ON kir.qryid=ki.id
+where kir.qryid=ki.id and ki.status=kir.status and ki.type_id=kir.type_id
+) w2 WHERE w2.status=w1.status and w2.type_id=w1.type_id and w2.icbc_id=w1.icbc_id
+)
+<if test="status_id!=null and status_id!=''">
+and icbc.mid_add in 
+<foreach collection="status_id" item="dramaId" open="(" close=")" separator=",">
+#{dramaId}
+</foreach>
+</if>
+<if test="ywlx_id!=null and ywlx_id!=''">
+and w1.type_id=#{ywlx_id}
+</if>
+<if test="icbc_id!=null and icbc_id!=''">
+and w1.icbc_id=#{icbc_id}
+</if> 	
+<if test="c_name!=null and c_name!=''">
+and (w1.c_name like concat('%',#{c_name},'%')
+  or w1.c_carno like concat('%',#{c_name},'%')
+  or w1.c_carvin like concat('%',#{c_name},'%')
+  or w1.c_cardno like concat('%',#{c_name},'%'))
+</if> 		
+ORDER BY w1.dt_edit desc
+</if>
+<!-- 我的参与总数  -->
+<if test="dn=='wdqd_count'">
+select count(*) as totalsize
+from icbc_erp_kj_icbc kir 
+LEFT JOIN assess_admin admin ON admin.id=kir.mid_add
+LEFT JOIN assess_gems gems ON gems.id=admin.gemsid
+LEFT JOIN assess_fs fs ON fs.id=gems.fsid 
+LEFT JOIN kj_icbc icbc ON icbc.id=kir.icbc_id
+LEFT JOIN icbc_erp_commtaskname kn ON kn.status=kir.status
+LEFT JOIN icbc_erp_commontype nt ON nt.id=kir.type_id
+LEFT JOIN assess_admin admin1 ON admin1.id=kir.operate_id
+where 1=1 
+and kir.type_id!=4
+and kir.status!=4 
+and kir.status!=8
+and kir.status!=12
+and kir.status!=16
+and kir.status!=21
+and kir.status!=25
+and kir.status!=30
+and kir.status!=40
+and kir.status!=46
+and kir.status!=55
+and kir.status!=65
+and kir.status!=71
+and kir.status!=82
+and kir.status!=86
+and kir.status!=95
+<if test="status_id!=null and status_id!=''">
+and kir.status in 
+<foreach collection="status_id" item="dramaId" open="(" close=")" separator=",">
+#{dramaId}
+</foreach>
+</if>
+<if test="ywlx_id!=null and ywlx_id!=''">
+and kir.type_id=#{ywlx_id}
+</if>
+<if test="icbc_id!=null and icbc_id!=''">
+and kir.icbc_id=#{icbc_id}
+</if> 	
+<if test="c_name!=null and c_name!=''">
+and (kir.c_name like concat('%',#{c_name},'%')
+  or kir.c_carno like concat('%',#{c_name},'%')
+  or kir.c_carvin like concat('%',#{c_name},'%')
+  or kir.c_cardno like concat('%',#{c_name},'%'))
+</if> 		
+ORDER BY kir.dt_edit desc
+</if>
+<!--查询某个板块-->
+<if test="dn=='icbc_tocode'">
+select * from icbc_erp_kj_icbc
+where type_id=#{type_id} and icbc_id=#{icbc_id} and status
+order by dt_edit desc limit 1
+</if>
+<!-- 查询某个板块某个节点是否存在  -->
+<if test="dn=='yhds_tocode'">
+select * from icbc_erp_kj_icbc_result
+where type_id=#{type_id} and status=#{status} and icbc_id=#{icbc_id} 
+order by dt_edit desc limit 1
+</if>
+<if test="dn=='yhds_tocode2'">
+select * from icbc_erp_kj_icbc_result
+where type_id=#{type_id} and status=#{status} and icbc_id=#{icbc_id} 
+ORDER BY dt_add limit 1
+</if>
+
+
+<!-- 获取业务类型 -->
+<if test="dn=='commtasknamebyid'">
+select * from  icbc_erp_commontype where erp_btype_id=#{erp_btype_id}
+</if>
+<!--获取业务类型 状态-->
+<if test="dn=='commtasknametoname'">
+select * from  icbc_erp_commtaskname where status=#{status}
+</if>
+<!--根据id获取icbc_erp_kj_icbc-->
+<if test="dn=='icbc_erp_kj_icbcbyid'">
+select * from  icbc_erp_kj_icbc where id=#{id}
+</if>
+<if test="dn=='icbc_erp_kj_icbc'">
+select 
+*,
+fs.`name` as fsname,
+gems.`name` as gemsname,
+cars.id as carsid,
+kk.id as kkid,
+dk.id as dkid,
+mq.id as mqid,
+fs.id as fsid,
+gems.id as gemsid,
+fs.id as fsid,
+icbc.mid_add as icbc_adminid,
+cars.gems_code as cars_gems_code,
+kk.gems_code as kk_gems_code,
+dk.gems_code as dk_gems_code,
+mq.gems_code as mq_gems_code,
+kk.kk_car_stateid as kk_car_stateidd,
+kk.kk_car_cityid as kk_car_cityidd,
+kk.kk_loan_stateid as kk_loan_stateidd,
+kk.kk_loan_cityid as kk_loan_cityidd
+from kj_icbc icbc 
+LEFT JOIN assess_cars cars ON cars.icbc_id=icbc.id
+LEFT JOIN kjs_icbc_kk kk ON kk.icbc_id=icbc.id
+LEFT JOIN kjs_icbc_cardk dk ON dk.icbc_id=icbc.id
+LEFT JOIN kjs_icbc_mq mq ON mq.icbc_id=icbc.id
+LEFT JOIN assess_fs fs ON fs.id=icbc.gems_fs_id
+LEFT JOIN assess_gems gems ON gems.id=icbc.gems_id
+where icbc.id=#{icbc_id} limit 1
+</if>
+
+</select>
+<!--list查询 -->
+<select id="icbc_list" parameterType="pd" resultType="pd">
+<!--代理商根据权限等级查询 -->
+<if test="dn=='dls_cp1'">
+select 
+id
+from (
+    select t1.*,
+    if(find_in_set(upac_id, @pids) > 0, @pids := concat(@pids, ',', gemsid), 0) as ischild
+    from (
+     select * from assess_admin admin where admin.fs_type=2 and admin.deltag=0 order by admin.upac_id,admin.gemsid
+    ) t1,
+(select @pids :=#{id} ) t2
+) t3 
+where t3.ischild != 0 or t3.gemsid=#{id}
+</if>
+<if test="dn=='dls_cp2'">
+select * from
+(select 
+admin.*,
+t3.name as fsname,
+gems.cp as gemscp,
+gems.mobile as mobile
+ from (
+              select t1.*,
+              if(find_in_set(up_id, @pids) > 0, @pids := concat(@pids, ',', id), 0) as ischild
+              from (
+                   select * from assess_fs fs where fs.fs_type=2 and fs.deltag=0 order by fs.up_id,fs.id
+                  ) t1,
+              (select @pids :=#{fsid} ) t2
+) t3 
+LEFT JOIN assess_admin admin ON t3.id=admin.icbc_erp_fsid
+LEFT JOIN assess_gems gems ON gems.id=admin.gemsid
+where (admin.id and t3.ischild != 0) or t3.id=#{fsid} 
+order by admin.dt_edit desc) t4
+where t4.deltag=0
+</if>
+<if test="dn=='dls_cp3'">
+
+
+</if>
+<!--处理过程  征信板块  -->
+<if test="dn=='001'">
+select 
+eki.dt_add as sdate,
+eki.dt_edit as edate,
+commontype.name as commontype_name,
+taskname.name as taskname_name,
+fs.name as fname,
+gems.name as gname,
+admin.name as gname1,
+kir.*
+from icbc_erp_kj_icbc_result kir
+LEFT JOIN kj_icbc icbc on icbc.id=kir.icbc_id
+LEFT JOIN assess_admin admin on admin.id=kir.mid_add
+LEFT JOIN icbc_erp_kj_icbc eki on eki.id=kir.qryid
+LEFT JOIN icbc_erp_commontype commontype on commontype.id=kir.type_id
+LEFT JOIN icbc_erp_commtaskname  taskname on taskname.`status`=kir.status
+LEFT JOIN assess_fs fs on icbc.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on icbc.gems_id=gems.id
+where kir.icbc_id=#{icbc_id} and kir.type_id=#{type_id}
+ORDER BY kir.id asc
+</if>
+<!-- 处理过程 评估板块 -->
+<if test="dn=='003'">
+select 
+eki.dt_add as sdate,
+eki.dt_edit as edate,
+commontype.name as commontype_name,
+taskname.name as taskname_name,
+fs.name as fname,
+gems.name as gname,
+admin.name as gname1,
+cars.id as cars_id,
+kir.*
+from icbc_erp_kj_icbc_result kir
+LEFT JOIN assess_cars cars on cars.icbc_id=kir.icbc_id
+LEFT JOIN assess_admin admin on admin.id=kir.mid_add
+LEFT JOIN icbc_erp_kj_icbc eki on eki.id=kir.qryid
+LEFT JOIN icbc_erp_commontype commontype on commontype.id=kir.type_id
+LEFT JOIN icbc_erp_commtaskname  taskname on taskname.`status`=kir.status
+LEFT JOIN assess_fs fs on admin.icbc_erp_fsid=fs.id
+LEFT JOIN assess_gems gems on admin.gemsid=gems.id
+where kir.icbc_id=#{icbc_id} and kir.type_id=#{type_id}
+ORDER BY kir.id asc
+</if>
+<!--处理过程-【其他没有表的板块公用 】-->
+<if test="dn=='004'">
+select 
+eki.dt_add as sdate,
+eki.dt_edit as edate,
+commontype.name as commontype_name,
+taskname.name as taskname_name,
+fs.name as fname,
+gems.name as gname,
+admin.name as gname1,
+kir.*
+from icbc_erp_kj_icbc_result kir
+LEFT JOIN icbc_erp_kj_icbc eki on eki.id=kir.qryid
+LEFT JOIN assess_admin admin on admin.id=kir.mid_add
+LEFT JOIN icbc_erp_commontype commontype on commontype.id=kir.type_id
+LEFT JOIN icbc_erp_commtaskname  taskname on taskname.`status`=kir.status
+LEFT JOIN assess_fs fs on eki.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on eki.gems_id=gems.id
+where kir.icbc_id=#{icbc_id} and kir.type_id=#{type_id} and kir.status!=0
+ORDER BY kir.id asc
+</if>
+<!--处理过程  开卡板块  -->
+<if test="dn=='005'">
+select 
+eki.dt_add as sdate,
+eki.dt_edit as edate,
+commontype.name as commontype_name,
+taskname.name as taskname_name,
+fs.name as fname,
+gems.name as gname,
+admin.name as gname1,
+kk.id as kk_id,
+kk.kk_date as kk_date,
+kir.*
+from icbc_erp_kj_icbc_result kir
+LEFT JOIN kjs_icbc_kk kk on kk.icbc_id=kir.icbc_id
+LEFT JOIN assess_admin admin on admin.id=kir.mid_add 	
+LEFT JOIN icbc_erp_kj_icbc eki on eki.id=kir.qryid
+LEFT JOIN icbc_erp_commontype commontype on commontype.id=kir.type_id
+LEFT JOIN icbc_erp_commtaskname  taskname on taskname.`status`=kir.status
+LEFT JOIN assess_fs fs on kk.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on kk.gems_id=gems.id
+where kir.icbc_id=#{icbc_id} and kir.type_id=#{type_id}
+ORDER BY kir.id asc
+</if>
+<!--处理过程  视频面签板块  -->
+<if test="dn=='006'">
+select 
+eki.dt_add as sdate,
+eki.dt_edit as edate,
+commontype.name as commontype_name,
+taskname.name as taskname_name,
+fs.name as fname,
+gems.name as gname,
+admin.name as gname1,
+mq.id as mq_id,
+kir.*
+from icbc_erp_kj_icbc_result kir
+LEFT JOIN kjs_icbc_mq mq on mq.icbc_id=kir.icbc_id
+LEFT JOIN assess_admin admin on admin.id=kir.mid_add 	
+LEFT JOIN icbc_erp_kj_icbc eki on eki.id=kir.qryid
+LEFT JOIN icbc_erp_commontype commontype on commontype.id=kir.type_id
+LEFT JOIN icbc_erp_commtaskname  taskname on taskname.`status`=kir.status
+LEFT JOIN assess_fs fs on mq.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on mq.gems_id=gems.id
+where kir.icbc_id=#{icbc_id} and kir.type_id=#{type_id}
+ORDER BY kir.id asc
+</if>
+<!-- 处理过程  汽车贷款 -->
+<if test="dn=='008'">
+select 
+eki.dt_add as sdate,
+eki.dt_edit as edate,
+commontype.name as commontype_name,
+taskname.name as taskname_name,
+fs.name as fname,
+gems.name as gname,
+admin.name as gname1,
+dk.id as dk_id,
+kir.*
+from icbc_erp_kj_icbc_result kir
+LEFT JOIN kjs_icbc_cardk dk on dk.icbc_id=kir.icbc_id
+LEFT JOIN assess_admin admin on admin.id=kir.mid_add	
+LEFT JOIN icbc_erp_kj_icbc eki on eki.id=kir.qryid
+LEFT JOIN icbc_erp_commontype commontype on commontype.id=kir.type_id
+LEFT JOIN icbc_erp_commtaskname  taskname on taskname.`status`=kir.status
+LEFT JOIN assess_fs fs on dk.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on dk.gems_id=gems.id
+where kir.icbc_id=#{icbc_id} and kir.type_id=#{type_id}
+ORDER BY kir.id asc
+</if>
+<!-- 资金分配 -->
+<if test="dn=='010'">
+select 
+eki.dt_add as sdate,
+eki.dt_edit as edate,
+commontype.name as commontype_name,
+taskname.name as taskname_name,
+fs.name as fname,
+gems.name as gname,
+admin.name as gname1,
+kir.*
+from icbc_erp_kj_icbc_result kir
+LEFT JOIN assess_admin admin on admin.id=kir.mid_add 	
+LEFT JOIN icbc_erp_kj_icbc eki on eki.id=kir.qryid
+LEFT JOIN icbc_erp_commontype commontype on commontype.id=kir.type_id
+LEFT JOIN icbc_erp_commtaskname  taskname on taskname.`status`=kir.status
+LEFT JOIN assess_fs fs on eki.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on eki.gems_id=gems.id
+where kir.icbc_id=#{icbc_id} and kir.type_id=#{type_id}
+ORDER BY kir.id asc
+</if>
+<!-- 查询征信所有 -->
+<if test="dn=='kj_icbc'">
+select * from kj_icbc 
+where 1=1
+<if test="text!=null and text!=''">
+and  (
+c_name=#{text} 
+or c_tel=#{text} 
+or c_cardno=#{text} 
+or gems_code=#{text}
+)
+</if>
+order by dt_edit desc
+</if>
+<!--查询评估所有 -->
+<if test="dn=='assess_cars'">
+select * from assess_cars  c
+LEFT JOIN kj_icbc i ON i.id=c.icbc_id
+WHERE c.icbc_id
+</if>
+
+<!--查询评估所有图片 -->
+<if test="dn=='assess_cars_item'">
+select * from assess_cars_item where cars_id=#{cars_id}
+</if>
+<!-- 查询开卡所有 -->
+<if test="dn=='kjs_icbc_kk'">
+select * from kjs_icbc_kk kk
+LEFT JOIN kj_icbc i ON i.id=kk.icbc_id
+WHERE kk.icbc_id
+</if>
+<!--面签所有  -->
+<if test="dn=='kjs_icbc_mq'">
+select * from kjs_icbc_mq mq
+LEFT JOIN kj_icbc i ON i.id=mq.icbc_id
+WHERE mq.icbc_id
+</if>
+<!-- 贷款所有 -->
+<if test="dn=='kjs_icbc_cardk'">
+select * from kjs_icbc_cardk dk
+LEFT JOIN kj_icbc i ON i.id=dk.icbc_id
+WHERE dk.icbc_id
+</if>
+<!-- 业务类型 -->
+<if test="dn=='commontype'">
+select * from  icbc_erp_commontype 
+</if>
+<!-- 操作节点流程 -->
+<if test="dn=='icbc_erp_kj_icbc'">
+select *,
+admin.name as adminname,
+gems.name as gemsname,
+fs.name as fsname,
+icbc.c_name as icbcname,
+nt.name as tname,
+kn.name as knname,
+icbc.dt_add as icbc_dt_add
+from icbc_erp_kj_icbc_result kir 
+LEFT JOIN assess_admin admin ON admin.id=kir.mid_add
+LEFT JOIN assess_gems gems ON gems.id=admin.gemsid
+LEFT JOIN assess_fs fs ON fs.id=gems.fsid 
+LEFT JOIN kj_icbc icbc ON icbc.id=kir.icbc_id
+LEFT JOIN icbc_erp_commtaskname kn ON kn.status=kir.status
+LEFT JOIN icbc_erp_commontype nt ON nt.id=kir.type_id
+where 1=1
+<if test="ywlx_id!=null and ywlx_id!=''">
+and kir.type_id=#{ywlx_id}
+</if>
+<if test="icbc_id!=null and icbc_id!=''">
+and kir.icbc_id=#{icbc_id}
+</if> 	
+ORDER BY kir.dt_edit desc
+</if>
+<!-- 操作节点流程 -->
+<if test="dn=='wdrw'">
+select
+w1.*,
+admin.name as adminname,
+gems.name as gemsname,
+fs.name as fsname,
+icbc.c_name as icbcname,
+nt.name as tname,
+kn.name as knname,
+admin1.name as opname,
+admin1.id as admin1_id,
+w1.operate_id as operate_id,
+admin2.name as add_name,
+icbc.dt_add as icbc_dt_add,
+kk.dk_price as kk_dk_price,
+kk.dz_type as kk_dz_type,
+icbc.mid_add as icbc_mid_add
+from 
+( 
+select 
+ki.*,
+kir.result_1_code as kir_code,
+kir.result_1_value as kir_value,
+kir.dt_edit as kir_dt_edit
+from icbc_erp_kj_icbc ki
+LEFT JOIN icbc_erp_kj_icbc_result kir ON kir.qryid=ki.id
+where kir.qryid=ki.id and ki.status=kir.status and ki.type_id=kir.type_id
+) w1 
+LEFT JOIN assess_admin admin ON admin.id=w1.mid_add
+LEFT JOIN assess_gems gems ON gems.id=admin.gemsid
+LEFT JOIN assess_fs fs ON fs.id=gems.fsid 
+LEFT JOIN kj_icbc icbc ON icbc.id=w1.icbc_id
+LEFT JOIN icbc_erp_commtaskname kn ON kn.status=w1.status
+LEFT JOIN icbc_erp_commontype nt ON nt.id=w1.type_id
+LEFT JOIN assess_admin admin1 ON admin1.id=w1.operate_id
+LEFT JOIN assess_admin admin2 ON admin2.id=icbc.mid_add
+LEFT JOIN kjs_icbc_kk kk ON kk.icbc_id=icbc.id
+where
+w1.kir_dt_edit=
+(
+select MAX(w2.kir_dt_edit) 
+from ( 
+select 
+ki.*,
+kir.result_1_code as kir_code,
+kir.result_1_value as kir_value,
+kir.dt_edit as kir_dt_edit
+from icbc_erp_kj_icbc ki
+LEFT JOIN icbc_erp_kj_icbc_result kir ON kir.qryid=ki.id
+where kir.qryid=ki.id and ki.status=kir.status and ki.type_id=kir.type_id
+) w2 WHERE w2.status=w1.status and w2.type_id=w1.type_id and w2.icbc_id=w1.icbc_id
+)
+<if test="status_id!=null and status_id!=''">
+and icbc.mid_add in 
+<foreach collection="status_id" item="dramaId" open="(" close=")" separator=",">
+#{dramaId}
+</foreach>
+</if>
+<if test="ywlx_id!=null and ywlx_id!=''">
+and w1.type_id=#{ywlx_id}
+</if>
+<if test="icbc_id!=null and icbc_id!=''">
+and w1.icbc_id=#{icbc_id}
+</if> 	
+<if test="c_name!=null and c_name!=''">
+and (w1.c_name like concat('%',#{c_name},'%')
+  or w1.c_carno like concat('%',#{c_name},'%')
+  or w1.c_carvin like concat('%',#{c_name},'%')
+  or w1.c_cardno like concat('%',#{c_name},'%'))
+</if> 		
+ORDER BY w1.dt_edit desc
+limit #{pagenow},#{pagesize}
+</if>
+
+<!-- 我的参与 -->
+<if test="dn=='wdcy'">
+ select
+ ki.*,
+ admin.name as adminname,
+ gems.name as gemsname,
+ fs.name as fsname,
+ icbc.c_name as icbcname,
+ nt.name as tname,
+ kn.name as knname, 
+ icbc.dt_add as icbc_dt_add,
+ kir.mid_add as kir_mid_add,
+ admin1.name as add_name
+ from icbc_erp_kj_icbc_result kir  
+ LEFT JOIN icbc_erp_kj_icbc ki ON ki.id=kir.qryid
+ LEFT JOIN assess_admin admin ON admin.id=ki.mid_add
+ LEFT JOIN assess_gems gems ON gems.id=admin.gemsid
+ LEFT JOIN assess_fs fs ON fs.id=gems.fsid 
+ LEFT JOIN kj_icbc icbc ON icbc.id=ki.icbc_id
+ LEFT JOIN icbc_erp_commtaskname kn ON kn.status=ki.status
+ LEFT JOIN icbc_erp_commontype nt ON nt.id=ki.type_id
+ LEFT JOIN assess_admin admin1 ON admin1.id=icbc.mid_add
+ where  kir.mid_add=${admin_id} and kir.qryid and ki.id 
+ <if test="ywlx_id!=null and ywlx_id!=''">
+and ki.type_id=#{ywlx_id}
+</if>
+<if test="icbc_id!=null and icbc_id!=''">
+and ki.icbc_id=#{icbc_id}
+</if> 		
+<if test="c_name!=null and c_name!=''">
+  and (ki.c_name like concat('%',#{c_name},'%')
+  or ki.c_carno like concat('%',#{c_name},'%')
+  or ki.c_carvin like concat('%',#{c_name},'%')
+  or ki.c_cardno like concat('%',#{c_name},'%'))
+</if>
+ GROUP BY kir.qryid
+ ORDER BY ki.dt_edit desc
+ limit #{pagenow},#{pagesize} 
+</if>
+<!-- 我的启动 -->
+<if test="dn=='wdqd'">
+select *,
+admin.name as adminname,
+gems.name as gemsname,
+fs.name as fsname,
+icbc.c_name as icbcname,
+nt.name as tname,
+kn.name as knname,
+admin1.name as opname,
+icbc.dt_add as icbc_dt_add
+from icbc_erp_kj_icbc kir 
+LEFT JOIN assess_admin admin ON admin.id=kir.mid_add
+LEFT JOIN assess_gems gems ON gems.id=admin.gemsid
+LEFT JOIN assess_fs fs ON fs.id=gems.fsid 
+LEFT JOIN kj_icbc icbc ON icbc.id=kir.icbc_id
+LEFT JOIN icbc_erp_commtaskname kn ON kn.status=kir.status
+LEFT JOIN icbc_erp_commontype nt ON nt.id=kir.type_id
+LEFT JOIN assess_admin admin1 ON admin1.id=kir.operate_id
+where 1=1 
+and kir.type_id!=4
+and kir.status!=4 
+and kir.status!=8
+and kir.status!=12
+and kir.status!=16
+and kir.status!=21
+and kir.status!=25
+and kir.status!=30
+and kir.status!=40
+and kir.status!=46
+and kir.status!=55
+and kir.status!=65
+and kir.status!=71
+and kir.status!=82
+and kir.status!=86
+and kir.status!=95
+<if test="status_id!=null and status_id!=''">
+and kir.status in 
+<foreach collection="status_id" item="dramaId" open="(" close=")" separator=",">
+#{dramaId}
+</foreach>
+</if>
+<if test="ywlx_id!=null and ywlx_id!=''">
+and kir.type_id=#{ywlx_id}
+</if>
+<if test="icbc_id!=null and icbc_id!=''">
+and kir.icbc_id=#{icbc_id}
+</if> 	
+<if test="c_name!=null and c_name!=''">
+and (kir.c_name like concat('%',#{c_name},'%')
+  or kir.c_carno like concat('%',#{c_name},'%')
+  or kir.c_carvin like concat('%',#{c_name},'%')
+  or kir.c_cardno like concat('%',#{c_name},'%'))
+</if> 		
+ORDER BY kir.dt_edit desc
+limit #{pagenow},#{pagesize}
+</if>
+
+<!-- 操作节点流程操作内容备注 -->
+<if test="dn=='icbc_erp_kj_icbc_result'">
+select * from  icbc_erp_kj_icbc_result 
+</if>
+<!--根据条件查询result表  -->
+<if test="dn=='erp_icbc_lsjl'">
+select * from  icbc_erp_kj_icbc_result 
+where
+icbc_id=#{icbc_id} and status=#{status} and type_id=#{type_id}
+order by dt_edit
+</if>
+<!-- 操作节点板块是否操作 -->
+<if test="dn=='erp_type_id'">
+select type_id from icbc_erp_kj_icbc where icbc_id=#{icbc_id}
+</if>
+
+</select>
+<!--添加 -->
+<insert id="save"  parameterType="pd" useGeneratedKeys="true"  keyProperty="id">
+
+<!-- 添加icbc_erp_kj_icbc-->
+<if test="dn=='icbc_erp_kj_icbc'">
+insert into icbc_erp_kj_icbc(
+id,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+dt_sub,
+dt_fin,
+status,
+icbc_id,
+gems_id,
+gems_fs_id,
+type_id,
+c_name,
+c_carno,
+c_carvin,
+c_cardno
+
+)value(
+#{id},
+#{mid_add},
+#{mid_edit},
+#{dt_add},
+#{dt_edit},
+#{dt_sub},
+#{dt_fin},
+#{status},
+#{icbc_id},
+#{gems_id},
+#{gems_fs_id},
+#{type_id},
+#{c_name},
+#{c_carno},
+#{c_carvin},
+#{c_cardno}
+
+)
+</if>
+<!-- 添加icbc_erp_kj_icbc_result-->
+<if test="dn=='icbc_erp_kj_icbc_result'">
+insert into icbc_erp_kj_icbc_result(
+id,
+qryid,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+status,
+status_oldht,
+remark,
+result_1_code,
+result_1_msg,
+result_1_value,
+dt_sub,
+type_id,
+icbc_id,
+jsonAll
+)value(
+#{id},
+#{qryid},
+#{mid_add},
+#{mid_edit},
+#{dt_add},
+#{dt_edit},
+#{status},
+#{status_oldht},
+#{remark},
+#{result_1_code},
+#{result_1_msg},
+#{result_1_value},
+#{dt_sub},
+#{type_id},
+#{icbc_id},
+#{jsonAll}
+)
+</if>
+</insert>
+<!--更新 -->
+<update id="update" parameterType="pd">
+
+<!-- 每晚凌晨定时更新 操作id -->
+<if test="dn=='task01'">
+UPDATE icbc_erp_kj_icbc SET operate_id=#{operate_id}
+</if>
+
+<!--15大板块更新操作 -->
+<!-- 更新icbc_erp_kj_icbc状态 -->
+<if test="dn=='icbc_erp_kj_icbc'">
+update icbc_erp_kj_icbc 
+<trim prefix="set" suffixOverrides=",">
+<if test="mid_add!=null and mid_add!=''">mid_add=#{mid_add},</if> 
+<if test="mid_edit!=null and mid_edit!=''">mid_edit=#{mid_edit},</if>
+<if test="dt_add!=null and dt_add!=''">dt_add=#{dt_add},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if> 	
+<if test="dt_sub!=null and dt_sub!=''">dt_sub=#{dt_sub},</if> 	
+<if test="dt_fin!=null and dt_fin!=''">dt_fin=#{dt_fin},</if> 
+<if test="status!=null and status!=''">status=#{status},</if>
+<if test="icbc_id!=null and icbc_id!=''">icbc_id=#{icbc_id},</if>
+<if test="gems_id!=null and gems_id!=''">gems_id=#{gems_id},</if> 	
+<if test="gems_fs_id!=null and gems_fs_id!=''">gems_fs_id=#{gems_fs_id},</if>
+<if test="type_id!=null and type_id!=''">type_id=#{type_id},</if> 
+<if test="c_name!=null and c_name!=''">c_name=#{c_name},</if>
+<if test="c_carno!=null and c_carno!=''">c_carno=#{c_carno},</if>
+<if test="c_carvin!=null and c_carvin!=''">c_carvin=#{c_carvin},</if> 	
+<if test="c_cardno!=null and c_cardno!=''">c_cardno=#{c_cardno},</if>
+operate_id=#{operate_id},
+</trim>
+where id=#{id}
+</if>
+<!--征信 -->
+<if test="dn=='001'"> 
+update kj_icbc  
+set
+mid_edit=#{mid_edit},
+bc_status =#{bc_status},
+zx_result =#{zx_result},
+dt_edit=#{dt_edit}
+where id=#{icbc_id}
+</if>
+
+</update>
+<!--删除 -->
+<delete id="del">
+
+
+
+</delete>
+
+</mapper>

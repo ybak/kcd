@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.bxMapper">
+
+	    <select id="findbxbyc_name" parameterType="bx" resultType="bx">
+       select * from assess_querybx
+        where c_carno=#{c_carno}
+        </select>
+        
+        
+       <select id="findbx" parameterType="bx" resultType="bx">
+       select * from assess_querybx
+        
+        </select>
+        
+ </mapper>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper1.icbc1.icbc_result1Mapper" >
+
+<select id="lastfindresult" parameterType="icbc_result" resultType="icbc_result">
+select * from kj_icbc_result where qryid=#{qryid}  order by dt_add desc limit 1
+</select>
+<select id="kklastfindresult" parameterType="icbc_result" resultType="icbc_result">
+select * from kjs_icbc_kk_result where qryid=#{qryid}  order by dt_add desc limit 1
+</select>
+
+<select id="dklastfindresult" parameterType="icbc_result" resultType="icbc_result">
+select * from kjs_icbc_cardk_result where qryid=#{qryid}  order by dt_add desc limit 1
+</select>
+
+<select id="findresultbyqryid" parameterType="icbc_result" resultType="icbc_result">
+select * from kj_icbc_result where qryid=#{qryid} 
+</select>
+<select id="findzxbyqryid" parameterType="icbc_result" resultType="icbc_result">
+select * from kjs_icbc_zx_result where qryid=#{qryid}
+</select>
+<select id="findkkbyqryid" parameterType="icbc_result" resultType="icbc_result">
+select * from kjs_icbc_kk_result where qryid=#{qryid}
+</select>
+<select id="findcardkbyqryid" parameterType="icbc_result" resultType="icbc_result">
+select * from kjs_icbc_cardk_result where qryid=#{qryid}
+</select>
+<select id="findpreauditbyqryid" parameterType="icbc_result" resultType="icbc_result">
+select * from kjs_icbc_preaudit_result where qryid=#{qryid} 
+</select>
+<insert id="addzx_result" parameterType="icbc_result" useGeneratedKeys="true"  keyProperty="id">
+insert into kj_icbc_zx_result(
+id,
+qryid,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+status,
+remark
+)values(
+#{id},
+#{qryid},
+#{mid_add},
+#{mid_edit},
+#{dt_add},
+#{dt_edit},
+#{status},
+#{remark}
+)
+</insert>
+<insert id="addkk_result" parameterType="icbc_result" useGeneratedKeys="true"  keyProperty="id">
+insert into kjs_icbc_kk_result(
+id,
+qryid,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+status,
+remark
+)values(
+#{id},
+#{qryid},
+#{mid_add},
+#{mid_edit},
+#{dt_add},
+#{dt_edit},
+#{status},
+#{remark}
+)
+</insert>
+<insert id="addcardk_result" parameterType="icbc_result" useGeneratedKeys="true"  keyProperty="id">
+insert into kjs_icbc_cardk_result(
+id,
+qryid,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+status,
+remark
+)values(
+#{id},
+#{qryid},
+#{mid_add},
+#{mid_edit},
+#{dt_add},
+#{dt_edit},
+#{status},
+#{remark}
+)
+</insert>
+<insert id="addpreaudit_result" parameterType="icbc_result" useGeneratedKeys="true"  keyProperty="id">
+insert into kjs_icbc_preaudit_result(
+id,
+qryid,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+status,
+remark
+)values(
+#{id},
+#{qryid},
+#{mid_add},
+#{mid_edit},
+#{dt_add},
+#{dt_edit},
+#{status},
+#{remark}
+)
+</insert>
+<insert id="addicbc_result" parameterType="icbc_result" useGeneratedKeys="true"  keyProperty="id">
+insert into kj_icbc_result(
+id,
+qryid,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+status,
+remark
+)values(
+#{id},
+#{qryid},
+#{mid_add},
+#{mid_edit},
+#{dt_add},
+#{dt_edit},
+#{status},
+#{remark}
+)
+</insert>
+
+</mapper>

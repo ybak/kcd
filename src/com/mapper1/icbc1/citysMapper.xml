@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper1.icbc1.citysMapper" >
+
+
+<select id="findcitys" resultType="citys" parameterType="citys" >
+select * from comm_citys where id=#{id}
+</select>
+
+<select id="findallcitys" resultType="citys" parameterType="citys" >
+select * from comm_citys
+</select>
+
+<select id="findcitysbystate_id" resultType="citys" parameterType="citys" >
+select * from comm_citys where state_id=#{state_id} order by chrkey asc;
+</select>
+
+
+</mapper>

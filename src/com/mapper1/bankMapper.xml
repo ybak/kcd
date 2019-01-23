@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.bankMapper">
+
+	    <select id="findbankbycode" parameterType="bank" resultType="bank">
+       select * from yl_banklist 
+        where code = #{code}
+        </select>
+        <select id="bankmap" parameterType="bank" resultType="bank">
+         select * from yl_banklist 
+         where code = #{code} limit 1
+        </select>
+         <select id="bankmap1" parameterType="bank" resultType="bank">
+         select * from yl_banklist 
+         where id = #{id} limit 1
+         </select>
+         <select id="findbank" parameterType="bank" resultType="bank">
+         select * from yl_banklist        
+         </select>
+        
+        
+ </mapper>

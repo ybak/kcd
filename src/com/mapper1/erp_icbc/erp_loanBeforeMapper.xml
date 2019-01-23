@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.erp_icbc.erp_loanBeforeMapper">
+<!-- 列表页查询 -->      
+<select id="findList" parameterType="pd" resultType="pd">
+    
+<!-- 财务管理->贷前业务管理->放款记录-》列表页    --> 
+<if test="dn=='selectListLendingResult'">
+SELECT
+  	icbc.id AS icbc_id,
+	icbc.gems_code AS code,
+	icbc.c_name AS name,
+	icbc.c_cardno AS c_cardno,
+	fs.name AS fs_name,
+	icbc.fk_status AS status
+FROM
+	kj_icbc icbc
+LEFT JOIN assess_fs fs ON fs.id = icbc.gems_fs_id
+WHERE 1 = 1 and icbc.gems_fs_id=#{fsid}
+<if test="selectMsg!=null and selectMsg!=''">
+  and (icbc.gems_code like concat('%',#{selectMsg},'%')
+  or icbc.c_cardno like concat('%',#{selectMsg},'%')
+  or icbc.c_name like concat('%',#{selectMsg},'%'))
+</if>
+<if test="assess_cp!=null and assess_cp!=''">
+  and icbc.fk_status=#{assess_cp}
+</if>
+</if>        
+
+<!-- 财务管理->贷前业务管理->垫资记录-》列表页    --> 
+<if test="dn=='selectListMatEndowmentResult'">
+SELECT
+  	icbc.id AS icbc_id,
+	icbc.gems_code AS code,
+	icbc.c_name AS name,
+	icbc.c_cardno AS c_cardno,
+	fs.name AS fs_name,
+	icbc.fk_status AS status
+FROM
+	kj_icbc icbc
+LEFT JOIN assess_fs fs ON fs.id = icbc.gems_fs_id
+WHERE 1=1 and icbc.gems_fs_id=#{fsid}
+<if test="selectMsg!=null and selectMsg!=''">
+  and (icbc.gems_code like concat('%',#{selectMsg},'%')
+  or icbc.c_cardno like concat('%',#{selectMsg},'%')
+  or icbc.c_name like concat('%',#{selectMsg},'%'))
+</if>
+<if test="assess_cp!=null and assess_cp!=''">
+  and icbc.fk_status=#{assess_cp}
+</if>
+</if>    
+    
+<!-- 财务管理->贷前业务管理->业务付款申请-》列表页 -->    
+<if test="dn=='selectList'">
+SELECT
+  	erp_icbc.icbc_id AS icbc_id,
+	icbc.gems_code AS code,
+	erp_icbc.c_name AS name,
+	cars.cars_type AS cars_type,
+	fs.name AS fs_name,
+	erp_icbc.dt_add AS date
+FROM
+	icbc_erp_kj_icbc erp_icbc
+LEFT JOIN kj_icbc icbc ON icbc.id = erp_icbc.icbc_id
+LEFT JOIN assess_fs fs ON fs.id = erp_icbc.gems_fs_id
+LEFT JOIN assess_cars cars ON cars.icbc_id = erp_icbc.icbc_id
+WHERE 1 = 1 and erp_icbc.gems_fs_id=#{fsid} and erp_icbc.status=49 
+<if test="selectMsg!=null and selectMsg!=''">
+  and (icbc.gems_code like concat('%',#{selectMsg},'%')
+  or fs.name like concat('%',#{selectMsg},'%')
+  or erp_icbc.c_name like concat('%',#{selectMsg},'%'))
+</if>
+GROUP BY icbc_id
+ORDER BY date DESC
+</if>
+
+</select>
+    
+
+<!-- 详情页查询 --> 
+<select id="findById" parameterType="pd" resultType="pd">
+<!-- 财务管理->贷前业务管理->业务付款申请-》详情页 -->
+<if test="dn=='selectOneBusiness'">
+SELECT
+	icbc.gems_code AS code,
+	icbc.c_name AS name,
+	cars.cars_type AS cars_type,
+	fs.name AS fs_name,
+	fsd.account_name AS account_name,
+	fsd.bank_account AS bank_account,
+	fsd.open_bank AS open_bank,
+	icbc_kk.dk_price AS dk_price,
+	icbc_kk.jrfw_price AS jrfw_price
+FROM
+	kj_icbc icbc
+LEFT JOIN kjs_icbc_kk icbc_kk ON icbc_kk.icbc_id = icbc.id
+LEFT JOIN assess_fs fs ON fs.id = icbc.gems_fs_id
+LEFT JOIN assess_fs_details fsd ON fsd.fs_id = fs.id
+LEFT JOIN assess_cars cars ON cars.icbc_id = icbc.id
+WHERE 1=1
+<if test="icbc_id!=null and icbc_id!=''"> 
+and icbc.id=#{icbc_id}
+</if>
+</if>
+
+<!--放款记录->列表页  查询放款金额 -->
+<if test="dn=='selectOneLendingMoeny'">
+select 
+	icbc_id,fk_date,fk_money from icbc_erp_kj_icbc_result 
+where 
+	status=62 and icbc_id=#{icbc_id}
+</if> 
+
+<!--垫资记录->列表页  查询垫资金额 -->
+<if test="dn=='selectOneMatEndwomentMoeny'">
+select 
+	icbc_id,result_1_value from icbc_erp_kj_icbc_result
+where 
+	status=102 and icbc_id=#{icbc_id}
+</if> 
+</select>    
+
+
+
+
+
+
+</mapper>
+
+

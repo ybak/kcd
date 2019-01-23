@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper1.ManagementCenter.kj_icbcMapper" >
+<!-- 每月报单总量 -->
+<select id="selectbill" parameterType="kj_icbc" resultType="java.util.Map">
+select count(*) amount from kj_icbc where month(dt_add)=MONTH(SYSDATE()) and YEAR(dt_add)=year(SYSDATE())
+</select>
+
+ <!-- 每月放款单数 ,总金额-->
+  <select id="selectloan" parameterType="kj_icbc" resultType="java.util.Map" >
+  select count(ki.id) amount,sum(iekir.fk_money) money from kj_icbc ki,icbc_erp_kj_icbc_result iekir
+ where month(iekir.fk_date)=MONTH(SYSDATE()) and YEAR(iekir.fk_date)=year(SYSDATE()) and ki.fk_status in(1,2,3) and iekir.`status`=62  and ki.id=iekir.icbc_id
+ </select>
+
+ 
+  <!-- 每月已放款未抵押单数，总金额-->
+  <select id="selectfk" parameterType="kj_icbc" resultType="java.util.Map" >
+  select count(ki.id) amount,sum(iekir.fk_money) money from kj_icbc ki,icbc_erp_kj_icbc_result iekir
+ where month(iekir.fk_date)=MONTH(SYSDATE()) and YEAR(iekir.fk_date)=year(SYSDATE()) and ki.fk_status=1 and iekir.`status`=62  and ki.id=iekir.icbc_id
+ </select>
+
+
+ <!-- 每月总订单各省排名 -->
+ <select id="selectstates"  parameterType="kj_icbc" resultType="java.util.Map">
+ select count(ki.kk_loan_stateid) sell,cs.`name` name from kj_icbc ki,comm_states cs where ki.kk_loan_stateid=cs.id and month(ki.dt_add)=MONTH(SYSDATE()) 
+ and YEAR(dt_add)=year(SYSDATE()) GROUP BY ki.kk_loan_stateid ORDER BY count(ki.kk_loan_stateid) DESC
+ </select>
+  <!-- 每月总订单各代理商排名 -->
+ <select id="selectgems"  parameterType="kj_icbc" resultType="java.util.Map">
+  select count(ki.gems_fs_id) gems,af.`name` name from kj_icbc ki,assess_fs af where 
+  ki.gems_fs_id=af.id and month(ki.dt_add)=MONTH(SYSDATE()) and YEAR(ki.dt_add)=year(SYSDATE()) GROUP BY ki.gems_fs_id ORDER BY count(ki.gems_fs_id) DESC
+ </select>
+ 
+  <!-- 每月放款订单各省排名 -->
+ <select id="selectloanstates"  parameterType="kj_icbc" resultType="java.util.Map">
+ select count(ki.kk_loan_stateid) sell,cs.`name` name from kj_icbc ki,comm_states cs,icbc_erp_kj_icbc_result iekir where ki.kk_loan_stateid=cs.id and iekir.icbc_id=ki.id and month(iekir.fk_date)=MONTH(SYSDATE()) 
+ and YEAR(iekir.fk_date)=year(SYSDATE()) and ki.fk_status in(1,2,3) and iekir.status=62 GROUP BY ki.kk_loan_stateid ORDER BY count(ki.kk_loan_stateid) DESC
+ </select>
+  <!-- 每月放款订单各代理商排名 -->
+ <select id="selectloangems"  parameterType="kj_icbc" resultType="java.util.Map">
+  select count(ki.gems_fs_id) gems,af.`name` name from kj_icbc ki,assess_fs af,icbc_erp_kj_icbc_result iekir where 
+  ki.gems_fs_id=af.id and month(iekir.fk_date)=MONTH(SYSDATE()) and YEAR(iekir.fk_date)=year(SYSDATE()) and iekir.icbc_id=ki.id
+and ki.fk_status in(1,2,3) and iekir.`status`=62 GROUP BY ki.gems_fs_id ORDER BY count(ki.gems_fs_id) DESC
+ </select>
+ 
+ <!-- 每月总单数折线图数据 -->
+ <select id="selectchart"  parameterType="kj_icbc" resultType="java.util.Map">
+  select year(dt_add) year,month(dt_add) month,count(*) total from kj_icbc where 
+  year(SYSDATE())-year(dt_add) &lt; 2 GROUP BY year(dt_add),month(dt_add) ORDER BY dt_add DESC limit 9
+  </select>
+  <!-- 贷款金额区间扇形图 -->
+  <select id="selectmoneydistribute"  parameterType="kj_icbc" resultType="java.util.Map">
+  select sum(case when iekir.fk_money >= 30000 and iekir.fk_money &lt; 100000 then 1 end) singular1,
+	sum(case when iekir.fk_money >= 100000 and iekir.fk_money &lt; 200000 then 1 end) singular2,
+	sum(case when iekir.fk_money >= 200000 and iekir.fk_money &lt; 500000 then 1 end) singular3,
+	sum(case when iekir.fk_money >= 500000 then 1 end) singular4 
+ 	from icbc_erp_kj_icbc_result iekir,kj_icbc ki where month(iekir.fk_date)=MONTH(SYSDATE()) and YEAR(iekir.fk_date)=year(SYSDATE()) 
+and iekir.status = 62 and ki.fk_status in(1,2,3) and iekir.icbc_id=ki.id
+  </select>
+  <!-- 征信通过率查询 -->
+  <select id="selectcredit"  parameterType="kj_icbc" resultType="java.util.Map">
+  select count(zxok_tag) zxok,zxok_tag from kj_icbc GROUP BY zxok_tag ORDER BY zxok_tag
+  </select>
+  <!-- 客户年龄查询统计 -->
+  <select id="selectclientage" parameterType="kj_icbc" resultType="java.util.Map">
+  select sum(case when cardage.card >= 18 and cardage.card &lt; 30 then 1 end) age1,
+  sum(case when cardage.card >= 30 and cardage.card &lt; 40 then 1 end) age2,
+  sum(case when cardage.card >= 40 and cardage.card &lt; 50 then 1 end) age3,
+  sum(case when cardage.card >= 50 then 1 end) age4 from 
+  (select (year(SYSDATE())-Mid(c_cardno,7,4)) card from kj_icbc) cardage
+  </select>
+  <!-- 新车车龄查询统计 -->
+  <select id="selectcarsage" parameterType="kj_icbc" resultType="java.util.Map">
+  select sum(case when carage.age >= 1 and carage.age &lt; 3 then 1 end) age1,
+  sum(case when carage.age >= 3 and carage.age &lt; 6 then 1 end) age2,
+  sum(case when carage.age >= 6 and carage.age &lt; 9 then 1 end) age3,
+  sum(case when carage.age >= 9 then 1 end) age4
+  from (select (year(ki.dt_sub)-year(ac.cardt1)) age from assess_cars ac,kj_icbc ki where ki.id=ac.icbc_id and ac.cars_type=1) carage
+  </select>
+  <!-- 垫资天数分布图 -->
+  <select id="selectadvancefund" parameterType="kj_icbc" resultType="java.util.Map">
+  select year(yh_date.fk_date) year,month(yh_date.fk_date) month,avg(timestampdiff(day,dz_date.dt_sub,yh_date.fk_date)) adate from 
+  (select icbc_id,dt_sub from icbc_erp_kj_icbc_result where `status`=52) dz_date,
+  (select icbc_id,fk_date from icbc_erp_kj_icbc_result where `status`=62) yh_date 
+  where dz_date.icbc_id=yh_date.icbc_id GROUP BY year(yh_date.fk_date),month(yh_date.fk_date) ORDER BY yh_date.fk_date DESC limit 12
+  </select>
+  <!-- 抵押材料回收情况 -->
+  <select id="selectrecycle" parameterType="kj_icbc" resultType="java.util.Map">
+  select year(dt_sub) year,month(dt_sub) month,count(*) total from icbc_erp_kj_icbc_result where status=82 
+  and year(SYSDATE())-year(dt_sub) &lt; 2 GROUP BY year(dt_sub),month(dt_sub) ORDER BY dt_sub DESC limit 9
+  </select>
+  <!-- 二手车每月放款单数和总金额 -->
+  <select id="selectoldcars" parameterType="kj_icbc" resultType="java.util.Map">
+  select year(fk_date) year,month(fk_date) month,count(*) con,(sum(fk_money)/10000) money from icbc_erp_kj_icbc_result 
+  where icbc_id in(select icbc_id from assess_cars where cars_type=2) and `status`=62 
+  and year(SYSDATE())-year(fk_date) &lt; 2 GROUP BY year(fk_date),month(fk_date) ORDER BY fk_date DESC limit 12
+  </select>
+   <!-- 新车,二手车每月放款单数和总金额 -->
+  <select id="selectnewcars" parameterType="kj_icbc" resultType="java.util.Map">
+  select  newcars.year1,newcars.month1,oldcars.oldcon,oldcars.oldmoney,newcars.newcon,newcars.newmoney from
+(select year(fk_date) year1,month(fk_date) month1,count(*) oldcon,(sum(fk_money)/10000) oldmoney from icbc_erp_kj_icbc_result 
+  where icbc_id in(select icbc_id from assess_cars where cars_type=2) and `status`=62 
+  and year(SYSDATE())-year(fk_date) &lt; 2 GROUP BY year(fk_date),month(fk_date) ORDER BY fk_date DESC limit 12) oldcars,
+  (select year(fk_date) year1,month(fk_date) month1,count(*) newcon,(sum(fk_money)/10000) newmoney from icbc_erp_kj_icbc_result 
+  where icbc_id in(select icbc_id from assess_cars where cars_type=1) and `status`=62 
+  and year(SYSDATE())-year(fk_date) &lt; 2 GROUP BY year(fk_date),month(fk_date) ORDER BY fk_date DESC limit 12) newcars 
+where oldcars.year1=newcars.year1 and oldcars.month1=newcars.month1
+  </select>
+  <!-- 
+    select year(iekir.fk_date) year,month(iekir.fk_date) month,count(*) con,(sum(iekir.fk_money)/10000) money from icbc_erp_kj_icbc_result iekir,kj_icbc ki 
+  where icbc_id in(select icbc_id from assess_cars where cars_type=1) and iekir.`status`=62 
+  and year(SYSDATE())-year(iekir.fk_date) < 2 and iekir.icbc_id=ki.id and ki.fk_status in(1,2,3) 
+GROUP BY year(iekir.fk_date),month(iekir.fk_date) ORDER BY iekir.fk_date DESC limit 12
+   -->
+  
+  
+</mapper>

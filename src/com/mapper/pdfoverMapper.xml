@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.pdfoverMapper">
+
+<select id="pdflist" parameterType="pdfover" resultType="Map"> 
+select * from kcd_pdfover where uid=#{uid}
+</select>
+
+<select id="findpdfurl" parameterType="pdfover" resultType="Map"> 
+select * from kcd_pdfover where uid=#{uid}
+</select>
+
+<insert id="addpdf" parameterType="pdfover" keyProperty="eid">
+
+ insert into kcd_pdfover(
+   eid,
+   pdfurl,
+   pdftest,
+   pdftime,
+   pdfname,
+   uid,
+   pdfuptime
+    )values(
+ #{eid},
+ #{pdfurl},
+ #{pdftest},
+ #{pdftime},
+ #{pdfname},
+ #{uid},
+ #{pdfuptime}
+ ) 
+</insert>
+
+<select id="findbyname" parameterType="pdfover" resultType="pdfover">
+
+select * from kcd_pdfover
+where pdfname=#{pdfname}
+
+</select>
+<select id="findbyid" parameterType="pdfover" resultType="Map">
+
+select * from kcd_pdfover
+where uid=#{uid}
+
+</select>
+
+<update id="uppdf" parameterType="pdfover">
+
+update  kcd_pdfover
+<trim prefix="set" suffixOverrides=",">
+<if test="pdfurl!=null">pdfurl=#{pdfurl},</if>
+<if test="pdftest!=null">pdftest=#{pdftest},</if>
+<if test="pdfuptime!=null">pdfuptime=#{pdfuptime},</if>
+<if test="pdfname!=null">pdfname=#{pdfname},</if>
+</trim>
+where uid=#{uid}
+
+</update>
+
+</mapper>

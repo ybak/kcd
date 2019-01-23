@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper1.icbc1.newicbc_preauditMapper" >
+<select id="findpreauditbyorder" parameterType="icbc_preaudit" resultType="icbc_preaudit">
+select ki.*,fs.name as gname,gems.name as pname from kjs_icbc_preaudit ki,assess_fs fs,assess_gems gems where ki.gems_fs_id=fs.id and ki.gems_id=gems.id
+and ki.icbc_id=#{icbc_id} order by ki.dt_add desc limit 1
+</select>
+
+<select id="findpreauditbyid" parameterType="icbc_preaudit" resultType="icbc_preaudit">
+select * from kjs_icbc_preaudit where icbc_id=#{icbc_id} limit 1
+</select>
+
+<select id="findlastid"  resultType="icbc_preaudit">
+select * from kjs_icbc_preaudit where id=(select max(id) from kjs_icbc_preaudit)
+</select>
+
+<update id="uppreaudit" parameterType="icbc_preaudit">
+update kjs_icbc_preaudit
+<trim prefix="set" suffixOverrides=","> 
+<if test="gems_code!=null and gems_code!=''">gems_code=#{gems_code},</if>
+<if test="source_id!=null and source_id!=''">source_id=#{source_id},</if>
+<if test="property_id!=null and property_id!=''">property_id=#{property_id},</if>
+<if test="gear_box_id!=null and gear_box_id!=''">gear_box_id=#{gear_box_id},</if>
+<if test="car_status!=null and car_status!=''">car_status=#{car_status},</if>
+<if test="car_type!=null and car_type!=''">car_type=#{car_type},</if>
+<if test="carno!=null and carno!=''">carno=#{carno},</if>
+<if test="carkm!=null and carkm!=''">carkm=#{carkm},</if>
+<if test="carvin!=null and carvin!=''">carvin=#{carvin},</if>
+<if test="cardt1!=null and cardt1!=''">cardt1=#{cardt1},</if>
+<if test="cardt2!=null and cardt2!=''">cardt2=#{cardt2},</if>
+<if test="up_time!=null and up_time!=''">up_time=#{up_time},</if>
+<if test="bc_status!=null and bc_status!=''">bc_status=#{bc_status},</if>
+<if test="md_edit!=null and md_edit!=''">md_edit=#{md_edit},</if>
+<if test="api_edit!=null and api_edit!=''">api_edit=#{api_edit},</if>
+<if test="result!=null and result!=''">result=#{result},</if>
+<if test="seid!=null and seid!=''">seid=#{seid},</if>
+<if test="carid!=null and carid!=''">carid=#{carid},</if>
+<if test="brid!=null and brid!=''">brid=#{brid},</if>
+<if test="mid_add!=null and mid_add!=''">mid_add=#{mid_add},</if>
+<if test="mid_edit!=null and mid_edit!=''">mid_edit=#{mid_edit},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="dt_sub!=null and dt_sub!=''">dt_sub=#{dt_sub},</if>
+<if test="dt_fin!=null and dt_fin!=''">dt_fin=#{dt_fin},</if>
+<if test="result_time!=null and result_time!=''">result_time=#{result_time},</if>
+<if test="price_reuslt!=null and price_reuslt!=''">price_reuslt=#{price_reuslt},</if>
+</trim>
+where id=#{id}
+
+</update>
+
+<insert id="addpreaudit" parameterType="icbc_preaudit" useGeneratedKeys="true"  keyProperty="id">
+insert into kjs_icbc_preaudit(
+id,
+source_id,
+property_id,
+gear_box_id,
+car_status,
+car_type,
+carno,
+carkm,
+carvin,
+cardt1,
+cardt2,
+add_time,
+up_time,
+icbc_id,
+bc_status,
+md_add,
+md_edit,
+api_add,
+api_edit,
+sh_edit,
+result,
+gems_code,
+seid,
+carid,
+brid,
+dt_add,
+dt_edit,
+dt_sub,
+dt_fin,
+query_type,
+result_time,
+gems_fs_id,
+gems_id
+
+)values(
+#{id},
+#{source_id},
+#{property_id},
+#{gear_box_id},
+#{car_status},
+#{car_type},
+#{carno},
+#{carkm},
+#{carvin},
+#{cardt1},
+#{cardt2},
+#{add_time},
+#{up_time},
+#{icbc_id},
+#{bc_status},
+#{md_add},
+#{md_edit},
+#{api_add},
+#{api_edit},
+#{sh_edit},
+#{result},
+#{gems_code},
+#{seid},
+#{carid},
+#{brid},
+#{dt_add},
+#{dt_edit},
+#{dt_sub},
+#{dt_fin},
+#{query_type},
+#{result_time},
+#{gems_fs_id},
+#{gems_id}
+
+)
+</insert>
+
+
+
+</mapper>

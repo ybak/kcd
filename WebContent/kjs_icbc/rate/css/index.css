@@ -1,0 +1,147 @@
+input[type=button],input[type=text],input[type=password]{
+	-webkit-appearance:none;
+	outline:none;
+	
+	}
+body{
+	font-family: 'Helvetica Neue',Helvetica,sans-serif;
+    font-size: 17px;
+    line-height: 21px;
+    margin: 0;
+}
+li{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+ul{
+ 	padding: 0;
+}
+span{
+	font-size: 14px;
+}
+/*big盒子*/
+.f_w{
+     position: absolute;
+     top: 0;
+     left: 0;
+     bottom: 0;
+     right: 0;
+}
+/*输入项的标题*/
+.f_w_l > span{
+	line-height:30px;
+	color: #578aec;
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+/*input 统一样式*/
+.f_w div > input{
+	width:100%;
+	height: 40px;
+	border-radius: 5px; 
+	webkit-border-radius: 5px;
+	color: #222222;
+	border: 1px solid #CCCCCC;
+}
+.f_w > ul{
+	margin: 0 10px;
+}
+.maxtab{
+	font-size:12px;line-height: 15px;font-weight: 500; height: 15px; margin: 0; 
+	width:115px;text-align: left; padding: 0;color:#ff8700; display: block;
+}
+.f_w > ul > li{	
+	height: 90px;
+	padding-left:10px;
+	padding-right: 10px;
+	border-bottom: 1px solid #C0C0C0;
+}
+.f_w > ul > li:last-child{
+	border: none;
+}
+.f_w > ul > li > div{
+	display:inline-block;
+	width:47%;
+	height:40px;
+}
+.f_w > ul > li > div:last-child{
+	float: right;
+}
+.h_s1{
+	padding-bottom: 15px;
+}
+/*结果项*/
+.h_s input{
+	background: #e7eaef;
+}
+.h_s span{
+	color:#4B4B4B;
+	line-height: 30px;
+}
+.radio-btn input[type="radio"], .check-box input[type="checkbox"] {
+    visibility: hidden;
+}
+ .radio-btn {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    float: left;
+    cursor: pointer;
+    position: relative;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+    border: 1px solid #ccc;
+    background: rgb(255, 255, 255);
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(47%, rgba(246, 246, 246, 1)), color-stop(100%, rgba(237, 237, 237, 1)));
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+    background: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+    background: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=0);
+}
+.radio-btn i {
+    border: 1px solid #E1E2E4;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    border-radius: 100%;
+}
+.radio-btn li{
+	float: left;
+}
+/*黄色*/
+.checkedRadio i {
+    background-color: #ffd200;
+}
+/*选项ul*/
+.f_w_r{
+	margin-top:10px;
+}
+.f_w_r li{
+	margin-left:2px;
+	float: left;
+	height: 20px;
+}
+.f_w_r span{float: right;margin-left: 2px;color: #969696;line-height: 25px;}		
+.i:focus{
+	border: 1px solid #ccc; 
+	transition:border linear .2s,box-shadow linear .5s;
+	-moz-transition:border linear .2s,-moz-box-shadow linear .5s;
+	-webkit-transition:border linear .2s,-webkit-box-shadow linear .5s;
+	outline:none;
+	border-color:rgba(93,149,242,.75);
+	-webkit-appearance: none;
+	-webkit-transition: border-color 218ms;
+	-moz-transition: border-color 218ms;
+	-o-transition: border-color 218ms;
+	transition: border-color 218ms;
+}
+/*liwang 2018/5/10*/

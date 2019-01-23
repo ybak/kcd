@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper1.icbc1.newicbc_kkMapper" >
+
+<delete id="del_icbc_kk" parameterType="icbc_kk">
+DELETE FROM kjs_icbc_kk WHERE icbc_id=#{id}
+</delete>
+
+<select id="findicbc_kkbyid" resultType="icbc_kk" parameterType="icbc_kk">
+select ki.*,fs.name as gname,gems.name as pname from kjs_icbc_kk ki,assess_fs fs,assess_gems gems where ki.gems_fs_id=fs.id and ki.gems_id=gems.id
+and ki.icbc_id=#{icbc_id} order by ki.dt_add desc limit 1
+</select>
+
+<select id="findicbc_kkbyorder" parameterType="icbc_kk" resultType="icbc_kk">
+select * from kjs_icbc_kk where icbc_id=#{icbc_id}
+</select>
+
+<select id="kjs_kk_count" resultType="int">
+select count(*) from kjs_icbc_kk where icbc_id>0 and bc_status=2
+</select>
+
+<select id="kjs_kk" parameterType="icbc_kk" resultType="icbc_kk">
+select kk.* 
+,fs.`name` as gname,
+gems.`name` as pname
+from kjs_icbc_kk kk
+LEFT JOIN assess_fs fs on kk.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on kk.gems_id=gems.id
+where 1=1 and kk.icbc_id>0 and kk.bc_status>1
+<if test="bc_status!=null and bc_status!=''"> 
+ and kk.bc_status=#{bc_status}
+</if>
+ORDER BY kk.dt_edit DESC
+</select>
+
+
+<select id="findkkbyid" parameterType="icbc_kk" resultType="icbc_kk">
+select * from kjs_icbc_kk where id=#{id}
+</select>
+
+<select id="kkshbyid" parameterType="icbc_kk" resultType="icbc_kk">
+select kk.*,fs.name as gname,gems.name as pname
+from kjs_icbc_kk kk
+LEFT JOIN assess_fs fs on kk.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on kk.gems_id=gems.id
+where kk.id=#{id}
+</select>
+
+
+<select id="findicbc_kk2" parameterType="icbc_kk" resultType="icbc_kk">
+select bc_status from kjs_icbc_kk where icbc_id=#{icbc_id} order by dt_add desc limit 1
+</select>
+
+<select id="allfindicbc_kk" parameterType="icbc_kk" resultType="icbc_kk">
+ select * from ( SELECT a.icbc_id as icbc_id,a.bc_status as bc_status,a.dt_add as dt_add FROM 
+(SELECT * FROM kjs_icbc_kk ORDER BY dt_add DESC) as a 
+ GROUP BY icbc_id ) as b where b.icbc_id!=0
+</select>
+
+
+<update id="upicbc_kk" parameterType="icbc_kk">
+update kjs_icbc_kk
+<trim prefix="set" suffixOverrides=","> 
+<if test="gems_code!=null and gems_code!=''">gems_code=#{gems_code},</if>
+<if test="c_name!=null and c_name!=''">c_name=#{c_name},</if>
+<if test="c_tel!=null and c_tel!=''">c_tel=#{c_tel},</if>
+<if test="cars_type!=null and cars_type!=''">cars_type=#{cars_type},</if>
+<if test="kp_price!=null and kp_price!=''">kp_price=#{kp_price},</if>
+<if test="dk_price!=null and dk_price!=''">dk_price=#{dk_price},</if>
+<if test="jrfw_price!=null and jrfw_price!=''">jrfw_price=#{jrfw_price},</if>
+<if test="dk_total_price!=null and dk_total_price!=''">dk_total_price=#{dk_total_price},</if>
+<if test="aj_type!=null and aj_type!=''">aj_type=#{aj_type},</if>
+<if test="aj_date!=null and aj_date!=''">aj_date=#{aj_date},</if>
+<if test="aj_bank!=null and aj_bank!=''">aj_bank=#{aj_bank},</if>
+<if test="dk_lv!=null and dk_lv!=''">dk_lv=#{dk_lv},</if>
+<if test="dz_type!=null and dz_type!=''">dz_type=#{dz_type},</if>
+<if test="sp_address!=null and sp_address!=''">sp_address=#{sp_address},</if>
+<if test="yw_address!=null and yw_address!=''">yw_address=#{yw_address},</if>
+<if test="img_1!=null and img_1!=''">img_1=#{img_1},</if>
+<if test="img_2!=null and img_2!=''">img_2=#{img_2},</if>
+<if test="img_3!=null and img_3!=''">img_3=#{img_3},</if>
+<if test="img_4!=null and img_4!=''">img_4=#{img_4},</if>
+<if test="img_5!=null and img_5!=''">img_5=#{img_5},</if>
+<if test="img_6!=null and img_6!=''">img_6=#{img_6},</if>
+<if test="img_1s!=null and img_1s!=''">img_1s=#{img_1s},</if>
+<if test="up_time!=null and up_time!=''">up_time=#{up_time},</if>
+<if test="bc_status!=null and bc_status!=''">bc_status=#{bc_status},</if>
+<if test="md_edit!=null and md_edit!=''">md_edit=#{md_edit},</if>
+<if test="api_edit!=null and api_edit!=''">api_edit=#{api_edit},</if>
+<if test="sh_edit!=null and sh_edit!=''">sh_edit=#{sh_edit},</if>
+<if test="result!=null and result!=''">result=#{result},</if>
+<if test="result_time!=null and result_time!=''">result_time=#{result_time},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="dt_sub!=null and dt_sub!=''">dt_sub=#{dt_sub},</if>
+<if test="dt_fin!=null and dt_fin!=''">dt_fin=#{dt_fin},</if>
+<if test="query_type!=null and query_type!=''">query_type=#{query_type},</if>
+<if test="mid_edit!=null and mid_edit!=''">mid_edit=#{mid_edit},</if>
+<if test="kk_car_stateid!=null and kk_car_stateid!=''">kk_car_stateid=#{kk_car_stateid},</if>
+<if test="kk_car_cityid!=null and kk_car_cityid!=''">kk_car_cityid=#{kk_car_cityid},</if>
+<if test="kk_loan_stateid!=null and kk_loan_stateid!=''">kk_loan_stateid=#{kk_loan_stateid},</if>
+<if test="kk_loan_cityid!=null and kk_loan_cityid!=''">kk_loan_cityid=#{kk_loan_cityid},</if>
+<if test="kk_kh!=null and kk_kh!=''">kk_kh=#{kk_kh},</if>
+<if test="imgstep3_1!=null and imgstep3_1!=''">imgstep3_1=#{imgstep3_1},</if>
+<if test="imgstep3_2!=null and imgstep3_2!=''">imgstep3_2=#{imgstep3_2},</if>
+<if test="imgstep3_3!=null and imgstep3_3!=''">imgstep3_3=#{imgstep3_3},</if>
+<if test="imgstep3_4!=null and imgstep3_4!=''">imgstep3_4=#{imgstep3_4},</if>
+<if test="imgstep3_5!=null and imgstep3_5!=''">imgstep3_5=#{imgstep3_5},</if>
+<if test="imgstep3_6!=null and imgstep3_6!=''">imgstep3_6=#{imgstep3_6},</if>
+<if test="imgstep3_7!=null and imgstep3_7!=''">imgstep3_7=#{imgstep3_7},</if>
+<if test="imgstep3_7s!=null and imgstep3_7s!=''">imgstep3_7s=#{imgstep3_7s},</if>
+<if test="pdfstep4_1!=null and pdfstep4_1!=''">pdfstep4_1=#{pdfstep4_1},</if>
+<if test="pdf_time!=null and pdf_time!=''">pdf_time=#{pdf_time},</if>
+
+
+</trim>
+where id=#{id}
+</update>
+
+<insert id="addicbc_kk" parameterType="icbc_kk" useGeneratedKeys="true"  keyProperty="id">
+insert into kjs_icbc_kk(
+id,
+c_name,
+c_tel,
+cars_type,
+kp_price,
+dk_price,
+jrfw_price,
+dk_total_price,
+aj_type,
+aj_date,
+aj_bank,
+dk_lv,
+dz_type,
+sp_address,
+yw_address,
+add_time,
+up_time,
+icbc_id,
+md_add,
+md_edit,
+api_add,
+api_edit,
+sh_edit,
+result,
+result_time,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+dt_sub,
+dt_fin,
+gems_code,
+bc_status,
+query_type,
+gems_fs_id,
+gems_id,
+kk_car_stateid,
+kk_car_cityid,
+kk_loan_stateid,
+kk_loan_cityid,
+kk_kh,
+imgstep3_1,
+imgstep3_2,
+imgstep3_3,
+imgstep3_4,
+imgstep3_5,
+imgstep3_6,
+imgstep3_7,
+imgstep3_7s,
+pdfstep4_1,
+pdf_time,
+sfje,
+po_ysr,
+po_xl,
+po_xzdz,
+po_yzbm,
+po_gzdw,
+po_dwdz,
+po_zw,
+jjlxr_c_name,
+jjlxr_c_tel,
+jjlxr_jdrgx,
+jjlxr_xzdz,
+zdr_hyzk,
+zdr_grsr,
+zdr_jtsr,
+zdr_xl,
+zdr_jzzk,
+zdr_xzdz,
+zdr_yzbm,
+zdr_gzdw,
+zdr_dwdh,
+zdr_dwdz,
+zdr_dwxz,
+zdr_sshy,
+zdr_zy,
+zdr_zw,
+zdr_gznx,
+gjr1_hyzk,
+gjr2_hyzk,
+gjr1_xzdz,
+gjr2_xzdz,
+gjr1_yzbm,
+gjr2_yzbm,
+gjr1_gzdw,
+gjr2_gzdw,
+gjr1_dwdz,
+gjr2_dwdz,
+gjr1_yzdrgx,
+gjr2_yzdrgx,
+zdr_wsdz,
+po_wsdz,
+gjr1_wsdz,
+gjr2_wsdz
+
+)values(
+#{id},
+#{c_name},
+#{c_tel},
+#{cars_type},
+#{kp_price},
+#{dk_price},
+#{jrfw_price},
+#{dk_total_price},
+#{aj_type},
+#{aj_date},
+#{aj_bank},
+#{dk_lv},
+#{dz_type},
+#{sp_address},
+#{yw_address},
+#{add_time},
+#{up_time},
+#{icbc_id},
+#{md_add},
+#{md_edit},
+#{api_add},
+#{api_edit},
+#{sh_edit},
+#{result},
+#{result_time},
+#{mid_add},
+#{mid_edit},
+#{dt_add},
+#{dt_edit},
+#{dt_sub},
+#{dt_fin},
+#{gems_code},
+#{bc_status},
+#{query_type},
+#{gems_fs_id},
+#{gems_id},
+#{kk_car_stateid},
+#{kk_car_cityid},
+#{kk_loan_stateid},
+#{kk_loan_cityid},
+#{kk_kh},
+#{imgstep3_1},
+#{imgstep3_2},
+#{imgstep3_3},
+#{imgstep3_4},
+#{imgstep3_5},
+#{imgstep3_6},
+#{imgstep3_7},
+#{imgstep3_7s},
+#{pdfstep4_1},
+#{pdf_time},
+#{sfje},
+#{po_ysr},
+#{po_xl},
+#{po_xzdz},
+#{po_yzbm},
+#{po_gzdw},
+#{po_dwdz},
+#{po_zw},
+#{jjlxr_c_name},
+#{jjlxr_c_tel},
+#{jjlxr_jdrgx},
+#{jjlxr_xzdz},
+#{zdr_hyzk},
+#{zdr_grsr},
+#{zdr_jtsr},
+#{zdr_xl},
+#{zdr_jzzk},
+#{zdr_xzdz},
+#{zdr_yzbm},
+#{zdr_gzdw},
+#{zdr_dwdh},
+#{zdr_dwdz},
+#{zdr_dwxz},
+#{zdr_sshy},
+#{zdr_zy},
+#{zdr_zw},
+#{zdr_gznx},
+#{gjr1_hyzk},
+#{gjr2_hyzk},
+#{gjr1_xzdz},
+#{gjr2_xzdz},
+#{gjr1_yzbm},
+#{gjr2_yzbm},
+#{gjr1_gzdw},
+#{gjr2_gzdw},
+#{gjr1_dwdz},
+#{gjr2_dwdz},
+#{gjr1_yzdrgx},
+#{gjr2_yzdrgx},
+#{zdr_wsdz},
+#{po_wsdz},
+#{gjr1_wsdz},
+#{gjr2_wsdz}
+)
+
+</insert>
+
+<update id="upkk" parameterType="icbc_kk" >
+update kjs_icbc_kk
+<trim prefix="set" suffixOverrides=","> 
+<if test="mid_edit!=null and mid_edit!=''">mid_edit=#{mid_edit},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="bc_status!=null and bc_status!=''">bc_status=#{bc_status},</if>
+<if test="kk_kh!=null and kk_kh!=''">kk_kh=#{kk_kh},</if>
+
+<if test="c_name!=null and c_name!=''">c_name=#{c_name},</if>
+<if test="c_tel!=null and c_tel!=''">c_tel =#{c_tel },</if>
+<if test="cars_type!=null and cars_type!=''">cars_type=#{cars_type},</if>
+<if test="kp_price!=null and kp_price!=''">kp_price=#{kp_price},</if>
+<if test="dk_price!=null and dk_price!=''">dk_price=#{dk_price},</if>
+<if test="jrfw_price!=null and jrfw_price!=''">jrfw_price=#{jrfw_price},</if>
+<if test="dk_total_price!=null and dk_total_price!=''">dk_total_price=#{dk_total_price},</if>
+<if test="aj_type!=null and aj_type!=''">aj_type=#{aj_type},</if>
+<if test="aj_date!=null and aj_date!=''">aj_date=#{aj_date},</if>
+<if test="aj_bank!=null and aj_bank!=''">aj_bank=#{aj_bank},</if>
+<if test="dk_lv!=null and dk_lv!=''">dk_lv=#{dk_lv},</if>
+<if test="dz_type!=null and dz_type!=''">dz_type=#{dz_type},</if>
+<if test="dt_sub!=null and dt_sub!=''">dt_sub=#{dt_sub},</if>
+<if test="dt_fin!=null and dt_fin!=''">dt_fin=#{dt_fin},</if>
+<if test="kk_car_stateid!=null and kk_car_stateid!=''">kk_car_stateid=#{kk_car_stateid},</if>
+<if test="kk_car_cityid!=null and kk_car_cityid!=''">kk_car_cityid=#{kk_car_cityid},</if>
+<if test="kk_loan_stateid!=null and kk_loan_stateid!=''">kk_loan_stateid=#{kk_loan_stateid},</if>
+<if test="kk_loan_cityid!=null and kk_loan_cityid!=''">kk_loan_cityid=#{kk_loan_cityid},</if>
+<if test="sfje!=null and sfje!=''">sfje=#{sfje},</if>
+<if test="po_ysr!=null and po_ysr!=''">po_ysr=#{po_ysr},</if>
+<if test="po_xl!=null and po_xl!=''">po_xl=#{po_xl},</if>
+<if test="po_xzdz!=null and po_xzdz!=''">po_xzdz=#{po_xzdz},</if>
+<if test="po_yzbm!=null and po_yzbm!=''">po_yzbm=#{po_yzbm},</if>
+<if test="po_gzdw!=null and po_gzdw!=''">po_gzdw=#{po_gzdw},</if>
+<if test="po_dwdz!=null and po_dwdz!=''">po_dwdz=#{po_dwdz},</if>
+<if test="po_zw!=null and po_zw!=''">po_zw=#{po_zw},</if>
+<if test="jjlxr_c_name!=null and jjlxr_c_name!=''">jjlxr_c_name=#{jjlxr_c_name},</if>
+<if test="jjlxr_c_tel!=null and jjlxr_c_tel!=''">jjlxr_c_tel=#{jjlxr_c_tel},</if>
+<if test="jjlxr_jdrgx!=null and jjlxr_jdrgx!=''">jjlxr_jdrgx=#{jjlxr_jdrgx},</if>
+<if test="jjlxr_xzdz!=null and jjlxr_xzdz!=''">jjlxr_xzdz=#{jjlxr_xzdz},</if>
+<if test="zdr_hyzk!=null and zdr_hyzk!=''">zdr_hyzk=#{zdr_hyzk},</if>
+<if test="zdr_grsr!=null and zdr_grsr!=''">zdr_grsr=#{zdr_grsr},</if>
+
+<if test="zdr_jtsr!=null and zdr_jtsr!=''">zdr_jtsr=#{zdr_jtsr},</if>
+<if test="zdr_xl!=null and zdr_xl!=''">zdr_xl=#{zdr_xl},</if>
+<if test="zdr_jzzk!=null and zdr_jzzk!=''">zdr_jzzk=#{zdr_jzzk},</if>
+<if test="zdr_xzdz!=null and zdr_xzdz!=''">zdr_xzdz=#{zdr_xzdz},</if>
+<if test="zdr_yzbm!=null and zdr_yzbm!=''">zdr_yzbm=#{zdr_yzbm},</if>
+<if test="zdr_gzdw!=null and zdr_gzdw!=''">zdr_gzdw=#{zdr_gzdw},</if>
+<if test="zdr_dwdh!=null and zdr_dwdh!=''">zdr_dwdh=#{zdr_dwdh},</if>
+
+<if test="zdr_dwdz!=null and zdr_dwdz!=''">zdr_dwdz=#{zdr_dwdz},</if>
+<if test="zdr_dwxz!=null and zdr_dwxz!=''">zdr_dwxz=#{zdr_dwxz},</if>
+<if test="zdr_sshy!=null and zdr_sshy!=''">zdr_sshy=#{zdr_sshy},</if>
+<if test="zdr_zy!=null and zdr_zy!=''">zdr_zy=#{zdr_zy},</if>
+<if test="zdr_zw!=null and zdr_zw!=''">zdr_zw=#{zdr_zw},</if>
+<if test="zdr_gznx!=null and zdr_gznx!=''">zdr_gznx=#{zdr_gznx},</if>
+<if test="gjr1_hyzk!=null and gjr1_hyzk!=''">gjr1_hyzk=#{gjr1_hyzk},</if>
+
+<if test="gjr2_hyzk!=null and gjr2_hyzk!=''">gjr2_hyzk=#{gjr2_hyzk},</if>
+<if test="gjr1_xzdz!=null and gjr1_xzdz!=''">gjr1_xzdz=#{gjr1_xzdz},</if>
+<if test="gjr2_xzdz!=null and gjr2_xzdz!=''">gjr2_xzdz=#{gjr2_xzdz},</if>
+<if test="gjr1_yzbm!=null and gjr1_yzbm!=''">gjr1_yzbm=#{gjr1_yzbm},</if>
+<if test="gjr2_yzbm!=null and gjr2_yzbm!=''">gjr2_yzbm=#{gjr2_yzbm},</if>
+<if test="gjr1_gzdw!=null and gjr1_gzdw!=''">gjr1_gzdw=#{gjr1_gzdw},</if>
+<if test="gjr2_gzdw!=null and gjr2_gzdw!=''">gjr2_gzdw=#{gjr2_gzdw},</if>
+
+<if test="gjr1_dwdz!=null and gjr1_dwdz!=''">gjr1_dwdz=#{gjr1_dwdz},</if>
+<if test="gjr2_dwdz!=null and gjr2_dwdz!=''">gjr2_dwdz=#{gjr2_dwdz},</if>
+<if test="gjr1_yzdrgx!=null and gjr1_yzdrgx!=''">gjr1_yzdrgx=#{gjr1_yzdrgx},</if>
+<if test="gjr2_yzdrgx!=null and gjr2_yzdrgx!=''">gjr2_yzdrgx=#{gjr2_yzdrgx},</if>
+<if test="zdr_wsdz!=null and zdr_wsdz!=''">zdr_wsdz=#{zdr_wsdz},</if>
+<if test="po_wsdz!=null and po_wsdz!=''">po_wsdz=#{po_wsdz},</if>
+<if test="gjr1_wsdz!=null and gjr1_wsdz!=''">gjr1_wsdz=#{gjr1_wsdz},</if>
+<if test="gjr2_wsdz!=null and gjr2_wsdz!=''">gjr2_wsdz=#{gjr2_wsdz},</if>
+<if test="kk_date!=null and kk_date!=''">kk_date=#{kk_date},</if>
+</trim>
+where id=#{id}
+</update>
+
+</mapper>

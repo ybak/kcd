@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper1.send.admin_msgMapper" >
+
+
+<insert id="addadmin_msg" parameterType="admin_msg" useGeneratedKeys="true"  keyProperty="id">
+insert into assess_admin_msg
+(
+id,
+receiveid,
+sendid,
+dt_add,
+dt_edit,
+status,
+mid_add,
+msg
+
+)values(
+#{id},
+#{receiveid},
+#{sendid},
+#{dt_add},
+#{dt_edit},
+#{status},
+#{mid_add},
+#{msg}
+
+)
+
+</insert>
+
+</mapper>

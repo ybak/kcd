@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.mgcertMapper">
+         <select id="jkrID" parameterType="mgcert" resultType="List">
+         select concat(c_cardno,"|",gems_fs_id) from assess_mgcert 
+         where 
+         c_name!='' 
+         and c_cardno!=''
+         and c_carno!=''          
+         group by c_name,c_cardno         
+         </select>   
+         
+         
+         <!--  -->      
+         <select id="Apimgnewcar" parameterType="mgcert" resultType="mgcert">
+         select * from assess_mgnewcar 
+         where 
+         c_name!='' 
+         and c_cardno!=''       
+         </select>
+         <select id="Apimgcar" parameterType="mgcert" resultType="mgcert">
+         select * from assess_mgcar 
+         where 
+         c_name!='' 
+         and c_cardno!=''         
+         </select>
+         <select id="Apimgcert" parameterType="mgcert" resultType="mgcert">
+         select * from assess_mgcert 
+         where 
+         c_name!=''
+         and c_cardno!=''               
+         </select>
+          <!--  -->
+         <select id="Apijkxxmgcert" parameterType="mgcert" resultType="mgcert">
+         select * from assess_mgcert 
+         </select>
+         <select id="Apijkxxmgcar" parameterType="mgcert" resultType="mgcert">
+         select * from assess_mgcar   
+          </select>
+         <select id="Apijkxxmgnewcar" parameterType="mgcert" resultType="mgcert">
+         select * from assess_mgnewcar  
+          </select>
+          <!--  -->
+         <select id="mgcertAPI" parameterType="mgcert" resultType="mgcert">
+         select * from assess_mgcert where id=#{id}
+         </select>
+         <select id="mgcarAPI" parameterType="mgcert" resultType="mgcert">
+         select * from assess_mgcar where id=#{id}
+         </select>
+         <select id="mgnewcarAPI" parameterType="mgcert" resultType="mgcert">
+         select * from assess_mgnewcar where id=#{id}
+         </select>
+         <select id="mgxcAPI" parameterType="mgcert" resultType="mgcert">
+         select * from assess_mgxc where id=#{id}
+         </select>
+       	  
+         <!--  
+         bc_status=3  and cs_tag=1 
+            -->
+         <select id="csmgcert" parameterType="mgcert" resultType="mgcert">
+          select * from assess_mgcert 
+         where bc_status=3 and cs_tag=1 
+         </select>
+          <select id="csmgcar" parameterType="mgcert" resultType="mgcert">
+         select * from assess_mgcar 
+         where bc_status=3 and cs_tag=1                           
+         </select>
+          <select id="csmgnewcar" parameterType="mgcert" resultType="mgcert">
+         select * from assess_mgnewcar 
+         where bc_status=3 and cs_tag=1      
+         </select>
+         <!-- -->
+	     <select id="findzsresult" parameterType="mgcert" resultType="mgcert">
+         select * from assess_mgcert
+         where bc_status=#{bc_status}       
+         </select>
+         <!--  SELECT * from assess_mgcert order by dt_edit desc limit 10   -->
+         <select id="findmgcertlist" parameterType="mgcert" resultType="mgcert">
+         SELECT * from assess_mgcert order by dt_edit desc limit 100
+            
+         </select>
+         
+         <select id="findmgcar" parameterType="mgcert" resultType="mgcert">
+         SELECT * from assess_mgcar order by dt_edit desc limit 100     
+         </select>
+       
+         <select id="findmgnewcar" parameterType="mgcert" resultType="mgcert">
+         SELECT * from assess_mgnewcar order by dt_edit desc limit 100     
+         </select>
+         
+         <select id="findmgcertbyid" parameterType="mgcert" resultType="mgcert">
+         SELECT * from assess_mgcert where gems_fs_id=#{gems_fs_id}
+         </select>
+         
+         <select id="findmgcarbyid" parameterType="mgcert" resultType="mgcert">
+         SELECT * from assess_mgcar where gems_fs_id=#{gems_fs_id}     
+         </select>
+       
+         <select id="findmgnewcarbyid" parameterType="mgcert" resultType="mgcert">
+         SELECT * from assess_mgnewcar where gems_fs_id=#{gems_fs_id}   
+         </select>
+
+         <!-- 同步更新标记 -->
+         <update id="upmgcert" parameterType="mgcert">
+         update assess_mgcert
+         <trim prefix="set" suffixOverrides=",">
+         <if test="zjf_type!=null">
+         zjf_type=#{zjf_type},
+         </if>
+         <if test="spcount!=null">
+         spcount=#{spcount},
+         </if>      
+         </trim>
+         where id=#{id}
+         </update>
+         <update id="upmgcar" parameterType="mgcert">
+         update assess_mgcar
+         <trim prefix="set" suffixOverrides=",">
+         <if test="zjf_type!=null">
+         zjf_type=#{zjf_type},
+         </if>
+         <if test="spcount!=null">
+         spcount=#{spcount},
+         </if>
+         </trim>
+         where id=#{id}
+         </update>
+         <update id="upmgnewcar" parameterType="mgcert">
+         update assess_mgnewcar
+         <trim prefix="set" suffixOverrides=",">
+         <if test="zjf_type!=null">
+         zjf_type=#{zjf_type},
+         </if>
+         <if test="spcount!=null">
+         spcount=#{spcount},
+         </if>      
+         </trim>
+         where id=#{id}
+         </update>
+         <!-- 根据更新标记查询 -->
+         <select id="certlist"  parameterType="mgcert" resultType="mgcert">
+         select * from assess_mgcert where zjf_type=#{zjf_type}
+         </select>
+         <select id="carlist"  parameterType="mgcert" resultType="mgcert">
+         select * from assess_mgcar where zjf_type=#{zjf_type}
+         </select>
+         <select id="newcarlist"  parameterType="mgcert" resultType="mgcert">
+         select * from assess_mgnewcar where zjf_type=#{zjf_type}
+         </select>
+         <!-- 根据订单编号查询 -->  	   
+	     <select id="findcert" parameterType="mgcert" resultType="mgcert">
+          select * from assess_mgcert
+          where gems_code=#{gems_code}
+         </select> 
+          <select id="findcar" parameterType="mgcert" resultType="mgcert">
+          select * from assess_mgcar
+          where gems_code=#{gems_code}
+         </select> 
+          <select id="findnewcar" parameterType="mgcert" resultType="mgcert">
+          select * from assess_mgnewcar
+          where gems_code=#{gems_code}
+         </select> 
+</mapper>

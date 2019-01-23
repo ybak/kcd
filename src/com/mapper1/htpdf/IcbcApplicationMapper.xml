@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.htpdf.IcbcApplicationDaoMapper">
+	<!-- <select id="query" resultType="com.crm.bean.IcbcApplication" parameterType="int" >
+		 select ki.id, ki.c_name name,ki.c_tel tel,ki.c_cardno IDnumber,a.vincode vin,kik.dk_price loanamount,kik.jrfw_price servicefee,kik.kp_price kpj,kik.dk_total_price totalamount,kik.aj_date date,kik.dk_lv f_rate from kj_icbc ki,kjs_icbc_kk kik,assess_cars a where ki.id='374' and  ki.id=kik.icbc_id and kik.icbc_id=a.icbc_id  
+	</select>	 -->
+	<select id="query1" resultType="java.util.HashMap" parameterType="java.lang.Integer" >
+	 	 select ki.id, ki.c_name name,ki.c_tel tel,ki.c_cardno IDnumber,ki.c_name_gj1 gthk,ki.c_name_gj2 gthk2, ki.c_name_mt pname,ki.c_tel_gj1 gtel,ki.c_tel_gj2 gtel2, ki.c_cardno_gj1 gid,ki.c_cardno_gj2 gid2, ki.c_tel_mt pdh,ki.c_cardno_mt pIDnumber,a.vincode vin,a.motorcode  endine_h,a.c_carno cph,a.color_id ys,a.ppxh p_x,kik.dk_price loanamount,kik.jrfw_price servicefee,kik.kp_price kpj,kik.dk_total_price totalamount,kik.aj_date date,kik.dk_lv f_rate,kik.sfje first_payment_ratio,kik.gjr1_xzdz gzi,kik.gjr2_xzdz gzi2,kik.gjr1_gzdw ggzdw,kik.gjr2_gzdw ggzdw2, kik.zdr_zw zw,kik.zdr_hyzk hf,kik.zdr_xzdz xaddress,kik.zdr_grsr sr,kik.zdr_gzdw ggdw,kik.zdr_dwdz ggdi,a.price_result pgj,kik.cars_type carstype,kik.zdr_dwdh dwdh,kik.po_ysr posr,kik.po_xzdz pxzdz,kik.po_yzbm pyzbm, kik.po_xl pxl,kik.po_gzdw pdw,kik.zdr_xl xl,kik.gjr1_yzdrgx ggx,kik.jjlxr_c_name jj,kik.gjr1_yzbm gyzbm,kik.gjr2_yzbm gyzbm2,kik.gjr2_yzdrgx ggx2,kik.jjlxr_c_tel jjtel,kik.jjlxr_xzdz jjadd,kik.jjlxr_jdrgx jjgx,kik.zdr_yzbm yzbm,kik.gjr1_hyzk ghf,kik.gjr2_hyzk ghf2, se.name chex,cs.name sheng,cc.name shi,ki.imgstep2_1ss tt,kik.zdr_wsdz zsddd,kik.po_wsdz psddd,kik.gjr1_wsdz gsddd,kik.gjr2_wsdz gsddd2,kik.dz_type dztype,kik.po_dwdz pdwdz,kik.po_zw pzw,kik.po_dwdz pdwdz 
+	 from kj_icbc ki,kjs_icbc_kk kik,assess_cars a,car_series se,comm_states cs,comm_citys cc 
+	 where ki.id=#{0}  
+	 and  ki.id=kik.icbc_id 
+	 and kik.icbc_id=a.icbc_id 
+	 and a.seid=se.id and kik.kk_car_cityid=cc.id 
+	 and kik.kk_car_stateid=cs.id
+	 </select>
+	<insert id="create1">
+		update  kjs_icbc_kk set pdf=#{pdfpath} where icbc_id=#{id}
+	</insert>
+	<select id="query2" resultType="java.util.HashMap" parameterType="java.lang.String">
+ 	select ki.c_name name,ki.c_cardno IDnumber,kik.kp_price kpj,kik.sfje fpr,kik.dk_lv f_rate, kik.dk_price loanamount,kik.jrfw_price servicefee,kik.dk_total_price totalamount,a.price_result pgj,cs.name sh,cc.name si,kik.cars_type carstype  from kj_icbc ki,kjs_icbc_kk kik,assess_cars a,car_series se,comm_states cs,comm_citys cc 
+ 	where md5(concat(ki.id,'ex'))=#{0} and  ki.id=kik.icbc_id and kik.icbc_id=a.icbc_id and a.seid=se.id and kik.kk_car_cityid=cc.id and kik.kk_car_stateid=cs.id
+	</select>
+		<insert id="create2">
+		update  kjs_icbc_kk set excel=#{excelpath} where icbc_id=#{id}
+	</insert>
+<!-- 	<select id="query2" resultType="java.util.HashMap" parameterType="int" >
+	select ki.id,ki.c_name 姓名,ki.c_tel 电话,ki.c_cardno 身份证号,ki.c_name_mt 配偶姓名, ki.c_tel_mt 配偶电话,ki.c_cardno_mt 配偶身份证号,kik.po_ysr 配偶收入,kik.po_xl 配偶学历,kik.po_gzdw 配偶单位,ki.c_name_gj1 共借人,ki.c_tel_gj1 共同借款人电话,ki.c_cardno_gj1 共同借款人身份证,kik.gjr1_xzdz 共同还款人住址,kik.gjr1_gzdw  共同还款人工作单位,kik.gjr1_yzdrgx 共借人与借款人关系,ki.c_sex 性别,a.vincode 车架号,a.motorcode  发动机号,a.c_carno 车牌号,a.ppxh 品牌车型,kik.dk_price 贷款金额,kik.jrfw_price 金融服务费,kik.kp_price 开票价,kik.dk_total_price 贷款总额,kik.aj_date 期限,kik.dk_lv 银行利率,kik.sfje 首次付款金额,
+	kik.zdr_zw 职务,kik.zdr_hyzk 婚否,kik.zdr_xzdz 现住地址,
+	kik.zdr_grsr 收入,kik.zdr_gzdw 工作单位,kik.zdr_dwdz 单位地址,kik.zdr_dwdh 单位电话,kik.zdr_xl 学历,kik.jjlxr_c_name 紧急联系人,kik.jjlxr_c_tel 紧急联系人电话,kik.jjlxr_xzdz 紧急联系人地址,kik.jjlxr_jdrgx  紧急联系人与被借人关系
+	from kj_icbc ki,kjs_icbc_kk kik,assess_cars a where ki.id='374' and  ki.id=kik.icbc_id and kik.icbc_id=a.icbc_id  
+	</select> -->
+<!-- 	<select id="queryicbc" resultType="com.crm.bean.K" >
+		select zx_result z from kj_icbc
+	</select> -->
+</mapper>

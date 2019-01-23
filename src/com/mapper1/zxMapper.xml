@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.zxMapper">
+
+	    <select id="findzxbyc_name" parameterType="zx" resultType="zx">
+        select * from assess_queryzx
+        where  query_type=0 and c_name=#{c_name} 
+        </select>
+        <select id="zxmap" parameterType="zx" resultType="zx">
+        select * from assess_queryzx
+        where  query_type=0 and c_name=#{c_name}
+        and result_pdf!=""
+        limit 1
+        </select>
+        <select id="zxdsjmap" parameterType="zx" resultType="zx">
+        select * from assess_queryzx
+        where  
+        c_name=#{c_name}
+        and 
+        query_type=1         
+        and report_id!=""
+        limit 1
+        </select>
+        
+        
+        <select id="findzx" parameterType="zx" resultType="zx">
+        select * from assess_queryzx       
+        </select>
+        
+ </mapper>

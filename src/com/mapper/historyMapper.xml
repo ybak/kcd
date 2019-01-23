@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.historyMapper">
+
+<select id="findhistory" parameterType="history" resultType="Map" >
+select * from kcd_history where uid=#{uid}
+ 
+
+</select>
+
+<select id="hlist" parameterType="history" resultType="history" >
+select * from kcd_history where uid=#{uid}
+</select>
+<insert id="hsava" parameterType="history" keyProperty="hid">
+insert into kcd_history(
+  hid,
+  zt,
+  ly,
+  htime,
+  uid
+  )values(
+  #{hid},
+  #{zt},
+  #{ly},
+  #{htime},
+  #{uid}
+)
+
+
+
+</insert>
+
+
+
+
+</mapper>

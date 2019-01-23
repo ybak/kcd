@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.erp_icbc.dh_hkMapper">
+	
+	
+	<sql id="listbyhk">
+	 a.name,a.dtp,a.ad,a.gc,a.id i,IFNULL(b.su,'0') su,
+		IFNULL(b.cou,'0') cou,
+		b.kkid
+	</sql>
+	<sql id="countbyhk">
+	 count(*)
+	</sql>
+	
+	<!-- 查询所有开卡用户的信息 -->
+	<select id="findtolist"  parameterType="pd" resultType="pd">
+		<if test="dn=='hk'">
+		select
+		<include refid="listbyhk"></include>
+		from 
+		(select icbckk.c_name name,icbckk.dk_total_price dtp,icbckk.aj_date ad,icbckk.gems_code gc,icbckk.gems_code id from  kjs_icbc_kk icbckk ) a 
+		inner JOIN 
+		(select sum(hk_money) as su,COUNT(*) as cou,kk_id kkid from kjs_hk where hk_money>0 group by kk_id) b 
+		on a.id=b.kkid 
+		</if>
+	</select>
+	
+	<!-- 还款 list -->
+	<select id="findcount_hk" parameterType="java.util.HashMap">
+	
+	</select>
+	<!-- 还款 count -->
+	<select id="findlist_hk"  parameterType="pageinfo" resultType="java.util.HashMap">
+	
+	</select>
+	
+	<!-- 查询用户的具体的还款期数信息 -->
+	<select  id="shkb" resultType="java.util.HashMap">
+	 	select kh.hk_date hkd,kh.hk_money hk,kh.hk_periods h,kh.hid from kjs_hk kh where kk_id=#{id} order by hid
+	</select>
+
+	<!-- 添加客户的还款记录-->
+	<insert id="addhk" parameterType="hk">
+		INSERT INTO kjs_hk(kk_id,hk_date,hk_money,hk_periods) VALUES (#{kk_id}, #{hk_date}, #{hk_money},#{hk_periods})
+	</insert>
+</mapper>

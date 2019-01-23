@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.mgcarMapper">
+
+	    <select id="findmgcarbygems_code" parameterType="mgcar" resultType="mgcar">
+        select * from assess_mgcar
+        where gems_code=#{gems_code}
+        </select>
+
+
+	    <select id="findmgcar" parameterType="mgcar" resultType="mgcar">
+	     select * from assess_mgcar limit 1
+	    </select>
+
+	  
+
+
+</mapper>

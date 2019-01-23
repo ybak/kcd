@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.bbMapper">
+
+<select id="findbb" parameterType="bb" resultType="Map">
+select * from kcd_bb where  orderid=#{orderid}
+</select>
+
+
+<insert id="addbb" parameterType="bb" keyProperty="bid">
+  insert into kcd_bb(
+  bid,
+  khxm,
+  sfzbh,
+  md,
+  sqsbh,
+  orderid,
+  cxr,
+  stime,
+  bb,
+  onecxtime,
+  cxerror,
+  errortest
+  ) values(
+  #{bid},
+  #{khxm},
+  #{sfzbh},
+  #{md},
+  #{sqsbh},
+  #{orderid},
+  #{cxr},
+  #{stime},
+  #{bb},
+  #{onecxtime},
+  #{cxerror},
+  #{errortest}
+  )
+
+
+
+</insert>
+
+<update id="upbbxx" parameterType="bb">
+update kcd_bb set 
+<if test="bb!=null">bb=#{bb},</if>
+<if test="cxerror!=null">cxerror=#{cxerror},</if>
+<if test="errortest!=null">errortest=#{errortest},</if>
+<if test="stime!=null">stime=#{stime}</if>
+where orderid=#{orderid}
+
+</update>
+
+</mapper>

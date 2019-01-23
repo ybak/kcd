@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.zx.jbzxhistoryMapper">
+<select id="jbzxapihistorylist" parameterType="jbzxhistory" resultType="jbzxhistory">
+select * from kj_jbzxapihistory where jbzx_id=#{jbzx_id}
+</select>
+<insert id="addjbzxhistory" keyProperty="id"  parameterType="jbzxhistory">
+insert into kj_jbzxapihistory(
+id,
+jbzx_id,
+api_userid,
+apimsg,
+apitype,
+addtime,
+uptime,
+name,
+tel,
+cardno,
+loginname,
+msg
+)values(
+#{id},
+#{jbzx_id},
+#{api_userid},
+#{apimsg},
+#{apitype},
+#{addtime},
+#{uptime},
+#{name},
+#{tel},
+#{cardno},
+#{loginname},
+#{msg}
+)
+
+</insert>
+
+</mapper>

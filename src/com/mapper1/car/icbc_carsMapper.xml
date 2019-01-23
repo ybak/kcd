@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.car.icbc_carsMapper">
+
+<delete id="del_icbc_cars" parameterType="icbc_cars">
+DELETE FROM assess_cars WHERE icbc_id=#{id}
+</delete>
+
+<select id="kjs_pg_count" resultType="int">
+select count(*) from assess_cars where icbc_id>0 and bc_status=2
+</select>
+<select id="kjs_pg" parameterType="icbc_cars" resultType="icbc_cars">
+select cars.*,fs.`name` as gname,
+gems.`name` as pname,
+ki.c_name as c_name
+from 
+assess_cars cars  
+LEFT JOIN assess_fs fs on cars.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on cars.gems_id=gems.id
+LEFT JOIN kj_icbc ki on ki.id=cars.icbc_id
+where 1=1 and cars.icbc_id>0 and cars.bc_status>1
+<if test="bc_status!=null and bc_status!=''"> 
+ and cars.bc_status=#{bc_status}
+</if>
+ORDER BY cars.dt_edit DESC
+</select>
+
+<select id="findicbc_cars" parameterType="icbc_cars" resultType="icbc_cars">
+select ki.*,fs.name as gname,gems.name as pname from assess_cars ki,assess_fs fs,assess_gems gems where ki.gems_fs_id=fs.id 
+and ki.gems_id=gems.id and ki.icbc_id=#{icbc_id} order by ki.dt_add desc limit 1
+</select>
+
+<select id="findicbc_cars1" parameterType="icbc_cars" resultType="icbc_cars">
+select * from assess_cars where icbc_id=#{icbc_id}
+</select>
+
+<select id="findcarsbyid" parameterType="icbc_cars" resultType="icbc_cars">
+select * from assess_cars where id=#{id}
+</select>
+
+<select id="carsshbyid" parameterType="icbc_cars" resultType="icbc_cars">
+select ac.*,fs.name as gname,gems.name as pname
+from assess_cars ac
+LEFT JOIN assess_fs fs on ac.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on ac.gems_id=gems.id
+where ac.id=#{id}
+</select>
+
+<select id="findicbc_cars2" parameterType="icbc_cars" resultType="icbc_cars">
+select bc_status from assess_cars where icbc_id=#{icbc_id} ORDER BY dt_add DESC limit 1
+</select>
+
+<select id="allfindicbc_cars" parameterType="icbc_cars" resultType="icbc_cars">
+ select * from ( SELECT a.icbc_id as icbc_id,a.bc_status as bc_status,a.dt_add as dt_add FROM 
+(SELECT * FROM assess_cars ORDER BY dt_add DESC) as a 
+ GROUP BY icbc_id ) as b where b.icbc_id!=0
+</select>
+<update id="upicbc_cars" parameterType="icbc_cars">
+update assess_cars 
+<trim prefix="set" suffixOverrides=","> 
+<if test="property_id!=null and property_id!=''">property_id=#{property_id},</if>     
+<if test="gems_id!=null and gems_id!=''">gems_id=#{gems_id},</if>
+<if test="mem_id!=null and mem_id!=''">mem_id=#{mem_id},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="bc_status!=null and bc_status!=''">bc_status=#{bc_status},</if>
+<if test="price_result!=null and price_result!=''">price_result=#{price_result},</if>
+<if test="mem_name!=null and mem_name!=''">mem_name=#{mem_name},</if>
+<if test="mem_tel!=null and mem_tel!=''">mem_tel=#{mem_tel},</if>
+<if test="carid!=null and carid!=''">carid=#{carid},</if>
+<if test="seid!=null and seid!=''">seid=#{seid},</if>
+<if test="brid!=null and brid!=''">brid=#{brid},</if>
+<if test="mem_states!=null and mem_states!=''">mem_states=#{mem_states},</if>
+<if test="mem_citys!=null and mem_citys!=''">mem_citys=#{mem_citys},</if>
+<if test="car_days!=null and car_days!=''">car_days=#{car_days},</if>
+<if test="car_km!=null and car_km!=''">car_km=#{car_km},</if>
+<if test="color_id!=null and color_id!=''">color_id=#{color_id},</if>
+<if test="price_new!=null and price_new!=''">price_new=#{price_new},</if>
+<if test="vincode2!=null and vincode2!=''">vincode2=#{vincode2},</if>
+<if test="motorcode!=null and motorcode!=''">motorcode=#{motorcode},</if>
+<if test="c_tel!=null and c_tel!=''">c_tel=#{c_tel},</if>
+<if test="c_carno!=null and c_carno!=''">c_carno=#{c_carno},</if>
+<if test="cbs_orderid!=null and cbs_orderid!=''">cbs_orderid=#{cbs_orderid},</if>
+<if test="cbs_result!=null and cbs_result!=''">cbs_result=#{cbs_result},</if>
+<if test="icbc_pricecs!=null and icbc_pricecs!=''">icbc_pricecs=#{icbc_pricecs},</if>
+<if test="source_id!=null and source_id!=''">source_id=#{source_id},</if>
+<if test="gear_box_id!=null and gear_box_id!=''">gear_box_id=#{gear_box_id},</if>
+<if test="car_status!=null and car_status!=''">car_status=#{car_status},</if>
+<if test="cardt1!=null and cardt1!=''">cardt1=#{cardt1},</if>
+<if test="vincode!=null and vincode!=''">vincode=#{vincode},</if>
+<if test="cardt2!=null and cardt2!=''">cardt2=#{cardt2},</if>
+<if test="car_km_icbc!=null and car_km_icbc!=''">car_km_icbc=#{car_km_icbc},</if>
+<if test="ppxh!=null and ppxh!=''">ppxh=#{ppxh},</if>
+</trim>
+where id=#{id}
+</update>
+ 
+<select id="findlastid"  resultType="icbc_cars">
+select * from assess_cars where id=(select max(id) from assess_cars)
+</select>
+
+<insert id="addassess_cars" parameterType="icbc_cars" useGeneratedKeys="true"  keyProperty="id">
+insert into assess_cars
+(
+id,
+code,
+vincode,
+dt_add,
+mem_id,
+mem_name,
+mem_tel,
+mem_states,
+mem_citys,
+brid,
+seid,
+carid,
+car_days,
+car_km,
+color_id,
+price_new,
+model_score,
+parts_score,
+gaso_score,
+color_score,
+items_score,
+hide_score,
+score,
+price_result,
+gems_id,
+gems_code,
+imgurl,
+gems_fs_id,
+vincode2,
+ico_1,
+ico_2,
+ico_3,
+ico_4,
+ico_5,
+ico_6,
+ico_7,
+ico_8,
+ico_9,
+ico_10,
+ico_11,
+ico_12,
+ico_13,
+ico_14,
+ico_15,
+ico_16,
+ico_17,
+ico_18,
+ico_19,
+ico_20,
+ico_21,
+bc_status,
+bc_type,
+motorcode,
+dt_edit,
+c_tel,
+c_carno,
+cbs_orderid,
+cbs_result,
+qryid_bx,
+qryid_by,
+qryid_qryid,
+bypj,
+icbc_id,
+icbc_pricecs,
+xsource,
+api_add,
+api_edit,
+source_id,
+property_id,
+gear_box_id,
+car_status,
+cardt1,
+cardt2,
+car_km_icbc
+)values(
+#{id},
+#{code},
+#{vincode},
+#{dt_add},
+#{mem_id},
+#{mem_name},
+#{mem_tel},
+#{mem_states},
+#{mem_citys},
+#{brid},
+#{seid},
+#{carid},
+#{car_days},
+#{car_km},
+#{color_id},
+#{price_new},
+#{model_score},
+#{parts_score},
+#{gaso_score},
+#{color_score},
+#{items_score},
+#{hide_score},
+#{score},
+#{price_result},
+#{gems_id},
+#{gems_code},
+#{imgurl},
+#{gems_fs_id},
+#{vincode2},
+#{ico_1},
+#{ico_2},
+#{ico_3},
+#{ico_4},
+#{ico_5},
+#{ico_6},
+#{ico_7},
+#{ico_8},
+#{ico_9},
+#{ico_10},
+#{ico_11},
+#{ico_12},
+#{ico_13},
+#{ico_14},
+#{ico_15},
+#{ico_16},
+#{ico_17},
+#{ico_18},
+#{ico_19},
+#{ico_20},
+#{ico_21},
+#{bc_status},
+#{bc_type},
+#{motorcode},
+#{dt_edit},
+#{c_tel},
+#{c_carno},
+#{cbs_orderid},
+#{cbs_result},
+#{qryid_bx},
+#{qryid_by},
+#{qryid_qryid},
+#{bypj},
+#{icbc_id},
+#{icbc_pricecs},
+#{xsource},
+#{api_add},
+#{api_edit},
+#{source_id},
+#{property_id},
+#{gear_box_id},
+#{car_status},
+#{cardt1},
+#{cardt2},
+#{car_km_icbc}
+)
+</insert>
+
+
+<update id="upcodebyid" parameterType="icbc_cars">
+update assess_cars 
+<trim prefix="set" suffixOverrides=",">
+<if test="code!=null and code!=''">code=#{code},</if>
+<if test="mem_name!=null and mem_name!=''">mem_name=#{mem_name},</if>
+<if test="mem_tel!=null and mem_tel!=''">mem_tel=#{mem_tel},</if>
+<if test="mem_id!=null and mem_id!=''">mem_id=#{mem_id},</if>
+<if test="vincode!=null and vincode!=''">vincode=#{vincode},</if>
+<if test="mem_states!=null and mem_states!=''">mem_states=#{mem_states},</if>
+<if test="mem_citys!=null and mem_citys!=''">mem_citys=#{mem_citys},</if>
+<if test="brid!=null and brid!=''">brid=#{brid},</if>
+<if test="seid!=null and seid!=''">seid=#{seid},</if>
+<if test="carid!=null and carid!=''">carid=#{carid},</if>
+<if test="car_days!=null and car_days!=''">car_days=#{car_days},</if>
+<if test="car_km!=null and car_km!=''">car_km=#{car_km},</if>
+<if test="color_id!=null and color_id!=''">color_id=#{color_id},</if> 
+<if test="price_new!=null and price_new!=''">price_new=#{price_new},</if>
+<if test="price_result!=null and price_result!=''"> price_result=#{price_result},</if>
+<if test="gems_id!=null and gems_id!=''">gems_id=#{gems_id},</if>
+<if test="gems_code!=null and gems_code!=''">gems_code=#{gems_code},</if>
+<if test="imgurl!=null and imgurl!=''">imgurl=#{imgurl},</if>
+<if test="gems_fs_id!=null and gems_fs_id!=''">gems_fs_id=#{gems_fs_id},</if>
+<if test="vincode2!=null and vincode2!=''">vincode2=#{vincode2},</if>
+<if test="bc_status!=null and bc_status!=''">bc_status=#{bc_status},</if>
+<if test="motorcode!=null and motorcode!=''">motorcode=#{motorcode},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="c_tel!=null and c_tel!=''">c_tel=#{c_tel},</if> 
+<if test="c_carno!=null and c_carno!=''">c_carno=#{c_carno},</if>
+<if test="cbs_orderid!=null and cbs_orderid!=''"> cbs_orderid=#{cbs_orderid},</if>
+<if test="cbs_result!=null and cbs_result!=''">cbs_result=#{cbs_result},</if>
+<if test="qryid_bx!=null and qryid_bx!=''">qryid_bx=#{qryid_bx},</if> 
+<if test="qryid_by!=null and qryid_by!=''">qryid_by=#{qryid_by},</if>
+<if test="qryid_qryid!=null and qryid_qryid!=''">qryid_qryid=#{qryid_qryid},</if>
+<if test="bypj!=null and bypj!=''">bypj=#{bypj},</if>
+<if test="icbc_pricecs!=null and icbc_pricecs!=''">icbc_pricecs=#{icbc_pricecs},</if>
+<if test="api_edit!=null and api_edit!=''">api_edit=#{api_edit},</if>
+<if test="source_id!=null and source_id!=''">source_id=#{source_id},</if>
+<if test="property_id!=null and property_id!=''">property_id=#{property_id},</if>
+<if test="gear_box_id!=null and gear_box_id!=''">gear_box_id=#{gear_box_id},</if>
+<if test="car_status!=null and car_status!=''">car_status=#{car_status},</if>
+<if test="cardt1!=null and cardt1!=''">cardt1=#{cardt1},</if>
+<if test="cardt2!=null and cardt2!=''">cardt2=#{cardt2},</if>
+<if test="car_km_icbc!=null and car_km_icbc!=''">car_km_icbc=#{car_km_icbc},</if>
+</trim>
+where id=#{id}
+</update>
+
+
+
+
+
+
+</mapper>

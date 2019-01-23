@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.thjlMapper">
+
+	    <select id="findthjlbyc_name" parameterType="thjl" resultType="thjl">
+        select * from assess_querythjl
+        where c_name=#{c_name}
+        </select>
+        
+        <select id="thjlmap" parameterType="thjl" resultType="thjl">
+        select * from assess_querythjl
+        where c_name=#{c_name} and bc_status=5 and api_status=1 limit 1
+        </select>                
+        <select id="findthjl" parameterType="thjl" resultType="thjl">
+        select * from assess_querythjl order by dt_edit desc limit 1
+    
+        </select>
+        
+ </mapper>

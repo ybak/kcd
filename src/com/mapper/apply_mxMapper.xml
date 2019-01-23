@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper.apply_mxMapper">
+
+<insert id="addapply_mx" parameterType="apply_mx" keyProperty="id" >
+insert into kcd_apply_mx 
+(
+id,
+khgsname,
+applynum,
+gsryname,
+addtime,
+uptime,
+ryckey,
+a_qdid
+)
+values(
+#{id},
+#{khgsname},
+#{applynum},
+#{gsryname},
+#{addtime},
+#{uptime},
+#{ryckey},
+#{a_qdid}
+)
+
+
+
+</insert>
+
+
+
+</mapper>

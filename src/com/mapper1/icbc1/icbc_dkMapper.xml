@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper1.icbc1.icbc_dkMapper" >
+
+<delete id="del_icbc_dk" parameterType="icbc_dk">
+DELETE FROM kjs_icbc_cardk WHERE icbc_id=#{id}
+</delete>
+<select id="kjs_dk_count" resultType="int">
+select count(*) from kjs_icbc_cardk where icbc_id>0 and bc_status=2
+</select>
+
+<select id="kjs_dk" resultType="icbc_dk" parameterType="icbc_dk">
+select dk.* 
+,fs.`name` as gname,
+gems.`name` as pname,
+ki.c_name as c_name
+from kjs_icbc_cardk dk
+LEFT JOIN assess_fs fs on dk.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on dk.gems_id=gems.id
+LEFT JOIN kj_icbc ki on ki.id=dk.icbc_id
+where 1=1 and dk.icbc_id>0 and dk.bc_status>1
+<if test="bc_status!=null and bc_status!=''"> 
+ and dk.bc_status=#{bc_status}
+</if>
+ORDER BY dk.dt_edit DESC
+</select>
+
+
+<select id="finddkbyorder" resultType="icbc_dk" parameterType="icbc_dk" >
+select ki.*,fs.name as gname,gems.name as pname from kjs_icbc_cardk ki,assess_fs fs,assess_gems gems where ki.gems_fs_id=fs.id 
+and ki.gems_id=gems.id and ki.icbc_id=#{icbc_id} order by ki.dt_add desc limit 1
+</select>
+
+<select id="finddk2" resultType="icbc_dk" parameterType="icbc_dk">
+select bc_status from kjs_icbc_cardk where icbc_id=#{icbc_id} order by dt_add desc limit 1
+</select>
+
+<select id="finddkbyid" resultType="icbc_dk" parameterType="icbc_dk">
+select * from kjs_icbc_cardk where id=#{id}
+</select>
+
+<select id="findjj_status" resultType="icbc_dk" parameterType="icbc_dk">
+select 
+icbc.fk_status as fk_status,
+icbc.dt_edit as fk_time,
+kk.id as kkid,
+kk.bc_status as kk_status,
+kk.kk_kh as kk_kh,
+kk.pdfstep4_1 as pdfstep4_1,
+kk.pdf_time as pdf_time,
+dk.id as dkid,
+dk.bc_status as dk_status,
+mq.id as mqid,
+mq.bc_status as mq_status
+from kj_icbc icbc
+LEFT JOIN  kjs_icbc_kk kk on kk.icbc_id=icbc.id
+LEFT JOIN kjs_icbc_cardk dk on dk.icbc_id=icbc.id
+LEFT JOIN kjs_icbc_mq mq on mq.icbc_id=icbc.id
+where icbc.id=#{icbc_id}
+</select>
+
+<select id="findjj" resultType="icbc_dk" parameterType="icbc_dk">
+select kk.id as kkid,dk.id as dkid,mq.id as mqid from kjs_icbc_kk kk
+LEFT JOIN kjs_icbc_cardk dk on dk.icbc_id=kk.icbc_id
+LEFT JOIN kjs_icbc_mq mq on mq.icbc_id=kk.icbc_id
+where kk.icbc_id=#{icbc_id}
+</select>
+
+<select id="dkshbyid" resultType="icbc_dk" parameterType="icbc_dk">
+select dk.*,fs.name as gname,gems.name as pname
+from kjs_icbc_cardk dk
+LEFT JOIN assess_fs fs on dk.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on dk.gems_id=gems.id
+where dk.id=#{id}
+</select>
+<select id="allfinddk" parameterType="icbc_dk" resultType="icbc_dk">
+ select * from ( SELECT a.icbc_id as icbc_id,a.bc_status as bc_status,a.dt_add as dt_add FROM 
+(SELECT * FROM kjs_icbc_cardk ORDER BY dt_add DESC) as a 
+ GROUP BY icbc_id ) as b where b.icbc_id!=0
+
+</select>
+
+<update id="updk" parameterType="icbc_dk" >
+update kjs_icbc_cardk
+<trim prefix="set" suffixOverrides=","> 
+<if test="mid_edit!=null and mid_edit!=''">mid_edit=#{mid_edit},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="bc_status!=null and bc_status!=''">bc_status=#{bc_status},</if>
+<if test="sh_status!=null and sh_status!=''">sh_status=#{sh_status},</if>
+<if test="fk_status!=null and fk_status!=''">fk_status=#{fk_status},</if>
+<if test="dt_fin!=null and dt_fin!=''">dt_fin=#{dt_fin},</if>
+</trim>
+where id=#{id}
+</update>
+
+
+<select id="findicbc_cardk" parameterType="icbc_dk" resultType="icbc_dk">
+select * from kjs_icbc_cardk where icbc_id=#{icbc_id} order by dt_add desc limit 1
+</select>
+
+<update id="upicbc_cardk" parameterType="icbc_dk">
+update kjs_icbc_cardk
+<trim prefix="set" suffixOverrides=","> 
+<if test="result!=null and result!=''">result=#{result},</if>
+<if test="result_time!=null and result_time!=''">result_time=#{result_time},</if>
+<if test="api_edit!=null and api_edit!=''">api_edit=#{api_edit},</if>
+<if test="bc_status!=null and bc_status!=''">bc_status=#{bc_status},</if>
+<if test="gems_code!=null and gems_code!=''">gems_code=#{gems_code},</if>
+<if test="query_type!=null and query_type!=''">query_type=#{query_type},</if>
+<if test="dt_fin!=null and dt_fin!=''">dt_fin=#{dt_fin},</if>
+<if test="dt_sub!=null and dt_sub!=''">dt_sub=#{dt_sub},</if>
+<if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="dt_add!=null and dt_add!=''">dt_add=#{dt_add},</if>
+<if test="mid_edit!=null and mid_edit!=''">mid_edit=#{mid_edit},</if>
+<if test="mid_add!=null and mid_add!=''">mid_add=#{mid_add},</if>
+<if test="gems_id!=null and gems_id!=''">gems_id=#{gems_id},</if>
+<if test="gems_fs_id!=null and gems_fs_id!=''">gems_fs_id=#{gems_fs_id},</if>
+<if test="imgstep4_1ss!=null and imgstep4_1ss!=''">imgstep4_1ss=#{imgstep4_1ss},</if>
+<if test="imgstep4_2ss!=null and imgstep4_2ss!=''">imgstep4_2ss=#{imgstep4_2ss},</if>
+<if test="imgstep4_3ss!=null and imgstep4_3ss!=''">imgstep4_3ss=#{imgstep4_3ss},</if>
+<if test="imgstep4_4ss!=null and imgstep4_4ss!=''">imgstep4_4ss=#{imgstep4_4ss},</if>
+<if test="imgstep4_5ss!=null and imgstep4_5ss!=''">imgstep4_5ss=#{imgstep4_5ss},</if>
+<if test="imgstep5_1ss!=null and imgstep5_1ss!=''">imgstep5_1ss=#{imgstep5_1ss},</if>
+<if test="imgstep6_1ss!=null and imgstep6_1ss!=''">imgstep6_1ss=#{imgstep6_1ss},</if>
+<if test="imgstep7_1ss!=null and imgstep7_1ss!=''">imgstep7_1ss=#{imgstep7_1ss},</if>
+</trim>
+where id=#{id}
+</update>
+
+<insert id="addicbc_cardk" parameterType="icbc_dk" useGeneratedKeys="true"  keyProperty="id">
+insert into kjs_icbc_cardk(
+id,
+add_time,
+up_time,
+icbc_id,
+result,
+result_time,
+api_add,
+api_edit,
+bc_status,
+gems_code,
+query_type,
+dt_fin,
+dt_sub,
+dt_edit,
+dt_add,
+mid_edit,
+mid_add,
+gems_fs_id,
+gems_id,
+imgstep4_1ss,
+imgstep4_2ss,
+imgstep4_3ss,
+imgstep4_4ss,
+imgstep4_5ss,
+imgstep5_1ss,
+imgstep6_1ss,
+imgstep7_1ss
+)values(
+#{id},
+#{add_time},
+#{up_time},
+#{icbc_id},
+#{result},
+#{result_time},
+#{api_add},
+#{api_edit},
+#{bc_status},
+#{gems_code},
+#{query_type},
+#{dt_fin},
+#{dt_sub},
+#{dt_edit},
+#{dt_add},
+#{mid_edit},
+#{mid_add},
+#{gems_fs_id},
+#{gems_id},
+#{imgstep4_1ss},
+#{imgstep4_2ss},
+#{imgstep4_3ss},
+#{imgstep4_4ss},
+#{imgstep4_5ss},
+#{imgstep5_1ss},
+#{imgstep6_1ss},
+#{imgstep7_1ss}
+)
+</insert>
+
+</mapper>

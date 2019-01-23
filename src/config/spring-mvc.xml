@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/mvc
+    http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+    <!-- 注解扫描包 -->    
+    <context:component-scan base-package="com">
+    </context:component-scan>
+
+
+  <!-- 开启注解 -->
+    <mvc:annotation-driven />
+    
+<!--      <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+       <property name="exceptionMappings">
+           <props>
+               <prop key="java.lang.ArithmeticException">mvcArithmeticExceptionPage</prop>
+               <prop key="java.lang.Throwable">mvcErrorPage</prop>
+           </props>
+       </property>
+      </bean> -->
+    
+
+    <!-- 定义跳转的文件的前后缀 ，视图模式配置-->
+    <bean id="viewResolver"
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- 自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/" />
+        <property name="suffix" value=".jsp" />
+        <property name="redirectHttp10Compatible" value="false" />
+    </bean>
+    <bean id="multipartResolver"  
+    class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >  
+    <property name="defaultEncoding" value="UTF-8"/> <!-- 默认编码 (ISO-8859-1) -->  
+    <property name="maxInMemorySize" value="4096"/> <!-- 最大内存大小 (10240)-->  
+    <!-- <property name="uploadTempDir" value="/image/upload/"/> --> <!-- 上传后的目录名 (WebUtils#TEMP_DIR_CONTEXT_ATTRIBUTE) -->  
+    <property name="maxUploadSize" value="104857600"/> <!-- 最大文件大小，-1为无限止(-1) -->  
+    </bean>
+    
+    
+  <!-- 拦截器  多个拦截器，顺序执行  -->
+<context:component-scan base-package="com.controller.icbc.jsp">
+</context:component-scan>     
+   <mvc:interceptors>       
+   <mvc:interceptor> 
+    <mvc:mapping path="/newicbc.do"/> 
+    <bean class="com.controller.intercept.LoginInterceptor"></bean> 
+   </mvc:interceptor> 
+   <mvc:interceptor> 
+    <mvc:mapping path="/upicbc.do"/> 
+    <bean class="com.controller.intercept.LoginInterceptor"></bean> 
+   </mvc:interceptor> 
+   <mvc:interceptor> 
+    <mvc:mapping path="/icbc_sp_up.do"/> 
+    <bean class="com.controller.intercept.LoginInterceptor"></bean> 
+   </mvc:interceptor> 
+   <mvc:interceptor> 
+    <mvc:mapping path="/icbc_cars.do"/> 
+    <bean class="com.controller.intercept.LoginInterceptor"></bean> 
+   </mvc:interceptor> 
+   <mvc:interceptor> 
+    <mvc:mapping path="/kk_up.do"/> 
+    <bean class="com.controller.intercept.LoginInterceptor"></bean> 
+   </mvc:interceptor> 
+   <mvc:interceptor> 
+    <mvc:mapping path="/dk_up.do"/> 
+    <bean class="com.controller.intercept.LoginInterceptor"></bean> 
+   </mvc:interceptor> 
+    <mvc:interceptor> 
+    <mvc:mapping path="/dsj_result_jsp.do"/> 
+    <bean class="com.controller.intercept.LoginInterceptor"></bean> 
+   </mvc:interceptor>
+   <mvc:interceptor> 
+    <mvc:mapping path="/erp/*.do"/> 
+    <bean class="com.controller.intercept.LoginInterceptor"></bean> 
+   </mvc:interceptor>
+   
+  </mvc:interceptors>  
+  
+  	<!--初始化云信坐席 -->
+	<bean class="com.controller.erp_icbc.YunXin.seats.AddSeat1"> </bean>
+     <!-- 注册RequestMappingHandlerMapping 和RequestMappingHandlerAdapter 两个bean。-->  
+    <mvc:annotation-driven>  
+        <mvc:message-converters>  
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
+                <property name="objectMapper">  
+                    <bean class="com.util.url.JsonObjectMapper"></bean>  
+                </property>  
+            </bean>  
+        </mvc:message-converters>  
+    </mvc:annotation-driven>  
+     
+
+
+</beans>

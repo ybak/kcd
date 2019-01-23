@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.archivesMapper">
+
+	    <select id="findarchivesbyc_name" parameterType="archives" resultType="archives">
+        select * from assess_queryarchives
+        where c_carno=#{c_carno}
+        </select>
+       <select id="archivesmap" parameterType="archives" resultType="archives">
+        select * from assess_queryarchives
+         <where>
+         c_carno=#{c_carno}  
+         </where> 
+       </select>
+         <select id="findarchives" parameterType="archives" resultType="archives">
+        select * from assess_queryarchives 
+        
+        </select>
+        <select id="Apiarchives" parameterType="archives" resultType="archives">
+        select * from assess_queryarchives where                
+         <if test="c_carno!=''">
+         c_carno=#{c_carno} 
+         </if>
+         <if test="c_carno!='' and r_item6!=''">
+          and
+         </if>
+         <if test="r_item6!=''">
+          r_item6=#{r_item6} 
+         </if>
+           and 
+           query_type=#{query_type}
+           and  
+           bc_status=3 limit 1      
+         </select>
+        
+ </mapper>

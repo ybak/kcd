@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.applyMapper">
+
+<select id="findbyacodeandtype" parameterType="apply" resultType="apply">
+select * from kcd_apply where acode=#{acode} and apply_address=#{apply_address}
+</select>
+
+<delete id="delapply" parameterType="apply">
+delete from kcd_apply where applyurl=#{applyurl}
+</delete>
+
+<select id="fapply" resultType="apply" parameterType="int">
+select * from kcd_apply where aid=#{0} limit #{1},#{2}
+</select>
+<select id="fapplylenth" resultType="int" parameterType="apply">
+select count(*) from kcd_apply where aid=#{aid}
+</select>
+<select id="findapplybycode" resultType="apply" parameterType="apply">
+select * from kcd_apply where acode=#{acode}
+</select>
+<select id="alllenth" resultType="int" parameterType="apply">
+select count(*) from kcd_apply
+</select>
+<select id="KCDCounts" resultType="int" parameterType="apply">
+select count(*) from kcd_apply where apply_address=#{0}
+</select>
+<select id="allapply" resultType="apply" parameterType="int">
+select * from kcd_apply where 1=1 order by addtime desc limit #{0},#{1} 
+</select>
+<!-- 查询快车道文件 -->
+<select id="KCDapply" resultType="apply" parameterType="apply">
+select * from kcd_apply where apply_address=#{0} order by addtime desc limit #{1},#{2} 
+</select>
+
+<select id="fapplybyname" resultType="Map" parameterType="apply">
+select * from kcd_apply where 
+(applyname=#{name} or authorizename=#{name})
+</select>
+<update id="upapply" parameterType="apply" >
+update kcd_apply set aid=#{aid} where apply_id=#{apply_id}
+</update>
+
+<insert id="addapply"  parameterType="apply" keyProperty="apply_id">
+insert into kcd_apply(
+apply_id,
+applyurl,
+applyname,
+authorizeurl,
+authorizename,
+acode,
+aid,
+addtime,
+uptime,
+apply_address,
+admin_name
+)values(
+#{apply_id},
+#{applyurl},
+#{applyname},
+#{authorizeurl},
+#{authorizename},
+#{acode},
+#{aid},
+#{addtime},
+#{uptime},
+#{apply_address},
+#{admin_name}
+)
+</insert>
+
+</mapper>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>登陆中</title>
+<body>
+<script src="../3rd/jquery-1.11.3.min.js"></script>
+	<script src="js/util.js"></script>
+	<script type="text/javascript">
+		window.onload=function(){
+			function login(){
+				delCookie("uid");
+				delCookie("sdktoken");
+				delCookie("mark");
+				$.ajax({
+			        type: "post",
+			        url: "../yx/login.do",
+			        dataType: "json",
+			        success: function(res){
+			        	console.log(res.auditAccid+" "+res.auditToken);
+			        	if(res!=null && res!=""){
+					           setCookie('uid',res.auditAccid);    
+					           //括号里的内容换成后端程序员哥哥给你返回的id和token
+					           setCookie('sdktoken',res.auditToken);
+					           setCookie('mark',res.mark);
+					           window.location.href = './main.html';
+						  }else{
+							  alert('此账号没有开通视频面签权限！')
+						  }
+			        }
+			      });
+			}
+			login();
+		}
+	</script>
+</body>
+</html>

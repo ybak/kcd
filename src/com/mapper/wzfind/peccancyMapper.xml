@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.wzfind.peccancyMapper">
+
+<select id="findpeccancybyid"  parameterType="peccancy"  resultType="peccancy">
+select * from kcd_peccancy where id=#{id}
+</select>
+
+<select id="peccancylist"  parameterType="peccancy"  resultType="peccancy">
+select * from kcd_peccancy
+</select>
+
+<insert id="addpeccancy" useGeneratedKeys="true" parameterType="peccancy"  keyProperty="id">
+insert into kcd_peccancy(
+id,
+authority,
+carprefix,
+carrest,
+cartype,
+vinno,
+engineno,
+iscity,
+mobile,
+ckeyid,
+orderno,
+resultmsg,
+orderstate,
+addtime,
+uptime
+)values(
+#{id},
+#{authority},
+#{carprefix},
+#{carrest},
+#{cartype},
+#{vinno},
+#{engineno},
+#{iscity},
+#{mobile},
+#{ckeyid},
+#{orderno},
+#{resultmsg},
+#{orderstate},
+#{addtime},
+#{uptime}
+)
+</insert>
+<update id="uppeccancy" parameterType="peccancy">
+update kcd_peccancy set resultmsg=#{resultmsg} and uptime=#{uptime} where id=#{id}
+</update>
+<update id="upporderstate" parameterType="peccancy">
+update kcd_peccancy set orderstate=#{orderstate} and uptime=#{uptime} where id=#{id}
+</update>
+<update id="uporderno" parameterType="peccancy">
+update kcd_peccancy set orderno=#{orderno} and uptime=#{uptime} where id=#{id}
+</update>
+</mapper>

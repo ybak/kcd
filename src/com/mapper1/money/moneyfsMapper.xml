@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.money.moneyfsMapper">
+
+<select id="findmoneyfsbyorderid"  parameterType="moneyfs" resultType="moneyfs">
+select * from moneyfs where bintype=1 
+and fctype=5 and orderid=#{orderid}
+</select>
+
+<select id="findmoneyfslastid"  resultType="moneyfs">
+select * from moneyfs where id=(select max(id) from moneyfs)
+</select>
+
+<insert id="addmoneyfs" parameterType="moneyfs" useGeneratedKeys="true"  keyProperty="id">
+insert into moneyfs(
+id,
+mid,
+fsid,
+gemsid,
+amount,
+type,
+dt_add,
+dt_edit,
+status,
+remark,
+otherid,
+orderid,
+bintype,
+mid_add,
+mid_edit,
+fctype
+)values(
+#{id},
+#{mid},
+#{fsid},
+#{gemsid},
+#{amount},
+#{type},
+#{dt_add},
+#{dt_edit},
+#{status},
+#{remark},
+#{otherid},
+#{orderid},
+#{bintype},
+#{mid_add},
+#{mid_edit},
+#{fctype}
+)
+</insert>
+
+
+</mapper>
