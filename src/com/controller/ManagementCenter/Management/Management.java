@@ -2,7 +2,6 @@ package com.controller.ManagementCenter.Management;
 
 
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
@@ -15,9 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.model1.ManagementCenter.assess_fs;
+
+import com.model1.icbc.erp.PageData;
 import com.service1.ManagementCenter.kj_icbcService;
-import com.service1.ManagementCenter.kjs_icbc_cardkService;
-import com.service1.ManagementCenter.kj_icbc_resultService;
 import net.sf.json.JSONArray;
 
 
@@ -25,24 +25,23 @@ import net.sf.json.JSONArray;
 public class Management {
 	@Autowired
 	private kj_icbcService kj_icbcService;
-	@Autowired
-	private kjs_icbc_cardkService kjs_icbc_cardkService;
-	@Autowired
-	private kj_icbc_resultService kj_icbc_resultService;
-	
+
+	assess_fs assess_fs=new assess_fs();
 	//前台数据后台获取
 	public  void management(HttpServletRequest request) {
-			
-		List<HashMap> loanlist=kj_icbcService.SelectLoan();//本月已放款单数，总金额   amount=0/money=null
+		PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	//Integer.parseInt(pdLoginSession.get("fs_id").toString())
+		assess_fs.setId(27);
+		assess_fs.setUp_id(27);
+		List<HashMap> loanlist=kj_icbcService.SelectLoan(assess_fs);//本月已放款单数，总金额   amount=0/money=null
 			if(loanlist.get(0).get("amount").equals(0) ){
 				loanlist.get(0).put("money",0);
 			}
-		List<HashMap> fklist=kj_icbcService.SelectFk();//本月已放款未抵押单数，总金额   amount=0/money=null
+		List<HashMap> fklist=kj_icbcService.SelectFk(assess_fs);//本月已放款未抵押单数，总金额   amount=0/money=null
 			if(fklist.get(0).get("amount").equals(0)){
 				fklist.get(0).put("money",0);
 			}
 		
-		List<HashMap> rankinglist=kj_icbcService.SelectStates();//每月总订单数各省排名     sell,name=null
+		List<HashMap> rankinglist=kj_icbcService.SelectStates(assess_fs);//每月总订单数各省排名     sell,name=null
 			for(int i=0;i<rankinglist.size();i++){
 				if(rankinglist.get(i).get("sell")==null && rankinglist.get(0).get("sell").equals("")){
 					rankinglist.get(i).put("sell",0);
@@ -50,7 +49,7 @@ public class Management {
 				}
 			}
 		
-		List<HashMap> gemslist=kj_icbcService.SelectGems();//每月总订单数各代理商排名    gems,name=null
+		List<HashMap> gemslist=kj_icbcService.SelectGems(assess_fs);//每月总订单数各代理商排名    gems,name=null
 			for(int i=0;i<gemslist.size();i++){
 				if(gemslist.get(i).get("gems")==null && gemslist.get(0).get("gems").equals("")){
 					gemslist.get(i).put("gems",0);
@@ -58,7 +57,7 @@ public class Management {
 				}
 			}
 		
-		List<HashMap> rankingloanlist=kj_icbcService.SelectLoanStates();//每月放款单数各省排名	 sell,name=null
+		List<HashMap> rankingloanlist=kj_icbcService.SelectLoanStates(assess_fs);//每月放款单数各省排名	 sell,name=null
 			for(int i=0;i<rankingloanlist.size();i++){
 				if(rankingloanlist.get(i).get("sell")==null && rankingloanlist.get(0).get("sell").equals("")){
 					rankingloanlist.get(i).put("sell",0);
@@ -66,7 +65,7 @@ public class Management {
 				}
 			}
 		
-		List<HashMap> gemsloanlist=kj_icbcService.SelectLoanGems();//每月放款单数各代理商排名         gems,name=null
+		List<HashMap> gemsloanlist=kj_icbcService.SelectLoanGems(assess_fs);//每月放款单数各代理商排名         gems,name=null
 			for(int i=0;i<gemsloanlist.size();i++){
 				if(gemsloanlist.get(i).get("gems")==null && gemsloanlist.get(0).get("gems").equals("")){
 					gemsloanlist.get(i).put("gems",0);
@@ -74,7 +73,7 @@ public class Management {
 				}
 			}
 		
-		List<HashMap> cardpasscomm=kjs_icbc_cardkService.SelectCarPassComm();//每月汽车贷款过件率各省排名     rate,name=null
+		List<HashMap> cardpasscomm=kj_icbcService.SelectCarPassComm(assess_fs);//每月汽车贷款过件率各省排名     rate,name=null
 			for(int i=0;i<cardpasscomm.size();i++){
 				if(cardpasscomm.get(i).get("rate")==null && cardpasscomm.get(0).get("rate").equals("")){
 					cardpasscomm.get(i).put("rate",0);
@@ -82,7 +81,7 @@ public class Management {
 				}
 			}
 		
-		List<HashMap> cardpassgems=kjs_icbc_cardkService.SelectCarPassGems();//每月汽车贷款过件率各代理商排名    rate,name=null
+		List<HashMap> cardpassgems=kj_icbcService.SelectCarPassGems(assess_fs);//每月汽车贷款过件率各代理商排名    rate,name=null
 			for(int i=0;i<cardpassgems.size();i++){
 				if(cardpassgems.get(i).get("rate")==null && cardpassgems.get(0).get("rate").equals("")){
 					cardpassgems.get(i).put("rate",0);
@@ -90,11 +89,11 @@ public class Management {
 				}
 			}
 		
-		request.setAttribute("billlist",kj_icbcService.SelectBill());//每月报单总量     0
+		request.setAttribute("billlist",kj_icbcService.SelectBill(assess_fs));//每月报单总量     0
 		request.setAttribute("loanlist",loanlist);//每月已放款单数，总金额
 		request.setAttribute("fklist",fklist);//每月已放款未抵押单数，总金额
-		request.setAttribute("carselect",kjs_icbc_cardkService.CountSelect());//所有汽车贷款     0
-		request.setAttribute("carpass",kjs_icbc_cardkService.CountPass());//汽车贷款通过          0
+		request.setAttribute("carselect",kj_icbcService.CountSelect(assess_fs));//所有汽车贷款     0
+		request.setAttribute("carpass",kj_icbcService.CountPass(assess_fs));//汽车贷款通过          0
 		request.setAttribute("rankinglist",rankinglist);//每月总订单数各省排名
 		request.setAttribute("gemslist",gemslist);//每月总订单数各代理商排名
 		request.setAttribute("rankingloanlist",rankingloanlist);//每月总订过件单数各省排名
@@ -110,7 +109,9 @@ public class Management {
 	public String getPathMap(HttpServletRequest request, HttpServletResponse response){
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
-			List<HashMap> chart=kj_icbcService.SelectChart();//后台获取查询数据
+			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
+			assess_fs.setUp_id(27);
+			List<HashMap> chart=kj_icbcService.SelectChart(assess_fs);//后台获取查询数据
 			Object [][] Ochart=new Object[2][9];			
 			if(chart.size()<9){
 				for(int i=0;i<chart.size();i++){
@@ -146,7 +147,9 @@ public class Management {
 	public String getCarPathMap(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
-			List<HashMap> chart=kjs_icbc_cardkService.SelectChart();//后台获取查询数据
+			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
+			assess_fs.setUp_id(27);
+			List<HashMap> chart=kj_icbcService.SelectCarChart(assess_fs);//后台获取查询数据
 			Object [][] Ochart=new Object[2][9];			
 			if(chart.size()<9){
 				for(int i=0;i<chart.size();i++){
@@ -182,7 +185,9 @@ public class Management {
 	public String getCarFkPathMap(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
-			List<HashMap> chart=kjs_icbc_cardkService.SelectCarFk();//后台获取查询数据
+			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
+			assess_fs.setUp_id(27);
+			List<HashMap> chart=kj_icbcService.SelectCarFk(assess_fs);//后台获取查询数据
 			String[] s = new String[2];
 			if(chart.size() < 2){
 				if(chart.size()<1){
@@ -221,7 +226,9 @@ public class Management {
 	public String getMoneyPathMap(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
-			List<HashMap> chart=kj_icbcService.SelectMoneyDistribute();//后台获取查询数据
+			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
+			assess_fs.setUp_id(27);
+			List<HashMap> chart=kj_icbcService.SelectMoneyDistribute(assess_fs);//后台获取查询数据
 			String[] s = new String[4];	
 			if(chart.get(0) == null){
 				for(int i=0;i<4;i++){
@@ -254,7 +261,10 @@ public class Management {
 	public String getPawnPathMap(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
-			List<HashMap> chart=kj_icbc_resultService.SelectResult();//后台获取查询数据
+			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
+			assess_fs.setUp_id(27);
+			List<HashMap> chart=kj_icbcService.SelectResult(assess_fs);//后台获取查询数据
+			
 			String[] s = new String[5];		
 			if(chart.get(0) == null){
 				for(int i=0;i<5;i++){
@@ -287,27 +297,34 @@ public class Management {
 	public String getCreditPathMap(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
-			List<HashMap> credit=kj_icbcService.SelectCredit();//后台获取查询数据
-			String[] s = new String[2];
-			if(credit.size() < 2){
+			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
+			assess_fs.setUp_id(27);
+			List<HashMap> credit=kj_icbcService.SelectCredit(assess_fs);//后台获取查询数据
+			String[] s = new String[3];
+			if(credit.size() < 3){
 				if(credit.size()<1){
-					for(int i=0;i<2;i++){
+					for(int i=0;i<3;i++){
 						s[i]="0";
 					}
 				}else{
-					if(credit.get(0).get("zxok_tag").toString().equals("0")){
-						s[0]=credit.get(0).get("zxok").toString();
-						s[1]="0";
+					if(credit.get(0).get("zxok_tag").toString().equals("1")){
+						s[0]=credit.get(0).get("zxok").toString();	
 					}else{
 						s[0]="0";
-						s[1]=credit.get(0).get("zxok").toString();
-					}				
+						for(int i=0;i<credit.size();i++){
+							s[i+1]=credit.get(i).get("zxok").toString();
+						}
+						for(int i=credit.size();i<3;i++){
+							s[i+1]="0";
+						}
+					}					
 				}		
 			}else{
-				for(int i=0;i<2;i++){
+				for(int i=0;i<3;i++){
 					s[i]=credit.get(i).get("zxok").toString();
 				}
 			}
+
 			JSONArray jsonArray = JSONArray.fromObject(s);
 			response.setContentType("text/html;charset=UTF-8");
 			response.setContentType("application/json");
@@ -326,7 +343,9 @@ public class Management {
 	public String getAgePathMap(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
-			List<HashMap> credit=kj_icbcService.SelectClientAge();//后台获取查询数据
+			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
+			assess_fs.setUp_id(27);
+			List<HashMap> credit=kj_icbcService.SelectClientAge(assess_fs);//后台获取查询数据
 			String[] s = new String[4];
 			if(credit.get(0) == null){
 				for(int i=0;i<4;i++){
@@ -359,7 +378,9 @@ public class Management {
 	public String getCarsAgePathMap(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
-			List<HashMap> carsage=kj_icbcService.SelectCarsAge();//后台获取查询数据
+			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
+			assess_fs.setUp_id(27);
+			List<HashMap> carsage=kj_icbcService.SelectCarsAge(assess_fs);//后台获取查询数据
 			String[] s = new String[4];
 			if(carsage.get(0) == null){
 				for(int i=0;i<4;i++){
@@ -392,7 +413,9 @@ public class Management {
 	public String getAdvanceFundPathMap(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
-			List<HashMap> fund=kj_icbcService.SelectAdvanceFund();//后台获取查询数据
+			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
+			assess_fs.setUp_id(27);
+			List<HashMap> fund=kj_icbcService.SelectAdvanceFund(assess_fs);//后台获取查询数据
 			Object [][] Ofund=new Object[2][12];					
 			if(fund.size()<12){
 				for(int i=0;i<fund.size();i++){
@@ -430,7 +453,9 @@ public class Management {
 	public String getRecyclePathMap(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
-			List<HashMap> fund=kj_icbcService.SelectRecycle();//后台获取查询数据
+			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
+			assess_fs.setUp_id(27);
+			List<HashMap> fund=kj_icbcService.SelectRecycle(assess_fs);//后台获取查询数据
 			Object [][] Ofund=new Object[2][9];						
 			if(fund.size()<9){
 				for(int i=0;i<fund.size();i++){
@@ -467,9 +492,10 @@ public class Management {
 	public String getNewOldCarsPathMap(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
-			List<HashMap> newcars=kj_icbcService.SelectNewCars();//后台获取查询数据	
+			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	//
+			assess_fs.setUp_id(27);
+			List<HashMap> newcars=kj_icbcService.SelectNewCars(assess_fs);//后台获取查询数据	
 			Object [][] Ofund=new Object[5][12];			
-			System.out.println(newcars.size()+"--------------------------------------");
 			if(newcars.size()<12){
 				for(int i=0;i<newcars.size();i++){
 					Ofund[0][i]=(newcars.get(i).get("year1")+"-"+newcars.get(i).get("month1"));//把日期格式输出放入二维数组xxxx-xx

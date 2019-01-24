@@ -18,7 +18,9 @@
 										<input type="text" placeholder="请输入代理商" />
 									</li>
 									<li>
-										<div>请选择省份<i>></i></div>
+										<div>请选择省份<i>></i>
+										</div>
+										
 									</li>
 									<li>
 										<div>请选择时间<i>></i></div>
@@ -34,7 +36,7 @@
 							<!--报单统计头部右边开始-->
 							<div class="graph_statistics_top" >
 								<div class="graph_statistics_content" style="width:40%;">
-									<p class="graph_statistics_number font_color_1">0<font>笔</font></p>
+									<p class="graph_statistics_number font_color_1">${billlist[0].amount }<font>笔</font></p>
 									<p class="font_size_2 font_color_3">本月报单总量</p>
 								</div>
 								<%-- <div class="graph_statistics_content" style="width: 50%;float: right;">
@@ -51,39 +53,39 @@
 									 </tr>
 									 
 									<tr>
-										<td class="font_color_3"> </td>
-										<td class="font_color_1 font_size_1">0</td>
+										<td class="font_color_3">${rankinglist[0].name }</td>
+										<td class="font_color_1 font_size_1">${rankinglist[0].sell }</td>
 										<td ><div class="graph_rank">1</div></td>
-										<td class="font_color_1 font_size_1">0</td>
-										<td class="font_color_3"> </td>
+										<td class="font_color_1 font_size_1">${gemslist[0].gems}</td>
+										<td class="font_color_3">${gemslist[0].name}</td>
 									</tr>
 									<tr>
-										<td class="font_color_3"> </td>
-										<td class="font_color_1 font_size_1">0</td>
+										<td class="font_color_3">${rankinglist[1].name }</td>
+										<td class="font_color_1 font_size_1">${rankinglist[1].sell }</td>
 										<td ><div class="graph_rank">2</div></td>
-										<td class="font_color_1 font_size_1">0</td>
-										<td class="font_color_3"> </td>
+										<td class="font_color_1 font_size_1">${gemslist[1].gems}</td>
+										<td class="font_color_3">${gemslist[1].name}</td>
 									</tr>
 									<tr>
-										<td class="font_color_3"> </td>
-										<td class="font_color_1 font_size_1">0</td>
+										<td class="font_color_3">${rankinglist[2].name }</td>
+										<td class="font_color_1 font_size_1">${rankinglist[2].sell }</td>
 										<td ><div class="graph_rank">3</div></td>
-										<td class="font_color_1 font_size_1">0</td>
-										<td class="font_color_3"> </td>
+										<td class="font_color_1 font_size_1">${gemslist[2].gems}</td>
+										<td class="font_color_3">${gemslist[2].name}</td>
 									</tr>
 									<tr>
-										<td class="font_color_3"> </td>
-										<td class="font_color_1 font_size_1">0</td>
+										<td class="font_color_3">${rankinglist[3].name }</td>
+										<td class="font_color_1 font_size_1">${rankinglist[3].sell }</td>
 										<td ><div class="graph_rank">4</div></td>
-										<td class="font_color_1 font_size_1">0</td>
-										<td class="font_color_3"> </td>
+										<td class="font_color_1 font_size_1">${gemslist[3].gems}</td>
+										<td class="font_color_3">${gemslist[3].name}</td>
 									</tr>
 									<tr>
-										<td class="font_color_3"> </td>
-										<td class="font_color_1 font_size_1">0</td>
+										<td class="font_color_3">${rankinglist[4].name }</td>
+										<td class="font_color_1 font_size_1">${rankinglist[4].sell }</td>
 										<td ><div class="graph_rank">5</div></td>
-										<td class="font_color_1 font_size_1">0</td>
-										<td class="font_color_3"> </td>
+										<td class="font_color_1 font_size_1">${gemslist[4].gems}</td>
+										<td class="font_color_3">${gemslist[4].name}</td>
 									</tr>
 								</table>
 							</div>
@@ -117,7 +119,7 @@
 							<!--过件率 汽车贷款通过右边开始-->
 							<div class="graph_statistics_top" >
 								<div class="graph_statistics_content" style="width:40%;float: right;margin-right:22%;">
-									<p class="graph_statistics_number font_color_2">0<font>%</font></p>
+									<p class="graph_statistics_number font_color_2">${Math.round(carpass*100/carselect) }<font>%</font></p>
 									<p class="font_size_2 font_color_3">本月过件率</p>
 								</div>
 							</div>
@@ -129,39 +131,39 @@
 									    <th >代理商</th>
 									 </tr>
 									<tr>
-										<td class="font_color_3"> </td>
-										<td class="font_color_1 font_size_1">0</td>
+										<td class="font_color_3">${cardpasscomm[0].name }</td>
+										<td class="font_color_1 font_size_1">${Math.ceil(cardpasscomm[0].rate*100) }%</td>
 										<td ><div class="graph_rank">1</div></td>
-										<td class="font_color_1 font_size_1">0</td>
-										<td class="font_color_3"> </td>
+										<td class="font_color_1 font_size_1">${Math.ceil(cardpassgems[0].rate*100) }%</td>
+										<td class="font_color_3">${cardpassgems[0].name }</td>
 									</tr>
 									<tr>
-										<td class="font_color_3"> </td>
-										<td class="font_color_1 font_size_1">0</td>
+										<td class="font_color_3">${cardpasscomm[1].name }</td>
+										<td class="font_color_1 font_size_1">${Math.ceil(cardpasscomm[1].rate*100) }%</td>
 										<td ><div class="graph_rank">2</div></td>
-										<td class="font_color_1 font_size_1">0</td>
-										<td class="font_color_3"> </td>
+										<td class="font_color_1 font_size_1">${Math.ceil(cardpassgems[1].rate*100) }%</td>
+										<td class="font_color_3">${cardpassgems[1].name }</td>
 									</tr>
 									<tr>
-										<td class="font_color_3"> </td>
-										<td class="font_color_1 font_size_1">0</td>
+										<td class="font_color_3">${cardpasscomm[2].name }</td>
+										<td class="font_color_1 font_size_1">${Math.ceil(cardpasscomm[2].rate*100) }%</td>
 										<td ><div class="graph_rank">3</div></td>
-										<td class="font_color_1 font_size_1">0</td>
-										<td class="font_color_3"> </td>
+										<td class="font_color_1 font_size_1">${Math.ceil(cardpassgems[2].rate*100) }%</td>
+										<td class="font_color_3">${cardpassgems[2].name }</td>
 									</tr>
 									<tr>
-										<td class="font_color_3"> </td>
-										<td class="font_color_1 font_size_1">0</td>
+										<td class="font_color_3">${cardpasscomm[3].name }</td>
+										<td class="font_color_1 font_size_1">${Math.ceil(cardpasscomm[3].rate*100) }%</td>
 										<td ><div class="graph_rank">4</div></td>
-										<td class="font_color_1 font_size_1">0</td>
-										<td class="font_color_3"> </td>
+										<td class="font_color_1 font_size_1">${Math.ceil(cardpassgems[3].rate*100) }%</td>
+										<td class="font_color_3">${cardpassgems[3].name }</td>
 									</tr>
 									<tr>
-										<td class="font_color_3"> </td>
-										<td class="font_color_1 font_size_1">0</td>
+										<td class="font_color_3">${cardpasscomm[4].name }</td>
+										<td class="font_color_1 font_size_1">${Math.ceil(cardpasscomm[4].rate*100) }%</td>
 										<td ><div class="graph_rank">5</div></td>
-										<td class="font_color_1 font_size_1">0</td>
-										<td class="font_color_3"> </td>
+										<td class="font_color_1 font_size_1">${Math.ceil(cardpassgems[4].rate*100) }%</td>
+										<td class="font_color_3">${cardpassgems[4].name }</td>
 									</tr>
 								</table>
 							</div>
@@ -202,17 +204,17 @@
 							<!--放款统计头部右边开始-->
 							<div class="graph_statistics_top" style="margin-top: 20%;">
 								<div class="graph_statistics_content" style="width:45%;">
-									<p class="graph_statistics_number font_color_1">0<font>笔</font></p>
+									<p class="graph_statistics_number font_color_1">${loanlist[0].amount}<font>笔</font></p>
 									<p class="font_size_2 font_color_3">本月放款总订单</p>
 								</div>
 								<div class="graph_statistics_content" style="width: 50%;float: right;">
-									<p class="graph_statistics_number font_color_2">0<font>元</font></p>
+									<p class="graph_statistics_number font_color_2">${loanlist[0].money == null ?0:Math.ceil(loanlist[0].money/loanlist[0].amount) }<font>元</font></p>
 									<p class="font_size_2 font_color_3">本月放款均金额</p>
 								</div>
 							</div>
 							
 							<div class="graph_statistics_content" style="width: 100%; margin-bottom: 7%;">
-									<p class="graph_statistics_number font_color_2">0<font>元</font></p>
+									<p class="graph_statistics_number font_color_2">${Math.ceil(loanlist[0].money) }<font>元</font></p>
 									<p class="font_size_2 font_color_3">本月累计放款总订单总金额</p>
 							</div>
 						
@@ -224,39 +226,39 @@
 									    <th >代理商</th>
 									 </tr>
 									<tr>
-										<td class="font_color_3"> </td>
-										<td class="font_color_1 font_size_1">0</td>
+										<td class="font_color_3">${rankingloanlist[0].name }</td>
+										<td class="font_color_1 font_size_1">${rankingloanlist[0].sell }</td>
 										<td ><div class="graph_rank">1</div></td>
-										<td class="font_color_1 font_size_1">0</td>
-										<td class="font_color_3"> </td>
+										<td class="font_color_1 font_size_1">${gemsloanlist[0].gems }</td>
+										<td class="font_color_3">${gemsloanlist[0].name }</td>
 									</tr>
 									<tr>
-										<td class="font_color_3"> </td>
-										<td class="font_color_1 font_size_1">0</td>
+										<td class="font_color_3">${rankingloanlist[1].name }</td>
+										<td class="font_color_1 font_size_1">${rankingloanlist[1].sell }</td>
 										<td ><div class="graph_rank">2</div></td>
-										<td class="font_color_1 font_size_1">0</td>
-										<td class="font_color_3"> </td>
+										<td class="font_color_1 font_size_1">${gemsloanlist[1].gems }</td>
+										<td class="font_color_3">${gemsloanlist[1].name }</td>
 									</tr>
 									<tr>
-										<td class="font_color_3"> </td>
-										<td class="font_color_1 font_size_1">0</td>
+										<td class="font_color_3">${rankingloanlist[2].name }</td>
+										<td class="font_color_1 font_size_1">${rankingloanlist[2].sell }</td>
 										<td ><div class="graph_rank">3</div></td>
-										<td class="font_color_1 font_size_1">0</td>
-										<td class="font_color_3"> </td>
+										<td class="font_color_1 font_size_1">${gemsloanlist[2].gems }</td>
+										<td class="font_color_3">${gemsloanlist[2].name }</td>
 									</tr>
 									<tr>
-										<td class="font_color_3"> </td>
-										<td class="font_color_1 font_size_1">0</td>
+										<td class="font_color_3">${rankingloanlist[3].name }</td>
+										<td class="font_color_1 font_size_1">${rankingloanlist[3].sell }</td>
 										<td ><div class="graph_rank">4</div></td>
-										<td class="font_color_1 font_size_1">0</td>
-										<td class="font_color_3"> </td>
+										<td class="font_color_1 font_size_1">${gemsloanlist[3].gems }</td>
+										<td class="font_color_3">${gemsloanlist[3].name }</td>
 									</tr>
 									<tr>
-										<td class="font_color_3"> </td>
-										<td class="font_color_1 font_size_1">0</td>
+										<td class="font_color_3">${rankingloanlist[4].name }</td>
+										<td class="font_color_1 font_size_1">${rankingloanlist[4].sell }</td>
 										<td ><div class="graph_rank">5</div></td>
-										<td class="font_color_1 font_size_1">0</td>
-										<td class="font_color_3"> </td>
+										<td class="font_color_1 font_size_1">${gemsloanlist[4].gems }</td>
+										<td class="font_color_3">${gemsloanlist[4].name }</td>
 									</tr>
 								</table>
 							</div>
@@ -272,12 +274,12 @@
 							<div class="graph_title" style="margin-bottom: 9%;">抵押完成情况</div>
 							<div class="graph_statistics_top" >
 								<div class="graph_statistics_content" style="width:45%; height: 76px;">
-									<p class="graph_statistics_number font_color_1">0<font>笔</font></p>
+									<p class="graph_statistics_number font_color_1">${fklist[0].amount }<font>笔</font></p>
 									<p class="font_size_2 font_color_3">本月已放款未完成</p>
 									<p class="font_size_2 font_color_3">抵押的订单总数</p>
 								</div>
 								<div class="graph_statistics_content" style="width: 50%;float: right;height:76px;">
-									<p class="graph_statistics_number font_color_2">0<font>元</font></p>
+									<p class="graph_statistics_number font_color_2">${Math.ceil(fklist[0].money) }<font>元</font></p>
 									<p class="font_size_2 font_color_3">本月已放款未完成</p>
 									<p class="font_size_2 font_color_3">抵押的订单金额</p>
 								</div>
@@ -360,24 +362,24 @@
 									<th>逾期率</th>
 								</tr>
 								<tr>
-									<td> </td>
-									<td>0</td>
+									<td>金稻谷</td>
+									<td>0.98%</td>
 								</tr>
 								<tr>
-									<td> </td>
-									<td>0</td>
+									<td>联众</td>
+									<td>0.96%</td>
 								</tr>
 								<tr>
-									<td> </td>
-									<td>0</td>
+									<td>厦门远景</td>
+									<td>0.94%</td>
 								</tr>
 								<tr>
-									<td> </td>
-									<td>0</td>
+									<td>灿谷</td>
+									<td>0.88%</td>
 								</tr>
 								<tr>
-									<td> </td>
-									<td>0</td>
+									<td>泰州索普</td>
+									<td>0.83%</td>
 								</tr>
 							</table>
 							<div style="width: 100%; height: 10%;margin-top: 2%;">
