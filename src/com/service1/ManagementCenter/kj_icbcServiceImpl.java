@@ -6,12 +6,14 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mapper1.ManagementCenter.assess_fsMapper;
 import com.model1.ManagementCenter.assess_fs;
 
 
 @Service
+@Transactional(value = "kcway2", rollbackFor = Exception.class)
 public class kj_icbcServiceImpl implements kj_icbcService{
 
 	@Resource

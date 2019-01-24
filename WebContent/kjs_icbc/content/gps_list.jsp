@@ -3,7 +3,7 @@
 <div class="content-wrapper" >
 	<!-- http://www.tianyigps.cn -->
  	<iframe  id="mainiframe" width="100%"  height="411px"
-	 src="http://kcd.locationserver.cn/monitor/coopLogin.jhtml" frameborder="0" scrolling="auto">
+	 src="http://kcdgps.kcway.net/monitor/jmLogin.jhtml?name=kcd&password=Kcd123456" frameborder="0" scrolling="auto">
 	</iframe>
 </div>
 <script type="text/javascript">

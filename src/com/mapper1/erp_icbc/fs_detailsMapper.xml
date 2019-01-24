@@ -84,6 +84,7 @@
    <if test="jcbzjth_price != null and jcbzjth_price!=''">jcbzjth_price,</if>
    <if test="jcbzjth_date != null and jcbzjth_date!=''">jcbzjth_date,</if>
    <if test="fs_id!= null and fs_id!=''">fs_id,</if>
+   <if test="xt_name!= null and xt_name!=''">xt_name,</if>
    </trim>
    values
    <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -164,6 +165,7 @@
    <if test="jcbzjth_price != null and jcbzjth_price!=''">#{jcbzjth_price},</if>
    <if test="jcbzjth_date != null and jcbzjth_date!=''">#{jcbzjth_date},</if>
    <if test="fs_id!= null and fs_id!=''">#{fs_id},</if>
+   <if test="xt_name!= null and xt_name!=''">#{xt_name},</if>
    </trim>
    </if>
 
@@ -257,6 +259,7 @@ update assess_fs_details
 <if test="jcbzjth_price!=null and jcbzjth_price!=''">jcbzjth_price=#{jcbzjth_price},</if> 	
 <if test="jcbzjth_date!=null and jcbzjth_date!=''">jcbzjth_date=#{jcbzjth_date},</if>
 <if test="fs_id!=null and fs_id!=''">fs_id=#{fs_id},</if>
+<if test="xt_name!= null and xt_name!=''">xt_name=#{xt_name},</if>
 </trim>
 where id=#{id}
 </if>

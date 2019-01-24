@@ -1,9 +1,11 @@
 package com.util;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.security.MessageDigest;
 
 public class md5util {
-  
+	 private static final String SALT = "tamboo";
     
     /** 
      * message-digest algorithm 5（信息-摘要算法） 
@@ -20,7 +22,77 @@ public class md5util {
 //        System.out.println("加密前： " + pwd);  
 //        System.err.println("加密后： " + md5util.getMD5(pwd));  
 //        }  
-      
+	  /***
+     * 上传文件工具
+     * @param file
+     * @param filePath
+     * @param fileName
+     * @throws Exception
+     */
+    public static void uploadFile(byte[] file, String filePath, String fileName) throws Exception {
+        File targetFile = new File(filePath);
+        if(!targetFile.exists()){
+            targetFile.mkdirs();
+        }
+        FileOutputStream out = new FileOutputStream(filePath+fileName);
+        out.write(file);
+        out.flush();
+        out.close();
+    }
+    
+    public static String encode(String password) {
+        password = password + SALT;
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        char[] charArray = password.toCharArray();
+        byte[] byteArray = new byte[charArray.length];
+
+        for (int i = 0; i < charArray.length; i++)
+            byteArray[i] = (byte) charArray[i];
+        byte[] md5Bytes = md5.digest(byteArray);
+        StringBuffer hexValue = new StringBuffer();
+        for (int i = 0; i < md5Bytes.length; i++) {
+            int val = ((int) md5Bytes[i]) & 0xff;
+            if (val < 16) {
+                hexValue.append("0");
+            }
+
+            hexValue.append(Integer.toHexString(val));
+        }
+        return hexValue.toString();
+    }
+
+    /*
+     * Java文件操作 获取文件扩展名
+     *
+     */
+    public static String getExtensionName(String filename) {
+        if ((filename != null) && (filename.length() > 0)) {
+            int dot = filename.lastIndexOf('.');
+            if ((dot >-1) && (dot < (filename.length() - 1))) {
+                return filename.substring(dot + 1);
+            }
+        }
+        return filename;
+    }
+    /*
+     * Java文件操作 获取不带扩展名的文件名
+     *
+     *
+     */
+    public static String getFileNameNoEx(String filename) {
+        if ((filename != null) && (filename.length() > 0)) {
+            int dot = filename.lastIndexOf('.');
+            if ((dot >-1) && (dot < (filename.length()))) {
+                return filename.substring(0, dot);
+            }
+        }
+        return filename;
+    }
         /** 
          * 生成md5 
          *  

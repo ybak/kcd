@@ -46,8 +46,8 @@
 	
 	     </property> 
 	    
-        <property name="username" value="kcdapitest" />
-        <property name="password" value="cwuEn4xutESWpPFj" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
     </bean>
 <!-- kcdapitest   cwuEn4xutESWpPFj -->
     <!--
@@ -95,8 +95,8 @@
 	
 	     </property> 
 	    
-        <property name="username" value="kcway" />
-        <property name="password" value="NDXppG2qUNB6pXcA" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
     </bean>
 <!-- 'user'=>'kcway',
 		'pass'=>'NDXppG2qUNB6pXcA',

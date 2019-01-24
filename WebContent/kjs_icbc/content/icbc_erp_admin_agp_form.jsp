@@ -157,11 +157,11 @@
 								<td><label class="checkbox-inline"><input name="hzczzh" id="hzczzh" value="0" onclick="checkfl(this)" type="checkbox">杭州城站支行</label>
 								</td>
 								<td id="hzczzh1" name="node"> 
-								<label class="checkbox-inline"><input name="zx" id="zx" value="0" onclick="check(this)" type="checkbox">征信</label>
-								<label class="checkbox-inline"><input name="qcpg" id="qcpg" value="0" onclick="check(this)" type="checkbox">汽车评估</label>
-								<label class="checkbox-inline"><input name="ssmq" id="ssmq" value="0" onclick="check(this)" type="checkbox">视频面签</label>
-								<label class="checkbox-inline"><input name="qcdk" id="qcdk" value="0" onclick="check(this)" type="checkbox">汽车贷款</label>
-								<label class="checkbox-inline"><input name="clhs" id="clhs" value="0" onclick="check(this)" type="checkbox">材料回收</label>
+								<label class="checkbox-inline"><input name="zx1" id="zx1" value="0" onclick="check(this)" type="checkbox">征信</label>
+								<label class="checkbox-inline"><input name="qcpg1" id="qcpg1" value="0" onclick="check(this)" type="checkbox">汽车评估</label>
+								<label class="checkbox-inline"><input name="ssmq1" id="ssmq1" value="0" onclick="check(this)" type="checkbox">视频面签</label>
+								<label class="checkbox-inline"><input name="qcdk1" id="qcdk1" value="0" onclick="check(this)" type="checkbox">汽车贷款</label>
+								<label class="checkbox-inline"><input name="clhs1" id="clhs1" value="0" onclick="check(this)" type="checkbox">材料回收</label>
 								</td>
 				                </tr>
 				                <!-- 哈尔滨顾乡支行 -->
@@ -169,23 +169,23 @@
 								<td><label class="checkbox-inline"><input name="hebgxzh" id="hebgxzh" value="0" onclick="checkfl(this)" type="checkbox">哈尔滨顾乡支行</label>
 								</td>
 								<td id="hebgxzh1" name="node"> 
-								<label class="checkbox-inline"><input name="zx" id="zx" value="0" onclick="check(this)" type="checkbox">征信</label>
-								<label class="checkbox-inline"><input name="qcpg" id="qcpg" value="0" onclick="check(this)" type="checkbox">汽车评估</label>
-								<label class="checkbox-inline"><input name="ssmq" id="ssmq" value="0" onclick="check(this)" type="checkbox">视频面签</label>
-								<label class="checkbox-inline"><input name="qcdk" id="qcdk" value="0" onclick="check(this)" type="checkbox">汽车贷款</label>
-								<label class="checkbox-inline"><input name="clhs" id="clhs" value="0" onclick="check(this)" type="checkbox">材料回收</label>
+								<label class="checkbox-inline"><input name="zx2" id="zx2" value="0" onclick="check(this)" type="checkbox">征信</label>
+								<label class="checkbox-inline"><input name="qcpg2" id="qcpg2" value="0" onclick="check(this)" type="checkbox">汽车评估</label>
+								<label class="checkbox-inline"><input name="ssmq2" id="ssmq2" value="0" onclick="check(this)" type="checkbox">视频面签</label>
+								<label class="checkbox-inline"><input name="qcdk2" id="qcdk2" value="0" onclick="check(this)" type="checkbox">汽车贷款</label>
+								<label class="checkbox-inline"><input name="clhs2" id="clhs2" value="0" onclick="check(this)" type="checkbox">材料回收</label>
 								</td>
 				                </tr>
 				                <!-- 台州路桥支行 -->
 				                <tr>
-								<td><label class="checkbox-inline"><input name="hebgxzh" id="hebgxzh" value="0" onclick="checkfl(this)" type="checkbox">台州路桥支行</label>
+								<td><label class="checkbox-inline"><input name="tzlqzh" id="tzlqzh" value="0" onclick="checkfl(this)" type="checkbox">台州路桥支行</label>
 								</td>
-								<td id="hebgxzh1" name="node"> 
-								<label class="checkbox-inline"><input name="zx" id="zx" value="0" onclick="check(this)" type="checkbox">征信</label>
-								<label class="checkbox-inline"><input name="qcpg" id="qcpg" value="0" onclick="check(this)" type="checkbox">汽车评估</label>
-								<label class="checkbox-inline"><input name="ssmq" id="ssmq" value="0" onclick="check(this)" type="checkbox">视频面签</label>
-								<label class="checkbox-inline"><input name="qcdk" id="qcdk" value="0" onclick="check(this)" type="checkbox">汽车贷款</label>
-								<label class="checkbox-inline"><input name="clhs" id="clhs" value="0" onclick="check(this)" type="checkbox">材料回收</label>
+								<td id="tzlqzh1" name="node"> 
+								<label class="checkbox-inline"><input name="zx3" id="zx3" value="0" onclick="check(this)" type="checkbox">征信</label>
+								<label class="checkbox-inline"><input name="qcpg3" id="qcpg3" value="0" onclick="check(this)" type="checkbox">汽车评估</label>
+								<label class="checkbox-inline"><input name="ssmq3" id="ssmq3" value="0" onclick="check(this)" type="checkbox">视频面签</label>
+								<label class="checkbox-inline"><input name="qcdk3" id="qcdk3" value="0" onclick="check(this)" type="checkbox">汽车贷款</label>
+								<label class="checkbox-inline"><input name="clhs3" id="clhs3" value="0" onclick="check(this)" type="checkbox">材料回收</label>
 								</td>
 				                </tr>
 				                <!-- 南京江宁支行 -->
@@ -193,11 +193,11 @@
 								<td><label class="checkbox-inline"><input name="njjnzh" id="njjnzh" value="0" onclick="checkfl(this)" type="checkbox">南京江宁支行</label>
 								</td>
 								<td id="njjnzh1" name="node"> 
-								<label class="checkbox-inline"><input name="zx" id="zx" value="0" onclick="check(this)" type="checkbox">征信</label>
-								<label class="checkbox-inline"><input name="qcpg" id="qcpg" value="0" onclick="check(this)" type="checkbox">汽车评估</label>
-								<label class="checkbox-inline"><input name="ssmq" id="ssmq" value="0" onclick="check(this)" type="checkbox">视频面签</label>
-								<label class="checkbox-inline"><input name="qcdk" id="qcdk" value="0" onclick="check(this)" type="checkbox">汽车贷款</label>
-								<label class="checkbox-inline"><input name="clhs" id="clhs" value="0" onclick="check(this)" type="checkbox">材料回收</label>
+								<label class="checkbox-inline"><input name="zx4" id="zx4" value="0" onclick="check(this)" type="checkbox">征信</label>
+								<label class="checkbox-inline"><input name="qcpg4" id="qcpg4" value="0" onclick="check(this)" type="checkbox">汽车评估</label>
+								<label class="checkbox-inline"><input name="ssmq4" id="ssmq4" value="0" onclick="check(this)" type="checkbox">视频面签</label>
+								<label class="checkbox-inline"><input name="qcdk4" id="qcdk4" value="0" onclick="check(this)" type="checkbox">汽车贷款</label>
+								<label class="checkbox-inline"><input name="clhs4" id="clhs4" value="0" onclick="check(this)" type="checkbox">材料回收</label>
 								</td>
 				                </tr>
 <!-- 				                 <tr >
@@ -226,11 +226,11 @@
 								<label class="checkbox-inline"><input name="fkjl" id="fkjl" value="0" onclick="check(this)" type="checkbox">放款记录</label>
 								<label class="checkbox-inline"><input name="dhywgl" id="dhywgl" value="0" onclick="check(this)" type="checkbox">贷后业务管理</label>
 								<label class="checkbox-inline"><input name="sqdc" id="sqdc" value="0" onclick="check(this)" type="checkbox">申请代偿</label>
-								<label class="checkbox-inline"><input name="dcqr" id="fkjl" value="0" onclick="check(this)" type="checkbox">代偿确认</label>
+								<label class="checkbox-inline"><input name="dcqr" id="dcqr" value="0" onclick="check(this)" type="checkbox">代偿确认</label>
 								<label class="checkbox-inline"><input name="hzsdc" id="hzsdc" value="0" onclick="check(this)" type="checkbox">合作商代偿</label>
-								<label class="checkbox-inline"><input name="fkjl" id="fkjl" value="0" onclick="check(this)" type="checkbox">合作商代偿确认</label>
+								<label class="checkbox-inline"><input name="hzsdcqr" id="hzsdcqr" value="0" onclick="check(this)" type="checkbox">合作商代偿确认</label>
 								<label class="checkbox-inline"><input name="gsdz" id="gsdz" value="0" onclick="check(this)" type="checkbox">公司垫资</label>
-								<label class="checkbox-inline"><input name="yhdk" id="yhdk" value="0" onclick="check(this)" type="checkbox">银行垫资</label>
+								<label class="checkbox-inline"><input name="cwgl_yhdk" id="cwgl_yhdk" value="0" onclick="check(this)" type="checkbox">银行贷款</label>
 								<label class="checkbox-inline"><input name="cwsz" id="cwsz" value="0" onclick="check(this)" type="checkbox">财务收支</label>
 								</td>
 				                </tr>	
@@ -274,10 +274,12 @@
 								<td>
 								<label class="checkbox-inline"><input name="khhkgl" id="khhkgl" value="0" onclick="checkfl(this)" type="checkbox">客户还款管理</label>
 								</td>
-                                <td>
+                                <td id="khhkgl1" name="node">
+                                <label class="checkbox-inline"><input name="khhklr" id="khhklr" value="0" onclick="check(this)" type="checkbox">客户还款录入</label>
+                                <label class="checkbox-inline"><input name="khhkqk" id="khhkqk" value="0" onclick="check(this)" type="checkbox">客户还款情况</label>
                                 </td>
                                 </tr>
-                                <!--  -->
+                                <!-- 客户逾期名单 -->
                                 <tr >
 								<td>
 								<label class="checkbox-inline"><input name="khyqmd" id="khyqmd" value="0" onclick="checkfl(this)" type="checkbox">客户逾期名单</label>
@@ -298,7 +300,10 @@
 								<td>
 								<label class="checkbox-inline"><input name="tcgl" id="tcgl" value="0" onclick="checkfl(this)" type="checkbox">拖车管理</label>
 								</td>
-                                <td>
+                                <td id="tcgl1" name="node">
+                                <label class="checkbox-inline"><input name="tc_ysl" id="tc_ysl" value="0" onclick="check(this)" type="checkbox">拖车(已受理)</label>
+                                <label class="checkbox-inline"><input name="tc_wsl" id="tc_wsl" value="0" onclick="check(this)" type="checkbox">拖车(未受理)</label>
+                                <label class="checkbox-inline"><input name="tc_wc" id="tc_wc" value="0" onclick="check(this)" type="checkbox">拖车(完成)</label>
                                 </td>
                                 </tr>
                                 <!-- 诉讼管理 -->
@@ -330,7 +335,9 @@
 								<td>
 								<label class="checkbox-inline"><input name="cqcl" id="cqcl" value="0" onclick="checkfl(this)" type="checkbox">结清处理</label>
 								</td>
-                                <td>
+                                <td id="cqcl1" name="node">
+                                <label class="checkbox-inline"><input name="cqcl_yjq" id="cqcl_yjq" value="0" onclick="check(this)" type="checkbox">已结清</label>
+                                <label class="checkbox-inline"><input name="cqcl_wjq" id="cqcl_wjq" value="0" onclick="check(this)" type="checkbox">未结清</label>
                                 </td>
                                 </tr>
                                 <!--  -->

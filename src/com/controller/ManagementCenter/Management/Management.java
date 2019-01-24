@@ -29,9 +29,12 @@ public class Management {
 	assess_fs assess_fs=new assess_fs();
 	//前台数据后台获取
 	public  void management(HttpServletRequest request) {
-		PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	//Integer.parseInt(pdLoginSession.get("fs_id").toString())
-		assess_fs.setId(27);
-		assess_fs.setUp_id(27);
+		PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
+		//Integer.parseInt(pdLoginSession.get("fs_id").toString())
+		
+		assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+		assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+		
 		List<HashMap> loanlist=kj_icbcService.SelectLoan(assess_fs);//本月已放款单数，总金额   amount=0/money=null
 			if(loanlist.get(0).get("amount").equals(0) ){
 				loanlist.get(0).put("money",0);

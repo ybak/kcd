@@ -88,30 +88,31 @@
 
  <!-- 每月总订单各省排名 -->
  <select id="selectstates"  parameterType="assess_fs" resultType="java.util.Map">
- 	select count(ki.kk_loan_stateid) sell,cs.`name` name 
- 	from kj_icbc ki,comm_states cs 
- 	where ki.kk_loan_stateid=cs.id 
+ 	select count(kik.kk_loan_stateid) sell,cs.`name` name 
+ 	from kj_icbc ki,comm_states cs,kjs_icbc_kk kik 
+ 	where kik.kk_loan_stateid=cs.id 
+	and kik.icbc_id=ki.id 
  	and month(ki.dt_add)=MONTH(SYSDATE()) 
- 	and YEAR(dt_add)=year(SYSDATE()) 
+ 	and YEAR(ki.dt_add)=year(SYSDATE()) 
  	and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
- 	GROUP BY ki.kk_loan_stateid 
- 	ORDER BY count(ki.kk_loan_stateid) DESC
+ 	GROUP BY kik.kk_loan_stateid 
+ 	ORDER BY count(kik.kk_loan_stateid) DESC
  </select>
 
  
   <!-- 每月放款订单各省排名 -->
  <select id="selectloanstates"  parameterType="assess_fs" resultType="java.util.Map">
- 	select count(ki.kk_loan_stateid) sell,cs.`name` name 
- 	from kj_icbc ki,comm_states cs,icbc_erp_kj_icbc_result iekir 
- 	where ki.kk_loan_stateid=cs.id 
- 	and iekir.icbc_id=ki.id 
+ 	 	select count(kik.kk_loan_stateid) sell,cs.`name` name 
+ 	from kjs_icbc_kk kik,comm_states cs,icbc_erp_kj_icbc_result iekir 
+ 	where kik.kk_loan_stateid=cs.id 
+ 	and iekir.icbc_id=kik.icbc_id 
  	and month(iekir.fk_date)=MONTH(SYSDATE()) 
  	and YEAR(iekir.fk_date)=year(SYSDATE()) 
  	and iekir.status=62 
  	and iekir.result_1_code=1 
- 	and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
- 	GROUP BY ki.kk_loan_stateid 
- 	ORDER BY count(ki.kk_loan_stateid) DESC
+ 	and kik.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
+ 	GROUP BY kik.kk_loan_stateid 
+ 	ORDER BY count(kik.kk_loan_stateid) DESC
  </select>
 
  

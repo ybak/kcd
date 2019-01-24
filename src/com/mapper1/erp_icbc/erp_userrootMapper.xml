@@ -508,9 +508,11 @@ admin.gemsid as gems_id,
 gems.imgurl as gems_imgurl,
 gems.ssbm as gems_ssbm,
 fs.id as fs_id,
+fs.oemimgurl as fs_oemimgurl,
 agp.modal_tag as modal_tag,
 agp.qx_type as qx_type,
-fs_ds.zy_bank as fs_zy_bank
+fs_ds.zy_bank as fs_zy_bank,
+fs_ds.xt_name as fs_xt_name
 from assess_admin admin
 LEFT JOIN assess_fs fs ON fs.id=admin.icbc_erp_fsid
 LEFT JOIN assess_gems gems ON gems.id=admin.gemsid
@@ -560,6 +562,7 @@ showtag=#{showtag},
 <if test="namepy!=null and namepy!=''">namepy=#{namepy},</if>
 <if test="dt_edit!=null and dt_edit!=''">dt_edit=#{dt_edit},</if>
 <if test="mid_edit!=null and mid_edit!=''">mid_edit=#{mid_edit},</if>
+<if test="oemimgurl!=null and oemimgurl!=''">oemimgurl=#{oemimgurl},</if>
 icbc_erp_tag=#{icbc_erp_tag},
 </trim>
 where id=#{id}

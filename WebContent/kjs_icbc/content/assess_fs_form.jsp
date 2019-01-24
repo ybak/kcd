@@ -50,7 +50,7 @@
         <div class="panel-heading">
            <h4 class="box-title">
            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">公司资料</a>
-		   <a class=" btn btn-info search-btn pull-right">导出</a>
+		   <a href="javascript:alert('暂未开放')" class=" btn btn-info search-btn pull-right">导出</a>
 		   </h4>
 		        
 		</div>
@@ -60,7 +60,33 @@
 		<div class="form-group">
 			<label for="inputHouse" class="col-sm-2 control-label">基本资料</label>
 			<div class="col-sm-10">
+
 				<div class="row inline-from">
+				<div class="col-sm-2">
+						<div class="input-group">
+							<span class="input-group-addon">
+								公司LOGO
+							</span>
+						<input type="hidden" value="" id="img" name="img" >
+                        <input style="display: none" onchange="javascript:setImagePreview();" type="file" value="" id="fileimg" name="fileimg" >
+                        <label for="fileimg">
+                        <c:if test="${empty requestScope.pd.oemimgurl }">
+                        <img  id="preview" style="display: block; width: 100px; height: 100px;"  class="img-thumbnail"  src="/kcd/kjs_icbc/kjs_icbc_style/images/logo.png"/>
+                        </c:if>
+                        <c:if test="${!empty requestScope.pd.oemimgurl }">
+                        <img  id="preview" style="display: block; width: 100px; height: 100px;"  class="img-thumbnail"  src="http://a.kcway.net/${requestScope.pd.oemimgurl }"/>
+                        </c:if>
+                        </label>
+						</div>
+				</div>
+				   <div class="col-sm-4">
+						<div class="input-group">
+							<span class="input-group-addon">
+								系统名称
+							</span>
+							<input  id="xt_name" name="xt_name" value="${requestScope.pd.xt_name }" class="form-control"  placeholder="" type="text">
+						</div>
+					</div>
 					<div class="col-sm-4">
 						<div class="input-group">
 							<span class="input-group-addon">
@@ -643,7 +669,7 @@
 		<div class="panel-heading">
 			<h4 class="box-title">
            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo1" aria-expanded="false" class="collapsed">账户管理</a>
-		   <a class=" btn btn-info search-btn pull-right">导出</a>
+		   <a href="javascript:alert('暂未开放')" class=" btn btn-info search-btn pull-right">导出</a>
 			</h4>
 		</div>
 		<div id="collapseTwo1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
@@ -736,7 +762,7 @@
 		<div class="panel-heading">
 			<h4 class="box-title">
            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" class="collapsed">业务合作模式（上线）</a>
-		   <a class=" btn btn-info search-btn pull-right">导出</a>
+		   <a href="javascript:alert('暂未开放')" class=" btn btn-info search-btn pull-right">导出</a>
 			</h4>
 		</div>
 		<div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
@@ -1095,7 +1121,7 @@
 <div class="panel-heading">
 			<h4 class="box-title">
             <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" class="collapsed">业务合作模式（下线）</a>
-		    <a class=" btn btn-info search-btn pull-right">导出</a>
+		    <a href="javascript:alert('暂未开放')" class=" btn btn-info search-btn pull-right">导出</a>
 			</h4>
 </div>
 <div id="collapseThree" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
@@ -1161,7 +1187,7 @@
 <div id="yxcl" class="tab-pane fade">
 	<div class="box-header with-border">
 				<h3 class="box-title">影像材料</h3>
-		<a class="btn btn-info search-btn">导出</a>
+		<a href="javascript:alert('暂未开放')" class="btn btn-info search-btn">导出</a>
 	</div>
 </div>
 </div>
@@ -1447,5 +1473,37 @@ function dofind(){//vin车型
 		       }
 		});
 		}
-
+	    function setImagePreview(avalue) {
+	        var docObj = document.getElementById("fileimg");
+	        var imgObjPreview = document.getElementById("preview");
+	        if(docObj.files && docObj.files[0])
+	        {
+	            //火狐下，直接设img属性
+	            imgObjPreview.style.display = 'block';
+	            imgObjPreview.style.width = '100px';
+	            imgObjPreview.style.height = '100px';
+	            //imgObjPreview.src = docObj.files[0].getAsDataURL();
+	            //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+	            imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
+	        }
+	        else
+	        {
+	            //IE下，使用滤镜
+	            docObj.select();
+	            var imgSrc = document.selection.createRange().text;
+	            var localImagId = document.getElementById("localImag"); //必须设置初始大小
+	            localImagId.style.width = "100px";
+	            localImagId.style.height = "100px"; //图片异常的捕捉，防止用户修改后缀来伪造图片
+	            try {
+	                localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+	                localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+	            } catch(e) {
+	                alert("您上传的图片格式不正确，请重新选择!");
+	                return false;
+	            }
+	            imgObjPreview.style.display = 'none';
+	            document.selection.empty();
+	        }
+	        return true;
+	    }
 				</script>

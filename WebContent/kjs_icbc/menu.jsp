@@ -109,38 +109,40 @@
 				</a>
 				<ul class="treeview-menu">
 				    
-				<c:if  test="${fn:contains(sessionScope.pd.purview_map,'zx')==true }">
-					<li ${requestScope.dn=='zx' && requestScope.type=='wlghd1'?"class='active'":'' }>
-					<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd1&dn=zx&qn=list">
+				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'zx1')==true }">
+					<li ${requestScope.dn=='zx' && requestScope.type=='hzczzh'?"class='active'":'' }>
+					<a href="${pageContext.request.contextPath}/erp/index_.do?type=hzczzh&dn=zx&qn=list">
 					<i class="fa fa-arrow-circle-o-right"></i>征信
 					</a>
 					</li>
 					</c:if>
-				<c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcpg')==true}">
-					<li ${requestScope.dn=='pg' && requestScope.type=='wlghd1'?"class='active'":''}>
-						<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd1&dn=pg&qn=list">
+				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcpg1')==true}">
+					<li ${requestScope.dn=='pg' && requestScope.type=='hzczzh'?"class='active'":''}>
+						<a href="${pageContext.request.contextPath}/erp/index_.do?type=hzczzh&dn=pg&qn=list">
 						<i class="fa fa-arrow-circle-o-right"></i>汽车评估</a>
 					</li>	
 					</c:if>
 
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'ssmq')==true}">
-					<li ${requestScope.dn=='mq' && requestScope.type=='wlghd1'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd1&dn=mq&qn=list">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'ssmq1')==true}">
+					<li ${requestScope.dn=='mq' && requestScope.type=='hzczzh'?"class='active'":''}>
+					<a href="${pageContext.request.contextPath}/erp/index_.do?type=hzczzh&dn=mq&qn=list">
 					<i class="fa fa-arrow-circle-o-right"></i>视频面签</a>
 					</li>
 					</c:if>
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcdk')==true}">					
-					<li ${requestScope.dn=='cardk' && requestScope.type=='wlghd1'?"class='active'":''}>
-						<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd1&dn=cardk&qn=list">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcdk1')==true}">					
+					<li ${requestScope.dn=='cardk' && requestScope.type=='hzczzh'?"class='active'":''}>
+						<a href="${pageContext.request.contextPath}/erp/index_.do?type=hzczzh&dn=cardk&qn=list">
 						<i class="fa fa-arrow-circle-o-right"></i>汽车贷款
 						</a>
 					</li>
 					</c:if>
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'clhs1')==true}">
 					<li>
 						<a href="javascript:void(0);">
 						<i class="fa fa-arrow-circle-o-right"></i>材料回收
 						</a>
 					</li>
+					</c:if>
 <!-- 					<li>
 						<a href="">
 						<i class="fa fa-arrow-circle-o-right"></i>视频连线
@@ -155,38 +157,40 @@
 				    <span>哈尔滨顾乡支行<!-- <small class="label pull-right bg-red">33</small> --></span>
 				    </a>
 				    <ul class="treeview-menu">
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'zx')==true }">
-					<li ${requestScope.dn=='zx' && requestScope.type=='wlghd2'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd2&dn=zx&qn=list">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'zx2')==true }">
+					<li ${requestScope.dn=='zx' && requestScope.type=='hebgxzh'?"class='active'":''}>
+					<a href="${pageContext.request.contextPath}/erp/index_.do?type=hebgxzh&dn=zx&qn=list">
 					<i class="fa fa-arrow-circle-o-right"></i>征信
 					</a>
 					</li>
 					</c:if>
-				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcpg')==true}">
-					<li ${requestScope.dn=='pg' && requestScope.type=='wlghd2'?"class='active'":''}>
-						<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd2&dn=pg&qn=list">
+				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcpg2')==true}">
+					<li ${requestScope.dn=='pg' && requestScope.type=='hebgxzh'?"class='active'":''}>
+						<a href="${pageContext.request.contextPath}/erp/index_.do?type=hebgxzh&dn=pg&qn=list">
 						<i class="fa fa-arrow-circle-o-right"></i>汽车评估</a>
 					</li>	
 					</c:if>
 
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'ssmq')==true}">
-					<li ${requestScope.dn=='mq' && requestScope.type=='wlghd2'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd2&dn=mq&qn=list">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'ssmq2')==true}">
+					<li ${requestScope.dn=='mq' && requestScope.type=='hebgxzh'?"class='active'":''}>
+					<a href="${pageContext.request.contextPath}/erp/index_.do?type=hebgxzh&dn=mq&qn=list">
 					<i class="fa fa-arrow-circle-o-right"></i>视频面签</a>
 					</li>
 					</c:if>
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcdk')==true}">					
-					<li ${requestScope.dn=='cardk' && requestScope.type=='wlghd2'?"class='active'":''}>
-						<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd2&dn=cardk&qn=list">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcdk2')==true}">					
+					<li ${requestScope.dn=='cardk' && requestScope.type=='hebgxzh'?"class='active'":''}>
+						<a href="${pageContext.request.contextPath}/erp/index_.do?type=hebgxzh&dn=cardk&qn=list">
 						<i class="fa fa-arrow-circle-o-right"></i>汽车贷款
 						</a>
 					</li>
 					</c:if>
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'clhs2')==true}">
 					<li>
 						<a href="javascript:void(0);">
 						<i class="fa fa-arrow-circle-o-right"></i>材料回收
 						</a>
 					</li>
+					</c:if>
 			        </ul>
 					</li>
 					</c:if>
@@ -196,38 +200,40 @@
 				    <span>台州路桥支行<!-- <small class="label pull-right bg-red">33</small> --></span>
 				    </a>
 				    <ul class="treeview-menu">
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'zx')==true }">
-					<li ${requestScope.dn=='zx' && requestScope.type=='wlghd3'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd3&dn=zx&qn=list">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'zx3')==true }">
+					<li ${requestScope.dn=='zx' && requestScope.type=='tzlqzh'?"class='active'":''}>
+					<a href="${pageContext.request.contextPath}/erp/index_.do?type=tzlqzh&dn=zx&qn=list">
 					<i class="fa fa-arrow-circle-o-right"></i>征信
 					</a>
 					</li>
 					</c:if>
-				<c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcpg')==true}">
-					<li ${requestScope.dn=='pg' && requestScope.type=='wlghd3'?"class='active'":''}>
-						<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd3&dn=pg&qn=list">
+				<c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcpg3')==true}">
+					<li ${requestScope.dn=='pg' && requestScope.type=='tzlqzh'?"class='active'":''}>
+						<a href="${pageContext.request.contextPath}/erp/index_.do?type=tzlqzh&dn=pg&qn=list">
 						<i class="fa fa-arrow-circle-o-right"></i>汽车评估</a>
 					</li>	
 					</c:if>
 
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'ssmq')==true}">
-					<li ${requestScope.dn=='mq' && requestScope.type=='wlghd3'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd3&dn=mq&qn=list">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'ssmq3')==true}">
+					<li ${requestScope.dn=='mq' && requestScope.type=='tzlqzh'?"class='active'":''}>
+					<a href="${pageContext.request.contextPath}/erp/index_.do?type=tzlqzh&dn=mq&qn=list">
 					<i class="fa fa-arrow-circle-o-right"></i>视频面签</a>
 					</li>
 					</c:if>
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcdk')==true}">					
-					<li ${requestScope.dn=='cardk' && requestScope.type=='wlghd3'?"class='active'":''}>
-						<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd3&dn=cardk&qn=list">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcdk3')==true}">					
+					<li ${requestScope.dn=='cardk' && requestScope.type=='tzlqzh'?"class='active'":''}>
+						<a href="${pageContext.request.contextPath}/erp/index_.do?type=tzlqzh&dn=cardk&qn=list">
 						<i class="fa fa-arrow-circle-o-right"></i>汽车贷款
 						</a>
 					</li>
 					</c:if>
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'clhs3')==true}">
 					<li>
 						<a href="javascript:void(0);">
 						<i class="fa fa-arrow-circle-o-right"></i>材料回收
 						</a>
 					</li>
+					</c:if>
 			        </ul>
 					</li>
 					</c:if>
@@ -237,37 +243,39 @@
 				    <span>南京江宁支行<!-- <small class="label pull-right bg-red">33</small> --></span>
 				    </a>
 				    <ul class="treeview-menu">
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'zx')==true }">
-					<li ${requestScope.dn=='zx' && requestScope.type=='wlghd4'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd4&dn=zx&qn=list">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'zx4')==true }">
+					<li ${requestScope.dn=='zx' && requestScope.type=='njjnzh'?"class='active'":''}>
+					<a href="${pageContext.request.contextPath}/erp/index_.do?type=njjnzh&dn=zx&qn=list">
 					<i class="fa fa-arrow-circle-o-right"></i>征信
 					</a>
 					</li>
 					</c:if>
-				<c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcpg')==true}">
-					<li ${requestScope.dn=='pg' && requestScope.type=='wlghd4'?"class='active'":''}>
-						<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd4&dn=pg&qn=list">
+				<c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcpg4')==true}">
+					<li ${requestScope.dn=='pg' && requestScope.type=='njjnzh'?"class='active'":''}>
+						<a href="${pageContext.request.contextPath}/erp/index_.do?type=njjnzh&dn=pg&qn=list">
 						<i class="fa fa-arrow-circle-o-right"></i>汽车评估</a>
 					</li>	
 					</c:if>
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'ssmq')==true}">
-					<li ${requestScope.dn=='mq' && requestScope.type=='wlghd4'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd4&dn=mq&qn=list">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'ssmq4')==true}">
+					<li ${requestScope.dn=='mq' && requestScope.type=='njjnzh'?"class='active'":''}>
+					<a href="${pageContext.request.contextPath}/erp/index_.do?type=njjnzh&dn=mq&qn=list">
 					<i class="fa fa-arrow-circle-o-right"></i>视频面签</a>
 					</li>
 					</c:if>
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcdk')==true}">					
-					<li ${requestScope.dn=='cardk' && requestScope.type=='wlghd4'?"class='active'":''}>
-						<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd4&dn=cardk&qn=list">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcdk4')==true}">					
+					<li ${requestScope.dn=='cardk' && requestScope.type=='njjnzh'?"class='active'":''}>
+						<a href="${pageContext.request.contextPath}/erp/index_.do?type=njjnzh&dn=cardk&qn=list">
 						<i class="fa fa-arrow-circle-o-right"></i>汽车贷款
 						</a>
 					</li>
 					</c:if>
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'clhs4')==true}">
 					<li>
 						<a href="javascript:void(0);">
 						<i class="fa fa-arrow-circle-o-right"></i>材料回收
 						</a>
 					</li>
+					</c:if>
 			        </ul>
 					</li>
 					</c:if>
@@ -310,36 +318,44 @@
 						</a>
 					</li>
 					</c:if>
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'clhs')==true}">		
 					<li>
 						<a href="javascript:void(0);">
 						<i class="fa fa-arrow-circle-o-right"></i>材料回收
 						</a>
 					</li>
+					</c:if>
 			        </ul>
 					</li>
 					</c:if>
 					<!-- 视频面签 -->
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'zxsp')==true}">		
 				   <li>
 				   <a href="${pageContext.request.contextPath}/erp/demo.do?type=hk&dn=yxVideo&qn=form"> 
 				   <i class="fa fa-external-link"></i> 
 				   <span style="color:#ffffff">视频面签</span>
 				   </a>
 			       </li>
+			       </c:if>
 					<!-- 车辆抵押 -->
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cldy')==true}">
 					<li ${requestScope.dn=='VehicleMortgage'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/erp/index.do?type=cldy_sxx&dn=VehicleMortgage&qn=list"> <i class="fa fa-automobile"></i> 
 				    <span>车辆抵押</span>
 				    </a>
 					</li>
+					</c:if>
 					<!-- GPS安装 -->
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'gpsaz')==true}">
 					<li>
 					<a href="#"> <i class="fa fa-wrench"></i> 
 				    <span>GPS安装</span>
 				    </a>
 					</li>
+					</c:if>
 					<!-- 财务管理 -->
-			<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cwgl')==true}">
-			 			<li>
+			    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'cwgl')==true}">
+			 	<li>
 				<a href="#"> <i class="fa fa-dollar"></i> 
 				<span>财务管理</span>
 				</a>
@@ -351,172 +367,221 @@
 					</a>
 					</li>	
 					</c:if> --%>
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'dqywgl')==true}">
                     <li><a href="#"> 
                        <i class="fa fa-dollar"></i><span>贷前业务管理&nbsp;&nbsp;&nbsp;↓</span></a>
 						<ul class="treeview-menu">
-							<li ${requestScope.dn=='businessPayApplication'?"class='active'":''}>
-							<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dqywgl&dn=businessPayApplication&qn=list">
+						<c:if  test="${fn:contains(sessionScope.pd.purview_map,'ywfksq')==true}">
+							<li ${requestScope.type=='dqywgl6' && requestScope.dn=='businessPayApplication'?"class='active'":''}>
+							<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dqywgl6&dn=businessPayApplication&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>业务付款申请
 						    </a>
 							</li>
-							<li ${requestScope.dn=='matEndowmentResult'?"class='active'":''}>
-							<a href="${pageContext.request.contextPath }/erp/matEndowentResult_list.do?type=dqywgl&dn=matEndowmentResult&qn=list">
+						</c:if>
+						<c:if  test="${fn:contains(sessionScope.pd.purview_map,'dzjl')==true}">
+							<li ${requestScope.type=='dqywgl7' && requestScope.dn=='matEndowmentResult'?"class='active'":''}>
+							<a href="${pageContext.request.contextPath }/erp/matEndowentResult_list.do?type=dqywgl7&dn=matEndowmentResult&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>垫资记录
 						    </a>
 							</li>
-							
-							<li ${requestScope.dn=='lendingResult'?"class='active'":''}>
-							<a href="${pageContext.request.contextPath }/erp/lengding_list.do?type=dqywgl&dn=lendingResult&qn=list">
+						</c:if>	
+						<c:if  test="${fn:contains(sessionScope.pd.purview_map,'fkjl')==true}">
+							<li ${requestScope.type=='dqywgl8' && requestScope.dn=='lendingResult'?"class='active'":''}>
+							<a href="${pageContext.request.contextPath }/erp/lengding_list.do?type=dqywgl8&dn=lendingResult&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>放款记录
 						    </a>
 							</li>
+						</c:if>
 						</ul>
 					</li>
+                    </c:if>
 
-
-
+                    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'dhywgl')==true}">
 					<li><a href="#"><i class="fa fa-dollar"></i><span>贷后业务管理&nbsp;&nbsp;&nbsp;↓</span></a>
 						<ul class="treeview-menu">
-							<li>
-							<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dhywgl&dn=businessPayApplication&qn=list">
+							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'sqdc')==true}">
+							<li ${requestScope.type=='dhywgl1' && requestScope.dn=='businessPayApplication'?"class='active'":''}>
+							<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dhywgl1&dn=businessPayApplication&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>申请代偿
 						    </a>
 							</li>
-							
-							<li>
-							<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dhywgl&dn=matEndowmentResult&qn=list">
+							</c:if>
+							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'dcqr')==true}">
+							<li ${requestScope.type=='dhywgl2' && requestScope.dn=='matEndowmentResult'?"class='active'":''}>
+							<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dhywgl2&dn=matEndowmentResult&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>代偿确认
 						    </a>
 							</li>
-							
-							<li>
-							<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dhywgl&dn=lendingResult&qn=list">
+							</c:if>
+							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'hzsdc')==true}">
+							<li ${requestScope.type=='dhywgl3' && requestScope.dn=='lendingResult'?"class='active'":''}>
+							<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dhywgl3&dn=lendingResult&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>合作商代偿
 						    </a>
 							</li>
-							
-							<li>
-							<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dhywgl&dn=lendingResult&qn=list">
+							</c:if>
+							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'hzsdcqr')==true}">
+							<li ${requestScope.type=='dhywgl4' && requestScope.dn=='lendingResult'?"class='active'":''}>
+							<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dhywgl4&dn=lendingResult&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>合作商代偿确认
 						    </a>
 							</li>
+							</c:if>
 						</ul>
 					</li>
+					</c:if>
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'gsdz')==true}">
 					<li>
 					<a href="javascript:void(0);">
 					<i class="fa fa-arrow-circle-o-right"></i>公司垫资
 				    </a>
 					</li>
+					</c:if>
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cwgl_yhdk')==true}">
 					<li ${requestScope.dn=='financeone'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/financialExcelController/bankLoan.do?type=cwgl&dn=financeone&qn=list">
 					<i class="fa fa-arrow-circle-o-right"></i>银行贷款
 				    </a>
 					</li>
+					</c:if>
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cwsz')==true}">
 					<li>
 					<a href="javascript:void(0);">
 					<i class="fa fa-arrow-circle-o-right"></i>财务收支
 				    </a>
 					</li>
+					</c:if>
 				</ul>
 			</li>
 			</c:if>
 			        <!--客户还款管理  -->
+			        <c:if  test="${fn:contains(sessionScope.pd.purview_map,'khhkgl')==true}">
 			        <li>
 					<a href="#"> <i class="fa fa-user"></i> 
 				    <span>客户还款管理 </span>
 				    </a>
 				    <ul class="treeview-menu">
+				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'khhklr')==true}">
 					<li ${requestScope.dn=='dh_repaymentEntry'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/erp/index.do?type=khhkgl&dn=dh_repaymentEntry&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>客户还款录入</span>
 				    </a>
 					</li>
+					</c:if>
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'khhkqk')==true}">
 					<li ${requestScope.dn=='dh_repaymentSituation'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/erp/index.do?type=khhkgl&dn=dh_repaymentSituation&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>客户还款情况</span>
 				    </a>
 					</li>
+					</c:if>
 				    </ul>
 					</li>
+					</c:if>
 			        <!--客户逾期名单  -->
+			        <c:if  test="${fn:contains(sessionScope.pd.purview_map,'khyqmd')==true}">
 			        <li>
 					<a href="#"> <i class="fa fa-user"></i> 
 				    <span>客户逾期名单</span>
 				    </a>
 					</li>
+					</c:if>
 			        <!--催缴作业  -->
+			        <c:if  test="${fn:contains(sessionScope.pd.purview_map,'dczy')==true}">
 			        <li ${requestScope.dn=='dh_electricOperation'?"class='active'":'' or requestScope.dn=='dh_repaymentTelReminders'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/erp/index.do?type=khhkgl&dn=dh_electricOperation&qn=list"> <i class="fa fa-file-text"></i> 
 				    <span>电催作业 </span>
 				    </a>
 					</li>
+					</c:if>
 					<!--拖车管理  -->
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'tcgl')==true}">
 			        <li>
 					<a href="#"> <i class="fa fa-truck"></i> 
 				    <span>拖车管理 </span>
 				    </a>
 				    <ul class="treeview-menu">
+				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'tc_ysl')==true}">
 					<li>
 					<a href="javascript:void(0);"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>拖车(已受理)</span>
 				    </a>
 					</li>
+					</c:if>
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'tc_wsl')==true}">
 					<li>
 					<a href="javascript:void(0);"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>拖车(未受理)</span>
 				    </a>
 					</li>
+					</c:if>
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'tc_wc')==true}">
 					<li>
 					<a href="javascript:void(0);"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>拖车(完成)</span>
 				    </a>
 					</li>
+					</c:if>
 				    </ul>
 					</li>
-					 <!--诉讼管理  -->
+					</c:if>
+					<!--诉讼管理  -->
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'ssgl')==true}">
 			        <li>
 					<a href="#"> <i class="fa fa-exclamation-triangle"></i> 
 				    <span>诉讼管理</span>
 				    </a>
 					</li>
-					 <!--保险管理  -->
+					</c:if>
+					<!--保险管理  -->
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'bxgl')==true}">
 			        <li>
 					<a href="#"> <i class="fa fa-h-square"></i> 
 				    <span>保险管理 </span>
 				    </a>
 					</li>
-					
-					 <!--车险理赔  -->
+					</c:if>
+					<!--车险理赔  -->
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cxlp')==true}">
 			        <li>
 					<a href="#"> <i class="fa fa-ambulance"></i> 
 				    <span>车险理赔</span>
 				    </a>
 					</li>
+					</c:if>
 					<!--结清处理  -->
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl')==true}">
 			        <li>
 					<a href="#"> <i class="fa fa-sign-language"></i> 
 				    <span>结清处理</span>
 				    </a>
 				    <ul class="treeview-menu">
+				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl_yjq')==true}">
 					<li>
 					<a href="javascript:void(0);"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>已结清</span>
 				    </a>
 					</li>
+					</c:if>
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl_wjq')==true}">
 					<li>
 					<a href="javascript:void(0);"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>未结清</span>
 				    </a>
 					</li>
+					</c:if>
 				    </ul>
 					</li>
+					</c:if>
 					<!--GPS管理  -->
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'gpsgl')==true}">
 					<li ${requestScope.type=='gps'?"class='active'":''}>
 			        <a href="${pageContext.request.contextPath}/erp/gps_list.do?type=gps&dn=gps&qn=list">
 			         <i class="fa fa-list"></i>
 			        <span style="color:#ffffff">GPS管理</span>
 			        </a>
 			        </li>
+			        </c:if>
 <%--  		<c:if  test="${fn:contains(sessionScope.pd.purview_map,'zxsp')==true}">
 	            <c:if test="${fn:contains(sessionScope.pd.purview_map,'dhgl')==true}">					  
 		         <li>

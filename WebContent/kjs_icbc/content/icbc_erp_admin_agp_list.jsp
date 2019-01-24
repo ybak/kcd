@@ -133,7 +133,7 @@ laydate.render({
 			<td class="text-center">
 			<a href="">
 			<c:if test="${pd.qx_type eq '1' }">
-			<span class="label label-warning">代理商</span>
+			<span class="label label-warning">业务员</span>
 			</c:if>
 			<c:if test="${pd.qx_type eq '2'}">
 			<span class="label label-success">审核员/管理员</span>

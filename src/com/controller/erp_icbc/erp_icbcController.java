@@ -33,6 +33,7 @@ import com.service1.kjs_icbc.newicbcService;
 import com.service1.kjs_icbc.newicbc_kkService;
 import com.util.jsonutil;
 import com.util.limitutil;
+import com.util.md5util;
 import com.util.duoying.MD5;
 @Controller
 public class erp_icbcController {
@@ -568,7 +569,8 @@ public class erp_icbcController {
 	@RequestMapping(value="erp/assess_fs_add.do",produces = "text/html;charset=UTF-8")  
 	public ModelAndView assess_fs_add(
 			//assess_fs assess_fs,
- 			HttpServletRequest request
+ 			HttpServletRequest request,
+ 			@RequestParam("fileimg")MultipartFile fileimg
  			){
 		Map<String, String> paramemap=Tools.getpostmap(request);
 //		Enumeration<?> enu=request.getParameterNames();  
@@ -581,6 +583,26 @@ public class erp_icbcController {
 		PageData pData= (PageData)request.getSession().getAttribute("pd");
 		PageData fs_details=new PageData();
 		PageData pagedate=new PageData();
+		String fileName ="";
+        String filrurl="";
+        Date date = new Date();
+        String filePath ="/KCDIMG/assess/upload/"+new SimpleDateFormat("yyyy/MM/dd/").format(date);
+        if(fileimg!=null&&!fileimg.equals("")) {
+            try {
+                fileName = fileimg.getOriginalFilename();
+                fileName= md5util.encode(fileName)+"."+md5util.getExtensionName(fileName);
+                filePath ="/KCDIMG/assess/upload/"+new SimpleDateFormat("yyyy/MM/dd/").format(date);
+                md5util.uploadFile(fileimg.getBytes(), filePath, fileName);
+                filrurl="assess/upload/img/"+new SimpleDateFormat("yyyy/MM/dd/").format(date)+fileName;
+                System.out.println("存放路径："+filePath+fileName);
+                System.out.println("数据库路径："+filrurl);
+                pagedate.put("oemimgurl",filrurl);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+        	pagedate.put("oemimgurl","");
+        }
 		pagedate.put("dn","assess_fs");
 		pagedate.put("name",paramemap.get("name"));
 		pagedate.put("name_qy",paramemap.get("name_qy"));
@@ -608,7 +630,6 @@ public class erp_icbcController {
 		pagedate.put("update_time",getSecondTimestamp(new Date()));
 		pagedate.put("fs_type",2);
 		pagedate.put("oem","");
-		pagedate.put("oemimgurl","");
 		pagedate.put("rec_id",0);
 		pagedate.put("support","");
 		pagedate.put("sup_tel","");
@@ -636,6 +657,7 @@ public class erp_icbcController {
 		erp_userrootService.save(pagedate);
 		
 		fs_details.put("dn","assess_fs_details");
+		fs_details.put("xt_name",paramemap.get("xt_name"));
 		fs_details.put("mid_add",paramemap.get("userid"));
 		fs_details.put("mid_edit",paramemap.get("userid"));
 		fs_details.put("dt_add",new Date());
@@ -760,6 +782,7 @@ public class erp_icbcController {
 	@RequestMapping(value="erp/assess_fs_update.do",produces = "text/html;charset=UTF-8")  
 	public ModelAndView assess_fs_update(
 			//assess_fs assess_fs,
+			@RequestParam("fileimg")MultipartFile fileimg,
  			HttpServletRequest request
  			){
 		Map<String, String> paramemap=Tools.getpostmap(request);
@@ -775,6 +798,26 @@ public class erp_icbcController {
 		PageData pagedate=new PageData();
 		
 		pagedate.put("dn","assess_fs");
+		String fileName ="";
+        String filrurl="";
+        Date date = new Date();
+        String filePath ="/KCDIMG/assess/upload/"+new SimpleDateFormat("yyyy/MM/dd/").format(date);
+        if(fileimg!=null&&!fileimg.equals("")) {
+            try {
+                fileName = fileimg.getOriginalFilename();
+                fileName= md5util.encode(fileName)+"."+md5util.getExtensionName(fileName);
+                filePath ="/KCDIMG/assess/upload/"+new SimpleDateFormat("yyyy/MM/dd/").format(date);
+                md5util.uploadFile(fileimg.getBytes(), filePath, fileName);
+                filrurl="assess/upload/img/"+new SimpleDateFormat("yyyy/MM/dd/").format(date)+fileName;
+                System.out.println("存放路径："+filePath+fileName);
+                System.out.println("数据库路径："+filrurl);
+                pagedate.put("oemimgurl",filrurl);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else{
+        	pagedate.put("oemimgurl","");
+        }
 		pagedate.put("id",paramemap.get("id"));
 		pagedate.put("name",paramemap.get("name"));
 		pagedate.put("name_qy",paramemap.get("name_qy"));
@@ -811,6 +854,7 @@ public class erp_icbcController {
 		erp_userrootService.updatebyid(pagedate);
 		
 		fs_details.put("dn","assess_fs_details");
+		fs_details.put("xt_name",paramemap.get("xt_name"));
 		fs_details.put("mid_edit",paramemap.get("userid"));
 		fs_details.put("dt_edit",new Date());
 		fs_details.put("company_jc",paramemap.get("name"));

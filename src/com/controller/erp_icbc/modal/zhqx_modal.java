@@ -43,7 +43,35 @@ public class zhqx_modal {
 	private String   kk;
 	private String   ssmq;
 	private String   qcdk;
-	
+	private String   clhs;
+	   //4.杭州城站支行
+		private String   hzczzh;
+		private String   zx1;
+		private String   qcpg1;
+		private String   ssmq1;
+		private String   qcdk1;
+		private String   clhs1;
+		//4.哈尔滨顾乡支行
+		private String   hebgxzh;
+		private String   zx2;
+		private String   qcpg2;
+		private String   ssmq2;
+		private String   qcdk2;
+		private String   clhs2;
+		//4.台州路桥支行
+		private String   tzlqzh;
+		private String   zx3;
+		private String   qcpg3;
+		private String   ssmq3;
+		private String   qcdk3;
+		private String   clhs3;
+		//4.南京江宁支行
+		private String   njjnzh;
+		private String   zx4;
+		private String   qcpg4;
+		private String   ssmq4;
+		private String   qcdk4;
+		private String   clhs4;
 	//5.贷后管理
 	private String   dhgl;
 	private String   yhhkxq;
@@ -59,7 +87,47 @@ public class zhqx_modal {
 	//6.财务管理
 	private String   cwgl;
 	private String   khdkmx;
-	
+	private String   dqywgl;
+	private String   ywfksq;
+	private String   dzjl;
+	private String   fkjl;
+	private String   dhywgl;
+	private String   sqdc;
+	private String   dcqr;
+	private String   hzsdc;
+	private String   hzsdcqr;
+	private String   gsdz;
+	private String   cwgl_yhdk;
+	private String   cwsz;
+	//车辆抵押
+	private String   cldy;
+	//GPS安装
+	private String   gpsaz;
+	//GPS管理
+	private String   gpsgl;
+	//客户还款管理
+	private String   khhkgl;
+	private String   khhklr;
+	private String   khhkqk;
+	//客户逾期名单
+	private String   khyqmd;
+	//电催作业
+	private String   dczy;
+	//拖车管理
+	private String   tcgl;
+	private String   tc_ysl;
+	private String   tc_wsl;
+	private String   tc_wc;
+	//诉讼管理
+	private String   ssgl;
+	//保险管理 
+	private String   bxgl;
+	//车险理赔 
+	private String   cxlp;
+	//结清处理
+	private String   cqcl;
+	private String   cqcl_yjq;
+	private String   cqcl_wjq;
 	//7.在线视频
 	private String   zxsp;
 	//8.处理过程
@@ -204,10 +272,25 @@ public class zhqx_modal {
                 +gzrw+","+wdrw+","+wdcy+","+wdqd+","+qbrw+","
                 +zhgl+","+gsgl+","+rygl+","+zhqx+","+gsgladd+","+gsgldelete+","+gsglupdate+","+zhqxadd+","+zhqxdelete+","+zhqxupdate+","+rygladd+","+rygldelete+","+ryglupdate+","
                 +wlghd+","+zx+","+qcpg+","+kk+","+ssmq+","+qcdk+","
+                +hzczzh+","+zx1+","+qcpg1+","+ssmq1+","+qcdk1+","
+                +hebgxzh+","+zx2+","+qcpg2+","+ssmq2+","+qcdk2+","
+                +tzlqzh+","+zx3+","+qcpg3+","+ssmq3+","+qcdk3+","
+                +njjnzh+","+zx4+","+qcpg4+","+ssmq4+","+qcdk4+","
                 +dhgl+","+yhhkxq+","+yhhklr+","+dclcjyq+","+dclzjyq+","+dclgjyq+","+dcltc+","+dclgs+","+dhx+","+yhx+","
-                +cwgl+","+khdkmx+","
+                +cwgl+","+khdkmx+","+dqywgl+","+ywfksq+","+dzjl+","+fkjl+","+dhywgl+","+sqdc+","+dcqr+","+hzsdc+","+hzsdcqr+","+gsdz+","+cwgl_yhdk+","+cwsz+","
                 +zxsp+","
-                +clgc+","
+                +zxsp+","
+                +cldy+","
+                +gpsaz+","
+                +gpsgl+","
+                +khhkgl+","+khhklr+","+khhkqk+","
+                +khyqmd+","
+                +dczy+","
+                +tcgl+","+tc_ysl+","+tc_wsl+","+tc_wc+","
+                +ssgl+","
+                +bxgl+","
+                +cxlp+","
+                +cqcl+","+cqcl_yjq+","+cqcl_wjq+","
                 +zxcx+","+cxjg_3+","
                 +zxtr+","+zxyhyj_6+","+trsh_7+","
                 +clpg+","+pgjsh_11+","
@@ -1457,6 +1540,445 @@ public class zhqx_modal {
 
 	public void setYhx(String yhx) {
 		this.yhx = yhx;
+	}
+
+	public String getClhs() {
+		return clhs;
+	}
+
+	public void setClhs(String clhs) {
+		this.clhs = clhs;
+	}
+
+	public String getHzczzh() {
+		return hzczzh;
+	}
+
+	public void setHzczzh(String hzczzh) {
+		this.hzczzh = hzczzh;
+	}
+
+	public String getZx1() {
+		return zx1;
+	}
+
+	public void setZx1(String zx1) {
+		this.zx1 = zx1;
+	}
+
+	public String getQcpg1() {
+		return qcpg1;
+	}
+
+	public void setQcpg1(String qcpg1) {
+		this.qcpg1 = qcpg1;
+	}
+
+	public String getSsmq1() {
+		return ssmq1;
+	}
+
+	public void setSsmq1(String ssmq1) {
+		this.ssmq1 = ssmq1;
+	}
+
+	public String getQcdk1() {
+		return qcdk1;
+	}
+
+	public void setQcdk1(String qcdk1) {
+		this.qcdk1 = qcdk1;
+	}
+
+	public String getClhs1() {
+		return clhs1;
+	}
+
+	public void setClhs1(String clhs1) {
+		this.clhs1 = clhs1;
+	}
+
+	public String getHebgxzh() {
+		return hebgxzh;
+	}
+
+	public void setHebgxzh(String hebgxzh) {
+		this.hebgxzh = hebgxzh;
+	}
+
+	public String getZx2() {
+		return zx2;
+	}
+
+	public void setZx2(String zx2) {
+		this.zx2 = zx2;
+	}
+
+	public String getQcpg2() {
+		return qcpg2;
+	}
+
+	public void setQcpg2(String qcpg2) {
+		this.qcpg2 = qcpg2;
+	}
+
+	public String getSsmq2() {
+		return ssmq2;
+	}
+
+	public void setSsmq2(String ssmq2) {
+		this.ssmq2 = ssmq2;
+	}
+
+	public String getQcdk2() {
+		return qcdk2;
+	}
+
+	public void setQcdk2(String qcdk2) {
+		this.qcdk2 = qcdk2;
+	}
+
+	public String getClhs2() {
+		return clhs2;
+	}
+
+	public void setClhs2(String clhs2) {
+		this.clhs2 = clhs2;
+	}
+
+	public String getTzlqzh() {
+		return tzlqzh;
+	}
+
+	public void setTzlqzh(String tzlqzh) {
+		this.tzlqzh = tzlqzh;
+	}
+
+	public String getZx3() {
+		return zx3;
+	}
+
+	public void setZx3(String zx3) {
+		this.zx3 = zx3;
+	}
+
+	public String getQcpg3() {
+		return qcpg3;
+	}
+
+	public void setQcpg3(String qcpg3) {
+		this.qcpg3 = qcpg3;
+	}
+
+	public String getSsmq3() {
+		return ssmq3;
+	}
+
+	public void setSsmq3(String ssmq3) {
+		this.ssmq3 = ssmq3;
+	}
+
+	public String getQcdk3() {
+		return qcdk3;
+	}
+
+	public void setQcdk3(String qcdk3) {
+		this.qcdk3 = qcdk3;
+	}
+
+	public String getClhs3() {
+		return clhs3;
+	}
+
+	public void setClhs3(String clhs3) {
+		this.clhs3 = clhs3;
+	}
+
+	public String getNjjnzh() {
+		return njjnzh;
+	}
+
+	public void setNjjnzh(String njjnzh) {
+		this.njjnzh = njjnzh;
+	}
+
+	public String getZx4() {
+		return zx4;
+	}
+
+	public void setZx4(String zx4) {
+		this.zx4 = zx4;
+	}
+
+	public String getQcpg4() {
+		return qcpg4;
+	}
+
+	public void setQcpg4(String qcpg4) {
+		this.qcpg4 = qcpg4;
+	}
+
+	public String getSsmq4() {
+		return ssmq4;
+	}
+
+	public void setSsmq4(String ssmq4) {
+		this.ssmq4 = ssmq4;
+	}
+
+	public String getQcdk4() {
+		return qcdk4;
+	}
+
+	public void setQcdk4(String qcdk4) {
+		this.qcdk4 = qcdk4;
+	}
+
+	public String getClhs4() {
+		return clhs4;
+	}
+
+	public void setClhs4(String clhs4) {
+		this.clhs4 = clhs4;
+	}
+
+	public String getDqywgl() {
+		return dqywgl;
+	}
+
+	public void setDqywgl(String dqywgl) {
+		this.dqywgl = dqywgl;
+	}
+
+	public String getYwfksq() {
+		return ywfksq;
+	}
+
+	public void setYwfksq(String ywfksq) {
+		this.ywfksq = ywfksq;
+	}
+
+	public String getDzjl() {
+		return dzjl;
+	}
+
+	public void setDzjl(String dzjl) {
+		this.dzjl = dzjl;
+	}
+
+	public String getFkjl() {
+		return fkjl;
+	}
+
+	public void setFkjl(String fkjl) {
+		this.fkjl = fkjl;
+	}
+
+	public String getDhywgl() {
+		return dhywgl;
+	}
+
+	public void setDhywgl(String dhywgl) {
+		this.dhywgl = dhywgl;
+	}
+
+	public String getSqdc() {
+		return sqdc;
+	}
+
+	public void setSqdc(String sqdc) {
+		this.sqdc = sqdc;
+	}
+
+	public String getDcqr() {
+		return dcqr;
+	}
+
+	public void setDcqr(String dcqr) {
+		this.dcqr = dcqr;
+	}
+
+	public String getHzsdc() {
+		return hzsdc;
+	}
+
+	public void setHzsdc(String hzsdc) {
+		this.hzsdc = hzsdc;
+	}
+
+	public String getHzsdcqr() {
+		return hzsdcqr;
+	}
+
+	public void setHzsdcqr(String hzsdcqr) {
+		this.hzsdcqr = hzsdcqr;
+	}
+
+	public String getGsdz() {
+		return gsdz;
+	}
+
+	public void setGsdz(String gsdz) {
+		this.gsdz = gsdz;
+	}
+	public String getCwsz() {
+		return cwsz;
+	}
+
+	public void setCwsz(String cwsz) {
+		this.cwsz = cwsz;
+	}
+
+	public String getCldy() {
+		return cldy;
+	}
+
+	public void setCldy(String cldy) {
+		this.cldy = cldy;
+	}
+
+	public String getGpsaz() {
+		return gpsaz;
+	}
+
+	public void setGpsaz(String gpsaz) {
+		this.gpsaz = gpsaz;
+	}
+
+	public String getGpsgl() {
+		return gpsgl;
+	}
+
+	public void setGpsgl(String gpsgl) {
+		this.gpsgl = gpsgl;
+	}
+
+	public String getKhhkgl() {
+		return khhkgl;
+	}
+
+	public void setKhhkgl(String khhkgl) {
+		this.khhkgl = khhkgl;
+	}
+
+	public String getKhhklr() {
+		return khhklr;
+	}
+
+	public void setKhhklr(String khhklr) {
+		this.khhklr = khhklr;
+	}
+
+	public String getKhhkqk() {
+		return khhkqk;
+	}
+
+	public void setKhhkqk(String khhkqk) {
+		this.khhkqk = khhkqk;
+	}
+
+	public String getKhyqmd() {
+		return khyqmd;
+	}
+
+	public void setKhyqmd(String khyqmd) {
+		this.khyqmd = khyqmd;
+	}
+
+	public String getDczy() {
+		return dczy;
+	}
+
+	public void setDczy(String dczy) {
+		this.dczy = dczy;
+	}
+
+	public String getTcgl() {
+		return tcgl;
+	}
+
+	public void setTcgl(String tcgl) {
+		this.tcgl = tcgl;
+	}
+
+	public String getTc_ysl() {
+		return tc_ysl;
+	}
+
+	public void setTc_ysl(String tc_ysl) {
+		this.tc_ysl = tc_ysl;
+	}
+
+	public String getTc_wsl() {
+		return tc_wsl;
+	}
+
+	public void setTc_wsl(String tc_wsl) {
+		this.tc_wsl = tc_wsl;
+	}
+
+	public String getTc_wc() {
+		return tc_wc;
+	}
+
+	public void setTc_wc(String tc_wc) {
+		this.tc_wc = tc_wc;
+	}
+
+	public String getSsgl() {
+		return ssgl;
+	}
+
+	public void setSsgl(String ssgl) {
+		this.ssgl = ssgl;
+	}
+
+	public String getBxgl() {
+		return bxgl;
+	}
+
+	public void setBxgl(String bxgl) {
+		this.bxgl = bxgl;
+	}
+
+	public String getCxlp() {
+		return cxlp;
+	}
+
+	public void setCxlp(String cxlp) {
+		this.cxlp = cxlp;
+	}
+
+	public String getCqcl() {
+		return cqcl;
+	}
+
+	public void setCqcl(String cqcl) {
+		this.cqcl = cqcl;
+	}
+
+	public String getCqcl_yjq() {
+		return cqcl_yjq;
+	}
+
+	public void setCqcl_yjq(String cqcl_yjq) {
+		this.cqcl_yjq = cqcl_yjq;
+	}
+
+	public String getCqcl_wjq() {
+		return cqcl_wjq;
+	}
+
+	public void setCqcl_wjq(String cqcl_wjq) {
+		this.cqcl_wjq = cqcl_wjq;
+	}
+
+	public String getCwgl_yhdk() {
+		return cwgl_yhdk;
+	}
+
+	public void setCwgl_yhdk(String cwgl_yhdk) {
+		this.cwgl_yhdk = cwgl_yhdk;
 	}
 
 
