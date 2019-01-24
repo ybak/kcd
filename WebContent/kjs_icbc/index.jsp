@@ -43,12 +43,13 @@ function sname(){
 <jsp:include page="menu.jsp"></jsp:include>
 <c:if test="${empty requestScope.qn }">
 <c:choose>
-<c:when test="${sessionScope.pd.icbc_erp_fsid ne '1708'}">
+<%-- <c:when test="${sessionScope.pd.icbc_erp_fsid ne '1708'}">
+<jsp:include  page="content/nojsp.jsp" ></jsp:include>
+</c:when> 
+--%>
+ <c:when test="${fn:contains(sessionScope.pd.purview_map,'glzx')!=true}">
 <jsp:include  page="content/nojsp.jsp" ></jsp:include>
 </c:when>
-<%-- <c:when test="${fn:contains(sessionScope.pd.purview_map,'glzx')!=true}">
-<jsp:include  page="content/nojsp.jsp" ></jsp:include>
-</c:when> --%>
 
 <c:otherwise>
 <jsp:include  page="content/${requestScope.dn }.jsp" ></jsp:include>

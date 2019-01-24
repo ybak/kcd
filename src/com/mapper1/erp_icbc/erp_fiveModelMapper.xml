@@ -117,8 +117,9 @@ from kjs_icbc_mq icbcmq
 LEFT JOIN assess_fs fs on fs.id=icbcmq.gems_fs_id
 LEFT JOIN assess_gems gems on gems.id=icbcmq.gems_id
 LEFT JOIN kj_icbc ki on ki.id=icbcmq.icbc_id
+where 1=1 and icbcmq.gems_fs_id=#{fsid}
 <if test="bc_status!=null and bc_status!=''"> 
-where icbcmq.bc_status=#{bc_status} 
+and icbcmq.bc_status=#{bc_status} 
 </if>
 order by icbcmq.dt_edit desc 
 </if> 
@@ -132,8 +133,9 @@ from kjs_icbc_cardk icbcdk
 LEFT JOIN assess_fs fs on fs.id=icbcdk.gems_fs_id
 LEFT JOIN assess_gems gems on gems.id=icbcdk.gems_id
 LEFT JOIN kj_icbc ki on ki.id=icbcdk.icbc_id
+where 1=1 and icbcdk.gems_fs_id=#{fsid}
 <if test="bc_status!=null and bc_status!=''"> 
-where icbcdk.bc_status=#{bc_status}
+and icbcdk.bc_status=#{bc_status}
 </if>
 order by icbcdk.dt_edit desc
      </if> 
@@ -145,8 +147,9 @@ gems.name as gemsname
 from kjs_icbc_kk icbckk
 LEFT JOIN assess_fs fs on fs.id=icbckk.gems_fs_id
 LEFT JOIN assess_gems gems on gems.id=icbckk.gems_id
+where 1=1 and icbckk.gems_fs_id=#{fsid}
 <if test="bc_status!=null and bc_status!=''"> 
-where icbckk.bc_status=#{bc_status}
+and icbckk.bc_status=#{bc_status}
 </if>
 order by icbckk.dt_edit desc
      </if> 
@@ -160,7 +163,7 @@ from assess_cars icbcpg
 LEFT JOIN assess_fs fs on fs.id=icbcpg.gems_fs_id
 LEFT JOIN assess_gems gems on gems.id=icbcpg.gems_id
 LEFT JOIN kj_icbc ki on ki.id=icbcpg.icbc_id
-where icbcpg.icbc_id>0
+where icbcpg.icbc_id>0 and icbcpg.gems_fs_id=#{fsid}
 <if test="bc_status!=null and bc_status!=''"> 
 and icbcpg.bc_status=#{bc_status}
 </if>
@@ -174,8 +177,9 @@ gems.name as gemsname
 from kj_icbc icbc
 LEFT JOIN assess_fs fs on fs.id=icbc.gems_fs_id
 LEFT JOIN assess_gems gems on gems.id=icbc.gems_id
+where 1=1 and icbc.gems_fs_id=#{fsid}
 <if test="bc_status!=null and bc_status!=''"> 
-where icbc.bc_status=#{bc_status}
+and icbc.bc_status=#{bc_status}
 </if>
 order by icbc.dt_edit desc
      </if> 

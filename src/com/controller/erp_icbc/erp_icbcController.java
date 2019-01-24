@@ -1079,6 +1079,8 @@ public class erp_icbcController {
 		request.setAttribute("pagenow",pn);
 		if(type.equals("khhkgl")){
 			return new ModelAndView("kjs_icbc/index");
+		}else if(type.equals("cldy_sxx")){
+			return new ModelAndView("kjs_icbc/index");
 		}
 		/*统计数据*/
 		Management.management(request);

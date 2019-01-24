@@ -1416,11 +1416,17 @@ public class erp_fiveModelController{
 			String   type,
  			HttpServletRequest request
  			){
+		
 		System.out.println(status+"**************");
 		List<PageData>  newpdList=new ArrayList<>();
 		PageData pd=new PageData();
 		pd.put("dn",dn);
 		pd.put("bc_status",status);
+		//2019-1-23 newAdd start
+		PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");
+		System.out.println(pdLoginSession.get("icbc_erp_fsid")+"sdasdas");
+		pd.put("fsid",pdLoginSession.get("icbc_erp_fsid"));
+		//2019-1-23 newAdd end
 		List<PageData>  pdList=erp_fiveModelService.findtolist(pd);
 		newpdList=limitutil.fy(pdList,pagesize,pagenow);
 		int q=pdList.size()%pagesize;
@@ -1429,6 +1435,7 @@ public class erp_fiveModelController{
 			totalpage=pdList.size()/pagesize;	    		
 		}else{
 			totalpage=pdList.size()/pagesize+1;
+			
 		} 
 		request.setAttribute("zxmap",icbcmodel.zx_status());  // new add
 		request.setAttribute("pgmap",icbcmodel.pg_status());  // new add 
