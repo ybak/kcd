@@ -920,13 +920,10 @@ public class erp_wdrwController {
 			Integer dzhb, 
 			Integer dzje, 
 			String dz_date,
-			
-			Integer dz_type, 
-			
+			String dz_type, 
 			String hf_date,
 			Integer hfje, 
 			Integer dsje, 
-			
 			Integer admin_id,
 			Integer icbc_id, 
 			Integer type_id, 
@@ -939,7 +936,7 @@ public class erp_wdrwController {
 		JSONObject json_result=new JSONObject();//json数据
 		PageData erp_result=new PageData();//erp进度
 		PageData erp_type=new PageData();//erp板块
-		if(dz_type==2){
+		if(dz_type.equals("2")){
 			json_result.put("dzhb_"+status_id,dzhb);
 			json_result.put("dzje_"+status_id,dzje);
 			json_result.put("dz_date_"+status_id,dz_date);
@@ -973,7 +970,7 @@ public class erp_wdrwController {
 		erp_result.put("result_1_value",json_result.toJSONString());
 		erp_wdrwService.update(erp_type);
 		erp_wdrwService.save(erp_result);
-		if(dz_type==2){
+		if(dz_type.equals("2")){
 		//添加融资板块
 		PageData result_date=new PageData();
 		result_date.put("dn", "yhds_tocode");

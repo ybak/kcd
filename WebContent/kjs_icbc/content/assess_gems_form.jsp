@@ -194,7 +194,14 @@
 						<select name="agpid" id="agpid" onchange="gettitle()"  class="form-control">
 							<option value="0">请选择</option>
 							<c:forEach var="pageDatas2" items="${requestScope.pageDatas2 }">
-							<option value="${pageDatas2.id }" ${pageDatas2.id eq requestScope.pd.erp_agpid ?"selected='selected'":''}>${pageDatas2.name }</option>
+							<c:choose>
+							  <c:when test="${requestScope.pd.erp_agpid eq pageDatas2.id }">
+							  <option value="${pageDatas2.id }" selected="selected">${pageDatas2.name }</option>
+							  </c:when>
+							  <c:otherwise>
+							  <option value="${pageDatas2.id }">${pageDatas2.name }</option>
+							  </c:otherwise>
+							</c:choose>
 							</c:forEach>
 						</select>
 					</div>

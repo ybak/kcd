@@ -437,10 +437,7 @@ select
 agp.*
 <!-- (select GROUP_CONCAT(a.name) from assess_admin a where a.fs_type=2  and a.deltag=0 and a.agpid=agp.id) as namelist -->
 from icbc_erp_admin_agp agp 
-where 
-(agp.gems_fs_id=0
-or
-agp.gems_fs_id=#{fsid}) 
+where agp.gems_fs_id=#{fsid} 
 <if test="showtag!=null and showtag!=''">
 and agp.showtag=#{showtag}
 </if>

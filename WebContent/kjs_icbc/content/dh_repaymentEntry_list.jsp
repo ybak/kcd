@@ -94,12 +94,12 @@
 						</td>
 						<td class="text-center">
 							<p>
-								
+							<i class="fa fa-search-plus"></i>
 							</p>
 						</td>
 						<td class="text-center">
 							<p>
-								
+							<i class="fa fa-arrow-circle-down"></i>
 							</p>
 						</td>
 					</tr>

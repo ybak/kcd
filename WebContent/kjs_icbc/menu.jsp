@@ -103,7 +103,7 @@
 			   </li>
 		        </c:if>
 		        <c:if  test="${fn:contains(sessionScope.pd.fs_zy_bank,'1')==true}">
-		        <li ${requestScope.type=='wlghd'?"class='treeview active'":''}>
+		        <li>
 				<a href="#"><i class="fa fa-bank"></i> 
 				<span>杭州城站支行<!-- <small class="label pull-right bg-red">33</small> --></span>
 				</a>
@@ -278,33 +278,33 @@
 				    </a>
 				    <ul class="treeview-menu">
 					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'zx')==true }">
-					<li ${requestScope.dn=='zx'?"class='active'":''}>
+					<li ${requestScope.dn=='zx' && requestScope.type=='wlghd'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd&dn=zx&qn=list">
 					<i class="fa fa-arrow-circle-o-right"></i>征信
 					</a>
 					</li>
 					</c:if>
 				<c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcpg')==true}">
-					<li ${requestScope.dn=='pg'?"class='active'":''}>
+					<li ${requestScope.dn=='pg' && requestScope.type=='wlghd'?"class='active'":''}>
 						<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd&dn=pg&qn=list">
 						<i class="fa fa-arrow-circle-o-right"></i>汽车评估</a>
 					</li>	
 					</c:if>
 					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'kk')==true}">				
-					<li ${requestScope.dn=='kk'?"class='active'":''}>
+					<li ${requestScope.dn=='kk' && requestScope.type=='wlghd'?"class='active'":''}>
 						<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd&dn=kk&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>开卡
 						</a>
 					</li>
 					</c:if>
 					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'ssmq')==true}">
-					<li ${requestScope.dn=='mq'?"class='active'":''}>
+					<li ${requestScope.dn=='mq' && requestScope.type=='wlghd'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd&dn=mq&qn=list">
 					<i class="fa fa-arrow-circle-o-right"></i>视频面签</a>
 					</li>
 					</c:if>
 					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'qcdk')==true}">					
-					<li ${requestScope.dn=='cardk'?"class='active'":''}>
+					<li ${requestScope.dn=='cardk' && requestScope.type=='wlghd'?"class='active'":''}>
 						<a href="${pageContext.request.contextPath}/erp/index_.do?type=wlghd&dn=cardk&qn=list">
 						<i class="fa fa-arrow-circle-o-right"></i>汽车贷款
 						</a>

@@ -1183,11 +1183,7 @@ public class erp_icbcController {
 		pd.put("dt_edit",new Date());
 		pd.put("qx_type",zhqx_modal.getQx_type());
 		pd.put("modal_tag",zhqx_modal.getModal_tag());
-		if(zhqx_modal.getModal_tag()==1){
-			pd.put("gems_fs_id",0);
-		}else {
-			pd.put("gems_fs_id",pData.get("icbc_erp_fsid"));	
-		}
+		pd.put("gems_fs_id",pData.get("icbc_erp_fsid"));	
 		if(zhqx_modal.getCn().equals("1")){
 			pd.put("mid_add",pData.get("id"));
 			pd.put("dt_add",new Date());
