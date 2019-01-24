@@ -19,7 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
-import com.mapper.sxx.financialExcel.FinancialExcelMapper;
+import com.mapper1.sxx.financialExcel.FinancialExcelMapper;
+import com.service1.sxx.FinancialExcelService;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -29,7 +30,7 @@ import net.sf.json.JSONObject;
 public class FinancialExcelController {
 	
 	@Autowired
-	private FinancialExcelMapper financialExcelMapper;
+	private FinancialExcelService financialExcelService;
 	
 	String jsonicbc = "";
 	//导出字段列表
@@ -59,9 +60,9 @@ public class FinancialExcelController {
 			HttpServletRequest request
 			){
 		//机构名称
-		List<String> list1 = financialExcelMapper.FindInstitutionsNameList();
+		List<String> list1 = financialExcelService.FindInstitutionsNameList();
 		//银行名称
-		List<String> list2 = financialExcelMapper.FindBankNameList();
+		List<String> list2 = financialExcelService.FindBankNameList();
 	
 		request.setAttribute("Institutions", list1);
 		request.setAttribute("Bank", list2);
@@ -89,7 +90,7 @@ public class FinancialExcelController {
 			String cn,
 			String type,
 			HttpServletRequest request){
-		 Map<String, Object> map = financialExcelMapper.GetLoanInformationbyid(id);
+		 Map<String, Object> map = financialExcelService.GetLoanInformationbyid(id);
 		
 		jsonicbc = JSON.toJSONString(map);
 		
@@ -147,9 +148,9 @@ public class FinancialExcelController {
 			//当用户没有选择导出的字段时,查询所有数据并导出
 			if(arr.length() == 2){
 				//获取数据
-				List<Map> list1 = financialExcelMapper.ExportBuyCarInstallmentExcel(Institutions, Bank);
-				List<Map> list2 = financialExcelMapper.FindBuyCarInstallmentExcelByStatus();
-				List<Map> list3 = financialExcelMapper.FindFirstPaymentDate();
+				List<Map> list1 = financialExcelService.ExportBuyCarInstallmentExcel(Institutions, Bank);
+				List<Map> list2 = financialExcelService.FindBuyCarInstallmentExcelByStatus();
+				List<Map> list3 = financialExcelService.FindFirstPaymentDate();
 				//创建表并且插入数据
 				ExportOperationsExcel.CreateExcel(list1, list2, list3);
 			  //当用户选择了需要导出的字段时, 只导出用户选择的字段
@@ -168,7 +169,7 @@ public class FinancialExcelController {
 					lev3MenuName.add( Integer.parseInt(jsonlist.get(i).substring(jsonlist.get(i).length()-2, jsonlist.get(i).length())) );  //获取到用户选择的三级菜单在集合中的位置
 				}
 		
-				List<Map> list = financialExcelMapper.ExportBuyCarInstallmentExcel(Institutions, Bank);
+				List<Map> list = financialExcelService.ExportBuyCarInstallmentExcel(Institutions, Bank);
 				
 				ExportOperationsExcel.CreateExcel(fieldName, lev2MenuName, lev3MenuName, list);
 			}

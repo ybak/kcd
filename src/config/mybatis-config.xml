@@ -136,13 +136,14 @@
     </typeAliases>
 
        <mappers>
-       <!-- 可视化数据 -->
+        <!-- 银行贷款 -->
+        <mapper resource="com/mapper1/sxx/financialExcel/FinancialExcelMapper.xml" />
+        <!-- 可视化数据 -->
         <mapper resource="com/mapper1/ManagementCenter/kj_icbcMapper.xml" />
         <mapper resource="com/mapper1/ManagementCenter/kjs_icbc_cardkMapper.xml" />
         <mapper resource="com/mapper1/ManagementCenter/kj_icbc_resultMapper.xml" />
         
         <mapper resource="com/mapper1/icbc1/comm_zonesMapper.xml" />
-        <mapper resource="com/mapper/sxx/financialExcel/FinancialExcelMapper.xml" />
         <mapper resource="com/mapper1/erp_icbc/erp_loanBeforeMapper.xml" />
        <!-- erpmapper -->
         <mapper resource="com/mapper1/erp_icbc/fs_detailsMapper.xml" />

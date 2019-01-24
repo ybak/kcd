@@ -527,7 +527,9 @@ public class ExportOperationsExcel {
 						sheet.addCell(new Label(j+1, i+3, "无此条数据"));
 						sheet.setColumnView(j+1, "无此条数据".length()+10);
 					} else {
-						sheet.addCell( new Label(j+1, i+3, map.get(field).toString()) );
+						if(null!=map.get(field)){
+							sheet.addCell( new Label(j+1, i+3, map.get(field).toString()) );
+						}
 					}
 					
 				}

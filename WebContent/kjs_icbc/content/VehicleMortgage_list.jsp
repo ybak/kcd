@@ -101,10 +101,10 @@
 						</td>
 						<td class="text-center">
 							
-							<a href="javascript:alert('暂无功能')">
+							<a href="javascript:alert('测试账户暂未开放')">
 								<i class="fa fa-search-plus"></i>
 							</a>
-							<a href="javascript:alert('暂无功能')">
+							<a href="javascript:alert('测试账户暂未开放')">
 								<i class="fa fa-hand-paper-o"></i>
 							</a>
 						</td>
