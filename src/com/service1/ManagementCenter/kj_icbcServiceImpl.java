@@ -122,7 +122,7 @@ public class kj_icbcServiceImpl implements kj_icbcService{
 	//汽车贷款折线图
 	@Override
 	public List<HashMap> SelectCarChart(assess_fs ass_fs){
-		return assess_fsmapper.selectchart(ass_fs);
+		return assess_fsmapper.selectcarchart(ass_fs);
 	}
 	//汽车放款分布扇形图
 	@Override
