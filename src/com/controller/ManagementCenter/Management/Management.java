@@ -29,12 +29,9 @@ public class Management {
 	assess_fs assess_fs=new assess_fs();
 	//前台数据后台获取
 	public  void management(HttpServletRequest request) {
-		PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
-		//Integer.parseInt(pdLoginSession.get("fs_id").toString())
-		
+		PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");
 		assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
 		assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
-		
 		List<HashMap> loanlist=kj_icbcService.SelectLoan(assess_fs);//本月已放款单数，总金额   amount=0/money=null
 			if(loanlist.get(0).get("amount").equals(0) ){
 				loanlist.get(0).put("money",0);
@@ -112,8 +109,9 @@ public class Management {
 	public String getPathMap(HttpServletRequest request, HttpServletResponse response){
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
-			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
-			assess_fs.setUp_id(27);
+			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");
+			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
 			List<HashMap> chart=kj_icbcService.SelectChart(assess_fs);//后台获取查询数据
 			Object [][] Ochart=new Object[2][9];			
 			if(chart.size()<9){
@@ -151,7 +149,8 @@ public class Management {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
-			assess_fs.setUp_id(27);
+			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
 			List<HashMap> chart=kj_icbcService.SelectCarChart(assess_fs);//后台获取查询数据
 			Object [][] Ochart=new Object[2][9];			
 			if(chart.size()<9){
@@ -189,7 +188,8 @@ public class Management {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
-			assess_fs.setUp_id(27);
+			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
 			List<HashMap> chart=kj_icbcService.SelectCarFk(assess_fs);//后台获取查询数据
 			String[] s = new String[2];
 			if(chart.size() < 2){
@@ -230,7 +230,8 @@ public class Management {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
-			assess_fs.setUp_id(27);
+			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
 			List<HashMap> chart=kj_icbcService.SelectMoneyDistribute(assess_fs);//后台获取查询数据
 			String[] s = new String[4];	
 			if(chart.get(0) == null){
@@ -265,7 +266,8 @@ public class Management {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
-			assess_fs.setUp_id(27);
+			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
 			List<HashMap> chart=kj_icbcService.SelectResult(assess_fs);//后台获取查询数据
 			
 			String[] s = new String[5];		
@@ -301,7 +303,8 @@ public class Management {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
-			assess_fs.setUp_id(27);
+			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
 			List<HashMap> credit=kj_icbcService.SelectCredit(assess_fs);//后台获取查询数据
 			String[] s = new String[3];
 			if(credit.size() < 3){
@@ -347,7 +350,8 @@ public class Management {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
-			assess_fs.setUp_id(27);
+			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
 			List<HashMap> credit=kj_icbcService.SelectClientAge(assess_fs);//后台获取查询数据
 			String[] s = new String[4];
 			if(credit.get(0) == null){
@@ -382,7 +386,8 @@ public class Management {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
-			assess_fs.setUp_id(27);
+			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
 			List<HashMap> carsage=kj_icbcService.SelectCarsAge(assess_fs);//后台获取查询数据
 			String[] s = new String[4];
 			if(carsage.get(0) == null){
@@ -417,7 +422,8 @@ public class Management {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
-			assess_fs.setUp_id(27);
+			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
 			List<HashMap> fund=kj_icbcService.SelectAdvanceFund(assess_fs);//后台获取查询数据
 			Object [][] Ofund=new Object[2][12];					
 			if(fund.size()<12){
@@ -457,7 +463,8 @@ public class Management {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
-			assess_fs.setUp_id(27);
+			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
 			List<HashMap> fund=kj_icbcService.SelectRecycle(assess_fs);//后台获取查询数据
 			Object [][] Ofund=new Object[2][9];						
 			if(fund.size()<9){
@@ -496,7 +503,8 @@ public class Management {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	//
-			assess_fs.setUp_id(27);
+			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
 			List<HashMap> newcars=kj_icbcService.SelectNewCars(assess_fs);//后台获取查询数据	
 			Object [][] Ofund=new Object[5][12];			
 			if(newcars.size()<12){

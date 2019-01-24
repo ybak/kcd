@@ -294,22 +294,22 @@ GROUP BY year(iekir.fk_date),month(iekir.fk_date) ORDER BY iekir.fk_date DESC li
  
  <!-- 每月汽车贷款各省市过件率排名 -->
  <select id="selectcarpasscomm"  parameterType="assess_fs" resultType="java.util.Map"><!-- 汽车  -->
-	select round(other.Osell/count(other.Oid),2) rate,other.`name` name from 
+		select round(other.Osell/count(other.Oid),2) rate,other.`name` name from 
 		(select loan.kk_loan_stateid Oid,count(loan.kk_loan_stateid) Osell,cs.`name` 
-			from (select ki.kk_loan_stateid  
-				from kjs_icbc_cardk kic,kj_icbc ki 
-				where ki.id=kic.icbc_id 
+			from (select kik.kk_loan_stateid  
+				from kjs_icbc_cardk kic,kjs_icbc_kk kik 
+				where kik.icbc_id=kic.icbc_id 
 				and month(kic.dt_sub)=MONTH(SYSDATE()) 
 				and YEAR(kic.dt_sub)=year(SYSDATE()) 
 				and kic.bc_status=3 
-				and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) ) loan,
+				and kik.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) ) loan,
 				comm_states cs where loan.kk_loan_stateid=cs.id 
 				GROUP BY loan.kk_loan_stateid 
 			ORDER BY count(loan.kk_loan_stateid) DESC) other,
-		(select ki.kk_loan_stateid Aid 
-			from kjs_icbc_cardk kic,kj_icbc ki 
-			where ki.id=kic.icbc_id 
-			and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
+		(select kik.kk_loan_stateid Aid 
+			from kjs_icbc_cardk kic,kjs_icbc_kk kik 
+			where kik.icbc_id=kic.icbc_id 
+			and kik.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id} ) 
 			and month(kic.dt_sub)=MONTH(SYSDATE()) 
 		and YEAR(kic.dt_sub)=year(SYSDATE())) amount 
 	where amount.Aid=other.Oid 
