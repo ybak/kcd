@@ -6,8 +6,7 @@
     <typeAliases>
          <!-- 可视化数据 -->
          <typeAlias  alias="kj_icbc"  type="com.model1.ManagementCenter.kj_icbc"/>
-         <typeAlias  alias="kjs_icbc_cardk"  type="com.model1.ManagementCenter.kjs_icbc_cardk"/>
-         <typeAlias  alias="icbc_erp_kj_icbc_result"  type="com.model1.ManagementCenter.icbc_erp_kj_icbc_result"/>
+         <typeAlias  alias="assess_fs"  type="com.model1.ManagementCenter.assess_fs"/>
          
          <typeAlias alias="comm_zones"  type="com.model1.city.comm_zones"/>
          <!--  -->
@@ -140,8 +139,7 @@
         <mapper resource="com/mapper1/sxx/financialExcel/FinancialExcelMapper.xml" />
         <!-- 可视化数据 -->
         <mapper resource="com/mapper1/ManagementCenter/kj_icbcMapper.xml" />
-        <mapper resource="com/mapper1/ManagementCenter/kjs_icbc_cardkMapper.xml" />
-        <mapper resource="com/mapper1/ManagementCenter/kj_icbc_resultMapper.xml" />
+        <mapper resource="com/mapper1/ManagementCenter/assess_fsMapper.xml" />
         
         <mapper resource="com/mapper1/icbc1/comm_zonesMapper.xml" />
         <mapper resource="com/mapper1/erp_icbc/erp_loanBeforeMapper.xml" />
