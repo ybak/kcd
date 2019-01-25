@@ -72,7 +72,7 @@
  </select>
 
  
-  <!-- 每月已放款未抵押单数，总金额   ok!!!!!-->
+  <!-- 每月已放款未抵押单数，总金额            未完成-->
   <select id="selectfk" parameterType="assess_fs" resultType="java.util.Map" >
   	select count(icbc_id) amount,sum(fk_money) money from icbc_erp_kj_icbc_result  
 	where icbc_id in(select icbc_id from kj_icbc ki,icbc_erp_kj_icbc_result iekir 
@@ -191,12 +191,12 @@
   		GROUP BY year(yh_date.fk_date),month(yh_date.fk_date) 
   		ORDER BY yh_date.fk_date DESC limit 12
   </select>
-  <!-- 抵押材料回收情况      ok-->
+  <!-- 抵押材料回收情况              未完成  -->
   <select id="selectrecycle" parameterType="assess_fs" resultType="java.util.Map">
  		 select year(iekir.dt_sub) year,
  		 	month(iekir.dt_sub) month,
  		 	count(*) total from icbc_erp_kj_icbc_result iekir,kj_icbc ki 
- 		 where iekir.status=81 and iekir.result_1_code=1 
+ 		 where iekir.status=81 
  		 and ki.id=iekir.icbc_id 
   		 and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
   		 and year(SYSDATE())-year(iekir.dt_sub) &lt; 2 
@@ -247,12 +247,12 @@ select sum(case when  to_days(pawn.d1) - to_days(pawn.d) &lt; 15 then 1 end) paw
 	   from (select iekir1.qryid,iekir1.status s,iekir1.dt_sub d,iekir2.status s1,iekir2.dt_sub d1 
 	   	from (select ieki.qryid,ieki.status,ieki.dt_sub 
 	   		from icbc_erp_kj_icbc_result ieki,kj_icbc ki 
-	   		where ieki.status=72 and ieki.result_1_code=1 
+	   		where ieki.status=72  
 	   		and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
 	   	and ki.id=ieki.icbc_id) iekir1,
 		(select ieki.qryid,ieki.status,ieki.dt_sub 
 			from icbc_erp_kj_icbc_result ieki,kj_icbc ki 
-			where ieki.status=81 and ieki.result_1_code=1 
+			where ieki.status=81 
 			and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
 		and ki.id=ieki.icbc_id) iekir2 
 	   where iekir1.qryid=iekir2.qryid ) pawn 

@@ -30,7 +30,7 @@ public class Management {
 	//前台数据后台获取
 	public  void management(HttpServletRequest request) {
 		PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");
-		assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+		assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));//Integer.parseInt(pdLoginSession.get("fs_id").toString())
 		assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
 		List<HashMap> loanlist=kj_icbcService.SelectLoan(assess_fs);//本月已放款单数，总金额   amount=0/money=null
 			if(loanlist.get(0).get("amount").equals(0) ){
@@ -259,14 +259,14 @@ public class Management {
 		}
 		return null;
 	}
-	//抵押完成分布扇形图ajax前台获取
+	//抵押完成天数分布扇形图ajax前台获取
 	@RequestMapping("erp/Management/getPawnPathMap.do") 
 	@ResponseBody
 	public String getPawnPathMap(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
-			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));//Integer.parseInt(pdLoginSession.get("fs_id").toString())
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
 			List<HashMap> chart=kj_icbcService.SelectResult(assess_fs);//后台获取查询数据
 			
@@ -463,7 +463,7 @@ public class Management {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession= (PageData)request.getSession().getAttribute("pd");	
-			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));//Integer.parseInt(pdLoginSession.get("fs_id").toString())
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
 			List<HashMap> fund=kj_icbcService.SelectRecycle(assess_fs);//后台获取查询数据
 			Object [][] Ofund=new Object[2][9];						
