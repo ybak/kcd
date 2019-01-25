@@ -339,10 +339,22 @@
 			       </c:if>
 					<!-- 车辆抵押 -->
 					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cldy')==true}">
-					<li ${requestScope.dn=='VehicleMortgage'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/erp/index.do?type=cldy_sxx&dn=VehicleMortgage&qn=list"> <i class="fa fa-automobile"></i> 
+					<li>
+					<a href=""> <i class="fa fa-automobile"></i> 
 				    <span>车辆抵押</span>
 				    </a>
+				       <ul class="treeview-menu">
+					    	<li ${requestScope.type=='not'?"class='active'":''}>
+								<a href="${pageContext.request.contextPath}/vehicleMortgageController/mortgageRecord.do?type=not&dn=VehicleMortgage&qn=list&cn=w1">
+								<i class="fa fa-arrow-circle-o-right"></i>待处理
+							    </a>
+							</li>
+							<li ${requestScope.type=='already'?"class='active'":''}>
+								<a href="${pageContext.request.contextPath}/vehicleMortgageController/mortgageRecord.do?type=already&dn=VehicleMortgage&qn=list&cn=w1">
+								<i class="fa fa-arrow-circle-o-right"></i>已处理
+							    </a>
+							</li>
+					    </ul>
 					</li>
 					</c:if>
 					<!-- GPS安装 -->

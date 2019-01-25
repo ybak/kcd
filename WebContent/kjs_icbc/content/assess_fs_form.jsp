@@ -71,7 +71,7 @@
                         <input style="display: none" onchange="javascript:setImagePreview();" type="file" value="" id="fileimg" name="fileimg" >
                         <label for="fileimg">
                         <c:if test="${empty requestScope.pd.oemimgurl }">
-                        <img  id="preview" style="display: block; width: 100px; height: 100px;"  class="img-thumbnail"  src="/kcd/kjs_icbc/kjs_icbc_style/images/logo.png"/>
+                        <img  id="preview" style="display: block; width: 100px; height: 100px;"  class="img-thumbnail"  src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/images/logo.png"/>
                         </c:if>
                         <c:if test="${!empty requestScope.pd.oemimgurl }">
                         <img  id="preview" style="display: block; width: 100px; height: 100px;"  class="img-thumbnail"  src="http://a.kcway.net/${requestScope.pd.oemimgurl }"/>
@@ -82,11 +82,12 @@
 				   <div class="col-sm-4">
 						<div class="input-group">
 							<span class="input-group-addon">
-								系统名称
+								系统名称(限制五个字)
 							</span>
 							<input  id="xt_name" name="xt_name" value="${requestScope.pd.xt_name }" class="form-control"  placeholder="" type="text">
 						</div>
 					</div>
+					
 					<div class="col-sm-4">
 						<div class="input-group">
 							<span class="input-group-addon">
@@ -1193,6 +1194,7 @@
 </div>
 </div>
 <script>
+
 lay('#version').html('-v'+ laydate.v);
 //执行一个laydate实例
 laydate.render({
@@ -1385,6 +1387,8 @@ function dofind(){//vin车型
 		</div> --%>
 			</div><!-- /.content-wrapper -->
 				 <script>
+				   
+
 	 $(document).ready(function(){
 		
 		 //公司办公所在地址
@@ -1506,4 +1510,7 @@ function dofind(){//vin车型
 	        }
 	        return true;
 	    }
+	     
 				</script>
+
+				

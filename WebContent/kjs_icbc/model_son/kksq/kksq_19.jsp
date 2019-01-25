@@ -41,7 +41,6 @@ String dateString = formatter.format(date);
 	<input id="icbc_name" name="icbc_name" value="${pd.c_name }" type="hidden" />
     <input id="icbc_adminid" name="icbc_adminid" value="${pd.icbc_adminid }" type="hidden" />
     <input id="dt_date" name="dt_date" value="${pData2.dt_edit }" type="hidden" />
-			
 				<!-- ngIf: notUseButton -->
 				<div class="form-group ng-scope">
 					<label class="col-sm-2 control-label">审核结果</label>

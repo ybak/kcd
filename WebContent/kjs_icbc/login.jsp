@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="UTF-8">
-<title>欢迎使用快车道后台系统</title>
+<title>欢迎使用人保车贷后台系统</title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/kjs_icbc/new_login/css/style2.0.css">
 <style type="text/css">
 	ul li{font-size: 30px;color:#2ec0f6;}
@@ -82,8 +82,8 @@
 </div> 
 <div id="contPar" class="contPar">
 	<div id="page1"  style="z-index:1;">
-		<div class="title0">快车道后台系统</div>
-		<div class="title1">欢迎使用快车道后台系统</div>
+		<div class="title0">人保车贷系统</div>
+		<div class="title1">欢迎使用人保车贷系统</div>
 		<div class="imgGroug">
 			<ul>
 				<img alt="" class="img0 png" src="${pageContext.request.contextPath }/kjs_icbc/new_login/img/fk.png">
@@ -97,7 +97,7 @@
 <div class="tyg-div-denglv" >
 	<div class="tyg-div-form" style="background:#d7d9e0;width:273px;">
 
-			<h2>登录</h2><p class="tyg-p">快车道后台系统</p>
+			<h2>登录</h2><p class="tyg-p">人保车贷系统</p>
 			<div style="margin:5px 0px;">
 				<input type="text"  id="username" name="username" placeholder="请输入账号..."/>
 			</div>

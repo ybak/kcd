@@ -22,7 +22,7 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">申请通融原因</label>
 		<div class="col-sm-8">
-		<textarea   class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">${requestScope.pd.tr_msg }</textarea>
+		<textarea class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">${requestScope.pd.tr_msg }</textarea>
 		</div>
 	</div>
      <div class="form-group">
@@ -41,21 +41,27 @@
 </div>
 <script type="text/javascript">
 function erp_zxtrsh(){
-	var form = new FormData(document.getElementById("zxtryh_form"));
-	$.ajax({
-        url:"${pageContext.request.contextPath }/erp/erp_zxtryhsh.do",
-        type:"post",
-        data:form,
-        processData:false,
-        contentType:false,
-        success:function(data){
-         alert("提交成功!");
-         window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
-        },
-        error:function(e){
-         alert("错误！！");
-        }
-    });    
+	var result_value = $("#result_value").val();
+	if(result_value==""){
+		alert("请输入征信员银行意见");
+	}else{
+		var form = new FormData(document.getElementById("zxtryh_form"));
+		$.ajax({
+	        url:"${pageContext.request.contextPath }/erp/erp_zxtryhsh.do",
+	        type:"post",
+	        data:form,
+	        processData:false,
+	        contentType:false,
+	        success:function(data){
+	         alert("提交成功!");
+	         window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
+	        },
+	        error:function(e){
+	         alert("错误！！");
+	        }
+	    });   
+	}
+	 
 }
 </script>
 </form>	

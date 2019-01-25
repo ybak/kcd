@@ -100,9 +100,15 @@
 <script type="text/javascript">
 function erp(){
 	var val=$('input:radio[name="sk_type"]:checked').val();
+	var dz_date = $("#dz_date").val();
+	var dz_je = $("#dz_je").val();
     if(val==null){
         alert("请选择收款情况结果!");
         return false;
+    }else if(dz_date==""){
+    	alert("请选择垫资日期!");
+    }else if(dz_je==""){
+    	alert("请选择垫资金额(元)!");
     }else{
 		var form = new FormData(document.getElementById("zjfp_form"));
 		$.ajax({

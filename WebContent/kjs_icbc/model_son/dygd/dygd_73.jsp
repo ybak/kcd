@@ -58,23 +58,27 @@ laydate.render({
 </script>
 <script type="text/javascript">
 function erp(){
-	var form = new FormData(document.getElementById("erp_form"));
-	$.ajax({
-        url:"${pageContext.request.contextPath }/erp/erp_dygd_73.do",
-        type:"post",
-        data:form,
-        processData:false,
-        contentType:false,
-        success:function(data){
-         alert("提交成功!");
-         window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
-        },
-        error:function(e){
-         alert("错误！！");
-        }
-    });    
+	var ksrq = $("#ksrq").val();
+	if(ksrq==""){
+		alert("请填写开始日期!");
+	}else{
+		var form = new FormData(document.getElementById("erp_form"));
+		$.ajax({
+	        url:"${pageContext.request.contextPath }/erp/erp_dygd_73.do",
+	        type:"post",
+	        data:form,
+	        processData:false,
+	        contentType:false,
+	        success:function(data){
+	         alert("提交成功!");
+	         window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
+	        },
+	        error:function(e){
+	         alert("错误！！");
+	        }
+	    });   
+	}
 }
-
 
 </script>
 </div>

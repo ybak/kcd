@@ -76,31 +76,68 @@
 						<th class="text-center hidden-xs">订单编号</th>
 						<th class="text-center">客户姓名</th>
 						<th class="text-center">身份证号码</th>
-						<th class="text-center">订单状态</th>
+						<th class="text-center">贷款银行</th>
+						<th class="text-center">车辆类型</th>
+						<th class="text-center">业务员</th>
+						<th class="text-center">业务团队</th>
+						<th class="text-center">车辆号牌</th>
+						<th class="text-center">申请单状态</th>
 						<th class="text-center">操作</th>
 					</tr>
-					<tr>
+					
+					<c:forEach var="item" items="${untreated}">
+					
+						<tr>
 						<td class="text-center hidden-xs">
 						<input name="delid"  type="checkbox">
 						</td>
 						<td class="text-center hidden-xs">
-							1234
+							${item.gems_code }
 						</td>
 						<td class="text-center">
 							<span class="s-font-blue">
-								李四
+								${item.c_name }
 							</span>
 						</td>
 						<td class="text-center">
 							<span class="s-font-blue">
-								410181198012542659
+								${item.c_cardno }
 							</span>
 						</td>
 						<td class="text-center">
-							状态
+							${item.y_name }
 						</td>
 						<td class="text-center">
-							
+							<c:if test="${item.cars_type == '1'}">
+								新车
+							</c:if>
+							<c:if test="${item.cars_type == '2'}">
+								二手车
+							</c:if>
+						</td>
+						<td class="text-center">
+							${pd.name }
+						</td>
+						<td class="text-center">
+							${item.a_name }
+						</td>
+						<td class="text-center">
+							<c:if test="${empty pd.c_carno}">
+								无此条数据
+							</c:if>
+							<c:if test="${!empty pd.c_carno}">
+								${pd.c_carno }
+							</c:if>
+						</td>
+						<td class="text-center">
+							<c:if test="${type == 'not'}">
+								待处理
+							</c:if>
+							<c:if test="${type == 'already'}">
+								已处理
+							</c:if>
+						</td>
+						<td class="text-center">
 							<a href="javascript:alert('测试账户暂未开放')">
 								<i class="fa fa-search-plus"></i>
 							</a>
@@ -110,6 +147,9 @@
 						</td>
 						
 					</tr>
+					
+					</c:forEach>
+					
 				</tbody>
 			</table>
 		</div>

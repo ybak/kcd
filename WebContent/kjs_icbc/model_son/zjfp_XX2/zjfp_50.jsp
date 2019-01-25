@@ -44,9 +44,9 @@
 					<div class="col-sm-3">
 						<select class="form-control m-select" name="gems_fs_id" id="gems_fs_id" data-edit-select="1" style="display: none;">
 						<option value="0">--请选择--</option>
-						<c:forEach var="fs" items="${requestScope.fs }">
-                        <option value="${fs.id }">${fs.namepy }-${fs.name }</option>	
-                        </c:forEach>
+							<c:forEach var="fs" items="${requestScope.fs}">
+	                        	<option value="${fs.id }">${fs.namepy }-${fs.name }</option>	
+	                        </c:forEach>
 						</select>
 					</div>
 					<label class="col-sm-2 control-label">开户行</label>
@@ -118,21 +118,49 @@
 </form>
 <script type="text/javascript">
 function erp(){
-	var form = new FormData(document.getElementById("zjfp_form"));
-	$.ajax({
-        url:"${pageContext.request.contextPath }/erp/erp_zjfp_50.do",
-        type:"post",
-        data:form,
-        processData:false,
-        contentType:false,
-        success:function(data){
-         alert("提交成功!");
-         window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
-        },
-        error:function(e){
-         alert("错误！！");
-        }
-    });    
+	var gems_fs_id = $("#gems_fs_id").val();
+	var kh_bank = $("#kh_bank").val();
+	var kh_name = $("#kh_name").val();
+	var zh = $("#zh").val();
+	var yzfje = $("#yzfje").val();
+	var fwf = $("#fwf").val();
+	var dk_date = $("#dk_date").val();
+	var sjdkje = $("#sjdkje").val();
+	var gems_fs_id = $("#gems_fs_id").val();
+	if(gems_fs_id==0){
+		alert("请选择机构!");
+	}else if(kh_bank==""){
+		alert("请输入开户行!");
+	}else if(kh_name==""){
+		alert("请输入开户名!");
+	}else if(zh==""){
+		alert("请输入账号!");
+	}else if(yzfje==""){
+		alert("请输入应支付金额(元)!")
+	}else if(fwf==""){
+		alert("请输入服务费(元)!")
+	}else if(dk_date==""){
+		alert("请输入打款日期!")
+	}else if(sjdkje==""){
+		alert("请输入实际打款金额(元)!")
+	}else{
+		var form = new FormData(document.getElementById("zjfp_form"));
+		$.ajax({
+	        url:"${pageContext.request.contextPath }/erp/erp_zjfp_50.do",
+	        type:"post",
+	        data:form,
+	        processData:false,
+	        contentType:false,
+	        success:function(data){
+	         alert("提交成功!");
+	         window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
+	        },
+	        error:function(e){
+	         alert("错误！！");
+	        }
+	    });    
+	}
+	
 }
 
 

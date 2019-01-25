@@ -23,7 +23,7 @@
 	 <div class="form-group ng-scope">
 		<label class="col-sm-2 control-label">申请上牌地</label>
 		<div class="col-sm-8">
-			<input name="kqyspsh_98_sqspd"  type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
+			<input id="kqyspsh_98_sqspd" name="kqyspsh_98_sqspd"  type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
 		</div>
 	 </div>	
     <!-- <div class="form-group">
@@ -43,7 +43,7 @@
     <div class="form-group">
         <label class="col-sm-2 control-label">申请原因：</label>
         <div class="col-sm-8">
-            <textarea name="result_1_msg" rows="3" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text" ></textarea>
+            <textarea id="result_1_msg" name="result_1_msg" rows="3" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text" ></textarea>
         </div>
     </div>
 
@@ -55,7 +55,14 @@
 </form>
 <script type="text/javascript">
 function erp_kqyspsh_98(){
-	   	var form = new FormData(document.getElementById("kqyspsh_98"));
+	var kqyspsh_98_sqspd = $("#kqyspsh_98_sqspd").val();
+	var result_1_msg = $("#result_1_msg").val();
+	if(kqyspsh_98_sqspd==""){
+		alert("请输入上牌地!");
+	}else if(result_1_msg==""){
+		alert("请输入申请原因!");
+	}else{
+		var form = new FormData(document.getElementById("kqyspsh_98"));
 	   	$.ajax({
 	           url:"${pageContext.request.contextPath}/erp/erp_kqyspsh_98.do",
 	           type:"post",
@@ -70,6 +77,9 @@ function erp_kqyspsh_98(){
 	            alert("错误！！");
 	           }
 	    });  
+	}
+	
+	   	
 }
 </script>
 </div>                                             

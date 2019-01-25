@@ -95,9 +95,15 @@ laydate.render({
 <script type="text/javascript">
 function erp_kksh(){
 	var val=$("#kk_status").val();
+	var kk_date=$("#kk_date").val();
+	var kk_kh=$("#kk_kh").val();
     if(val==null||val==0){
         alert("请选择开卡审核结果!");
         return false;
+    }else if(kk_date==""){
+    	alert("请输入开卡日期!");
+    }else if(kk_kh==""){
+    	alert("请输入卡号!");
     }else{
 		var form = new FormData(document.getElementById("kk_form"));
 		$.ajax({

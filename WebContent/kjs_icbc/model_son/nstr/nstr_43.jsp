@@ -23,7 +23,7 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">通融说明</label>
 		<div class="col-sm-8">
-			<textarea rows="3" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text" ></textarea>
+			<textarea name="trsm" id="trsm" rows="3" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text" ></textarea>
 		</div>
 	</div>
 	<div class="form-group">
@@ -49,21 +49,27 @@
 </form>
 <script type="text/javascript">
 function erp_nstrsh_43(){
-	   	var form = new FormData(document.getElementById("nstrsh_43"));
-	   	$.ajax({
-	           url:"${pageContext.request.contextPath}/erp/erp_nstrsh_43.do",
-	           type:"post",
-	           data:form,
-	           processData:false,
-	           contentType:false,
-	           success:function(data){
-	            alert("提交成功!");
-	            window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
-	           },
-	           error:function(e){
-	            alert("错误！！");
-	           }
-	    });  
+		var trsm = $("#trsm").val();
+		if(trsm==""){
+			alert("请输入通融说明!");
+		}else{
+			var form = new FormData(document.getElementById("nstrsh_43"));
+		   	$.ajax({
+		           url:"${pageContext.request.contextPath}/erp/erp_nstrsh_43.do",
+		           type:"post",
+		           data:form,
+		           processData:false,
+		           contentType:false,
+		           success:function(data){
+		            alert("提交成功!");
+		            window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
+		           },
+		           error:function(e){
+		            alert("错误！！");
+		           }
+		    });  
+		}
+	   	
 }
 </script>
 </div>                                             

@@ -29,13 +29,13 @@ String dateString = formatter.format(date);
 	<input id="fs_id" name="fs_id" value="${requestScope.pd.fsid }" type="hidden" />
 	<input id="dz_type" name="dz_type" value="${pd.dz_type}" type="hidden"    />	
 	<div class="form-group">
-		<label class="col-sm-2 control-label">收件确认</label>
+		<label class="col-sm-2 control-label">收件确认<i class="red">*</i></label>
 		<div class="col-sm-3">
 			<input type="radio" value="已收到"  class="ng-pristine ng-untouched ng-valid ng-not-empty" name="sjqr">已收到
 	            &nbsp;&nbsp;&nbsp;&nbsp;
 	        <input type="radio" value="未收到" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="sjqr">未收到
 		</div>
-		<label class="col-sm-2 control-label">收件日期</label>
+		<label class="col-sm-2 control-label">收件日期<i class="red">*</i></label>
 		<div class="col-sm-3">
 <div class="input-group date ng-isolate-scope ng-empty ng-valid">
   <input id="ksrq" name="ksrq" class="form-control" type="text">
@@ -44,7 +44,7 @@ String dateString = formatter.format(date);
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">材料复核结果</label>
+		<label class="col-sm-2 control-label">材料复核结果<i class="red">*</i></label>
 		<div class="col-sm-3">
 			<input type="radio" value="通过"  class="ng-pristine ng-untouched ng-valid ng-not-empty" name="clfh">通过
 	            &nbsp;&nbsp;&nbsp;&nbsp;
@@ -53,7 +53,7 @@ String dateString = formatter.format(date);
 		<!-- ngIf: rootData.taskDefKey=='postget'||taskAct.activityId=='postget' -->
 		<!-- ngIf: rootData.taskDefKey=='loanOrder_postget_asun'||rootData.taskDefKey=='loanOrder_postget_bank'||taskAct.activityId=='loanOrder_postget_asun'||taskAct.activityId=='loanOrder_postget_bank' -->
 		<span  class="ng-scope">
-	    	<label class="col-sm-2 control-label">车牌号码</label>
+	    	<label class="col-sm-2 control-label">车牌号码<i class="red">*</i></label>
 			<div class="col-sm-3">
 				 <input id="cphm" name="cphm" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
 			</div>
@@ -80,21 +80,35 @@ laydate.render({
 </script>
 <script type="text/javascript">
 function erp(){
-	var form = new FormData(document.getElementById("erp_form"));
-	$.ajax({
-        url:"${pageContext.request.contextPath }/erp/erp_dygd_80.do",
-        type:"post",
-        data:form,
-        processData:false,
-        contentType:false,
-        success:function(data){
-         alert("提交成功!");
-         window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
-        },
-        error:function(e){
-         alert("错误！！");
-        }
-    });    
+	var val=$('input:radio[name="sjqr"]:checked').val();
+	var vall=$('input:radio[name="clfh"]:checked').val();
+	var ksrq = $("#ksrq").val();
+	var cphm = $("#cphm").val();
+    if(val==null){
+        alert("请选择收件确认!");
+    }else if(vall==null){
+    	alert("请选择材料复核结果!");
+    }else if(ksrq==""){
+    	alert("请选择收件日期!");
+    }else if(cphm==""){
+    	alert("请输入车牌号码!");
+    }else{
+		var form = new FormData(document.getElementById("erp_form"));
+		$.ajax({
+	        url:"${pageContext.request.contextPath }/erp/erp_dygd_80.do",
+	        type:"post",
+	        data:form,
+	        processData:false,
+	        contentType:false,
+	        success:function(data){
+	         alert("提交成功!");
+	         window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
+	        },
+	        error:function(e){
+	         alert("错误！！");
+	        }
+	    });    
+	}
 }
 
 

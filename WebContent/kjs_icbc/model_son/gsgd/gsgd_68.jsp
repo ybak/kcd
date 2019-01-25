@@ -24,14 +24,14 @@
 		<input type="hidden" name="type_id" value="${requestScope.type_id}"> 
 		<input type="hidden" name="icbc_id" value="${pd.icbc_id}"> 
 	<div class="form-group">
-		<label class="col-sm-2 control-label">客户姓名</label>
+		<label class="col-sm-2 control-label">客户姓名<span class="red">*</span></label>
 		<div class="col-sm-3">
-			<input class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text" >
+			<input name="name" id="name" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text" >
 		</div>
 		<span>
-		<label class="col-sm-2 control-label">编号</label><!--AX年份000001  -->
+		<label class="col-sm-2 control-label">编号<span class="red">*</span></label><!--AX年份000001  -->
 		<div class="col-sm-3">
-			<input class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
+			<input name="code" id="code" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
 		</div>
 		</span>
 	</div>
@@ -52,7 +52,14 @@
 </form>
 <script type="text/javascript">
 function erp_gsgdsh_68(){
-	   	var form = new FormData(document.getElementById("gsgdsh_68"));
+	var name = $("#name").val();
+	var code = $("#code").val();
+	if(name==""){
+		alert("请输入客户名字!");
+	}else if(code==""){
+		alert("请输入编号!");
+	}else{
+		var form = new FormData(document.getElementById("gsgdsh_68"));
 	   	$.ajax({
 	           url:"${pageContext.request.contextPath}/erp/erp_gsgdsh_68.do",
 	           type:"post",
@@ -67,6 +74,8 @@ function erp_gsgdsh_68(){
 	            alert("错误！！");
 	           }
 	    });  
+	}
+	   	
 }
 </script>
 </div>                                             

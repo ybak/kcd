@@ -48,7 +48,6 @@
 <script type="text/javascript">
 function erp_mqsh(){
 	var val=$('input:radio[name="mq_status"]:checked').val();
-	
     if(val==null){
         alert("请选择审核结果!");
     }else{

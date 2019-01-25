@@ -62,23 +62,23 @@
 <script type="text/javascript">
 function erp(){
 	if(document.getElementById("gsqrsk").value!=0){
-	var form = new FormData(document.getElementById("zjfp_form"));
-	$.ajax({
-        url:"${pageContext.request.contextPath }/erp/erp_rz_103.do",
-        type:"post",
-        data:form,
-        processData:false,
-        contentType:false,
-        success:function(data){
-         alert("提交成功!");
-         window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
-        },
-        error:function(e){
-         alert("错误！！");
-        }
-    });
+		var form = new FormData(document.getElementById("zjfp_form"));
+		$.ajax({
+	        url:"${pageContext.request.contextPath }/erp/erp_rz_103.do",
+	        type:"post",
+	        data:form,
+	        processData:false,
+	        contentType:false,
+	        success:function(data){
+	         alert("提交成功!");
+	         window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
+	        },
+	        error:function(e){
+	         alert("错误！！");
+	        }
+	    });
 	}else{
-		alert("请认真审核！！");
+		alert("请认真审核！！请选择公司是否确认收款!");
 	}
 }
 

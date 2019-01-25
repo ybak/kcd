@@ -18,7 +18,7 @@ public class kj_icbcServiceImpl implements kj_icbcService{
 
 	@Resource
 	private assess_fsMapper assess_fsmapper;
-	
+	            
 	//每月报单总量
 	@Override
 	public List<HashMap> SelectBill(assess_fs ass_fs){

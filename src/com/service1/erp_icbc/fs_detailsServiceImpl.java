@@ -26,4 +26,9 @@ public class fs_detailsServiceImpl implements fs_detailsService{
 		fs_detailsMapper.update(pd);
 	}
 
+	@Override
+	public PageData findbyid(PageData pd) {
+		return fs_detailsMapper.findbyid(pd);
+	}
+
 }

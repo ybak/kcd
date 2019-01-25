@@ -96,22 +96,38 @@
 </form>
 <script type="text/javascript">
 function erp(){
-
-	var form = new FormData(document.getElementById("zjfp_form"));
-	$.ajax({
-        url:"${pageContext.request.contextPath }/erp/erp_rz_102.do",
-        type:"post",
-        data:form,
-        processData:false,
-        contentType:false,
-        success:function(data){
-         alert("提交成功!");
-         window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
-        },
-        error:function(e){
-         alert("错误！！");
-        }
-    });   
+	var rz_zh1 = $("#rz_zh1").val();
+	var rz_bank = $("#rz_bank").val();
+	var rz_zh2 = $("#rz_zh2").val();
+	var rz_dzje = $("#rz_dzje").val();
+	var rz_date = $("#rz_date").val();
+	if(rz_zh1==""){
+		alert("请输入账户!");
+	}else if(rz_bank==""){
+		alert("请输入开户行!");
+	}else if(rz_zh2==""){
+		alert("请输入账号!");
+	}else if(rz_dzje==""){
+		alert("请输入垫资金额!");
+	}else if(rz_date==""){
+		alert("请输入垫资日期!");
+	}else{
+		var form = new FormData(document.getElementById("zjfp_form"));
+		$.ajax({
+	        url:"${pageContext.request.contextPath }/erp/erp_rz_102.do",
+	        type:"post",
+	        data:form,
+	        processData:false,
+	        contentType:false,
+	        success:function(data){
+	         alert("提交成功!");
+	         window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
+	        },
+	        error:function(e){
+	         alert("错误！！");
+	        }
+	    });   
+	}
 
 }
 

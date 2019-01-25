@@ -99,21 +99,38 @@ laydate.render({
 </script>
 <script type="text/javascript">
 function erp(){
-	var form = new FormData(document.getElementById("erp_form"));
-	$.ajax({
-        url:"${pageContext.request.contextPath }/erp/erp_dygd_81.do",
-        type:"post",
-        data:form,
-        processData:false,
-        contentType:false,
-        success:function(data){
-         alert("提交成功!");
-         window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
-        },
-        error:function(e){
-         alert("错误！！");
-        }
-    });    
+	var cphm = $("#cphm").val();
+	var dywcrq = $("#dywcrq").val();
+	var djzsh = $("#djzsh").val();
+	var dyblry = $("#dyblry").val();
+	var val=$('input:radio[name="cyqk"]:checked').val();
+	if(cphm==""){
+		alert("请输入车牌号码!");
+	}else if(dywcrq==""){
+		alert("请输入抵押完成日期!");
+	}else if(djzsh==""){
+		alert("请输入登记证书号!");
+	}else if(dyblry==""){
+		alert("请输入抵押办理人员!");
+	}else if(val==null){
+        alert("请选择查验情况!");
+    }else{
+		var form = new FormData(document.getElementById("erp_form"));
+		$.ajax({
+	        url:"${pageContext.request.contextPath }/erp/erp_dygd_81.do",
+	        type:"post",
+	        data:form,
+	        processData:false,
+	        contentType:false,
+	        success:function(data){
+	         alert("提交成功!");
+	         window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
+	        },
+	        error:function(e){
+	         alert("错误！！");
+	        }
+	    });    
+	}
 }
 
 

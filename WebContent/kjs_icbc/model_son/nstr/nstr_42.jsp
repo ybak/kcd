@@ -23,11 +23,11 @@
     <div class="form-group">
 		<label class="col-sm-2 control-label">关联客户</label>
 		<div class="col-sm-3">
-		    <input class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
+		    <input name="name" id="name" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
         </div>
          <label class="col-sm-2 control-label">业务编号</label>
 		<div class="col-sm-3">
-			<input class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
+			<input name="code" id="code" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
 		</div>
 	</div>
 	
@@ -52,21 +52,30 @@
 </form>
 <script type="text/javascript">
 function erp_nstrsh_42(){
-	   	var form = new FormData(document.getElementById("nstrsh_42"));
-	   	$.ajax({
-	           url:"${pageContext.request.contextPath}/erp/erp_nstrsh_42.do",
-	           type:"post",
-	           data:form,
-	           processData:false,
-	           contentType:false,
-	           success:function(data){
-	            alert("提交成功!");
-	            window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
-	           },
-	           error:function(e){
-	            alert("错误！！");
-	           }
-	    });  
+		var name = $("#name").val();
+		var code = $("#code").val();
+		if(name==""){
+			alert("请输入客户姓名!");
+		}else if(code==""){
+			alert("请输入业务编号!");
+		}else{
+			var form = new FormData(document.getElementById("nstrsh_42"));
+		   	$.ajax({
+		           url:"${pageContext.request.contextPath}/erp/erp_nstrsh_42.do",
+		           type:"post",
+		           data:form,
+		           processData:false,
+		           contentType:false,
+		           success:function(data){
+		            alert("提交成功!");
+		            window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
+		           },
+		           error:function(e){
+		            alert("错误！！");
+		           }
+		    });  
+		}
+	   	
 }
 </script>
 </div>                                             

@@ -221,16 +221,95 @@
 	  </div>
 	  <div style="margin-top:10px;">
 	      <h4 class="modal-title">电催录入栏:</h4>
-	      <textarea style="border:1px solid #ccc;margin-top:10px;height:200px" class="form-control"></textarea>		
+	      <textarea style="border:1px solid #ccc;margin-top:10px;height:150px" class="form-control"></textarea>		
 	  </div>
 	  <div style="height:50px;margin:20px 0 0 0;">
 	  	 <button type="button" class="btn btn-info search-btn" style="float:right">提交</button>
 	</div>
 
 	  <div style="">
-	      <h4 class="modal-title">电催记录栏:</h4>
-	      	<textarea style="border:1px solid #ccc; height:200px;margin-top:10px;" class="form-control"></textarea>	
+	  	<div style="display: flex;">
+	      <h4 class="modal-title" style="margin-bottom: 10px;">电催记录栏:</h4>					
+		  <div class="foot-page" style="margin: -8px 10px;">			
+				<ul class="pagination no-margin">				       
+				    <li><a href="" aria-label="Next"><span aria-hidden="true">上一页</span></a></li>				  
+					<li><a href="" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>  				
+				</ul>
+	   
+			</div>  
+		  </div>		
+	      	<!-- <textarea style="border:1px solid #ccc; height:200px;margin-top:10px;" class="form-control"></textarea> -->
+	      	<div id="main_list" class="admin-content box">
+			<!-- 数据载入中 请在搜索，筛选，载入的时候显示 放在.box里 -->
+			<div class="overlay" style="display:none;">
+				<i class="fa fa-refresh fa-spin"></i>
+			</div>
+			<!-- 数据载入中结束 -->
+			<table class="table table-bordered table-hover">
+				<tbody>	
+					<tr>
+						<th style="width:3%" class="text-center hidden-xs"><input class="check_all" type="checkbox"></th>
+						<th class="text-center hidden-xs">日期时间</th>
+						<th class="text-center">电催类型</th>
+						<th class="text-center">操作人员</th>
+						<th class="text-center">查看</th>
+					</tr>
+					<c:forEach begin="0" end="4" var="i">
+					<tr>
+						<td class="text-center hidden-xs">
+						<input name="delid"  type="checkbox">
+						</td>
+						<td class="text-center hidden-xs">
+							2019-01-24
+						</td>
+						<td class="text-center">
+							<span class="s-font-blue">
+								人工电催
+							</span>
+						</td>
+						<td class="text-center">
+							张三
+						</td>
+						<td class="text-center">
+							<p>
+								<i class="fa fa-search-plus" onclick="toggleModel()"></i>
+							</p>
+						</td>
+
+					</tr>
+					</c:forEach>
+					
+				</tbody>
+			</table>
+		</div>	
 	  </div>
- 	 	  			
+	  
+	  <script>
+	function toggleModel(){
+		$('#myModal').modal({ show: true });
+	}
+	</script>
+	<!-- 模态框 -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="addModal_nstrLabel" aria-hidden="true">
+	    <div class="modal-dialog modal-lg">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	                <h4 class="modal-title">电催记录栏</h4>
+	            </div>
+	            <div class="modal-body" style="border:1px solid #ccc;background-color:#F7F7F7;border-radius: 10px;margin:30px;">
+	             	<!-- 模态框插入内容 start -->
+	  	
+					
+				 <!-- 模态框插入内容 end -->
+				</div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
+ 	 				
 </div>
 			

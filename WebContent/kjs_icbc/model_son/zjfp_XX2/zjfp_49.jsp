@@ -106,6 +106,36 @@ laydate.render({
 </form>
 <script type="text/javascript">
 function erp(){
+	var dz_type=document.getElementById("dz_type").value;
+		if(dz_type==2){
+			var dz_date = $("#dz_date").val();
+			var dzje = $("#dzje").val();
+			if(document.getElementById("dzhb").value==0){
+				alert("请选择确认垫资伙伴!");
+			}else if(dz_date==""){
+				alert("请输入垫资日期!");
+			}else if(dzje==""){
+				alert("请输入到账金额(元)!");
+			}else{
+				erp_zjfp_49();
+			}
+		}else{
+			var hf_date = $("#hf_date").val();
+			var hfje = $("#hfje").val();
+			var dsje = $("#dsje").val();
+			if(hf_date==""){
+				alert("请输入划付日期!");
+			}else if(hfje==""){
+				alert("请输入划付金额(元)!");
+			}else if(dsje==""){
+				alert("请输入代收金额!");
+			}else{
+				erp_zjfp_49();
+			}
+		}
+}
+
+function erp_zjfp_49(){
 	var form = new FormData(document.getElementById("zjfp_form"));
 	$.ajax({
         url:"${pageContext.request.contextPath }/erp/erp_zjfp_49.do",
@@ -120,7 +150,7 @@ function erp(){
         error:function(e){
          alert("错误！！");
         }
-    });    
+    });   
 }
 
 

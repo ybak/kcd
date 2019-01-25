@@ -135,6 +135,8 @@
     </typeAliases>
 
        <mappers>
+        <!-- 车辆抵押-->
+        <mapper resource="com/mapper1/sxx/financialExcel/VehicleMortgageMapper.xml" />
         <!-- 银行贷款 -->
         <mapper resource="com/mapper1/sxx/financialExcel/FinancialExcelMapper.xml" />
         <!-- 可视化数据 -->

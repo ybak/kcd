@@ -21,23 +21,23 @@
 <form id="yhdksh_59" name="modalForm" class="form-horizontal ng-pristine ng-valid ng-scope">
 	<input type="hidden" name="adminid" value="${sessionScope.pd.id}">
 	<input type="hidden" name="type_id" value="${requestScope.type_id}"> 
-	<input type="hidden" name="icbc_id" value="${pd.icbc_id}"> 
+	<input type="hidden" name="icbc_id" value="${requestScope.icbc_id}"> 
 	<div class="form-group">
-		<label class="col-sm-2 control-label">收件确认</label>
+		<label class="col-sm-2 control-label">收件确认<i class="red">*</i></label>
 		<div class="col-sm-3">
 			<input type="radio" value="已收到"   class="ng-pristine ng-untouched ng-valid ng-not-empty" name="yhdksh_59_msg">已收到
 	            &nbsp;&nbsp;&nbsp;&nbsp;
 	        <input type="radio" value="未收到" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="yhdksh_59_msg">未收到
 		</div>
-		<label class="col-sm-2 control-label">收件日期</label>
+		<label class="col-sm-2 control-label">收件日期<i class="red">*</i></label>
 		<div class="col-sm-3">
 			<div class="input-group date ng-isolate-scope ng-empty ng-valid" >
-  			<input placeholder="请选择日期" id="date_59_1" name="yhdksh_59_date" class="form-control" type="text"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+  			<input  id="date_59_1" name="yhdksh_59_date" class="form-control" type="text"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 			</div>
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">材料复核结果</label>
+		<label class="col-sm-2 control-label">材料复核结果<i class="red">*</i></label>
 		<div class="col-sm-3">
 			<input type="radio" value="1"  class="ng-pristine ng-untouched ng-valid ng-not-empty" name="result_1_code">通过
 	            &nbsp;&nbsp;&nbsp;&nbsp;
@@ -45,10 +45,10 @@
 		</div>
 		<!-- ngIf: rootData.taskDefKey=='postget'||taskAct.activityId=='postget' -->
 		<span class="ng-scope">
-	    	<label class="col-sm-2 control-label">进银行日期</label>
+	    	<label class="col-sm-2 control-label">进银行日期<i class="red">*</i></label>
 			<div class="col-sm-3">
 				<div class="input-group date ng-isolate-scope ng-empty ng-valid">
-  <input placeholder="请选择日期" id="date_59_2"  name="yhdksh_59_jyhrq" class="form-control" type="text"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+  <input  id="date_59_2"  name="yhdksh_59_jyhrq" class="form-control" type="text"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 </div>
 			</div>
 		</span><!-- end ngIf: rootData.taskDefKey=='postget'||taskAct.activityId=='postget' -->
@@ -86,8 +86,14 @@ laydate.render({
 function erp_yhdksh_59(){
 	var val=$('input:radio[name="yhdksh_59_msg"]:checked').val();
 	var vall=$('input:radio[name="result_1_code"]:checked').val();
+	var date_59_1 = $("#date_59_1").val();
+	var date_59_2 = $("#date_59_2").val();
     if(val==null){
         alert("请选择收件结果!");
+    }else if(date_59_1==""){
+    	alert("请选择收件日期!");
+    }else if(date_59_2==""){
+    	alert("请选择进银行日期!");
     }else if(vall==null){
     	alert("请选择材料复核结果!");
     }else{

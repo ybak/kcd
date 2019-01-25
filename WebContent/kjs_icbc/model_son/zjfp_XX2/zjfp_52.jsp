@@ -44,9 +44,9 @@
 		<label class="col-sm-2 control-label">确认垫资申请</label>
 		<div class="col-sm-3">
 			<select class="form-control" id="dz_type" name="dz_type">
-			<option value="0">--请选择--</option>
-			<option value="1" ${requestScope.pd.dz_type eq '1'?"selected='selected'":'' }>不垫资</option>
-			<option value="2" ${requestScope.pd.dz_type eq '2'?"selected='selected'":'' }>提车垫资</option>
+				<option value="0">--请选择--</option>
+				<option value="1" ${requestScope.pd.dz_type eq '1'?"selected='selected'":'' }>不垫资</option>
+				<option value="2" ${requestScope.pd.dz_type eq '2'?"selected='selected'":'' }>提车垫资</option>
 			</select>
 		</div>
 	</div><!-- end ngIf: notUseButton && (rootData.taskDefKey=='loanOrder_leadercheck_pay'||taskAct.activityId=='loanOrder_leadercheck_pay') -->
@@ -54,11 +54,11 @@
 	<div class="form-group ng-scope">
 		<label class="col-sm-2 control-label">需垫资金额(元)<i class="red">*</i></label>
 		<div class="col-sm-3">
-			<input id="xdzje" name="xdzje"  value="${requestScope.xdzje }" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="text">
+			<input id="xdzje" name="xdzje"  value="${requestScope.xdzje}" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="text">
 		</div>
 				<label class="col-sm-2 control-label">融资服务费</label>
 		<div class="col-sm-3">
-			<input id="rzfwf" name="rzfwf"  value="${requestScope.rzfwf }" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
+			<input id="rzfwf" name="rzfwf"  value="${requestScope.rzfwf}" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
 		</div>
 	</div>
 					<div class="form-group">

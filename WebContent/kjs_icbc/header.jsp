@@ -8,20 +8,22 @@
 		<header class="main-header" > <!-- Logo -->
 		 <a href="" class="logo" style="background-color:#12122b;"> <!-- mini logo for sidebar mini 50x50 pixels -->
 				<span class="logo-mini">
-					<img src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/images/logo.png" class="logoimg" width="20" height="20">
+					<c:if test="${empty sessionScope.pd.fs_oemimgurl }"><img src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/images/logo.png" class="logoimg" width="20" height="20">
+				    </c:if>
+				    <c:if test="${!empty sessionScope.pd.fs_oemimgurl }"><img src="http://a.kcway.net/${sessionScope.pd.fs_oemimgurl }" class="logoimg" width="20" height="20">
+				    </c:if>
 				</span> <!-- logo for regular state and mobile devices -->
 				<span class="logo-lg">
 				<c:if test="${empty sessionScope.pd.fs_oemimgurl }"><img src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/images/logo.png" class="logoimg hidden-xs" width="20" height="20"></c:if>
 				<c:if test="${!empty sessionScope.pd.fs_oemimgurl }"><img src="http://a.kcway.net/${sessionScope.pd.fs_oemimgurl }" class="logoimg hidden-xs" width="20" height="20"></c:if>
 					<span class="logotxt">
 						<b>
-						<c:if test="${empty sessionScope.pd.xt_name }">
-						快金所管理
-						</c:if>
-						<c:if test="${!empty sessionScope.pd.xt_name }">
-						${sessionScope.pd.xt_name }
-						</c:if>
-						
+						<c:if test="${empty sessionScope.pd.fs_xt_name}">
+						  快金所系统
+					    </c:if>	
+					    <c:if test="${!empty sessionScope.pd.fs_xt_name}">
+						 ${sessionScope.pd.fs_xt_name}
+					    </c:if>	
 						</b>
 					</span>
 				</span>

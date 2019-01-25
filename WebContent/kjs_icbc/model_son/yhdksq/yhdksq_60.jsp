@@ -22,7 +22,7 @@
 <form id="yhdksh_60" name="modalForm" class="form-horizontal ng-pristine ng-valid ng-scope" cg-disabled="detail">
 	<input type="hidden" name="adminid" value="${sessionScope.pd.id}">
 	<input type="hidden" name="type_id" value="${requestScope.type_id}"> 
-	<input type="hidden" name="icbc_id" value="${pd.icbc_id}"> 
+	<input type="hidden" name="icbc_id" value="${requestScope.icbc_id}"> 
 	<div class="form-group">		
 		<label class="col-sm-2 control-label">审批结果</label>
 		<div class="col-sm-8">

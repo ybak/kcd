@@ -8,6 +8,7 @@ public interface fs_detailsMapper {
     void save(PageData pd);
     //更新
     void update(PageData pd);
-    
+    //单个查询
+    PageData findbyid(PageData pd);
   
 }

@@ -1,3 +1,4 @@
+
 package com.controller.erp_icbc;
 
 import java.io.File;
@@ -3176,7 +3177,7 @@ public class erp_fifteenUpController {
 	  @RequestMapping(value="erp/erp_yhdksh_62.do",method=RequestMethod.POST,produces="text/html;charset=UTF-8") 
 	  public void erp_yhdksh_62(
 			  int adminid,
-			  int result_1_code,
+			  int result_1_code2,
 			  String yhdksh_62_fkrq,
 			  String yhdksh_62_fkje,
 			  String yhdksh_62_sqrq,
@@ -3217,7 +3218,7 @@ public class erp_fifteenUpController {
 				json.put("62_sqrq",yhdksh_62_sqrq); 
 				pResult.put("result_1_value",json.toString());
 				pResult.put("result_1_msg",result_1_msg);
-				pResult.put("result_1_code",result_1_code);
+				pResult.put("result_1_code",result_1_code2);
 				pResult.put("dt_sub",creditutil.time());
 				pResult.put("type_id",type_id);   // 银行申请贷款  对应 11
 				pResult.put("icbc_id",icbc_id);
@@ -3272,7 +3273,7 @@ public class erp_fifteenUpController {
 				pdd_status.put("status",47); // 资金分配开始 -小状态
 				List<PageData> pErpIcbc_47 = new ArrayList<>();
 				pErpIcbc_47 = erp_fiveModelService.findtolist(pdd_status);
-			if(result_1_code==1){
+			if(result_1_code2==1){
 				if(pErpIcbc_47.size()>0){
 					//pErpIcbc_66.size()>0  说明有  公司归档开始 -小状态 小状态啦
 					//则不必再添加
@@ -3309,7 +3310,7 @@ public class erp_fifteenUpController {
 				pResult_gsgd.put("status",47);
 				pResult_gsgd.put("status_oldht",0);
 				pResult_gsgd.put("remark","资金分配开始");
-				pResult_gsgd.put("result_1_code",result_1_code);
+				pResult_gsgd.put("result_1_code",result_1_code2);
 				pResult_gsgd.put("dt_sub",creditutil.time());
 				pResult_gsgd.put("type_id",10);   // 资金分配   对应 10
 				pResult_gsgd.put("icbc_id",icbc_id);
@@ -3318,7 +3319,7 @@ public class erp_fifteenUpController {
 			}
 			//当确认 为 "通过"时
 			//icbc表更新记录  和 result 表存一条完成记录
-			if(result_1_code==1){
+			if(result_1_code2==1){
 				//更新icbc_erp_kj_icbc表中，status的最新装填
 				PageData upd=new PageData();
 				upd.put("dn","update_icbc_erp_kj_icbc");
@@ -3346,11 +3347,11 @@ public class erp_fifteenUpController {
 			}
 			// 推送
 			String result_1_code_String = "状态";
-			if(result_1_code == 1){
+			if(result_1_code2 == 1){
 				result_1_code_String = "到账确认，本单已完整";
-			}else if(result_1_code == 2){
+			}else if(result_1_code2 == 2){
 				result_1_code_String = "未收到款项";
-			}else if(result_1_code == 3){
+			}else if(result_1_code2 == 3){
 				result_1_code_String = "收款金额不符";
 			}
 			Map map=erp_fifteenModel.fifteenModel();
@@ -3386,7 +3387,7 @@ public class erp_fifteenUpController {
 	  @RequestMapping(value="erp/erp_yhdksh_61.do",method=RequestMethod.POST,produces="text/html;charset=UTF-8") 
 	  public void erp_yhdksh_61(
 			  int adminid,
-			  int result_1_code,
+			  int result_1_code1,
 			  String yhdksh_61_date,
 			  String yhdksh_61_kh,
 			  String yhdksh_61_zh,
@@ -3434,7 +3435,7 @@ public class erp_fifteenUpController {
 				json.put("61_fq",yhdksh_61_fq); 
 				pResult.put("result_1_value",json.toString());
 				pResult.put("result_1_msg",result_1_msg);
-				pResult.put("result_1_code",result_1_code);
+				pResult.put("result_1_code",result_1_code1);
 				pResult.put("dt_sub",creditutil.time());
 				pResult.put("type_id",type_id);   // 银行申请贷款  对应 11
 				pResult.put("icbc_id",icbc_id);
@@ -3481,9 +3482,9 @@ public class erp_fifteenUpController {
 			}
 			// 推送
 			String result_1_code_String = "状态";
-			if(result_1_code == 1){
+			if(result_1_code1 == 1){
 				result_1_code_String = "成功";
-			}else if(result_1_code == 2){
+			}else if(result_1_code1 == 2){
 				result_1_code_String = "失败";
 			}
 			Map map=erp_fifteenModel.fifteenModel();
@@ -4706,4 +4707,3 @@ public class erp_fifteenUpController {
 }
 
 	 
-

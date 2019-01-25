@@ -22,9 +22,9 @@ public class upfileController {
 	    /**
 	     * 上传文件
 	     */
-	    @RequestMapping("erp/file_up")
+	    @RequestMapping("erp/file_up_util.do")
 	    @ResponseBody
-	    public String file_up(@RequestParam(value="file",required=false) MultipartFile file, HttpServletRequest request){
+	    public String file_up_util(@RequestParam("file")MultipartFile file,HttpServletRequest request){
 	        String fileName ="";
 	        String filrurl="";
 	        Date date = new Date();
@@ -35,7 +35,7 @@ public class upfileController {
 	                fileName= encode(fileName)+"."+getExtensionName(fileName);
 	                filePath ="/KCDIMG/assess/upload/"+new SimpleDateFormat("yyyy/MM/dd/").format(date);
 	                uploadFile(file.getBytes(), filePath, fileName);
-	                filrurl="upload/img/"+new SimpleDateFormat("yyyy/MM/dd/").format(date)+fileName;
+	                filrurl="upload/"+new SimpleDateFormat("yyyy/MM/dd/").format(date)+fileName;
 	                System.out.println("存放路径："+filePath+fileName);
 	                System.out.println("数据库路径："+filrurl);
 	            } catch (Exception e) {

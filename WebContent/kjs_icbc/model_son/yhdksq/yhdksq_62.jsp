@@ -22,7 +22,7 @@
 <form id="yhdksh_62" name="modalForm" class="form-horizontal ng-pristine ng-valid ng-scope ng-valid-required" >
 	<input type="hidden" name="adminid" value="${sessionScope.pd.id}">
 	<input type="hidden" name="type_id" value="${requestScope.type_id}"> 
-	<input type="hidden" name="icbc_id" value="${pd.icbc_id}"> 
+	<input type="hidden" name="icbc_id" value="${requestScope.icbc_id}"> 
 	<div id="haha" class="form-group">
 		<label class="col-sm-2 control-label">放款日期<i class="red">*</i></label>
 		<div class="col-sm-3">
@@ -71,16 +71,16 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">收款情况<span class="red">*</span></label> 
 		<div class="col-sm-8">
-			<input name="result_1_code" type="radio" value="1" class="ng-pristine ng-untouched ng-valid ng-not-empty"  >到账确认，本单已完整  &nbsp;&nbsp;&nbsp;&nbsp;
-	        <input name="result_1_code" type="radio" value="3" class="ng-pristine ng-untouched ng-valid ng-not-empty"  >收款金额不符&nbsp;&nbsp;&nbsp;&nbsp;
-	        <input name="result_1_code" type="radio" value="2" class="ng-pristine ng-untouched ng-valid ng-not-empty"  >未收到款项
+			<input name="result_1_code2" type="radio" value="1" class="ng-pristine ng-untouched ng-valid ng-not-empty"  >到账确认，本单已完整  &nbsp;&nbsp;&nbsp;&nbsp;
+	        <input name="result_1_code2" type="radio" value="3" class="ng-pristine ng-untouched ng-valid ng-not-empty"  >收款金额不符&nbsp;&nbsp;&nbsp;&nbsp;
+	        <input name="result_1_code2" type="radio" value="2" class="ng-pristine ng-untouched ng-valid ng-not-empty"  >未收到款项
         </div>
     </div>
     <div class="form-group">
 		<label class="col-sm-2 control-label">收款日期<i class="red">*</i></label>
 		 <div class="col-sm-3">
 			<div class="input-group date ng-isolate-scope ng-not-empty ng-valid ng-valid-required" >
-  <input placeholder="请选择日期" id="date_62_2" name="yhdksh_62_sqrq" class="form-control" type="text" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+  <input id="date_62_2" name="yhdksh_62_sqrq" class="form-control" type="text" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 </div>
 		</div>  
 		<!-- ngIf: task.creditsMoney -->
@@ -115,9 +115,12 @@ laydate.render({
 
 <script type="text/javascript">
 function erp_yhdksh_62(){
-	var val=$('input:radio[name="result_1_code"]:checked').val();
+	var val=$('input:radio[name="result_1_code2"]:checked').val();
+	var date_62_2 = $("#date_62_2").val();
     if(val==null){
         alert("请选择收款情况!");
+    }else if(date_62_2==""){
+    	alert("请选择收款日期!");
     }else{
 	   	var form = new FormData(document.getElementById("yhdksh_62"));
 	   	$.ajax({

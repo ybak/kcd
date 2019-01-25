@@ -27,17 +27,17 @@
 		<label class="col-sm-2 control-label">材料审核<span class="red">*</span></label>
 		<div class="col-sm-3">
 			<input type="radio" value="1" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="result_1_code">通过  &nbsp;&nbsp;&nbsp;&nbsp;
-	        <input type="radio" value="2"class="ng-pristine ng-untouched ng-valid ng-not-empty" name="result_1_code">不通过
+	        <input type="radio" value="2" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="result_1_code">不通过
 		</div>	
 	</div><!-- end ngIf: notUseButton -->
 	<div class="form-group">
 		<label class="col-sm-2 control-label">客户姓名</label>
 		<div class="col-sm-3">
-			<input class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
+			<input name="name" id="name" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
 		</div>
 		<label class="col-sm-2 control-label">编号</label><!--AX年份000001  -->
 		<div class="col-sm-3">
-			<input class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
+			<input name="code" id="code" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
 		</div>
 	</div>
 	<div class="form-group">
@@ -56,10 +56,16 @@
 <script type="text/javascript">
 function erp_gsgdsh_70(){
 	var val=$('input:radio[name="result_1_code"]:checked').val();
+	var name = $("#name").val();
+	var code = $("#code").val();
     if(val==null){
         alert("请选择材料审核结果!");
         return false;
-    }else{
+    }else if(name==""){
+		alert("请输入客户名字!");
+	}else if(code==""){
+		alert("请输入编号!");
+	}else{
 	   	var form = new FormData(document.getElementById("gsgdsh_70"));
 	   	$.ajax({
 	           url:"${pageContext.request.contextPath}/erp/erp_gsgdsh_70.do",

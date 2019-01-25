@@ -281,7 +281,7 @@ where ki.id=#{id}
      
 <!-- 查询icbc_erp_kj_icbc索引表中是否有数据。如果有，得到id主键值，作为 icbc_erp_kj_icbc_result 表qryid的值-->
 <if test="dn=='selectOne_icbc_erp_kj_icbc'">
-   select * from icbc_erp_kj_icbc where icbc_id=#{icbc_id} and type_id=#{type_id}
+   select * from icbc_erp_kj_icbc where icbc_id=#{icbc_id} and type_id=#{type_id} GROUP BY icbc_id
 </if>   
 <!-- 查询有无某个板块某个状态 start-->
 <if test="dn=='selectOneStatus_icbc_erp_kj_icbc_result'">

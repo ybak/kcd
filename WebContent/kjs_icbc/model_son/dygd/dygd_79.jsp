@@ -30,14 +30,14 @@ String dateString = formatter.format(date);
 	<input id="dz_type" name="dz_type" value="${pd.dz_type}" type="hidden"    />	
 	
 	<div class="form-group">
-		<label class="col-sm-2 control-label">快递公司</label>
+		<label class="col-sm-2 control-label">快递公司<i class="red">*</i></label>
 		<div class="col-sm-3">
 			<input id="kdgs" name="kdgs" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
 		</div>
 		<!-- ngIf: rootData.taskDefKey == 'loanOrder_postinfo_send'||($parent.taskAct.activityId=='loanOrder_postinfo_send'&&notUseButton) -->
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">快递单号</label>
+		<label class="col-sm-2 control-label">快递单号<i class="red">*</i></label>
 		<div class="col-sm-3">
 			<input id="kddh" name="kddh" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
 		</div>
@@ -69,21 +69,32 @@ laydate.render({
 </script>
 <script type="text/javascript">
 function erp(){
-	var form = new FormData(document.getElementById("erp_form"));
-	$.ajax({
-        url:"${pageContext.request.contextPath }/erp/erp_dygd_79.do",
-        type:"post",
-        data:form,
-        processData:false,
-        contentType:false,
-        success:function(data){
-         alert("提交成功!");
-         window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
-        },
-        error:function(e){
-         alert("错误！！");
-        }
-    });    
+	var kdgs = $("#kdgs").val();
+	var kddh = $("#kddh").val();
+	var jcrq = $("#jcrq").val();
+	if(kdgs==""){
+		alert("请输入快递公司!");
+	}else if(kddh==""){
+		alert("请输入快递单号!");
+	}else if(jcrq==""){
+		alert("请输入寄出日期!");
+	}else{
+		var form = new FormData(document.getElementById("erp_form"));
+		$.ajax({
+	        url:"${pageContext.request.contextPath }/erp/erp_dygd_79.do",
+	        type:"post",
+	        data:form,
+	        processData:false,
+	        contentType:false,
+	        success:function(data){
+	         alert("提交成功!");
+	         window.location.href='${pageContext.request.contextPath}/erp/wdrw_list.do?type=wdrw&dn=${requestScope.dn }&qn=list&cn=${requestScope.cn }';
+	        },
+	        error:function(e){
+	         alert("错误！！");
+	        }
+	    });    
+	}
 }
 
 

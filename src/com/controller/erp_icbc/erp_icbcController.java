@@ -592,11 +592,15 @@ public class erp_icbcController {
                 fileName = fileimg.getOriginalFilename();
                 fileName= md5util.encode(fileName)+"."+md5util.getExtensionName(fileName);
                 filePath ="/KCDIMG/assess/upload/"+new SimpleDateFormat("yyyy/MM/dd/").format(date);
+                if(fileimg.getSize()>0){
                 md5util.uploadFile(fileimg.getBytes(), filePath, fileName);
-                filrurl="assess/upload/img/"+new SimpleDateFormat("yyyy/MM/dd/").format(date)+fileName;
+                filrurl="assess/upload/"+new SimpleDateFormat("yyyy/MM/dd/").format(date)+fileName;
                 System.out.println("存放路径："+filePath+fileName);
                 System.out.println("数据库路径："+filrurl);
                 pagedate.put("oemimgurl",filrurl);
+                }else{
+                	pagedate.put("oemimgurl","");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -807,11 +811,16 @@ public class erp_icbcController {
                 fileName = fileimg.getOriginalFilename();
                 fileName= md5util.encode(fileName)+"."+md5util.getExtensionName(fileName);
                 filePath ="/KCDIMG/assess/upload/"+new SimpleDateFormat("yyyy/MM/dd/").format(date);
-                md5util.uploadFile(fileimg.getBytes(), filePath, fileName);
-                filrurl="assess/upload/img/"+new SimpleDateFormat("yyyy/MM/dd/").format(date)+fileName;
-                System.out.println("存放路径："+filePath+fileName);
-                System.out.println("数据库路径："+filrurl);
-                pagedate.put("oemimgurl",filrurl);
+                System.out.println("图片大小："+fileimg.getSize());
+                if(fileimg.getSize()>0){
+                	  md5util.uploadFile(fileimg.getBytes(), filePath, fileName);
+                      filrurl="assess/upload/"+new SimpleDateFormat("yyyy/MM/dd/").format(date)+fileName;
+                      System.out.println("存放路径："+filePath+fileName);
+                      System.out.println("数据库路径："+filrurl);
+                      pagedate.put("oemimgurl",filrurl);
+                }else{
+                	pagedate.put("oemimgurl","");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -963,9 +972,20 @@ public class erp_icbcController {
 		fs_details.put("jcbzxth",paramemap.get("jcbzxth"));
 		fs_details.put("jcbzjth_price",paramemap.get("jcbzjth_price"));
 		fs_details.put("jcbzjth_date",paramemap.get("jcbzjth_date"));
-		fs_details.put("id",paramemap.get("fs_details_id"));
-		fs_detailsService.update(fs_details);
-		
+		PageData pd_fd=new PageData();
+		pd_fd.put("fs_id",paramemap.get("fs_details_id"));
+		pd_fd.put("dn", "assess_fs_details");
+		PageData pd_fds=fs_detailsService.findbyid(pd_fd);
+		System.out.println("验证是否有数据："+pd_fds);
+		if(pd_fds!=null&&!pd_fds.equals("")){
+			fs_details.put("id",paramemap.get("fs_details_id"));
+			fs_detailsService.update(fs_details);
+		}else{
+			fs_details.put("mid_add",pData.get("id"));
+			fs_details.put("dt_add",new Date());
+			fs_details.put("fs_id",paramemap.get("id"));
+			fs_detailsService.save(fs_details);
+		}
 		request.setAttribute("mid_add",paramemap.get("userid"));
 		request.setAttribute("dn",paramemap.get("dn"));
 		request.setAttribute("qn",paramemap.get("qn"));

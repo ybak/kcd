@@ -21,25 +21,25 @@
 <form id="yhdksh_58" name="modalForm" class="form-horizontal ng-pristine ng-valid ng-scope">
 		<input type="hidden" name="adminid" value="${sessionScope.pd.id}">
 		<input type="hidden" name="type_id" value="${requestScope.type_id}"> 
-		<input type="hidden" name="icbc_id" value="${pd.icbc_id}"> 
+		<input type="hidden" name="icbc_id" value="${requestScope.icbc_id}"> 
 	<div class="form-group">
-		<label class="col-sm-2 control-label">收件确认</label>
+		<label class="col-sm-2 control-label">收件确认<i class="red">*</i></label>
 		<div class="col-sm-3">
 			<input type="radio" value="已收到"  class="ng-pristine ng-untouched ng-valid ng-not-empty" name="yhdksh_58_msg">已收到
 	            &nbsp;&nbsp;&nbsp;&nbsp;
 	        <input type="radio" value="未收到"  class="ng-pristine ng-untouched ng-valid ng-not-empty" name="yhdksh_58_msg">未收到
 		</div>
-		<label class="col-sm-1 control-label">收件日期</label>
+		<label class="col-sm-1 control-label">收件日期<i class="red">*</i></label>
 		<div class="col-sm-3">
         <div class="input-group date ng-isolate-scope ng-empty ng-valid">
-        <input placeholder="请选择日期" id="date_58" name="yhdksh_58_date"  class="form-control selectData" type="text">
+        <input id="date_58" name="yhdksh_58_date"  class="form-control selectData" type="text">
         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
         </div>
 		</div>
 	</div>	
 	
 	<div class="form-group">
-		<label class="col-sm-2 control-label">材料复核结果</label>
+		<label class="col-sm-2 control-label">材料复核结果<i class="red">*</i></label>
 		<div class="col-sm-3">
 			<input type="radio" value="1"  class="ng-pristine ng-untouched ng-valid ng-not-empty" name="result_1_code" >通过
 	            &nbsp;&nbsp;&nbsp;&nbsp;
@@ -70,10 +70,13 @@ laydate.render({
 function erp_yhdksh_58(){
 	var val=$('input:radio[name="yhdksh_58_msg"]:checked').val();
 	var vall=$('input:radio[name="result_1_code"]:checked').val();
+	var date_58 = $("#date_58").val();
     if(val==null){
         alert("请选择收件结果!");
     }else if(vall==null){
     	alert("请选择材料复核结果!");
+    }else if(date_58==""){
+    	alert("请选择收件日期!");
     }else{
 	    var form = new FormData(document.getElementById("yhdksh_58"));
 	   	$.ajax({

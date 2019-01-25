@@ -2,7 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mapper1.erp_icbc.fs_detailsMapper">
+<!--单个查询 -->
+<select id="findbyid" parameterType="pd" resultType="pd">
 
+<if test="dn=='assess_fs_details'">
+select * from assess_fs_details where fs_id=#{fs_id}
+</if>
+
+</select>
+<!--新增操作-->
 <insert id="save" parameterType="pd" useGeneratedKeys="true" keyProperty="id">
    <if test="dn=='assess_fs_details'">
    insert into assess_fs_details

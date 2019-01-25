@@ -22,13 +22,13 @@
 <form id="yhdksh_61" name="modalForm" class="form-horizontal ng-pristine ng-valid ng-scope ng-valid-required">
 	<input type="hidden" name="adminid" value="${sessionScope.pd.id}">
 	<input type="hidden" name="type_id" value="${requestScope.type_id}"> 
-	<input type="hidden" name="icbc_id" value="${pd.icbc_id}"> 
+	<input type="hidden" name="icbc_id" value="${requestScope.icbc_id}"> 
 	<div class="form-group">		
 		<label class="col-sm-2 control-label">放款结果</label>
 		<div class="col-sm-8">
-			<input name="result_1_code" type="radio" value="1"  class="ng-pristine ng-untouched ng-valid ng-not-empty">成功  
+			<input type="radio" value="1" name="result_1_code1"  class="ng-pristine ng-untouched ng-valid ng-not-empty">成功  
 				&nbsp;&nbsp;&nbsp;&nbsp;
-	        <input name="result_1_code" type="radio" value="2"  class="ng-pristine ng-untouched ng-valid ng-not-empty">失败
+	        <input type="radio" value="2" name="result_1_code1"  class="ng-pristine ng-untouched ng-valid ng-not-empty">失败
        	</div>
 	</div>
 	<!-- ngIf: task.auditRet==null ||task.auditRet == 1 --><div class="ng-scope">
@@ -36,24 +36,23 @@
 			<label class="col-sm-2 control-label">放款日期<i class="red">*</i></label>
 			 <div class="col-sm-3">
 				<div class="input-group date ng-isolate-scope ng-not-empty ng-valid ng-valid-required">
-  <input placeholder="请选择日期" id="date_61_1" name="yhdksh_61_date" class="form-control" type="text"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+  <input id="date_61_1" name="yhdksh_61_date" class="form-control" type="text"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 </div>
 			</div>   
 			<label class="col-sm-2 control-label">卡号<i class="red">*</i></label>
 			<div class="col-sm-3">
-				<input name="yhdksh_61_kh" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="text" >
+				<input id="yhdksh_61_kh" name="yhdksh_61_kh" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="text" >
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">支行<i class="red">*</i></label>
 			<div class="col-sm-3">
-				<input name="yhdksh_61_zh" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="text"  >
+				<input id="yhdksh_61_zh" name="yhdksh_61_zh" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="text"  >
 			</div>
-	
-			<label class="col-sm-2 control-label">金额<i class="red">*</i></label>
+			<label class="col-sm-2 control-label">分期数<i class="red">*</i></label>
 			<div class="col-sm-3">
 				<div class="input-group date ng-isolate-scope ng-not-empty ng-valid ng-valid-required" >
-					<input onkeyup="show_two(this.value)" name="yhdksh_61_je" id="yhdksh_61_je" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="text" ><span class="input-group-addon">元</span>
+					<input name="yhdksh_61_fq" id="yhdksh_61_fq" value="${pd.aj_date}" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text"  ><span class="input-group-addon">期</span>
 				</div>
 			</div>
 		</div>
@@ -61,14 +60,13 @@
 			<label class="col-sm-2 control-label">首期还款日期</label>
 			<div class="col-sm-3">
 				<div class="input-group date ng-isolate-scope ng-not-empty ng-valid" >
-  <input placeholder="请选择日期" id="date_61_2" name="yhdksh_61_sqhkr" class="form-control" type="text"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+  <input id="date_61_2" name="yhdksh_61_sqhkr" class="form-control" type="text"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 </div>
 			</div>
-	
-			<label class="col-sm-2 control-label" title="月还=金额/分期数(四入五入)">月还</label>
+			<label class="col-sm-2 control-label">金额<i class="red">*</i></label>
 			<div class="col-sm-3">
 				<div class="input-group date ng-isolate-scope ng-not-empty ng-valid ng-valid-required" >
-					<input name="yhdksh_61_yh" id="yhdksh_61_yh" placeholder="填写金额后自动填充" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text"  ><span class="input-group-addon">元</span>
+					<input onkeyup="show_two(this.value)" name="yhdksh_61_je" id="yhdksh_61_je" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="text" ><span class="input-group-addon">元</span>
 				</div>
 			</div>
 		</div>
@@ -80,12 +78,13 @@
 					<input name="yhdksh_61_syhk" id="yhdksh_61_syhk" placeholder="填写金额后自动填充" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text"  ><span class="input-group-addon">元</span>
 				</div>
 			</div>
-			<label class="col-sm-2 control-label">分期数</label>
+			<label class="col-sm-2 control-label" title="月还=金额/分期数(四入五入)">月还</label>
 			<div class="col-sm-3">
 				<div class="input-group date ng-isolate-scope ng-not-empty ng-valid ng-valid-required" >
-					<input name="yhdksh_61_fq" id="yhdksh_61_fq" value="${pd.aj_date}" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text"  ><span class="input-group-addon">期</span>
+					<input name="yhdksh_61_yh" id="yhdksh_61_yh" placeholder="填写金额后自动填充" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text"  ><span class="input-group-addon">元</span>
 				</div>
 			</div>
+			
 		</div>
 		<!-- ngIf: task.creditsMoney -->
 <!-- 		<div class="form-group">		 -->
@@ -138,22 +137,30 @@ function show_two(je){
     alert(str); */
 	//分期数  开卡时候
 	var fqs = document.getElementById("yhdksh_61_fq").value;
-	//计算月还  
-	var yhdksh_61_yh = 0; // 月还
-	var get_yh = je/fqs; 
-	var yh_two = get_yh.toFixed(2);
-	var yh_four = get_yh.toFixed(4);
-	var yh_four_getThree = yh_four.indexOf('.');
-	var getStrThree = yh_four.substr(yh_four_getThree+3,1);
-	if(getStrThree>0 && getStrThree<5){
-		//document.getElementById("yhdksh_61_yh").value=Number(yh_two)+Number(0.01)+"--月还(je/fqs)--"+get_yh;
-		yhdksh_61_yh = Number(yh_two)+Number(0.01);
-	}else{
-		//document.getElementById("yhdksh_61_yh").value=Number(yh_two)+"-没有加0.01-月还(je/fqs)--"+get_yh;
-		yhdksh_61_yh = Number(yh_two);
-	}
-	document.getElementById("yhdksh_61_yh").value= yhdksh_61_yh;
-    
+    if(fqs==""){
+    	alert("请先输入分期数,然后再输入金额!");
+    }else{
+    	//计算月还  
+    	var yhdksh_61_yh = 0; // 月还
+    	var get_yh = je/fqs; 
+    	var yh_two = get_yh.toFixed(2);
+    	var yh_four = get_yh.toFixed(4);
+    	var yh_four_getThree = yh_four.indexOf('.');
+    	var getStrThree = yh_four.substr(yh_four_getThree+3,1);
+    	if(getStrThree>0 && getStrThree<5){
+    		//document.getElementById("yhdksh_61_yh").value=Number(yh_two)+Number(0.01)+"--月还(je/fqs)--"+get_yh;
+    		yhdksh_61_yh = Number(yh_two)+Number(0.01);
+    	}else{
+    		//document.getElementById("yhdksh_61_yh").value=Number(yh_two)+"-没有加0.01-月还(je/fqs)--"+get_yh;
+    		yhdksh_61_yh = Number(yh_two);
+    	}
+    	document.getElementById("yhdksh_61_yh").value= yhdksh_61_yh;
+    	//计算首月还款  yhdksh_61_syhk = 月还+100
+        var max_yh = $("#yhdksh_61_yh").val(); // 月还
+        var yhdksh_61_syhk = Number(max_yh)+Number(100);  // 首月还款
+    	document.getElementById("yhdksh_61_syhk").value=yhdksh_61_syhk;
+    }
+	
 	/* 
 	//计算首月还款  yhdksh_61_syhk = 月还整数+100+月还小数点后两位*期数
     var max_yh = $("#yhdksh_61_yh").val(); // 月还
@@ -164,15 +171,27 @@ function show_two(je){
 	var yhdksh_61_syhk = Number(zs)+Number(100)+Number(xs);  // 首月还款
     //document.getElementById("yhdksh_61_syhk").value=yhdksh_61_syhk+"--整数:"+zs+"--小数:"+xs; 
 	*/
-	//计算首月还款  yhdksh_61_syhk = 月还+100
-    var max_yh = $("#yhdksh_61_yh").val(); // 月还
-    var yhdksh_61_syhk = Number(max_yh)+Number(100);  // 首月还款
-	document.getElementById("yhdksh_61_syhk").value=yhdksh_61_syhk;
+	
 }
 
 function erp_yhdksh_61(){
-	var val=$('input:radio[name="result_1_code"]:checked').val();
-    if(val==null){
+	var val=$('input:radio[name="result_1_code1"]:checked').val();
+	var yhdksh_61_kh=$("#yhdksh_61_kh").val();
+	var yhdksh_61_zh=$("#yhdksh_61_zh").val();
+	var yhdksh_61_je=$("#yhdksh_61_je").val();
+	var date_61_1 = $("#date_61_1").val();
+	var date_61_2 = $("#date_61_2").val();
+	if(yhdksh_61_kh==""){
+		alert("请填写卡号!");
+	}else if(date_61_1==""){
+		alert("请选择放款日期!");首期还款日期
+	}else if(date_61_2==""){
+		alert("请选择首期还款日期!");
+	}else if(yhdksh_61_zh==""){
+		alert("请填写支行!");
+	}else if(yhdksh_61_je==""){
+		alert("请填写金额!");
+	}else if(val==null){
         alert("请选择放款结果!");
     }else{
 	   	var form = new FormData(document.getElementById("yhdksh_61"));
@@ -189,7 +208,7 @@ function erp_yhdksh_61(){
 	           error:function(e){
 	            alert("错误！！");
 	           }
-	     });   
+	     });  
     }
 }
 </script>
