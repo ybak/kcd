@@ -973,7 +973,7 @@ public class erp_icbcController {
 		fs_details.put("jcbzjth_price",paramemap.get("jcbzjth_price"));
 		fs_details.put("jcbzjth_date",paramemap.get("jcbzjth_date"));
 		PageData pd_fd=new PageData();
-		pd_fd.put("fs_id",paramemap.get("fs_details_id"));
+		pd_fd.put("id",paramemap.get("fs_details_id"));
 		pd_fd.put("dn", "assess_fs_details");
 		PageData pd_fds=fs_detailsService.findbyid(pd_fd);
 		System.out.println("验证是否有数据："+pd_fds);

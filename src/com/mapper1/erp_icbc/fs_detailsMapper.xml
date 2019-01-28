@@ -6,7 +6,7 @@
 <select id="findbyid" parameterType="pd" resultType="pd">
 
 <if test="dn=='assess_fs_details'">
-select * from assess_fs_details where fs_id=#{fs_id}
+select * from assess_fs_details where id=#{id}
 </if>
 
 </select>
