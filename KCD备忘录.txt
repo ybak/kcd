@@ -1,0 +1,155 @@
+快金所数据库地址：                                                                                                                                                               
+http://125.77.23.30/sna/index.php
+            
+登陆帐号密码：
+kcway   NDXppG2qUNB6pXcA
+
+曹兴国:420
+三刀流:597
+杨章伟:706
+
+
+  
+
+快加宝墨刀地址
+https://pro.modao.cc/app/e7T6hGcBFlCyfHPmikjYWEHi54wfRwv
+
+//视频面前
+demo.do?type=hk&dn=yxVideo&qn=form
+快金锁线上地址
+http://apitest.kcway.net/kjs_icbc/login.jsp
+登陆
+kjy@888888  888888
+4000272776  272776
+
+快管车墨刀地址
+https://pro.modao.cc/app/k3sRUwAzAEne05t9kz0EXi98iWM2j0Z?via=qrcode#screen=sDB4E32E1BE1542267234331
+
+快加宝数据库
+
+http://125.77.23.30/sna/index.php
+
+DB: kjbdb
+用户：kjb
+
+密码：ExxH29nVn232mDMs
+
+
+快车道 apiTest数据库:
+http://125.77.23.30/sna/index.php
+
+userName: kcdapitest
+
+passWord: cwuEn4xutESWpPFj
+
+快加宝线上地址
+kjb.kcway.net/login.jsp
+kjb@111111  111111
+
+加我系统
+http://erp.jiawoclub.com
+
+
+AL鄢继兴 kcway2015   AL林晴  888888     Tom  123456
+
+隧道id	舍
+803db70f0606ec8a
+http://liw.free.idcfengye.com
+id:167X3zN7SR8jaSOq9I49UcL-W8-BhWn29wKBX3ju3VPByfB9-iLRWfdOx7k8IQCv
+
+新的vip:
+5c204324b9035
+http://5c204324b918e.vipbj1.tunnelnat.com => 127.0.0.1:8080
+
+norok官方登陆地址:
+https://center.tunnelnat.com/service.html
+
+隧道id 2	
+5bbeb2502dbf1
+http://5bbeb2502dd44.freetunnel.cc
+
+
+
+
+
+
+
+http://a.kcway.net/
+H5登陆页:http://a.kcway.net/assess/manager/login.php?from=app
+
+H5提交查询页:http://a.kcway.net/assess/manager/index.php?type=bclient&nav=0&do=order_new_queryzx2&query_type=0
+
+H5列表页http://a.kcway.net/assess/manager/index.php?type=bclient&nav=0&do=order_list_queryzx&bc_status=0
+
+http://a.kcway.net/assess/manager/login.php  // 快加后台
+http://apitest.kcway.net/login.jsp          // 测试后台登陆页面
+http://apitest.kcway.net/tyhttp.jsp        // 通用接口测试
+
+
+
+补息差（分，总/每期）：息差是指，我们的成本 跟渠道报出 的成本之间的差
+
+指定分期基准日：基准日就是出款日，也是下个月的扣款日期，如果 基准日10月17日，那下个月开始的每个月的扣款日就17日，
+最后一期的扣款日会根据具体 还款时间来扣款
+ 
+
+快加后台管理
+
+测试地址
+http://apitest.kcway.net/jbzxceshi.jsp  
+
+正式地址
+https://api.kcway.net/ulogin.do
+
+
+SVN----
+svn 密码
+kcd1 = 675718d5542e7e00
+
+kcd2 = 648b69d18c85d2d8
+
+kcd3 = 68b329da9893e340
+SVN://220.162.237.16/kcdsvn/api
+svn://125.77.23.30/kcdsvn/apitest
+
+[kcdsvn:/apitest]
+
+tiantian = rw
+
+kcd1 = rw
+
+kcd2 = rw
+
+kcd3 = rw
+
+
+
+[kcdsvn:/api]
+
+tiantian = rw
+
+kcd1 = rw
+
+kcd2 = rw
+
+kcd3 = rw
+
+
+
+kcd1 = 675718d5542e7e00
+
+kcd2 = 648b69d18c85d2d8
+
+kcd3 = 68b329da9893e340
+
+
+2018-3-31
+快金所测试账号
+账号: kjsys1@ht
+   
+密码: kcway2015
+
+
+Shiro --> Druid监控
+账号：druid 密码：dream
+
