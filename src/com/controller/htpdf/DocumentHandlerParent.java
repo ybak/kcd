@@ -40,6 +40,7 @@ public abstract class DocumentHandlerParent{
 	
 	//根目录 这里的是全局的 包括图片和.pdf都在这个目录的下级
 	public static String root_Directory="DIMG/assess/";
+	
 	//public static String root_Directory="C:/Users/Administrator/Desktop/word/haha1/";
 	
 	//拼接中间目录
