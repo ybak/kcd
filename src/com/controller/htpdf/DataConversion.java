@@ -149,7 +149,7 @@ public class DataConversion extends DataConversionParent{
 						if(count==1){
 							data.put("tt",DocumentHandlerParent.download_prefix+tts[i]);
 						}else if(count==2){
-							data.put("reverseIdCard_img",DocumentHandlerParent.root_Directory+tts[i]);
+							data.put("reverseIdCard_img",DocumentHandlerParent.download_prefix+tts[i]);
 							break;
 						}
 					}
