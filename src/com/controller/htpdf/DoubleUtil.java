@@ -1,5 +1,7 @@
 package com.controller.htpdf;
 import java.math.BigDecimal;
+
+import org.apache.commons.lang.StringUtils;
 /**
  * @author LiWang
  * 2018年5月21日
@@ -24,6 +26,11 @@ public class DoubleUtil {
         BigDecimal b2 = new BigDecimal(v2);  
         return b1.add(b2).toString();  
     }  
+    public static void main(String[] args){
+    	System.out.println("空"+StringUtils.isBlank("null"));
+    	System.out.println("加法"+add("45.26","12"));
+    	System.out.println("乘法"+mul("0.4","0.5"));
+    }
     /** 
      * 提供精确的减法运算。 
      *  
@@ -95,7 +102,8 @@ public class DoubleUtil {
         BigDecimal b2 = new BigDecimal(v2);  
         return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP).toString();  
     }  
-  
+    /*ROUND_HALF_UP: 遇到.5的情况时往上近似,例: 1.5 ->;2
+    ROUND_HALF_DOWN : 遇到.5的情况时往下近似,例: 1.5 ->;1*/
     /** 
      * 提供精确的小数位四舍五入处理。 
      *  

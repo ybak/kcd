@@ -5,10 +5,101 @@
 	<!-- <select id="query" resultType="com.crm.bean.IcbcApplication" parameterType="int" >
 		 select ki.id, ki.c_name name,ki.c_tel tel,ki.c_cardno IDnumber,a.vincode vin,kik.dk_price loanamount,kik.jrfw_price servicefee,kik.kp_price kpj,kik.dk_total_price totalamount,kik.aj_date date,kik.dk_lv f_rate from kj_icbc ki,kjs_icbc_kk kik,assess_cars a where ki.id='374' and  ki.id=kik.icbc_id and kik.icbc_id=a.icbc_id  
 	</select>	 -->
-	<select id="query1" resultType="java.util.HashMap" parameterType="java.lang.Integer" >
-	 	 select ki.id, ki.c_name name,ki.c_tel tel,ki.c_cardno IDnumber,ki.c_name_gj1 gthk,ki.c_name_gj2 gthk2, ki.c_name_mt pname,ki.c_tel_gj1 gtel,ki.c_tel_gj2 gtel2, ki.c_cardno_gj1 gid,ki.c_cardno_gj2 gid2, ki.c_tel_mt pdh,ki.c_cardno_mt pIDnumber,a.vincode vin,a.motorcode  endine_h,a.c_carno cph,a.color_id ys,a.ppxh p_x,kik.dk_price loanamount,kik.jrfw_price servicefee,kik.kp_price kpj,kik.dk_total_price totalamount,kik.aj_date date,kik.dk_lv f_rate,kik.sfje first_payment_ratio,kik.gjr1_xzdz gzi,kik.gjr2_xzdz gzi2,kik.gjr1_gzdw ggzdw,kik.gjr2_gzdw ggzdw2, kik.zdr_zw zw,kik.zdr_hyzk hf,kik.zdr_xzdz xaddress,kik.zdr_grsr sr,kik.zdr_gzdw ggdw,kik.zdr_dwdz ggdi,a.price_result pgj,kik.cars_type carstype,kik.zdr_dwdh dwdh,kik.po_ysr posr,kik.po_xzdz pxzdz,kik.po_yzbm pyzbm, kik.po_xl pxl,kik.po_gzdw pdw,kik.zdr_xl xl,kik.gjr1_yzdrgx ggx,kik.jjlxr_c_name jj,kik.gjr1_yzbm gyzbm,kik.gjr2_yzbm gyzbm2,kik.gjr2_yzdrgx ggx2,kik.jjlxr_c_tel jjtel,kik.jjlxr_xzdz jjadd,kik.jjlxr_jdrgx jjgx,kik.zdr_yzbm yzbm,kik.gjr1_hyzk ghf,kik.gjr2_hyzk ghf2, se.name chex,cs.name sheng,cc.name shi,ki.imgstep2_1ss tt,kik.zdr_wsdz zsddd,kik.po_wsdz psddd,kik.gjr1_wsdz gsddd,kik.gjr2_wsdz gsddd2,kik.dz_type dztype,kik.po_dwdz pdwdz,kik.po_zw pzw,kik.po_dwdz pdwdz 
+	
+
+	<!-- kj_icbc:
+			id:icbcId,
+			name:主贷人姓名
+			tel:主贷人手机号码
+			IDnumber:主贷人身份证
+			zdr_zw zw 职务
+			zdr_hyzk hf
+			zdr_xzdz xaddress 主贷人现住地址
+			zdr_grsr sr 主贷人月收入
+			zdr_gzdw ggdw 主贷人工作单位
+			zdr_dwdh dwdh 主贷人单位电话
+			zdr_xl xl 主贷人学历
+			zdr_wsdz zsddd 主贷人文书送达地址
+			dz_type dztype 垫资类型
+			imgstep2_1ss 图片合集
+			acess_cars:
+			price_result pgj 车辆评估价
+			vincode vin Vin码
+			motorcode  endine_h 发动机号
+			c_carno cph车牌
+			color_id ys车辆颜色
+			ppxh p_x 品牌型号
+			cars_type carstype车辆类型，1为新车，2为二手车
+			sfje first_payment_ratio首付金额 ,元
+
+			kjs_icbc_kk：
+			c_name_mt pname:配偶姓名
+			c_tel_mt pdh 配偶电话
+			c_cardno_mt pIDnumber配偶身份证号码
+			po_dwdz pdwdz 配偶，单位地址
+			po_zw pzw 配偶，主要从事或职务
+			po_ysr posr配偶。月收入，元
+			po_xzdz pxzdz 配偶现住地址
+			po_yzbm pyzbm 配偶邮政编码
+			po_xl pxl 配偶学历
+			po_gzdw pdw 配偶工作单位
+
+			po_wsdz psddd 配偶文书送达地址
+			c_name_gj1 gthk:共借人一姓名
+			c_name_gj2 gthk2:共借人二姓名
+			c_cardno_gj1 gid共借人1身份证
+			c_cardno_gj2 gid2共借人2身份证
+			c_tel_gj1 gtel 共借人一电话
+			c_tel_gj2 gtel2共借人2电话
+		
+			gjr1_dwdz gdwdz 共借人一单位地址
+			gjr2_dwdz gdwdz2 共借人二单位地址
+			gjr1_wsdz gsddd 共借人一文书地址
+			gjr2_wsdz gsddd2 共借人二文书地址
+			gjr1_xzdz gzi 共借人一现住地址
+			gjr2_xzdz gzi2共借人二现住地址
+			gjr1_gzdw ggzdw 共借人一工作单位
+			gjr2_gzdw ggzdw2共借人二工作单位
+			gjr1_yzbm gyzbm共借人一邮政编码
+			gjr2_yzbm gyzbm2共借人二邮政编码
+			gjr1_yzdrgx ggx 共借人与主贷人关系
+			gjr2_yzdrgx ggx2共借人二与主贷人关系
+			gjr1_hyzk ghf 共借人一婚姻状况
+			gjr2_hyzk ghf2 共借人二婚姻状况
+
+
+			dk_price loanamount贷款金额(元)
+			jrfw_price servicefee 金融服务费
+			kp_price kpj 开票价
+			dk_total_price 贷款总额
+			aj_date date 按揭期限
+			dk_lv f_rate 贷款利率
+				
+			zdr_yzbm yzbm 主贷人邮政编码
+			
+			jjlxr_c_name jj紧急联系人
+			jjlxr_c_tel jjtel紧急联系人电话
+			jjlxr_xzdz jjadd 紧急联系人地址
+			jjlxr_jdrgx jjgx紧急联系人与主贷人关系
+
+			jjlxr_c_name jj2紧急联系人二
+			jjlxr_c_tel jjtel2紧急联系人二电话
+			jjlxr_xzdz jjadd 2紧急联系人二地址
+			jjlxr_jdrgx jjgx2紧急联系人二与主贷人关系
+
+			
+			se.name chex 车辆系列
+			cs.name sheng省
+			cc.name shi市
+
+			down_payment_for 首付比例
+			Jigou	快加汽车服务（上海）有限公司
+			papers_type	身份证
+			Shul	壹台 -->
+	<select id="query1" resultType="java.util.HashMap" parameterType="java.lang.String" >
+	 select ki.bank_id bankId, ki.c_name name,ki.c_tel tel,ki.c_cardno IDnumber,kik.qtlxr_c_name jj2,kik.qtlxr_c_tel jjtel2,kik.qtlxr_xzdz jjadd2,kik.qtlxr_jdrgx jjgx2,kik.gjr1_dwdz gdwdz,kik.gjr2_dwdz gdwdz2, ki.c_name_gj1 gthk,ki.c_name_gj2 gthk2, ki.c_name_mt pname,ki.c_tel_gj1 gtel,ki.c_tel_gj2 gtel2, ki.c_cardno_gj1 gid,ki.c_cardno_gj2 gid2, ki.c_tel_mt pdh,ki.c_cardno_mt pIDnumber,a.vincode vin,a.motorcode  endine_h,a.c_carno cph,a.color_id ys,a.ppxh p_x,kik.dk_price loanamount,kik.jrfw_price servicefee,kik.kp_price kpj,kik.dk_total_price totalamount,kik.aj_date date,kik.dk_lv f_rate,kik.sfje first_payment_ratio,kik.gjr1_xzdz gzi,kik.gjr2_xzdz gzi2,kik.gjr1_gzdw ggzdw,kik.gjr2_gzdw ggzdw2, kik.zdr_zw zw,kik.zdr_hyzk hf,kik.zdr_xzdz xaddress,kik.zdr_grsr sr,kik.zdr_gzdw ggdw,kik.zdr_dwdz ggdi,a.price_result pgj,kik.cars_type carstype,kik.zdr_dwdh dwdh,kik.po_ysr posr,kik.po_xzdz pxzdz,kik.po_yzbm pyzbm, kik.po_xl pxl,kik.po_gzdw pdw,kik.zdr_xl xl,kik.gjr1_yzdrgx ggx,kik.jjlxr_c_name jj,kik.gjr1_yzbm gyzbm,kik.gjr2_yzbm gyzbm2,kik.gjr2_yzdrgx ggx2,kik.jjlxr_c_tel jjtel,kik.jjlxr_xzdz jjadd,kik.jjlxr_jdrgx jjgx,kik.zdr_yzbm yzbm,kik.gjr1_hyzk ghf,kik.gjr2_hyzk ghf2, se.name chex,cs.name sheng,cc.name shi,ki.imgstep2_1ss tt,kik.zdr_wsdz zsddd,kik.po_wsdz psddd,kik.gjr1_wsdz gsddd,kik.gjr2_wsdz gsddd2,kik.dz_type dztype,kik.po_dwdz pdwdz,kik.po_zw pzw,kik.po_dwdz pdwdz 
 	 from kj_icbc ki,kjs_icbc_kk kik,assess_cars a,car_series se,comm_states cs,comm_citys cc 
-	 where ki.id=#{0}  
+	 where ki.id=#{0}
 	 and  ki.id=kik.icbc_id 
 	 and kik.icbc_id=a.icbc_id 
 	 and a.seid=se.id and kik.kk_car_cityid=cc.id 

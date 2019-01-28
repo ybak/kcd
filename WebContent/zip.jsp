@@ -76,7 +76,7 @@
 					  $("li").addClass('active');
                       clearInterval(t); 
                      //将进度更新至100%  
-                     f("/KCDIMG/assess/"+data.loadf);
+                      f(data.message);  
                     }else{
                     	$("#i").hide();
                     	alert(data.message);

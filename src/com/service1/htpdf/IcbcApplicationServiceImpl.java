@@ -14,7 +14,7 @@ public class IcbcApplicationServiceImpl implements IcbcApplicationService{
 	@Autowired
 	IcbcApplicationDaoMapper iad;
 	
-	public List<Map<String,Object>> query1(int i){
+	public List<Map<String,Object>> query1(String i){
 		return iad.query1(i);
 	}
 	public void create1(String pdfname,int id){
