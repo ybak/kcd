@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.Repayment.RepaymentMapper">
+	<!--查询全部数据 -->
+	<select id="selectRepayment" parameterType="pd" resultType="pd">
+	select bc.id,bc.c_name,kk.dk_price,kk.gems_code,kk.aj_date,kk.dt_edit,bc.c_cardno,bc.loan_tpid,kk.dk_lv,kk.dk_total_price,aa.icbc_pricecs 
+		from 
+		kjs_icbc_kk kk,
+		kj_icbc bc,
+		assess_cars aa 
+		where kk.icbc_id=bc.id and bc.id=aa.icbc_id 
+		<if test="param != null and param != ''">
+			 and bc.c_name like '%${param}%' or bc.c_cardno like '%${param}%'
+		</if>
+		
+	</select>
+	
+	
+ 	<select id="selectBorrow" parameterType="int" resultType="java.util.Map">
+	    select bc.id
+			,bc.c_name
+			,kk.dk_price
+			,kk.gems_code
+			,kk.aj_date
+			,kk.icbc_id
+			,kk.dt_edit
+			,bc.c_cardno
+			,bc.loan_tpid
+			,kk.dk_lv
+			,kk.dk_total_price
+			,kk.gjr1_yzdrgx
+			,kk.gjr2_yzdrgx
+			,kk.c_tel
+			,aa.icbc_pricecs 
+			,yb.name y_name
+		from 
+		kjs_icbc_kk kk,
+		kj_icbc bc,
+		assess_cars aa,
+		yl_banklist yb
+		where kk.icbc_id = bc.id and bc.id = aa.icbc_id and bc.bank_id = yb.id and bc.id = #{id}
+	</select> 
+	 
+	<!--  还款计划 -->
+	<select id="selectschedule" parameterType="String" resultType="java.util.Map">
+		select * from import_repayment where id_card=#{id_card}
+	
+	</select>
+	
+	<!-- 贷后信息 -->
+	<select id="selectafter" parameterType="String" resultType="java.util.Map">
+		select 
+		bc.c_name_gj1,
+		bc.c_tel_gj1,
+		bc.c_cardno_gj1,	
+		bc.c_name_gj2,
+		bc.c_tel_gj2,
+		bc.c_cardno_gj2,
+		bc.c_cardno,
+		kk.jjlxr_c_name,kk.jjlxr_c_tel,kk.jjlxr_jdrgx 
+	from kj_icbc bc,kjs_icbc_kk kk where bc.id=kk.icbc_id and bc.c_cardno=#{c_cardno}
+	</select>
+	
+	<!-- 主贷人信息 -->
+	<select id="selectzdr" parameterType="String" resultType="java.util.Map">
+		select 
+		bc.c_name,
+		bc.c_sex,
+		kk.c_tel,
+		bc.c_cardno,
+		kk.zdr_xzdz,
+		kk.zdr_xl,
+		kk.zdr_gzdw,
+		kk.zdr_dwdh,
+		kk.zdr_dwdz,
+		kk.zdr_grsr 
+		from kj_icbc bc,kjs_icbc_kk kk where bc.id=kk.icbc_id and bc.c_cardno=#{c_cardno}
+	</select>
+</mapper>

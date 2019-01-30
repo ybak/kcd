@@ -330,10 +330,10 @@
 					</c:if>
 					<!-- 视频面签 -->
 					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'zxsp')==true}">		
-				   <li>
+				   <li ${requestScope.dn=='yxVideo'?"class='active'":'' }>
 				   <a href="${pageContext.request.contextPath}/erp/demo.do?type=hk&dn=yxVideo&qn=form"> 
 				   <i class="fa fa-external-link"></i> 
-				   <span style="color:#ffffff">视频面签</span>
+				   <span>视频面签</span>
 				   </a>
 			       </li>
 			       </c:if>
@@ -475,16 +475,18 @@
 				    <ul class="treeview-menu">
 				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'khhklr')==true}">
 					<li ${requestScope.dn=='dh_repaymentEntry'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/erp/index.do?type=khhkgl&dn=dh_repaymentEntry&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
-				    <span>客户还款录入</span>
-				    </a>
+					    <a href="${pageContext.request.contextPath }/uploadExcelController/select.do?type=khhklr&dn=dh_repaymentEntry&qn=list&pagesize=10&pagenow=1">
+						<i class="fa fa-arrow-circle-o-right"></i>客户还款录入
+					    </a>
 					</li>
 					</c:if>
 					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'khhkqk')==true}">
 					<li ${requestScope.dn=='dh_repaymentSituation'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/erp/index.do?type=khhkgl&dn=dh_repaymentSituation&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
-				    <span>客户还款情况</span>
-				    </a>
+					
+                        <a href="${pageContext.request.contextPath }/repaymentController/select.do?type=khhkqk&dn=dh_repaymentSituation&qn=list&pagesize=10&pagenow=1">
+						<i class="fa fa-arrow-circle-o-right"></i>客户还款情况
+					    </a>
+
 					</li>
 					</c:if>
 				    </ul>

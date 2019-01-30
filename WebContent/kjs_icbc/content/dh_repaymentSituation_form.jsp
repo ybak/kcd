@@ -37,56 +37,58 @@
 	    <div class="row" >
 	    	<label class="col-sm-1"  >主贷人姓名:<i class="red">*</i></label>
 	  		<div class="col-sm-2">
-	  			123464
+	  			${lborrow.c_name }
 		    </div>
 		    <label class="col-sm-1">身份证号:<i class="red">*</i></label>
 			<div class="col-sm-2">
-	      		李四
+	      		${lborrow.c_cardno }
 			</div>
 			<label class="col-sm-1" >金融产品:<i class="red">*</i></label>
 	  		<div class="col-sm-2">
-				13464975464
+				<c:if test="${lborrow.loan_tpid==1}">
+								  卡分期
+								</c:if>
 		    </div>
 		     <label class="col-sm-1" >车辆价格:<i class="red">*</i></label>
 			<div class="col-sm-2">
-				411325166545855
+				${lborrow.icbc_pricecs}
 			</div> 
 		</div>
 		<div class="row">
 	    	<label class="col-sm-1" >贷款金额:<i class="red">*</i></label>
 	  		<div class="col-sm-2">
-	  			大幅度
+	  			${lborrow.dk_price}
 		    </div>
 		    <label class="col-sm-1">贷款期数:<i class="red">*</i></label>
 			<div class="col-sm-2">
-	      		我是团队
+	      		${lborrow.aj_date}
 			</div>
 			<label class="col-sm-1" >每月应还:<i class="red">*</i></label>
 	  		<div class="col-sm-2">
-				1236.3
+				${lborrow.myyh}
 		    </div>
 		     <label class="col-sm-1" >还款日期:<i class="red">*</i></label>
 			<div class="col-sm-2">
-				2018
+				${lborrow.dt_edit}
 			</div> 
 		</div>
 		<div class="row" >
 	    	<label class="col-sm-1" >是否结清:<i class="red">*</i></label>
 	  		<div class="col-sm-2">
-	  			1236-799779
+	  			暂时无此数据
 		    </div>
 		   <label class="col-sm-1">贷款银行:<i class="red">*</i></label>
 			<div class="col-sm-2">
-	      		我是团队
+	      		${lborrow.y_name}
 			</div>
 			<label class="col-sm-1">已还期数:<i class="red">*</i></label>
 	  		<div class="col-sm-2">
-				上海市浦东新区上岗新村 博大汽车公园
+				1
 		    </div>
 		</div>
 	</div>
 	
-	
+	<c:if test="${not empty mapschedule }">
 	<div  style="padding-top:20px;">
       <h4 class="modal-title"  id="aayyclModalLabel">还款计划:</h4>	       
     </div>	
@@ -101,21 +103,45 @@
 				<th class="text-center">是否逾期</th>
 				<th class="text-center">逾期金额</th>
 				<th class="text-center">核销日期</th>
-			</tr>
-		   <c:forEach begin="1" end="12" var="i" varStatus="status">
+			</tr>		   
 			<tr>
+				<td class="text-center">1</td>
+				<td class="text-center">${mapschedule.zc_time }</td>
+				<td class="text-center">${mapschedule.b3}</td>
+
+				<td class="text-center">${mapschedule.balance_card}</td>
+
+				<td class="text-center">
+				<c:if test="${mapschedule.overdue_amount!=0 }">
+				是
+				</c:if>
+				<c:if test="${mapschedule.overdue_amount == 0 }">
+				否
+				</c:if>
+				</td>
+				<td class="text-center">${mapschedule.overdue_amount}</td>
+				<td class="text-center">暂无</td>
+		    </tr>
+		    <c:forEach begin="2" end="36" var="i" varStatus="status">
+		    <tr>
 				<td class="text-center">${status.index}</td>
-				<td class="text-center">2020-12-27</td>
-				<td class="text-center">10000</td>
-				<td class="text-center">10000</td>
-				<td class="text-center">否</td>
+				<td class="text-center">${mapschedule.zc_time }</td>
+				<td class="text-center">${mapschedule.b3}</td>
+
 				<td class="text-center">0</td>
-				<td class="text-center">2019-12-27</td>
+
+				<td class="text-center">
+				
+				否
+				
+				</td>
+				<td class="text-center">0</td>
+				<td class="text-center">暂无</td>
 		    </tr>
 		   </c:forEach>
        </table>
      </div>
-     
+     </c:if>
     <div  style="padding-top:20px;">
       <h4 class="modal-title"  id="aayyclModalLabel">贷后信息:</h4>	       
     </div>	
@@ -132,10 +158,11 @@
 				<th class="text-center">电话号码</th>
 				<th class="text-center">操作</th>
 			</tr>
+			
 		  	<tr>
 				<td class="text-center">主贷人</td>
-				<td class="text-center">张三</td>
-				<td class="text-center">410181196215642563</td>
+				<td class="text-center">${lborrow.c_name }</td>
+				<td class="text-center">${lborrow.c_cardno }</td>
 				<td class="text-center">本人</td>
 				<td class="text-center"><p>
 				<i class="fa fa-search-plus"></i>
@@ -143,31 +170,50 @@
 				<td class="text-center"><p>
 				<i class="fa fa-search-plus"></i>
 				</p></td>
-				<td class="text-center">15824569546</td>
+				<td class="text-center">${lborrow.c_tel }</td>
 				<td class="text-center"  onclick="toggleModel()" ><p>
 				<i  class="fa fa-search-plus"></i>
 				</p></td>
 		    </tr>
-		    <tr>
+		   <c:forEach var="mapafter" items="${mapafter }">
+		   <c:if test="${ not empty mapafter.jjlxr_c_name }">
+		     <tr>
 				<td class="text-center">紧急联系人</td>
-				<td class="text-center">李四</td>
+				<td class="text-center">${mapafter.jjlxr_c_name }</td>
 				<td class="text-center">410154956485213623</td>
-				<td class="text-center">朋友</td>
+				<td class="text-center">${mapafter.jjlxr_jdrgx }</td>
 				<td class="text-center"></td>
 				<td class="text-center"></td>
-				<td class="text-center">15985462315</td>	
+				<td class="text-center">${mapafter.jjlxr_c_name  }</td>	
 				<td class="text-center"></td>	
 		    </tr>
-		    <tr>
-				<td class="text-center">紧急联系人</td>
-				<td class="text-center">王五</td>
-				<td class="text-center">456213654895321633</td>
-				<td class="text-center">朋友</td>
+		    </c:if>
+		    
+		    <c:if test="${not empty mapafter.c_name_gj1}">
+		     <tr>
+				<td class="text-center">共借人1</td>
+				<td class="text-center">${mapafter.c_name_gj1 }</td>
+				<td class="text-center">${mapafter.c_cardno_gj1 }</td>
+				<td class="text-center">${mapafter.gjr1_yzdrgx }</td>
 				<td class="text-center"></td>
 				<td class="text-center"></td>
-				<td class="text-center">15854695231</td>
+				<td class="text-center">${mapafter.c_tel_gj1 }</td>
 				<td class="text-center"></td>
 		    </tr>
+		    </c:if> 
+		    <c:if test="${not empty mapafter.c_name_gj2 }">
+		     <tr>
+				<td class="text-center">共借人2</td>
+				<td class="text-center">${mapafter.c_name_gj2 }</td>
+				<td class="text-center">${mapafter.c_cardno_gj2 }</td>
+				<td class="text-center">${mapafter.gjr2_yzdrgx }</td>
+				<td class="text-center"></td>
+				<td class="text-center"></td>
+				<td class="text-center">${mapafter.c_tel_gj2 }</td>
+				<td class="text-center"></td>
+		    </tr> 
+		    </c:if> 
+		      </c:forEach>
        </table>
      </div>
       <div style="height:50px;margin:10px 0;">
@@ -193,25 +239,27 @@
 					<div class="row" >
 				    	<label class="col-sm-2">姓名:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
-				  			123464
+				  		${mapzdr.c_name }
 					    </div>
 					    <label class="col-sm-2 ">性别:<i class="red">*</i></label>
 						<div class="col-sm-2">
-				      		李四
+						<c:if test="${mapzdr.c_sex == 1}">男</c:if>
+				  		<c:if test="${mapzdr.c_sex == 0}">女</c:if>
+				      		
 						</div>
 						<label class="col-sm-2" >年龄:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
-							13464975464
+							21
 					    </div>
 					</div>
 					<div class="row" >
 				    	<label class="col-sm-2 " style="" >手机号:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
-				  			123464
+				  			${mapzdr.c_tel }
 					    </div>
 					    <label class="col-sm-2 ">身份证号:<i class="red">*</i></label>
 						<div class="col-sm-2">
-				      		李四
+				      		${mapzdr.c_cardno}
 						</div>
 						<label class="col-sm-2" >身份证地址:<i class="red">*</i></label>
 				  		<div class="col-sm-2" style="    white-space: nowrap;overflow:auto;">
@@ -221,43 +269,43 @@
 					<div class="row" >
 				    	<label class="col-sm-2">居住地:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
-				  			123464
+				  			${mapzdr.zdr_xzdz }
 					    </div>
 					    <label class="col-sm-2">学历:<i class="red">*</i></label>
 						<div class="col-sm-2">
-				      		李四
+				      		${mapzdr.zdr_xl }
 						</div>
 						<label class="col-sm-2">婚姻情况:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
-							13464975464
+							未婚
 					    </div>
 					</div>
 					<div class="row" >
 				    	<label class="col-sm-2 " style="" >单位性质:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
-				  			123464
+				  			私企
 					    </div>
 					    <label class="col-sm-2">单位名称:<i class="red">*</i></label>
 						<div class="col-sm-2">
-				      		李四
+				      		${mapzdr.zdr_gzdw}
 						</div>
 						<label class="col-sm-2" >单位职务:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
-							13464975464
+							开发
 					    </div>
 					</div>
 					<div class="row" >
 				    	<label class="col-sm-2">单位电话:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
-				  			123464
+				  			${mapzdr.zdr_dwdh }
 					    </div>
 					    <label class="col-sm-2">单位地址:<i class="red">*</i></label>
 						<div class="col-sm-2">
-				      		李四
+				      		${mapzdr.kk/zdr_dwdz}
 						</div>
 						<label class="col-sm-2" >个人月收入:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
-							13464975464
+							${mapzdr.zdr_grsr }
 					    </div>
 					</div>
 				 <!-- 模态框插入内容 end -->

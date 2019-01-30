@@ -135,6 +135,10 @@
     </typeAliases>
 
        <mappers>
+        <!-- 还款情况 -->
+        <mapper resource="com/mapper1/Repayment/RepaymentMapper.xml" />
+        <mapper resource="com/mapper1/Excel/recordMapper.xml" />
+        <mapper resource="com/mapper1/Excel/uploadExcelMapper.xml" />
         <!-- 车辆抵押-->
         <mapper resource="com/mapper1/sxx/financialExcel/VehicleMortgageMapper.xml" />
         <!-- 银行贷款 -->

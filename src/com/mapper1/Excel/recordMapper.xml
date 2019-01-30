@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper1.Excel.recordMapper" >
+
+	<!-- 把导入记录添加到数据库 -->
+	<insert id="addRecord" parameterType="map">
+		insert into import_record (uuid,oriName,dt_add,financial_products,mid_add,filepath)
+		values(#{uuid},#{oriName},#{dt_add},#{financial_products},#{mid_add},#{filepath})     
+	</insert>
+	
+	<!-- 查询数据库表中数据 -->
+	<select id="selectRecord" parameterType="pd" resultType="pd">
+		select * from import_record
+		<!-- 模糊查询 -->
+		<if test="param != null and param != ''">
+			where oriName like '%${param}%'
+		</if>
+	</select>
+
+	
+</mapper>

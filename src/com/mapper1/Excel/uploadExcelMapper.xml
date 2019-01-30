@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper1.Excel.uploadExcelMapper" >
+	<!-- excel表格中的数据导入数据库 -->
+	<insert id="addExcel" parameterType="map">
+		insert into import_repayment (name,id_card,repayment_card,balance_card,overdue_amount,continuity,maximum,add_time,balance_on)
+		values(#{name},#{id_card},#{repayment_card},#{balance_card},#{overdue_amount},#{continuity},#{maximum},#{add_time},#{balance_on})
+		<!-- <foreach collection="list" item="map" index="index" separator=","> -->
+		
+	<!-- 	(#{map.id},#{map.name},#{map.IdCard},#{map.RepaymentCard},#{map.balanceCard},
+		#{map.OverdueAmount},#{map.continuity},#{map.Maximum},#{map.add_time},#{map.balanceOn}) -->
+		<!-- </foreach>  -->
+	</insert>
+	
+
+	<!-- 根据身份证查询用户 -->
+	<select id="selectByIdCard">
+	
+	</select>
+	<!-- 查询下次应该还款的期数 -->
+	<select id="selectLastRepaymentDate">
+	
+	</select>
+</mapper>
