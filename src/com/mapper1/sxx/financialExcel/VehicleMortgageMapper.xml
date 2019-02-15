@@ -15,7 +15,7 @@
 	</select>
 	
 	
-	<select id="FindDataByIcbcid" parameterType="int" resultType="map">
+	<select id="FindDataByIcbcid" parameterType="int" resultType="pd">
 		
 		SELECT ki.gems_code
 			  	,ki.c_name
@@ -29,7 +29,9 @@
 		<foreach collection="list" item="icbcid" open=" (" close=") " separator=",">
                 #{icbcid}
         </foreach>
-	
+		<if test="param != null and param != ''">
+			 and (ki.c_name like '%${param}%' or ki.c_cardno like '%${param}%')
+		</if>
 	</select>
   
 </mapper>
