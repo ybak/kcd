@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mapper1.sxx.financialExcel.FinancialExcelMapper;
+import com.mapper1.sxx.FinancialExcelMapper;
 
 @Service
 @Transactional(value = "kcway2",rollbackFor = Exception.class)  

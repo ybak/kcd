@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
-import com.mapper1.sxx.financialExcel.FinancialExcelMapper;
+import com.mapper1.sxx.FinancialExcelMapper;
 import com.service1.sxx.FinancialExcelService;
 
 import net.sf.json.JSONArray;

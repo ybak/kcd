@@ -8,28 +8,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mapper1.sxx.LitigationManagementMapper;
+import com.mapper1.sxx.SettlementMapper;
 import com.mapper1.sxx.TrailerManagementMapper;
 import com.mapper1.sxx.VehicleMortgageMapper;
 import com.model1.icbc.erp.PageData;
 
 @Service
 @Transactional(value = "kcway2",rollbackFor = Exception.class)  
-public class LitigationManagementServiceImpl implements LitigationManagementService {
+public class SettlementServiceImpl implements SettlementService {
 	
 	@Autowired
-	private LitigationManagementMapper litigationManagementMapper;
+	private SettlementMapper settlementMapper;
 
 	@Override
 	public List<Map<String, Object>> ToBeProcessed(Integer status) {
 		// TODO Auto-generated method stub
-		return litigationManagementMapper.ToBeProcessed(status);
+		return settlementMapper.ToBeProcessed(status);
 	}
 
 	@Override
 	public List<PageData> FindDataByIcbcid(List<Integer> list, String param) {
 		// TODO Auto-generated method stub
-		return litigationManagementMapper.FindDataByIcbcid(list, param);
+		return settlementMapper.FindDataByIcbcid(list, param);
 	}
 
 	

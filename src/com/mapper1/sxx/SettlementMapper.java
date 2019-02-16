@@ -1,4 +1,4 @@
-package com.mapper1.sxx.financialExcel;
+package com.mapper1.sxx;
 
 import java.util.List;
 import java.util.Map;
@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.model1.icbc.erp.PageData;
 
-public interface LitigationManagementMapper {
+public interface SettlementMapper {
 
 	/**
 	 * 查询车辆抵押专员审批后的原始数据 

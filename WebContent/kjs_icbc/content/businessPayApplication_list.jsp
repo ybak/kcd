@@ -106,58 +106,99 @@ laydate.render({
 				</div>
 				<!-- 数据载入中结束 -->
 				<table class="table table-bordered table-hover">
-	<tbody>
-		<tr>
-			<th style="width: 3%" class="text-center hidden-xs"><input class="check_all" type="checkbox"></th>
-			<th class="text-center" style="width:150px;">业务编号</th>
-			<th class="text-center" style="width:100px">客户姓名</th>
-			<th class="hidden-xs text-center" style="width:100px">业务类型</th>
-			<th class="hidden-xs text-center" style="width:100px">合作商</th>
-			<th class="hidden-xs text-center" style="width:200px">申请日期</th>
-			
-			
-			<!-- <th class="hidden-xs text-center" style="width:100px">申请人</th>
-			<th class="text-center" style="width:100px">部门</th>
-			<th class="hidden-xs text-center" style="width:200px">收款账户</th>
-			<th class="hidden-xs text-center">收款开户行</th>
-			<th class="hidden-xs text-center">金额</th>
-			<th class="hidden-xs text-center">大写金额</th>
-			<th class="hidden-xs text-center">付款用途</th> -->
-			<!-- 付款用途（代收代付购车本金、代收代付服务费） -->
-			<th style="width:100px;" class="text-center">操作</th>
-		</tr>
-		<c:forEach  var="pd" items="${requestScope.pdDate}" varStatus="status">
-		<tr>
-			<td class="text-center hidden-xs"><input name="delid" value="4510" type="checkbox"></td>
-			<td class="text-center">${pd.code}</td>
-			<td class="text-center">${pd.name}</td>
-			<td class="text-center">
-				<c:if test="${pd.cars_type==1}">
-					新车
-				</c:if>
-				<c:if test="${pd.cars_type==2}">
-					二手车
-				</c:if>
-			</td>
-			<td class="hidden-xs text-center">${pd.fs_name}</td>
-			<td class="text-center" ><fmt:formatDate value="${pd.date}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-			<!-- 诗兴大发啊实打实的 -->
-			<!-- <td class="hidden-xs text-center">刘大帅</td>
-			<td class="hidden-xs text-center">技术部</td>
-			<td class="hidden-xs text-center">云车网有限公司</td>
-			<td class="hidden-xs text-center">中国建设银行大木桥路支行</td>
-			<td class="hidden-xs text-center">60800</td>
-			<td class="hidden-xs text-center">六万零八百</td>
-			<td class="hidden-xs text-center">代收代付购车本金</td> -->
-			<td class="text-center">
-				<div class="table-button text-center">
-					<a title="" href="${pageContext.request.contextPath}/erp/loanBefore_form.do?type=wdrw&dn=businessPayApplication&qn=form&cn=w1&icbc_id=${pd.icbc_id}&date=${pd.date}" class="btn btn-default">
-					<i class="fa fa-pencil"></i></a>
-				</div>
-			</td>
-		</tr>
-		</c:forEach>
-	</tbody>
+	<tbody>	
+					<tr>
+						<th style="width:3%" class="text-center hidden-xs"><input class="check_all" type="checkbox"></th>
+						<th class="text-center hidden-xs">业务编号</th>
+						<th class="text-center">客户姓名</th>
+						<th class="text-center">身份证号</th>
+						<th class="text-center">合作商</th>
+						<th class="text-center">当前欠款</th>
+						<th class="text-center" >贷款金额</th>
+						<th class="text-center" >垫款金额</th>
+						<th class="text-center" >逾期次数</th>
+						<th class="text-center" >已垫款次数</th>
+						<th class="text-center" >放款日期</th>
+						<th class="text-center" >逾期发生日期</th>
+						<th class="text-center" >逾期天数</th>
+						<th class="text-center" >申请代偿日期</th>
+						<th class="text-center" >已代偿日期</th>
+					</tr>
+					
+					<tr>
+						<td class="text-center hidden-xs">
+						<input name="delid"  type="checkbox">
+						</td>
+						<td class="text-center hidden-xs">
+							1
+						</td>
+						<td class="text-center">
+							<span class="s-font-blue">
+								李四
+							</span>
+						</td>
+						<td class="text-center">
+							2345678909873723
+						</td>
+						<td class="text-center">
+							<p>
+								腾讯
+							</p>
+						</td>
+						<td class="text-center">
+							<p>
+								${pd.dk_price}
+							</p>
+						</td>
+						<td class="text-center">
+							<p>
+								3000
+							</p>
+						</td>
+						<td class="text-center">
+							<p>
+								10000
+							</p>
+						</td>
+						<td class="text-center">
+							<p>
+								1000
+							</p>
+						</td>
+						<td class="text-center">
+							<p>
+								0
+							</p>
+						</td>
+						<td class="text-center">
+							<p>
+								1
+							</p>
+						</td>
+						<td class="text-center">
+							<p>
+								2022-10-11
+							</p>
+						</td>
+						<td class="text-center">
+							<p>
+								2020-08-09
+							</p>
+						</td>
+						<td class="text-center">
+							<p>
+								1
+							</p>
+						</td>
+						<td class="text-center">
+							<p>
+								2020-09-09
+							</p>
+						</td>
+									
+					</tr>
+				
+				</tbody>
 </table>
 				<script type="text/javascript">
 				function ajaxdel(id){

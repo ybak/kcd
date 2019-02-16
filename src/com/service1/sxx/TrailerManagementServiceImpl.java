@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mapper1.sxx.financialExcel.TrailerManagementMapper;
-import com.mapper1.sxx.financialExcel.VehicleMortgageMapper;
+import com.mapper1.sxx.TrailerManagementMapper;
+import com.mapper1.sxx.VehicleMortgageMapper;
 import com.model1.icbc.erp.PageData;
 
 @Service

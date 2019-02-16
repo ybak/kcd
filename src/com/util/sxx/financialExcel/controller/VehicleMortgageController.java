@@ -51,7 +51,7 @@ public class VehicleMortgageController {
 		List<PageData> list2 = new ArrayList<>();
 		List<PageData> newpdList = new ArrayList<>();
 		
-		if("not".equals(type)){
+		if("cldynot".equals(type)){
 			System.out.println("未处理");
 			//获取车辆抵押专员审批后的原始数据 --待处理
 			List<Map<String, Object>> list1 = vehicleMortgageService.ToBeProcessed(33);
@@ -60,10 +60,12 @@ public class VehicleMortgageController {
 				//获取到每条数据中的result_1_value值	并把这个值转为map			
 				Map<String, String> maps = (Map)JSON.parse( (String)list1.get(i).get("result_1_value") );
 				//判断当前这条数据的result_1_value值中是否包含ds_status属性
-				if(null != maps.get("ds_status")){
-					//判断当前这条数据的result_1_value值中的ds_status值是否为1  如果为1就代表专员审核通过，然后就获取到当前这条数据的icbcid值存到list中
-					if("1".equals(maps.get("ds_status"))){
-						icbcid.add( (int)list1.get(i).get("icbc_id") );
+				if(null != maps){
+					if(null != maps.get("ds_status")){
+						//判断当前这条数据的result_1_value值中的ds_status值是否为1  如果为1就代表专员审核通过，然后就获取到当前这条数据的icbcid值存到list中
+						if("1".equals(maps.get("ds_status"))){
+							icbcid.add( (int)list1.get(i).get("icbc_id") );
+						}
 					}
 				}
 			}

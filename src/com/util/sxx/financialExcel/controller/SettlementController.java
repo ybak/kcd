@@ -12,16 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSON;
 import com.model1.icbc.erp.PageData;
+import com.service1.sxx.SettlementService;
 import com.service1.sxx.TrailerManagementService;
 import com.service1.sxx.VehicleMortgageService;
 import com.util.limitutil;
 
 @Controller
-@RequestMapping("/trailerManagementController")
-public class TrailerManagementController {
+@RequestMapping("/settlementController")
+public class SettlementController {
 	
 	@Autowired
-	private TrailerManagementService trailerManagementService;
+	private SettlementService settlementService;
 
 	@RequestMapping("/mortgageRecord")
 	public String MortgageRecord(
@@ -50,10 +51,10 @@ public class TrailerManagementController {
 		List<PageData> list2 = new ArrayList<>();
 		List<PageData> newpdList = new ArrayList<>();
 		
-		if("tcglnot".equals(type)){
+		if("cqclnot".equals(type)){
 			System.out.println("未处理");
 			//获取车辆抵押专员审批后的原始数据 --待处理
-			List<Map<String, Object>> list1 = trailerManagementService.ToBeProcessed(33);
+			List<Map<String, Object>> list1 = settlementService.ToBeProcessed(33);
 			//循环原始数据
 			for (int i = 0; i < list1.size(); i++) {
 				//获取到每条数据中的result_1_value值	并把这个值转为map			
@@ -69,14 +70,14 @@ public class TrailerManagementController {
 				}
 			}
 			//根据筛选过的icbcid值获取最终页面上需要的数据
-			list2 = trailerManagementService.FindDataByIcbcid(icbcid, param);
+			list2 = settlementService.FindDataByIcbcid(icbcid, param);
 			newpdList = limitutil.fy(list2, pagesize, pagenow);
 			
 	
 		} else {
 			System.out.println("已处理");
 			//获取车辆抵押专员审批后的原始数据 --已处理
-			List<Map<String, Object>> list1 = trailerManagementService.ToBeProcessed(76);
+			List<Map<String, Object>> list1 = settlementService.ToBeProcessed(76);
 			for (int i = 0; i < list1.size(); i++) {
 				Map<String, String> maps = (Map)JSON.parse( (String)list1.get(i).get("result_1_value") );
 				if(null != maps.get("76_cyqk")){
@@ -86,7 +87,7 @@ public class TrailerManagementController {
 				}
 			}
 			
-			list2 = trailerManagementService.FindDataByIcbcid(icbcid, param);
+			list2 = settlementService.FindDataByIcbcid(icbcid, param);
 			newpdList = limitutil.fy(list2, pagesize, pagenow);
 			
 		}
