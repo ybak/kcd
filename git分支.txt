@@ -1,19 +1,21 @@
 
 分支操作：
 1：新建并切换到分支，充当前master分支切入分支
-tt_demo1 liqilin$ git checkout -b fix
+tt_demo1 liqilin$ git checkout -b ttTest
 M       src/main/java/com/tt/manager/ManagerGet.java
 M       src/main/java/com/tt/tool/Config.java
 M       src/main/java/com/tt/tool/CookieTools.java
 M       src/main/webapp/WEB-INF/jsp/manager/header.jsp
-Switched to a new branch 'fix'
+Switched to a new branch 'ttTest'
 
 2、关联到远程分支
-git branch --set-upstream-to=tt/fix 
+git branch --set-upstream-to=origin/ttTest 
 
 3、取消对master的跟踪
 git branch --unset-upstream master
 
+之后便可以随意commit,push,了，这些操作都是在你自己的分支上进行，不影响主分支master的。
+到需要合并分支的时候，把几个分支merge合并到主分支
 其他命令：
 查看远程分支
 git branch -r 
