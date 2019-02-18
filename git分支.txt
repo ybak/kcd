@@ -1,0 +1,19 @@
+
+分支操作：
+1：新建并切换到分支，充当前master分支切入分支
+tt_demo1 liqilin$ git checkout -b fix
+M       src/main/java/com/tt/manager/ManagerGet.java
+M       src/main/java/com/tt/tool/Config.java
+M       src/main/java/com/tt/tool/CookieTools.java
+M       src/main/webapp/WEB-INF/jsp/manager/header.jsp
+Switched to a new branch 'fix'
+
+2、关联到远程分支
+git branch --set-upstream-to=tt/fix 
+
+3、取消对master的跟踪
+git branch --unset-upstream master
+
+其他命令：
+查看远程分支
+git branch -r 
