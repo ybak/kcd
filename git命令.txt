@@ -1,3 +1,6 @@
+这个是ttTest分支的
+
+
 git init     在目录中创建新的 Git 仓库
 
 git clone     拷贝一个 Git 仓库到本地
@@ -21,3 +24,6 @@ git mv 命令用于移动或重命名一个文件、目录、软连接
  git pull：是从远程获取最新版本到本地，并自动merge；
  git fetch：是从远程获取最新版本到本地，不会自动merge；
  git merge：是用于从指定的commit(s)合并到当前分支，用来合并两个分支；
+
+
+ 
