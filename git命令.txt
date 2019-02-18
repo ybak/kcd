@@ -1,29 +1,29 @@
-�����ttTest��֧��
+这个是ttTest分支的
 
 
-git init     ��Ŀ¼�д����µ� Git �ֿ�
+git init     在目录中创建新的 Git 仓库
 
-git clone     ����һ�� Git �ֿ⵽����
+git clone     拷贝一个 Git 仓库到本地
 
-git status -s   �������ڲ鿴��Ŀ�ĵ�ǰ״̬
+git status -s   命令用于查看项目的当前状态
 
-git add     ����ɽ����ļ����ӵ�����
+git add     命令可将该文件添加到缓存
 
-git add .     ���������ӵ�ǰ��Ŀ�������ļ�
+git add .     命令来添加当前项目的所有文件
 
-git commit    ���������������ӵ��ֿ���
+git commit    将缓存区内容添加到仓库中
 
-git reset HEAD  ��������ȡ���ѻ��������
+git reset HEAD  命令用于取消已缓存的内容
 
-git rm  �� Git ���Ƴ�ĳ���ļ�   ���ɾ��֮ǰ�޸Ĺ������Ѿ��ŵ��ݴ�����Ļ��������Ҫ��ǿ��ɾ��ѡ�� -f
+git rm  从 Git 中移除某个文件   如果删除之前修改过并且已经放到暂存区域的话，则必须要用强制删除选项 -f
 
-git mv ���������ƶ���������һ���ļ���Ŀ¼��������
+git mv 命令用于移动或重命名一个文件、目录、软连接
 
- git commit���ǽ������޸Ĺ����ļ��ύ�����ؿ��У�
- git push���ǽ����ؿ��е�������Ϣ���͸�Զ�̿⣻
- git pull���Ǵ�Զ�̻�ȡ���°汾�����أ����Զ�merge��
- git fetch���Ǵ�Զ�̻�ȡ���°汾�����أ������Զ�merge��
- git merge�������ڴ�ָ����commit(s)�ϲ�����ǰ��֧�������ϲ�������֧��
+ git commit：是将本地修改过的文件提交到本地库中；
+ git push：是将本地库中的最新信息发送给远程库；
+ git pull：是从远程获取最新版本到本地，并自动merge；
+ git fetch：是从远程获取最新版本到本地，不会自动merge；
+ git merge：是用于从指定的commit(s)合并到当前分支，用来合并两个分支；
 
 
  
