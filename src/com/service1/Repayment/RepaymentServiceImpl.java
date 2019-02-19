@@ -38,13 +38,13 @@ public class RepaymentServiceImpl implements RepaymentService{
 	}
 
 	@Override
-	public List<Map> selectafter(String c_cardno) {
+	public List<Map> selectafter(Integer c_cardno) {
 		// TODO Auto-generated method stub
 		return repaymentMapper.selectafter(c_cardno);
 	}
 
 	@Override
-	public Map<String, Object> selectzdr(String c_cardno) {
+	public Map<String, Object> selectzdr(Integer c_cardno) {
 		// TODO Auto-generated method stub
 		return repaymentMapper.selectzdr(c_cardno);
 	}

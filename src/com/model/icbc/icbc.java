@@ -138,9 +138,12 @@ public class icbc {
     private String gjr_zx_result1 ;
     private String gjr_zx_result2;
     private String po_dsj_report_id;
-    private String gjr_dsj_report_id1 ;
+    private String gjr_dsj_report_id1;
     private String gjr_dsj_report_id2;
     private String imgstep8_1ss;
+    private String po_dsj_result;
+    private String gjr_dsj_result1;
+    private String gjr_dsj_result2;
     private int zjlx;
 	public int getId() {
 		return id;
@@ -957,6 +960,24 @@ public class icbc {
 	}
 	public void setZjlx(int zjlx) {
 		this.zjlx = zjlx;
+	}
+	public String getPo_dsj_result() {
+		return po_dsj_result;
+	}
+	public void setPo_dsj_result(String po_dsj_result) {
+		this.po_dsj_result = po_dsj_result;
+	}
+	public String getGjr_dsj_result1() {
+		return gjr_dsj_result1;
+	}
+	public void setGjr_dsj_result1(String gjr_dsj_result1) {
+		this.gjr_dsj_result1 = gjr_dsj_result1;
+	}
+	public String getGjr_dsj_result2() {
+		return gjr_dsj_result2;
+	}
+	public void setGjr_dsj_result2(String gjr_dsj_result2) {
+		this.gjr_dsj_result2 = gjr_dsj_result2;
 	}
 
     

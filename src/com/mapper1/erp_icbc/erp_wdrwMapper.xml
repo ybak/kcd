@@ -86,11 +86,24 @@ LEFT JOIN icbc_erp_kj_icbc_result kir ON kir.qryid=ki.id
 where kir.qryid=ki.id and ki.status=kir.status and ki.type_id=kir.type_id
 ) w2 WHERE w2.status=w1.status and w2.type_id=w1.type_id and w2.icbc_id=w1.icbc_id
 )
-<if test="status_id!=null and status_id!=''">
+<if test="status_id!=null and status_id.size()>0">
 and icbc.mid_add in 
 <foreach collection="status_id" item="dramaId" open="(" close=")" separator=",">
 #{dramaId}
 </foreach>
+</if>
+<if test="cn=='w1'">
+<choose>
+<when test="erp_status!=null and erp_status.size()>0">
+and w1.status in 
+<foreach collection="erp_status" item="dramaId" open="(" close=")" separator=",">
+#{dramaId}
+</foreach>
+</when>
+<otherwise>
+and w1.status &lt; 0
+</otherwise>
+</choose>
 </if>
 <if test="ywlx_id!=null and ywlx_id!=''">
 and w1.type_id=#{ywlx_id}
@@ -187,7 +200,7 @@ select * from  icbc_erp_kj_icbc where id=#{id}
 </if>
 <if test="dn=='icbc_erp_kj_icbc'">
 select 
-*,
+icbc.*,
 fs.`name` as fsname,
 gems.`name` as gemsname,
 cars.id as carsid,
@@ -277,7 +290,8 @@ LEFT JOIN icbc_erp_commontype commontype on commontype.id=kir.type_id
 LEFT JOIN icbc_erp_commtaskname  taskname on taskname.`status`=kir.status
 LEFT JOIN assess_fs fs on icbc.gems_fs_id=fs.id
 LEFT JOIN assess_gems gems on icbc.gems_id=gems.id
-where kir.icbc_id=#{icbc_id} and kir.type_id=#{type_id}
+where kir.icbc_id=#{icbc_id} and kir.type_id=#{type_id} 
+and kir.qryid=#{qryid}
 ORDER BY kir.id asc
 </if>
 <!-- 处理过程 评估板块 -->
@@ -300,7 +314,8 @@ LEFT JOIN icbc_erp_commontype commontype on commontype.id=kir.type_id
 LEFT JOIN icbc_erp_commtaskname  taskname on taskname.`status`=kir.status
 LEFT JOIN assess_fs fs on admin.icbc_erp_fsid=fs.id
 LEFT JOIN assess_gems gems on admin.gemsid=gems.id
-where kir.icbc_id=#{icbc_id} and kir.type_id=#{type_id}
+where kir.icbc_id=#{icbc_id} 
+and kir.type_id=#{type_id} and kir.qryid=#{qryid}
 ORDER BY kir.id asc
 </if>
 <!--处理过程-【其他没有表的板块公用 】-->
@@ -321,7 +336,10 @@ LEFT JOIN icbc_erp_commontype commontype on commontype.id=kir.type_id
 LEFT JOIN icbc_erp_commtaskname  taskname on taskname.`status`=kir.status
 LEFT JOIN assess_fs fs on eki.gems_fs_id=fs.id
 LEFT JOIN assess_gems gems on eki.gems_id=gems.id
-where kir.icbc_id=#{icbc_id} and kir.type_id=#{type_id} and kir.status!=0
+where kir.icbc_id=#{icbc_id} 
+and kir.type_id=#{type_id}
+and kir.qryid=#{qryid}
+and kir.status!=0
 ORDER BY kir.id asc
 </if>
 <!--处理过程  开卡板块  -->
@@ -345,7 +363,9 @@ LEFT JOIN icbc_erp_commontype commontype on commontype.id=kir.type_id
 LEFT JOIN icbc_erp_commtaskname  taskname on taskname.`status`=kir.status
 LEFT JOIN assess_fs fs on kk.gems_fs_id=fs.id
 LEFT JOIN assess_gems gems on kk.gems_id=gems.id
-where kir.icbc_id=#{icbc_id} and kir.type_id=#{type_id}
+where kir.icbc_id=#{icbc_id} 
+and kir.type_id=#{type_id}
+and kir.qryid=#{qryid}
 ORDER BY kir.id asc
 </if>
 <!--处理过程  视频面签板块  -->
@@ -368,7 +388,9 @@ LEFT JOIN icbc_erp_commontype commontype on commontype.id=kir.type_id
 LEFT JOIN icbc_erp_commtaskname  taskname on taskname.`status`=kir.status
 LEFT JOIN assess_fs fs on mq.gems_fs_id=fs.id
 LEFT JOIN assess_gems gems on mq.gems_id=gems.id
-where kir.icbc_id=#{icbc_id} and kir.type_id=#{type_id}
+where kir.icbc_id=#{icbc_id} 
+and kir.type_id=#{type_id}
+and kir.qryid=#{qryid}
 ORDER BY kir.id asc
 </if>
 <!-- 处理过程  汽车贷款 -->
@@ -391,7 +413,9 @@ LEFT JOIN icbc_erp_commontype commontype on commontype.id=kir.type_id
 LEFT JOIN icbc_erp_commtaskname  taskname on taskname.`status`=kir.status
 LEFT JOIN assess_fs fs on dk.gems_fs_id=fs.id
 LEFT JOIN assess_gems gems on dk.gems_id=gems.id
-where kir.icbc_id=#{icbc_id} and kir.type_id=#{type_id}
+where kir.icbc_id=#{icbc_id} 
+and kir.type_id=#{type_id}
+and kir.qryid=#{qryid}
 ORDER BY kir.id asc
 </if>
 <!-- 资金分配 -->
@@ -412,7 +436,9 @@ LEFT JOIN icbc_erp_commontype commontype on commontype.id=kir.type_id
 LEFT JOIN icbc_erp_commtaskname  taskname on taskname.`status`=kir.status
 LEFT JOIN assess_fs fs on eki.gems_fs_id=fs.id
 LEFT JOIN assess_gems gems on eki.gems_id=gems.id
-where kir.icbc_id=#{icbc_id} and kir.type_id=#{type_id}
+where kir.icbc_id=#{icbc_id} 
+and kir.type_id=#{type_id}
+and kir.qryid=#{qryid}
 ORDER BY kir.id asc
 </if>
 <!-- 查询征信所有 -->
@@ -541,11 +567,25 @@ LEFT JOIN icbc_erp_kj_icbc_result kir ON kir.qryid=ki.id
 where kir.qryid=ki.id and ki.status=kir.status and ki.type_id=kir.type_id
 ) w2 WHERE w2.status=w1.status and w2.type_id=w1.type_id and w2.icbc_id=w1.icbc_id
 )
-<if test="status_id!=null and status_id!=''">
+<if test="status_id!=null and status_id.size()>0">
 and icbc.mid_add in 
 <foreach collection="status_id" item="dramaId" open="(" close=")" separator=",">
 #{dramaId}
 </foreach>
+</if>
+<if test="cn=='w1'">
+<choose>
+<when test="erp_status!=null and erp_status.size()>0">
+and w1.status in 
+<foreach collection="erp_status" item="dramaId" open="(" close=")" separator=",">
+#{dramaId}
+</foreach>
+</when>
+<otherwise>
+and w1.status &lt; 0
+</otherwise>
+</choose>
+
 </if>
 <if test="ywlx_id!=null and ywlx_id!=''">
 and w1.type_id=#{ywlx_id}

@@ -27,11 +27,11 @@ public interface RepaymentMapper {
    /**
     * 查询贷后信息
     */
-   List<Map> selectafter (@Param("c_cardno")String c_cardno);
+   List<Map> selectafter (@Param("c_cardno")Integer c_cardno);
    
    /**
     * 查询主贷人信息
     */
-   Map<String, Object> selectzdr(String c_cardno);
+   Map<String, Object> selectzdr(Integer c_cardno);
 
 }

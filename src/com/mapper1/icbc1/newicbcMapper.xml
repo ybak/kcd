@@ -294,6 +294,10 @@ ORDER BY ki.dt_edit DESC
   <if test="po_dsj_report_id!=null and po_dsj_report_id!=''">po_dsj_report_id=#{po_dsj_report_id}, </if>
   <if test="gjr_dsj_report_id1!=null and gjr_dsj_report_id1!=''">gjr_dsj_report_id1=#{gjr_dsj_report_id1}, </if>
   <if test="gjr_dsj_report_id2!=null and gjr_dsj_report_id2!=''">gjr_dsj_report_id2=#{gjr_dsj_report_id2}, </if>
+  <if test="po_dsj_result!=null and po_dsj_result!=''">po_dsj_result=#{po_dsj_result}, </if>
+  <if test="gjr_dsj_result1!=null and gjr_dsj_result1!=''">gjr_dsj_result1=#{gjr_dsj_result1}, </if>
+  <if test="gjr_dsj_result2!=null and gjr_dsj_result2!=''">gjr_dsj_result2=#{gjr_dsj_result2}, </if>
+  
   </trim>
   where id=#{id}
  </update>

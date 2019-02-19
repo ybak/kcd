@@ -81,10 +81,10 @@ String dateString = formatter.format(date);
 			        <div class="input-group">
 						<input class="form-control" name="dsj_report_id" id="dsj_report_id" value="${pd.dsj_report_id }" type="text">
 					    <span class="input-group-addon">
-						<a style="color: #72afd2;" href="javascript:queryid('${pd.c_name }','${pd.c_tel }','${pd.c_cardno }','dsj_report_id')">获取编码</a>
+						<a style="color: #72afd2;" href="javascript:queryid('${requestScope.icbc_id }','1','${pd.c_name }','${pd.c_tel }','${pd.c_cardno }','dsj_report_id')">获取编码</a>
 						</span>
 						<span class="input-group-addon">
-						<a   style="color: #72afd2;" href="javascript:dsj_bg('dsj_report_id');">查看报告</a>
+						<a   style="color: #72afd2;" href="javascript:dsj_bg('${requestScope.icbc_id }','1','dsj_report_id');">查看报告</a>
 						</span>
 					</div>
 					</div>
@@ -107,10 +107,10 @@ String dateString = formatter.format(date);
 			        <div class="input-group">
 						<input class="form-control" name="gjr_dsj_report_id1" id="gjr_dsj_report_id1" value="${pd.gjr_dsj_report_id1 }" type="text">
 					    <span class="input-group-addon">
-						<a style="color: #72afd2;" href="javascript:queryid('${pd.c_name_gj1 }','${pd.c_tel_gj1 }','${pd.c_cardno_gj1 }','gjr_dsj_report_id1')">获取编码</a>
+						<a style="color: #72afd2;" href="javascript:queryid('${requestScope.icbc_id }','3','${pd.c_name_gj1 }','${pd.c_tel_gj1 }','${pd.c_cardno_gj1 }','gjr_dsj_report_id1')">获取编码</a>
 						</span>
 						<span class="input-group-addon">
-						<a   style="color: #72afd2;" href="javascript:dsj_bg('gjr_dsj_report_id1');">查看报告</a>
+						<a   style="color: #72afd2;" href="javascript:dsj_bg('${requestScope.icbc_id }','3','gjr_dsj_report_id1');">查看报告</a>
 						</span>
 					</div>
 					</div>
@@ -132,10 +132,10 @@ String dateString = formatter.format(date);
 			        <div class="input-group">
 						<input class="form-control" name="gjr_dsj_report_id2" id="gjr_dsj_report_id2" value="${pd.gjr_dsj_report_id2 }" type="text">
 					    <span class="input-group-addon">
-						<a style="color: #72afd2;" href="javascript:queryid('${pd.c_name_gj2 }','${pd.c_tel_gj2 }','${pd.c_cardno_gj2 }','gjr_dsj_report_id2')">获取编码</a>
+						<a style="color: #72afd2;" href="javascript:queryid('${requestScope.icbc_id }','4','${pd.c_name_gj2 }','${pd.c_tel_gj2 }','${pd.c_cardno_gj2 }','gjr_dsj_report_id2')">获取编码</a>
 						</span>
 						<span class="input-group-addon">
-						<a   style="color: #72afd2;" href="javascript:dsj_bg('gjr_dsj_report_id2');">查看报告</a>
+						<a   style="color: #72afd2;" href="javascript:dsj_bg('${requestScope.icbc_id }','4','gjr_dsj_report_id2');">查看报告</a>
 						</span>
 					</div>
 					</div>
@@ -157,10 +157,10 @@ String dateString = formatter.format(date);
 			        <div class="input-group">
 						<input class="form-control" name="po_dsj_report_id" id="po_dsj_report_id" value="${pd.po_dsj_report_id }" type="text">
 					    <span class="input-group-addon">
-						<a style="color: #72afd2;" href="javascript:queryid('${pd.c_name_mt }','${pd.c_tel_mt }','${pd.c_cardno_mt }','po_dsj_report_id')">获取编码</a>
+						<a style="color: #72afd2;" href="javascript:queryid('${requestScope.icbc_id }','2','${pd.c_name_mt }','${pd.c_tel_mt }','${pd.c_cardno_mt }','po_dsj_report_id')">获取编码</a>
 						</span>
 						<span class="input-group-addon">
-						<a   style="color: #72afd2;" href="javascript:dsj_bg('po_dsj_report_id');">查看报告</a>
+						<a   style="color: #72afd2;" href="javascript:dsj_bg('${requestScope.icbc_id }','2','po_dsj_report_id');">查看报告</a>
 						</span>
 					</div>
 					</div>
@@ -175,23 +175,27 @@ String dateString = formatter.format(date);
 </div>
 </form>
 <script type="text/javascript">
-     function queryid(name,phone,cardno,dsjname) {
+     function queryid(id,dsj_type,name,mobileNo,idCardNo,dsjname) {
     	 $.ajax({
   		   type: "post",
   		   dataType:"json",
-  		   url: "${pageContext.request.contextPath }/dsj_report_id.do",
+  		   url: "${pageContext.request.contextPath }/automobileFinance/dsj_Pre_loanAssessmentReport.do",
   		   data:{
-  			 name : name,
-  			 phone : phone,
-  			 cardno : cardno
+  			 id : id,
+  			dsj_type : dsj_type,
+  			name : name,
+  			idCardNo : idCardNo,
+  			mobileNo : mobileNo
   		   },
-  		   success: function(msg){  		    
-  		    if(msg.success==true){  
+  		   success: function(msg){  
+  			 alert(msg.msg);
+  			 document.getElementById(dsjname).value=msg.result_code;   
+  		    /* if(msg.success==true){  
   		    	alert("获取成功!");
   		    	document.getElementById(dsjname).value=msg.report_id;		
   		    }else{
   		    	alert("获取失败，请重试...");
-  		    }
+  		    } */
   		   },
   		   error:function(){
 	          alert("系统错误，请稍后重试...");         
@@ -219,10 +223,10 @@ String dateString = formatter.format(date);
     		   
              });
      }
-     function dsj_bg(report_id) {
+     function dsj_bg(id,dsjtype,report_id) {
     	 var dsj_code=document.getElementById(report_id).value;
     	 if(dsj_code!=null&&dsj_code!=""){
-    		 var frameSrc="${pageContext.request.contextPath }/dsj_result_jsp.do?report_id="+dsj_code;
+    		 var frameSrc="${pageContext.request.contextPath }/automobileFinance/get_dsj_result.do?id="+id+"&dsjtype="+dsjtype;
       	   //给iframe加上src路径
            $("#NoPermissioniframe").attr("src", frameSrc);
             //显示模态框  只有在选择编辑的行   然后根据回调函数成功后才会显示模态框

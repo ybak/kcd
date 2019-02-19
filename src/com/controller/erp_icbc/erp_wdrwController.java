@@ -3432,7 +3432,8 @@ public class erp_wdrwController {
 		request.setAttribute("yw_id", yw_id);
 		PageData pData = new PageData();
 		pData.put("dn", "icbc_erp_kj_icbc");
-		pData.put("icbc_id", icbc_id);		
+		pData.put("icbc_id", icbc_id);	
+//		pData.put("qryid", yw_id);
 		System.out.println("主订单id:" + icbc_id);
 		
 		       
@@ -3525,8 +3526,10 @@ public class erp_wdrwController {
 					pd001.put("dn", "001");
 					pd001.put("icbc_id", icbc_id);
 					pd001.put("type_id", type_id);
+					pd001.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd001);
 					//获取板块最后一条数据
+					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
 					request.setAttribute("pData2", pData2);
 					// 获取征信表id
@@ -3572,6 +3575,7 @@ public class erp_wdrwController {
 					if(pData2.get("status").toString().equals("8")){
 						erp_status = 8;
 					}
+					}
 				}
 				// 3.汽车评估板块
 				if (type_id.equals("3")) {
@@ -3579,8 +3583,10 @@ public class erp_wdrwController {
 					pd001.put("dn", "003");
 					pd001.put("icbc_id", icbc_id);
 					pd001.put("type_id", type_id);
+					pd001.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd001);
-					PageData pData2 = erp15.get(erp15.size() - 1);
+					if(erp15.size()>0){
+					PageData pData2 = erp15.get(erp15.size()-1);
 					request.setAttribute("pData2",pData2);
 					// 获取评估表id
 					request.setAttribute("cars_id", pData2.get("cars_id"));
@@ -3602,6 +3608,7 @@ public class erp_wdrwController {
 					if (pData2.get("status").toString().equals("12")) {
 						erp_status = 12;
 					}
+					}
 				}
 
 				// 4.银行电审
@@ -3610,7 +3617,9 @@ public class erp_wdrwController {
 					pd004.put("dn", "004");
 					pd004.put("icbc_id", icbc_id);
 					pd004.put("type_id", type_id);
+					pd004.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd004);
+					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
 					request.setAttribute("pData2",pData2);
 					switch (pData2.get("status").toString()) {
@@ -3634,7 +3643,7 @@ public class erp_wdrwController {
 						erp_status = Integer.parseInt(pData2.get("status").toString());
 						break;
 					}
-
+					}
 				}
 				// 开卡申请板块
 				if (type_id.equals("5")) {
@@ -3642,7 +3651,9 @@ public class erp_wdrwController {
 					pd005.put("dn", "005");
 					pd005.put("icbc_id", icbc_id);
 					pd005.put("type_id", type_id);
+					pd005.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd005);
+					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
 					request.setAttribute("pData2",pData2);
 					// 获取开卡表id
@@ -3709,6 +3720,7 @@ public class erp_wdrwController {
 						erp_status = Integer.parseInt(pData2.get("status").toString());
 						break;
 					}
+					}
 
 				}
 				// 视频面签板块
@@ -3717,7 +3729,9 @@ public class erp_wdrwController {
 					pd006.put("dn", "006");
 					pd006.put("icbc_id", icbc_id);
 					pd006.put("type_id", type_id);
+					pd006.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd006);
+					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
 					request.setAttribute("pData2",pData2);
 					switch (pData2.get("status").toString()) {
@@ -3741,6 +3755,7 @@ public class erp_wdrwController {
 						erp_status = Integer.parseInt(pData2.get("status").toString());
 						break;
 					}
+					}
 
 				}
 				
@@ -3755,6 +3770,7 @@ public class erp_wdrwController {
 					pd008.put("dn", "008");
 					pd008.put("icbc_id", icbc_id);
 					pd008.put("type_id", type_id);
+					pd008.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd008);
 					PageData pdyhds = new PageData();
 					pdyhds.put("dn", "yhds_tocode");
@@ -3766,6 +3782,7 @@ public class erp_wdrwController {
 						System.out.println("银行电审："+yhdspd.get("result_1_code"));
 						request.setAttribute("yhds_code", yhdspd.get("result_1_code"));
 					}
+					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
 					request.setAttribute("pData2",pData2);
 					switch (pData2.get("status").toString()) {
@@ -3887,7 +3904,7 @@ public class erp_wdrwController {
 						erp_status = Integer.parseInt(pData2.get("status").toString());
 						break;
 					}
-
+					}
 				}
 				// 资金分配板块
 				if (type_id.equals("10")) {
@@ -3900,7 +3917,9 @@ public class erp_wdrwController {
 					pd006.put("dn", "010");
 					pd006.put("icbc_id", icbc_id);
 					pd006.put("type_id", type_id);
+					pd006.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd006);
+					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
 					request.setAttribute("pData2",pData2);
 					switch (pData2.get("status").toString()) {
@@ -4006,7 +4025,7 @@ public class erp_wdrwController {
 						erp_status = Integer.parseInt(pData2.get("status").toString());
 						break;
 					}
-
+					}
 				}
 				
 				// 16.融资板块
@@ -4015,7 +4034,9 @@ public class erp_wdrwController {
 					pd006.put("dn", "004");
 					pd006.put("icbc_id", icbc_id);
 					pd006.put("type_id", type_id);
+					pd006.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd006);
+					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
 					request.setAttribute("pData2",pData2);
 					switch (pData2.get("status").toString()) {
@@ -4045,7 +4066,7 @@ public class erp_wdrwController {
 						erp_status = Integer.parseInt(pData2.get("status").toString());
 						break;
 					}
-
+					}
 				}
 				//11.银行贷款申请板块
 				if(type_id.equals("11")){
@@ -4053,7 +4074,9 @@ public class erp_wdrwController {
 					pd0011.put("dn","004");
 					pd0011.put("icbc_id", icbc_id);
 					pd0011.put("type_id", type_id);
+					pd0011.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd0011);
+					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
 					request.setAttribute("pData2",pData2);
 					switch(pData2.get("status").toString()){
@@ -4140,7 +4163,7 @@ public class erp_wdrwController {
 						erp_status=Integer.parseInt(pData2.get("status").toString());
 					    break;
 					}
-					
+					}
 				}
 				
 				
@@ -4150,7 +4173,9 @@ public class erp_wdrwController {
 					pd006.put("dn", "004");
 					pd006.put("icbc_id", icbc_id);
 					pd006.put("type_id", type_id);
+					pd006.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd006);
+					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
 					request.setAttribute("pData2", pData2);
 					switch(pData2.get("status").toString()){
@@ -4183,6 +4208,7 @@ public class erp_wdrwController {
 						erp_status=Integer.parseInt(pData2.get("status").toString());
 					    break;
 					}
+					}
 				}
 				//9.内审通融板块
 				if(type_id.equals("9")){
@@ -4190,7 +4216,9 @@ public class erp_wdrwController {
 					pd006.put("dn", "004");
 					pd006.put("icbc_id", icbc_id);
 					pd006.put("type_id", type_id);
+					pd006.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd006);
+					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
 					request.setAttribute("pData2",pData2);
 					switch(pData2.get("status").toString()){
@@ -4220,7 +4248,7 @@ public class erp_wdrwController {
 						erp_status=Integer.parseInt(pData2.get("status").toString());
 					    break;
 					}
-					
+					}
 				}
    				//12.公司归档板块
 				if(type_id.equals("12")){
@@ -4228,7 +4256,9 @@ public class erp_wdrwController {
 					pd0011.put("dn","004");
 					pd0011.put("icbc_id", icbc_id);
 					pd0011.put("type_id", type_id);
+					pd0011.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd0011);
+					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
 					request.setAttribute("pData2",pData2);
 					switch(pData2.get("status").toString()){
@@ -4261,7 +4291,7 @@ public class erp_wdrwController {
 						erp_status=Integer.parseInt(pData2.get("status").toString());
 					    break;
 					}
-					
+					}
 				}
 				//13.抵押归档
 				if(type_id.equals("13")){
@@ -4269,7 +4299,9 @@ public class erp_wdrwController {
 					pd006.put("dn", "004");
 					pd006.put("icbc_id", icbc_id);
 					pd006.put("type_id", type_id);
+					pd006.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd006);
+					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
 					request.setAttribute("pData2",pData2);
 					switch(pData2.get("status").toString()){
@@ -4416,7 +4448,7 @@ public class erp_wdrwController {
 						erp_status=Integer.parseInt(pData2.get("status").toString());
 					    break;
 					}
-					
+					}
 				}
 				//14.业务信息修改
 				if(type_id.equals("14")){
@@ -4424,7 +4456,9 @@ public class erp_wdrwController {
 					pd006.put("dn", "004");
 					pd006.put("icbc_id", icbc_id);
 					pd006.put("type_id", type_id);
+					pd006.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd006);
+					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
 					request.setAttribute("pData2",pData2);
 					switch(pData2.get("status").toString()){
@@ -4451,6 +4485,7 @@ public class erp_wdrwController {
 						erp_status=Integer.parseInt(pData2.get("status").toString());
 					    break;
 					}
+					}
 				}
 				//15.退单退费
 				//15.退单退费修改
@@ -4459,7 +4494,9 @@ public class erp_wdrwController {
 					pd006.put("dn", "004");
 					pd006.put("icbc_id", icbc_id);
 					pd006.put("type_id", type_id);
+					pd006.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd006);
+					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
 					request.setAttribute("pData2",pData2);
 					switch(pData2.get("status").toString()){
@@ -4547,6 +4584,7 @@ public class erp_wdrwController {
 					default:
 						erp_status=Integer.parseInt(pData2.get("status").toString());
 					    break;
+					}
 					}
 				}
 				// erp处理过程通用板块--开始

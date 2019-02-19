@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,6 +53,14 @@ public class erp_wdrw_2Controller {
 	private admin_msgService admin_msgService;
 	@Autowired
 	private erp_fiveModelService erp_fiveModelService;
+	
+	//通过HashSet踢除重复元素
+	public static List removeDuplicate(List list) {   
+	    HashSet h = new HashSet(list);   
+	    list.clear();   
+	    list.addAll(h);   
+	    return list;   
+	}   
 	
 	@RequestMapping(value = "erp/wdrw_list.do", produces = "text/html;charset=UTF-8")
 	public String wdrw_list_up(
@@ -234,7 +243,357 @@ public class erp_wdrw_2Controller {
 			pd1.put("pagenow",(pn-1)*ps);
 			pd1.put("pagesize",ps);
 			pd1.put("dn", dn);
+			pd1.put("cn", "w1");
 			pd1_count.put("dn", dn+"_count");
+			pd1_count.put("cn", "w1");
+			
+			//权限内状态 变更
+			List<Integer> erp_statuslist=new ArrayList<>();//变更后权限集合
+			System.out.println("权限map:"+pdsession.get("purview_map"));
+			if(pdsession.get("purview_map")!=null&&!pdsession.get("purview_map").equals("")){
+			String qxs=pdsession.get("purview_map").toString();
+		    String[] sl=qxs.split(",");
+		    for(int i=0;i<sl.length;i++){
+		    	System.out.println("数组："+sl[i]);
+		    	if(sl[i].indexOf("_")>0){
+		        // System.out.println("权限对应数字："+sl[i].substring(sl[i].lastIndexOf("_")+1, sl[i].length()));
+		    	String status=sl[i].substring(sl[i].lastIndexOf("_")+1, sl[i].length());
+		    		//System.out.println("权限对应状态："+status);
+		    		if(status!=null&&!status.equals("")){
+		    			switch (status.toString()) {
+		    			case "2":
+		    				erp_statuslist.add(1);
+		    				erp_statuslist.add(3);
+							break;
+		    			case "3":
+		    				erp_statuslist.add(2);
+							break;
+//		    			case "4":
+//		    				erp_statuslist.add(4);
+//							break;
+		    			case "5":
+		    				erp_statuslist.add(7);
+							break;
+		    			case "6":
+		    				erp_statuslist.add(5);
+							break;
+		    			case "7":
+		    				erp_statuslist.add(6);
+							break;
+		    			case "8":
+		    				erp_statuslist.add(7);
+		    				//erp_statuslist.add(8);
+							break;
+		    			case "10":
+		    				erp_statuslist.add(9);
+		    				erp_statuslist.add(11);
+							break;	
+		    			case "11":
+		    				erp_statuslist.add(10);
+							break;
+		    			case "12":
+		    				erp_statuslist.add(11);
+		    				//erp_statuslist.add(12);
+							break;
+		    			case "14":
+		    				erp_statuslist.add(13);
+		    				erp_statuslist.add(15);
+							break;
+		    			case "15":
+		    				erp_statuslist.add(14);
+							break;
+		    			case "16":
+		    				erp_statuslist.add(15);
+		    				//erp_statuslist.add(16);
+							break;
+		    			case "18":
+		    				erp_statuslist.add(17);
+		    				erp_statuslist.add(19);
+		    				erp_statuslist.add(20);
+							break;
+		    			case "19":
+		    				erp_statuslist.add(18);
+							break;
+		    			case "20":
+		    				erp_statuslist.add(19);
+							break;
+		    			case "21":
+		    				erp_statuslist.add(20);
+		    				//erp_statuslist.add(21);
+							break;
+		    			case "23":
+		    				erp_statuslist.add(22);
+		    				erp_statuslist.add(24);
+							break;
+		    			case "24":
+		    				erp_statuslist.add(23);
+							break;
+		    			case "25":
+		    				erp_statuslist.add(24);
+		    				//erp_statuslist.add(25);
+							break;
+		    			case "98":
+		    				erp_statuslist.add(26);
+		    				erp_statuslist.add(27);
+		    				erp_statuslist.add(29);
+							break;
+		    			case "27":
+		    				erp_statuslist.add(98);
+							break;
+		    			case "29":
+		    				erp_statuslist.add(27);
+							break;
+		    			case "30":
+		    				erp_statuslist.add(27);
+		    				erp_statuslist.add(29);
+		    				//erp_statuslist.add(30);
+							break;
+		    			case "32":
+		    				erp_statuslist.add(31);
+							break;
+		    			case "33":
+		    				erp_statuslist.add(32);
+							break;
+		    			case "40":
+		    				erp_statuslist.add(33);
+		    				erp_statuslist.add(37);
+		    				erp_statuslist.add(39);
+		    				//erp_statuslist.add(40);
+							break;
+		    			case "31":
+		    				erp_statuslist.add(33);
+		    				erp_statuslist.add(37);
+		    				erp_statuslist.add(39);
+							break;
+		    			case "34":
+		    				erp_statuslist.add(33);
+							break;
+		    			case "35":
+		    				erp_statuslist.add(34);
+		    				erp_statuslist.add(35);
+		    				
+							break;
+		    			case "37":
+		    				erp_statuslist.add(36);
+		    				
+							break;
+		    			case "38":
+		    				erp_statuslist.add(37);
+							break;
+		    			case "39":
+		    				erp_statuslist.add(38);
+							break;
+		    			case "42":
+		    				erp_statuslist.add(41);
+							break;
+		    			case "43":
+		    				erp_statuslist.add(42);
+							break;
+		    			case "44":
+		    				erp_statuslist.add(43);
+							break;
+		    			case "45":
+		    				erp_statuslist.add(44);
+							break;
+		    			case "46":
+		    				erp_statuslist.add(45);
+		    				//erp_statuslist.add(46);
+		    				
+							break;
+		    			case "48":
+		    				erp_statuslist.add(47);
+		    				erp_statuslist.add(52);
+							break;
+		    			case "49":
+		    				erp_statuslist.add(47);
+		    				erp_statuslist.add(99);
+		    				erp_statuslist.add(51);
+		    				erp_statuslist.add(52);
+							break;
+		    			case "52":
+		    				erp_statuslist.add(48);
+							break;
+		    			case "99":
+		    				erp_statuslist.add(49);
+							break;	
+		    			case "50":
+		    				erp_statuslist.add(99);
+		    				erp_statuslist.add(51);
+		    				erp_statuslist.add(54);
+							break;	
+		    			case "51":
+		    				erp_statuslist.add(50);
+		    				
+							break;
+		    			case "55":
+		    				erp_statuslist.add(51);
+		    				//erp_statuslist.add(55);
+							break;
+		    			case "54":
+		    				erp_statuslist.add(51);
+							break;
+		    			case "57":
+		    				erp_statuslist.add(56);
+		    				erp_statuslist.add(58);
+		    				erp_statuslist.add(63);
+							break;
+		    			case "58":
+		    				erp_statuslist.add(57);
+		    				erp_statuslist.add(59);
+							break;
+		    			case "59":
+		    				erp_statuslist.add(58);
+							break;
+		    			case "60":
+		    				erp_statuslist.add(60);
+		    				erp_statuslist.add(59);
+		    				erp_statuslist.add(61);
+							break;
+		    			case "61":
+		    				erp_statuslist.add(60);
+		    				erp_statuslist.add(62);
+							break;
+		    			case "65":
+		    				erp_statuslist.add(60);
+		    				erp_statuslist.add(62);
+		    				//erp_statuslist.add(65);
+							break;
+		    			case "63":
+		    				erp_statuslist.add(60);
+		    				erp_statuslist.add(63);
+							break;
+		    			case "62":
+		    				erp_statuslist.add(61);
+							break;
+		    			case "64":
+		    				erp_statuslist.add(64);
+							break;
+		    			case "67":
+		    				erp_statuslist.add(66);
+		    				erp_statuslist.add(69);
+		    				erp_statuslist.add(70);
+							break;
+		    			case "68":
+		    				erp_statuslist.add(67);
+							break;
+		    			case "69":
+		    				erp_statuslist.add(67);
+							break;
+		    			case "70":
+		    				erp_statuslist.add(68);
+							break;
+		    			case "71":
+		    				erp_statuslist.add(70);
+		    				//erp_statuslist.add(71);
+							break;
+		    			case "73":
+		    				erp_statuslist.add(72);
+							break;
+		    			case "74":
+		    				erp_statuslist.add(73);
+		    				erp_statuslist.add(75);
+							break;
+		    			case "75":
+		    				erp_statuslist.add(74);
+		    				erp_statuslist.add(76);
+							break;
+		    			case "76":
+		    				erp_statuslist.add(75);
+							break;
+		    			case "77":
+		    				erp_statuslist.add(78);
+		    				erp_statuslist.add(76);
+							break;
+		    			case "78":
+		    				erp_statuslist.add(77);
+							break;
+		    			case "79":
+		    				erp_statuslist.add(78);
+		    				erp_statuslist.add(80);
+							break;
+		    			case "80":
+		    				erp_statuslist.add(79);
+		    				erp_statuslist.add(81);
+							break;
+		    			case "81":
+		    				erp_statuslist.add(80);
+							break;
+		    			case "82":
+		    				erp_statuslist.add(81);
+		    				//erp_statuslist.add(82);
+							break;
+		    			case "96":
+		    				erp_statuslist.add(83);
+							break;
+		    			case "84":
+		    				erp_statuslist.add(96);
+							break;
+		    			case "85":
+		    				erp_statuslist.add(84);
+							break;
+		    			case "86":
+		    				erp_statuslist.add(84);
+		    				erp_statuslist.add(85);
+		    				//erp_statuslist.add(86);
+							break;
+		    			case "97":
+		    				erp_statuslist.add(87);
+							break;
+		    			case "88":
+		    				erp_statuslist.add(97);
+		    				erp_statuslist.add(89);
+							break;
+		    			case "90":
+		    				erp_statuslist.add(88);
+							break;
+		    			case "89":
+		    				erp_statuslist.add(88);
+		    				erp_statuslist.add(90);
+							break;
+		    			case "91":
+		    				erp_statuslist.add(90);
+		    				erp_statuslist.add(92);
+							break;
+		    			case "93":
+		    				erp_statuslist.add(90);
+		    				erp_statuslist.add(92);
+		    				erp_statuslist.add(94);
+							break;
+		    			case "95":
+		    				erp_statuslist.add(90);
+		    				erp_statuslist.add(92);
+		    				erp_statuslist.add(94);
+		    				//erp_statuslist.add(95);
+							break;
+		    			case "92":
+		    				erp_statuslist.add(91);
+							break;
+		    			case "94":
+		    				erp_statuslist.add(93);
+							break;
+		    			case "101":
+		    				erp_statuslist.add(100);
+							break;
+		    			case "102":
+		    				erp_statuslist.add(101);
+		    				erp_statuslist.add(103);
+							break;
+		    			case "104":
+		    				erp_statuslist.add(101);
+		    				erp_statuslist.add(103);
+							break;
+		    			case "103":
+		    				erp_statuslist.add(102);
+							break;
+		    		}
+		    	}
+		    }
+		    }
+		    System.out.println("去重前数据:"+erp_statuslist);
+		    System.out.println("去重后数据:"+removeDuplicate(erp_statuslist));
+		    pd1.put("erp_status",removeDuplicate(erp_statuslist));
+		    pd1_count.put("erp_status",removeDuplicate(erp_statuslist));
+		    }
 			pd1_count_map=erp_wdrwService.icbc_form(pd1_count);
 	        pdList2 = erp_wdrwService.icbc_list(pd1);
 	        System.out.println("未分配权限前总数："+pdList2.size());
@@ -245,7 +604,7 @@ public class erp_wdrw_2Controller {
 	        String knname="";
 	        for(int i=0;i<pdList2.size();i++){
 	        	int erp_status=0;
-	        	PageData pData=pdList2.get(i);
+        	PageData pData=pdList2.get(i);
 	        	if(pData.get("kk_dk_price")!=null&&!pData.get("kk_dk_price").equals("")){
 	        		dkbj=Integer.parseInt(pData.get("kk_dk_price").toString());
 	        	}
@@ -874,66 +1233,66 @@ public class erp_wdrw_2Controller {
 	        		if(pd_names!=null&&!pd_names.equals("")){
 	        			pData.put("knname", pd_names.get("name"));
 	        		}
-	        		pdList1.add(pData);
+	        		pdList.add(pData);
 	        	}
 	        }
-	        System.out.println("判断状态后总数："+pdList1.size());
-	        System.out.println("判断状态后json："+jsonutil.toJSONArray(pdList1));
+	        System.out.println("判断状态后总数："+pdList.size());
+	        //System.out.println("判断状态后json："+jsonutil.toJSONArray(pdList1));
 			//获取权限 里面的对应审核状态
-			if(pdsession.get("purview_map")!=null&&!pdsession.get("purview_map").equals("")){
-			String qxs=pdsession.get("purview_map").toString();
-		    String[] sl=qxs.split(",");
-		    for(int i=0;i<sl.length;i++){
-		    	//System.out.println("数组："+sl[i]);
-		    	if(sl[i].indexOf("_")>0){
-		       //System.out.println("权限对应数字："+sl[i].substring(sl[i].lastIndexOf("_")+1, sl[i].length()));
-		    	String status=sl[i].substring(sl[i].lastIndexOf("_")+1, sl[i].length());
-		    	for(int j=0;j<pdList1.size();j++){
-		    		PageData pageData=pdList1.get(j);
-		    		//System.out.println("权限对应状态："+pageData.get("erp_status")+"--"+status);
-		    		if(pageData.get("erp_status")!=null&&!pageData.get("erp_status").equals("")){
-		    			if(status.equals(pageData.get("erp_status").toString())){
-		    				//System.out.println("相等的状态权限："+pageData.get("erp_status")+"--"+status);
-			    			pdList.add(pageData);
-			    		}
-		    		}
-		    	}
-		    }
-		    }
-		    }
-			System.out.println("分配权限后总数："+pdList.size());	
+//			if(pdsession.get("purview_map")!=null&&!pdsession.get("purview_map").equals("")){
+//			String qxs=pdsession.get("purview_map").toString();
+//		    String[] sl=qxs.split(",");
+//		    for(int i=0;i<sl.length;i++){
+//		    	//System.out.println("数组："+sl[i]);
+//		    	if(sl[i].indexOf("_")>0){
+//		       //System.out.println("权限对应数字："+sl[i].substring(sl[i].lastIndexOf("_")+1, sl[i].length()));
+//		    	String status=sl[i].substring(sl[i].lastIndexOf("_")+1, sl[i].length());
+//		    	for(int j=0;j<pdList1.size();j++){
+//		    		PageData pageData=pdList1.get(j);
+//		    		//System.out.println("权限对应状态："+pageData.get("erp_status")+"--"+status);
+//		    		if(pageData.get("erp_status")!=null&&!pageData.get("erp_status").equals("")){
+//		    			if(status.equals(pageData.get("erp_status").toString())){
+//		    				//System.out.println("相等的状态权限："+pageData.get("erp_status")+"--"+status);
+//			    			pdList.add(pageData);
+//			    		}
+//		    		}
+//		    	}
+//		    }
+//		    }
+//		    }
+		//System.out.println("分配权限后总数："+pdList.size());	
 	    }
 		//排序
-		 Collections.sort(pdList,new Comparator<PageData>() {
-	            /*
-	             * int compare(PageData o1, PageData o2) 返回一个基本类型的整型，
-	             * 返回负数表示：o1 小于o2，
-	             * 返回0 表示：o1和o2相等，
-	             * 返回正数表示：o1大于o2
-	             */
-				@Override
-				public int compare(PageData o1, PageData o2) {
-					 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					  Date sd1 = null;
-					  Date sd2 = null;
-					try {
-						sd1=df.parse(o1.get("dt_edit").toString());
-						sd2=df.parse(o2.get("dt_edit").toString());
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					  Integer i=sd1.compareTo(sd2);
-					//按照时间进行降序序排列
-	                if(i<0){
-	                    return 1;
-	                }
-	                if(i==0){
-	                    return 0;
-	                }
-	                return -1;
-				}
-	        });
+//		 Collections.sort(pdList,new Comparator<PageData>() {
+//	            /*
+//	             * int compare(PageData o1, PageData o2) 返回一个基本类型的整型，
+//	             * 返回负数表示：o1 小于o2，
+//	             * 返回0 表示：o1和o2相等，
+//	             * 返回正数表示：o1大于o2
+//	             */
+//				@Override
+//				public int compare(PageData o1, PageData o2) {
+//					 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//					  Date sd1 = null;
+//					  Date sd2 = null;
+//					try {
+//						sd1=df.parse(o1.get("dt_edit").toString());
+//						sd2=df.parse(o2.get("dt_edit").toString());
+//					} catch (ParseException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//					  Integer i=sd1.compareTo(sd2);
+//					//按照时间进行降序序排列
+//	                if(i<0){
+//	                    return 1;
+//	                }
+//	                if(i==0){
+//	                    return 0;
+//	                }
+//	                return -1;
+//				}
+//	        });
 		System.out.println("当前页："+pn+",每页数量："+ps);
 		//newpdList = limitutil.fy(pdList, ps, pn);
 		int q = pdList.size() % ps;

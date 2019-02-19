@@ -174,12 +174,12 @@ public class RepaymenttestController {
 			
 			
 			//查询贷后信息
-			List<Map> mapafter = repaymentService.selectafter(c_cardno);
+			List<Map> mapafter = repaymentService.selectafter(id);
 			log.info("map4->"+mapafter);
 //			System.out.println("234577980---------------------"+mapafter.get(0).get("c_name_gj2 "));
 			
 			//查询主贷人信息
-			Map<String, Object> mapzdr = repaymentService.selectzdr(c_cardno);
+			Map<String, Object> mapzdr = repaymentService.selectzdr(id);
 			log.info("map5->"+mapzdr);
 		request.setAttribute("dn", dn);
 		request.setAttribute("cn", cn);
