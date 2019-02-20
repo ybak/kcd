@@ -116,7 +116,8 @@ public class erp_wdrwController {
 		JSONObject json_result=new JSONObject();//json数据
 		PageData erp_result=new PageData();//erp进度
 		PageData erp_type=new PageData();//erp板块
-
+		PageData pdsession= (PageData)request.getSession().getAttribute("pd");//获取session信息
+		admin_id=(Integer) pdsession.get("id");
 		json_result.put("nowstatus",81);
 		json_result.put("icbc_id", icbc_id);
 		json_result.put("qryid", yw_id);
@@ -153,7 +154,35 @@ public class erp_wdrwController {
 		erp_result.put("dn", "icbc_erp_kj_icbc_result");
 		erp_result.put("result_1_value",json_result.toString());
 		erp_wdrwService.update(erp_type);
-		erp_wdrwService.save(erp_result);			
+		erp_wdrwService.save(erp_result);
+		if(cyqk.equals("通过")){
+			System.out.println("完成操作新增一条数据并更新状态");
+			PageData p1=new PageData();
+			PageData p1_result=new PageData();
+			p1.put("dn", "icbc_erp_kj_icbc");
+			p1.put("mid_edit",admin_id);
+			p1.put("dt_edit", creditutil.time());
+			p1.put("status", 82);
+			p1.put("id",yw_id);
+			p1_result.put("qryid", yw_id);
+			p1_result.put("mid_add", admin_id);
+			p1_result.put("mid_edit",admin_id);
+			p1_result.put("dt_add", creditutil.time());
+			p1_result.put("dt_edit", creditutil.time());
+			p1_result.put("status", 82);
+			p1_result.put("status_oldht",0);
+			p1_result.put("remark","完成");
+			p1_result.put("result_1_code", 0);
+			p1_result.put("result_1_msg", "");
+			p1_result.put("result_1_value", "");
+			p1_result.put("dt_sub", creditutil.time());
+			p1_result.put("type_id", type_id);
+			p1_result.put("icbc_id", icbc_id);
+			p1_result.put("jsonAll", "");
+			p1_result.put("dn", "icbc_erp_kj_icbc_result");
+			erp_wdrwService.update(p1);
+			erp_wdrwService.save(p1_result);
+		}
 	}
 	/**
 	 * erp 抵押归档  银行收件确认80
@@ -192,7 +221,8 @@ public class erp_wdrwController {
 		JSONObject json_result=new JSONObject();//json数据
 		PageData erp_result=new PageData();//erp进度
 		PageData erp_type=new PageData();//erp板块
-
+		PageData pdsession= (PageData)request.getSession().getAttribute("pd");//获取session信息
+		admin_id=(Integer) pdsession.get("id");
 		json_result.put("nowstatus",80);
 		json_result.put("icbc_id", icbc_id);
 		json_result.put("qryid", yw_id);
@@ -814,6 +844,35 @@ public class erp_wdrwController {
 		erp_result.put("result_1_value",json_result.toJSONString());
 		erp_wdrwService.update(erp_type);
 		erp_wdrwService.save(erp_result);
+		System.out.println("判断状态;"+sk_type+"-"+sk_type.toString().equals("1"));
+		if(sk_type.toString().equals("1")){
+			System.out.println("资金分配完成操作新增一条数据并更新状态");
+			PageData p1=new PageData();
+			PageData p1_result=new PageData();
+			p1.put("dn", "icbc_erp_kj_icbc");
+			p1.put("mid_edit",admin_id);
+			p1.put("dt_edit", creditutil.time());
+			p1.put("status", 55);
+			p1.put("id",yw_id);
+			p1_result.put("qryid", yw_id);
+			p1_result.put("mid_add", admin_id);
+			p1_result.put("mid_edit",admin_id);
+			p1_result.put("dt_add", creditutil.time());
+			p1_result.put("dt_edit", creditutil.time());
+			p1_result.put("status", 55);
+			p1_result.put("status_oldht",0);
+			p1_result.put("remark","完成");
+			p1_result.put("result_1_code", 0);
+			p1_result.put("result_1_msg", "");
+			p1_result.put("result_1_value", "");
+			p1_result.put("dt_sub", creditutil.time());
+			p1_result.put("type_id", type_id);
+			p1_result.put("icbc_id", icbc_id);
+			p1_result.put("jsonAll", "");
+			p1_result.put("dn", "icbc_erp_kj_icbc_result");
+			erp_wdrwService.update(p1);
+			erp_wdrwService.save(p1_result);
+		}
 	}
 	/**
 	 * erp 资金分配 50 出账
@@ -3526,7 +3585,6 @@ public class erp_wdrwController {
 					pd001.put("dn", "001");
 					pd001.put("icbc_id", icbc_id);
 					pd001.put("type_id", type_id);
-					pd001.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd001);
 					//获取板块最后一条数据
 					if(erp15.size()>0){
@@ -3583,7 +3641,6 @@ public class erp_wdrwController {
 					pd001.put("dn", "003");
 					pd001.put("icbc_id", icbc_id);
 					pd001.put("type_id", type_id);
-					pd001.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd001);
 					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size()-1);
@@ -3617,7 +3674,6 @@ public class erp_wdrwController {
 					pd004.put("dn", "004");
 					pd004.put("icbc_id", icbc_id);
 					pd004.put("type_id", type_id);
-					pd004.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd004);
 					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
@@ -3651,7 +3707,6 @@ public class erp_wdrwController {
 					pd005.put("dn", "005");
 					pd005.put("icbc_id", icbc_id);
 					pd005.put("type_id", type_id);
-					pd005.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd005);
 					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
@@ -3729,7 +3784,6 @@ public class erp_wdrwController {
 					pd006.put("dn", "006");
 					pd006.put("icbc_id", icbc_id);
 					pd006.put("type_id", type_id);
-					pd006.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd006);
 					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
@@ -3770,7 +3824,6 @@ public class erp_wdrwController {
 					pd008.put("dn", "008");
 					pd008.put("icbc_id", icbc_id);
 					pd008.put("type_id", type_id);
-					pd008.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd008);
 					PageData pdyhds = new PageData();
 					pdyhds.put("dn", "yhds_tocode");
@@ -3917,7 +3970,6 @@ public class erp_wdrwController {
 					pd006.put("dn", "010");
 					pd006.put("icbc_id", icbc_id);
 					pd006.put("type_id", type_id);
-					pd006.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd006);
 					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
@@ -4034,7 +4086,6 @@ public class erp_wdrwController {
 					pd006.put("dn", "004");
 					pd006.put("icbc_id", icbc_id);
 					pd006.put("type_id", type_id);
-					pd006.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd006);
 					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
@@ -4074,7 +4125,6 @@ public class erp_wdrwController {
 					pd0011.put("dn","004");
 					pd0011.put("icbc_id", icbc_id);
 					pd0011.put("type_id", type_id);
-					pd0011.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd0011);
 					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
@@ -4173,7 +4223,6 @@ public class erp_wdrwController {
 					pd006.put("dn", "004");
 					pd006.put("icbc_id", icbc_id);
 					pd006.put("type_id", type_id);
-					pd006.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd006);
 					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
@@ -4216,7 +4265,6 @@ public class erp_wdrwController {
 					pd006.put("dn", "004");
 					pd006.put("icbc_id", icbc_id);
 					pd006.put("type_id", type_id);
-					pd006.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd006);
 					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
@@ -4256,7 +4304,6 @@ public class erp_wdrwController {
 					pd0011.put("dn","004");
 					pd0011.put("icbc_id", icbc_id);
 					pd0011.put("type_id", type_id);
-					pd0011.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd0011);
 					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
@@ -4299,7 +4346,6 @@ public class erp_wdrwController {
 					pd006.put("dn", "004");
 					pd006.put("icbc_id", icbc_id);
 					pd006.put("type_id", type_id);
-					pd006.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd006);
 					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
@@ -4456,7 +4502,6 @@ public class erp_wdrwController {
 					pd006.put("dn", "004");
 					pd006.put("icbc_id", icbc_id);
 					pd006.put("type_id", type_id);
-					pd006.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd006);
 					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
@@ -4494,7 +4539,6 @@ public class erp_wdrwController {
 					pd006.put("dn", "004");
 					pd006.put("icbc_id", icbc_id);
 					pd006.put("type_id", type_id);
-					pd006.put("qryid", yw_id);
 					erp15 = erp_wdrwService.icbc_list(pd006);
 					if(erp15.size()>0){
 					PageData pData2 = erp15.get(erp15.size() - 1);
