@@ -20,13 +20,13 @@ public class schedjob {
         
    
     @Autowired
-    private static pdfoverService pdfoverService;
+    private  pdfoverService pdfoverService;
     
     @Autowired
-    private static authorizeService authorizeService;
+    private  authorizeService authorizeService;
    
     @Autowired
-    private static fsService fsservice;
+    private  fsService fsservice;
     
 	 
 

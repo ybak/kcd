@@ -135,6 +135,10 @@
     </typeAliases>
 
        <mappers>
+       <!--  申请代偿 -->
+        <mapper resource="com/mapper1/businessPayApplication/BusinessPayMapper.xml" />
+        <!--  代偿确认 -->
+        <mapper resource="com/mapper1/matEndiwmentResult/MatEndiwmentResultMapper.xml" />
         <!-- 还款情况 -->
         <mapper resource="com/mapper1/Repayment/RepaymentMapper.xml" />
         <mapper resource="com/mapper1/Excel/recordMapper.xml" />

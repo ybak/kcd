@@ -21,7 +21,7 @@
 <form id="pg_Form" action="${pageContext.request.contextPath}/erp/clpg_modal_up.do" method="post" enctype="multipart/form-data" name="modalForm" class="form-horizontal ng-pristine ng-valid ng-scope ng-valid-required" >
 	<input type="hidden" name="adminid" value="${sessionScope.pd.id}">
 	<input type="hidden" name="type_id" value="${requestScope.type_id}"> 
-	<input type="hidden" name="icbc_id" value="${pd.icbc_id}"> 
+	<input type="hidden" name="icbc_id" value="${requestScope.icbc_id}"> 
 	<input type="hidden" name="cars_id" value="${pd.carsid}"> 
 	<div class="form-group ng-scope">  
 		<label class="col-sm-2 control-label">审核结果<i class="red">*</i></label> 

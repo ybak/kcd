@@ -59,12 +59,13 @@ function NetcallBridge(yx) {
 	      this.netcallDurationTimer = null;
 	    //音视频流配置
 	      this.sessionConfig = {
-	          videoQuality: Netcall.CHAT_VIDEO_QUALITY_480P, //传输的视频分辨率
+	    	  videoQuality: Netcall.CHAT_VIDEO_QUALITY_720P, //传输的视频分辨率
 	          videoFrameRate: Netcall.CHAT_VIDEO_FRAME_RATE_NORMAL,//传输的视频帧率，实际帧率因画面采集频率和机器性能限制可能达不到期望值
 	          videoBitrate: 0,//传输的视频码率, >=100000 <= 5000000 有效(PC Agent适用)
 	          recordVideo: true,//是否开启服务器端的视频录制，默认不开
 	          recordAudio: true,//是否开启服务器端的音频录制，默认不开
-	          highAudio: true //高清语音开关, 默认关闭
+	          highAudio: true, //高清语音开关, 默认关闭
+	          isHostSpeaker:false
 	      };
 	      // 是否开启摄像头输入
 	      this.deviceVideoInOn = true;
