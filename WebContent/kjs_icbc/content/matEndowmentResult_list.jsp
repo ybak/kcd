@@ -14,7 +14,7 @@
 		var s=$("#page_limit_select").val();
 		var status=$("#status").val();
 		var querytype=$("#querytype").val();		
-		window.location.href ="${pageContext.request.contextPath}/businessPayApplicationController/select.do?type=dhywgl&dn=businessPayApplication&qn=list&pagesize="+s+"&pagenow=1";
+		window.location.href ="${pageContext.request.contextPath}/matEndiwmentResultControoller/select.do?type=dhywgl&dn=matEndowmentResult&qn=list&pagesize="+s+"&pagenow=1";
     }
     
     function reset(){
@@ -35,7 +35,7 @@
 				<div class="row">
 					<div class="col-sm-10">
 						<div class="btn-group">		
-							<form class="form-horizontal" name="myform" action="${pageContext.request.contextPath }/businessPayApplicationController/select.do?type=dhywgl&dn=businessPayApplication&qn=list&pagesize=10&pagenow=1" method="post">
+							<form class="form-horizontal" name="myform" action="${pageContext.request.contextPath }/matEndiwmentResultControoller/select.do?type=dhywgl&dn=matEndowmentResult&qn=list&pagesize=10&pagenow=1" method="post">
 								<input autocomplete="off" type="text" placeholder="请输入客户姓名或身份证号" name="param" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" style="width:500px;">
 								<button class="btn btn-info search-btn" type="submit" style="background-color:#00acd6;">查询</button>   			
 								<button class="btn btn-info search-btn" type="button" onclick="reset()" style="background-color:#00acd6;">重置</button>   																	
@@ -66,12 +66,12 @@
 						    int totalpage1=Integer.parseInt(request.getAttribute("totalpage").toString());
 						    if(pagenow1>1&&pagenow1<=totalpage1){
 							%>
-							<a href="${pageContext.request.contextPath }/businessPayApplicationController/select.do?type=dhywgl&dn=businessPayApplication&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" class="btn btn-default">«</a>						
+							<a href="${pageContext.request.contextPath }/matEndiwmentResultControoller/select.do?type=dhywgl&dn=matEndowmentResult&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" class="btn btn-default">«</a>						
 							<%				    	
 					         }						
 							 if(pagenow1>=1&&pagenow1<totalpage1){
 							%>
-							<a href="${pageContext.request.contextPath }/businessPayApplicationController/select.do?type=dhywgl&dn=businessPayApplication&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" class="btn btn-default">»</a>
+							<a href="${pageContext.request.contextPath }/matEndiwmentResultControoller/select.do?type=dhywgl&dn=matEndowmentResult&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" class="btn btn-default">»</a>
 	                        <%
 	                        }
 	                        %>
@@ -164,7 +164,7 @@
 			<c:if test="${requestScope.totalpage ge '1' }">
 				<ul class="pagination no-margin">
 				       <c:if test="${requestScope.pagenow ne '1' }">
-				        <li><a href="${pageContext.request.contextPath }/businessPayApplicationController/select.do?type=dhywgl&dn=businessPayApplication&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" aria-label="Next"><span aria-hidden="true">«</span></a></li>
+				        <li><a href="${pageContext.request.contextPath }/matEndiwmentResultControoller/select.do?type=dhywgl&dn=matEndowmentResult&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" aria-label="Next"><span aria-hidden="true">«</span></a></li>
 				       </c:if>
 					   <%
 				       int pagenow=Integer.parseInt(request.getAttribute("pagenow").toString());
@@ -186,7 +186,7 @@
 				       if(j==pagenow){
 				       %>
 					   <li id="l<%=j %>" class="active">
-					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/businessPayApplicationController/select.do?type=dhywgl&dn=businessPayApplication&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
+					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/matEndiwmentResultControoller/select.do?type=dhywgl&dn=matEndowmentResult&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
 					   <%=j %>
 					   </a>
 					   </li>
@@ -194,7 +194,7 @@
 				       }else{
 					   %>
 	                   <li id="l<%=j %>" >
-					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/businessPayApplicationController/select.do?type=dhywgl&dn=businessPayApplication&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
+					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/matEndiwmentResultControoller/select.do?type=dhywgl&dn=matEndowmentResult&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
 					   <%=j %>					   
 					   </a>
 					   </li>					   
@@ -207,7 +207,7 @@
 		               %>
 					   <c:if test="${requestScope.pagenow lt requestScope.totalpage}">
 			               <c:if test="${requestScope.totalpage gt 5}">
-						  <li><a href="${pageContext.request.contextPath }/businessPayApplicationController/select.do?type=dhywgl&dn=businessPayApplication&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" aria-label="Next"><span aria-hidden="true">»</span></a></li>  
+						  <li><a href="${pageContext.request.contextPath }/matEndiwmentResultControoller/select.do?type=dhywgl&dn=matEndowmentResult&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" aria-label="Next"><span aria-hidden="true">»</span></a></li>  
 						   </c:if>
 					   </c:if>
 					     				

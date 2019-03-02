@@ -14,7 +14,7 @@
 		var s=$("#page_limit_select").val();
 		var status=$("#status").val();
 		var querytype=$("#querytype").val();		
-		window.location.href ="${pageContext.request.contextPath}/businessPayApplicationController/select.do?type=wlghd&dn=businessPayApplication&qn=list&pagesize="+s+"&pagenow=1";
+		window.location.href ="${pageContext.request.contextPath}/matEndiwmentResultControoller/select.do?type=wlghd&dn=matEndowmentResult&qn=list&pagesize="+s+"&pagenow=1";
     }
     
     function reset(){

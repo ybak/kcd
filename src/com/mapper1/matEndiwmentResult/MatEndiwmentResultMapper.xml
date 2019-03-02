@@ -20,8 +20,8 @@
 	left join kjs_icbc_kk kk on kk.icbc_id=bc.id
 	where 1=1				 
 		<if test="param != null and param != ''">	
-		and (con.c_name like '%${param}%' 
-			OR con.id_card like '%${param}%')
+		and con.c_name like '%${param}%' 
+			OR con.id_card like '%${param}%'
 		</if>
 		limit #{pagenow},#{pagesize}
 	</select>

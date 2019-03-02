@@ -49,6 +49,7 @@ public class BusinessPayApplicationController {
 	 */
 	@RequestMapping("/select")
 	public String select(
+			String param,
 			String qn,
 			String type,
 			String dn,	
@@ -59,10 +60,7 @@ public class BusinessPayApplicationController {
 			HttpServletRequest request) throws UnsupportedEncodingException, ParseException{
 		
 //		List<PageData> newpdList=new ArrayList<>();
-		String param=request.getParameter("param");
-		if(StringUtils.isNotBlank(param)){
-			  param = new String(param.getBytes("ISO-8859-1"),"utf-8");
-			}
+		
 		int ps = 0;
 		int pn = 0;
 		if (pagesize != null && !pagesize.equals("")) {
@@ -75,7 +73,12 @@ public class BusinessPayApplicationController {
 		} else {
 			pn = 1;
 		}
+//		String param=request.getParameter("param");
+//		if(StringUtils.isNotBlank(param)){
+//			  param = new String(param.getBytes("ISO-8859-1"),"utf-8");
+//			}
 		List<PageData> buList=businessPayService.selectBusinessPay(param,(pn-1)*ps,ps);
+		System.out.println("_--------------------------param:"+param);
 		for(PageData pd : buList){
 			
 			//判断根据身份证号查询时数据不为空

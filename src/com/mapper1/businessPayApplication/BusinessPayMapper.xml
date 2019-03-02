@@ -5,8 +5,7 @@
 
 <mapper namespace="com.mapper1.businessPayApplication.BusinessPayMapper">
 	<!--查询全部数据 -->
-	<select id="selectBusinessPay" parameterType="string" resultType="pd">
-			
+	<select id="selectBusinessPay" parameterType="string" resultType="pd">		
 			select bc.c_name,
 			bc.c_cardno,
 			bc.gems_code, 
@@ -31,8 +30,8 @@
 	left join assess_fs fs on fs.id=bc.gems_fs_id
 	where 1=1
 		<if test="param != null and param != ''">	
-			and (bc.c_name like '%${param}%' 
-			OR bc.c_cardno like '%${param}%')
+			and bc.c_name like '%${param}%' 
+			OR bc.c_cardno like '%${param}%'
 		</if>
 	 ORDER BY kk.dt_edit DESC limit #{pagenow},#{pagesize}
 	</select>

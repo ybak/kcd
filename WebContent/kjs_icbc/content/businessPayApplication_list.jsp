@@ -35,7 +35,7 @@
 				<div class="row">
 					<div class="col-sm-10">
 						<div class="btn-group">		
-							<form class="form-horizontal" name="myform" action="${pageContext.request.contextPath }/businessPayApplicationController/select.do?type=dhywgl&dn=businessPayApplication&qn=list&pagesize=10&pagenow=1" method="post">
+							<form class="form-horizontal" name="myform" action="${pageContext.request.contextPath }/businessPayApplicationController/select.do?type=dhywgl&dn=businessPayApplication&qn=list" method="post">
 								<input autocomplete="off" type="text" placeholder="请输入客户姓名或身份证号" name="param" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" style="width:500px;">
 								<button class="btn btn-info search-btn" type="submit" style="background-color:#00acd6;">查询</button>   			
 								<button class="btn btn-info search-btn" type="button" onclick="reset()" style="background-color:#00acd6;">重置</button>   																	

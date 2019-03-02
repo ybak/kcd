@@ -39,6 +39,7 @@ public class MatEndiwmentResultControoller {
 	
 	@RequestMapping("/select")
 	public String select(String qn,
+			String param,
 			String type,
 			String dn,	
 			Integer pagesize,
@@ -47,10 +48,10 @@ public class MatEndiwmentResultControoller {
 			HttpServletRequest request) throws UnsupportedEncodingException{
 //			List<PageData> newpdList=new ArrayList<>();
 			
-			String param=request.getParameter("param");
-			if(StringUtils.isNotBlank(param)){
-			  param = new String(param.getBytes("ISO-8859-1"),"utf-8");
-			}
+//			String param=request.getParameter("param");
+//			if(StringUtils.isNotBlank(param)){
+//			  param = new String(param.getBytes("ISO-8859-1"),"utf-8");
+//			}
 			int ps = 0;
 			int pn = 0;
 			if (pagesize != null && !pagesize.equals("")) {
