@@ -18,9 +18,9 @@ public class BusinessPayServiceImpl implements BusinessPayService{
 	@Autowired
 	private BusinessPayMapper businessPaymapper;
 	@Override
-	public List<PageData> selectBusinessPay(String param) {
+	public List<PageData> selectBusinessPay(String param,int pagenow ,int pagesize) {
 		// TODO Auto-generated method stub
-		return businessPaymapper.selectBusinessPay(param);
+		return businessPaymapper.selectBusinessPay(param,pagenow,pagesize);
 	}
 	@Override
 	public List<Map> selectdetail(String id_card,String periods) {
@@ -51,6 +51,11 @@ public class BusinessPayServiceImpl implements BusinessPayService{
 	public int updateflag(String id_card, String periods,String date,String day) {
 		// TODO Auto-generated method stub
 		return businessPaymapper.updateflag(id_card, periods,date,day);
+	}
+	@Override
+	public int count() {
+		// TODO Auto-generated method stub
+		return businessPaymapper.count();
 	}
 	
 }

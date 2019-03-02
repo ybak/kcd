@@ -23,6 +23,25 @@
 		and (con.c_name like '%${param}%' 
 			OR con.id_card like '%${param}%')
 		</if>
+		limit #{pagenow},#{pagesize}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="count" resultType="Integer">
+		select count(*) from (select con.*,
+			kk.dk_total_price,
+			kk.aj_date,	
+			kk.dk_lv,	
+			(select 
+			count(*) 
+			from 
+			import_repayment  re
+			where 
+			re.id_card=bc.c_cardno) as jd_count
+			from  confirm_compensatory con
+	left join kj_icbc bc on con.id=bc.id
+	left join kjs_icbc_kk kk on kk.icbc_id=bc.id
+) a	
 	</select>
 	
 	<!-- 查询贷款详情 -->

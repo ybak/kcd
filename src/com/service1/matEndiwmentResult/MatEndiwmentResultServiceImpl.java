@@ -20,9 +20,9 @@ public class MatEndiwmentResultServiceImpl implements MatEndiwmentResultService{
 	
 	
 	@Override
-	public List<PageData> selectMat(String param) {
+	public List<PageData> selectMat(String param,int pagenow,int pagesize) {
 		// TODO Auto-generated method stub
-		return matEndiwmentResultMapper.selectMat(param);
+		return matEndiwmentResultMapper.selectMat(param,pagenow,pagesize);
 	}
 
 
@@ -100,6 +100,13 @@ public class MatEndiwmentResultServiceImpl implements MatEndiwmentResultService{
 	public int updatestate(String id_card, String periods, String dcdate) {
 		// TODO Auto-generated method stub
 		return matEndiwmentResultMapper.updatestate(id_card, periods,dcdate);
+	}
+
+
+	@Override
+	public int count() {
+		// TODO Auto-generated method stub
+		return matEndiwmentResultMapper.count();
 	}
 
 

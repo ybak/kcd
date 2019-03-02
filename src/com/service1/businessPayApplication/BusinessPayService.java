@@ -13,7 +13,12 @@ public interface BusinessPayService {
 	 * 查询全部数据 by  zp 2019-2-15
 	 * @return 
 	 */
-   List<PageData> selectBusinessPay(String param);
+   List<PageData> selectBusinessPay(@Param("param") String param,@Param("pagenow")int pagenow,@Param("pagesize")int pagesize);
+   
+   /**
+    * 查询总条数
+    */
+   int count();
    
    /**
     * 添加前的查询

@@ -413,15 +413,17 @@
 						<ul class="treeview-menu">
 							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'sqdc')==true}">
 							<li ${requestScope.type=='dhywgl1' && requestScope.dn=='businessPayApplication'?"class='active'":''}>
-<a href="${pageContext.request.contextPath }/businessPayApplicationController/select.do?type=dhywgl1&dn=businessPayApplication&qn=list&pagesize=10&pagenow=1">
+<a href="${pageContext.request.contextPath }/businessPayApplicationController/select.do?type=dhywgl&dn=businessPayApplication&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>申请代偿
+
 						    </a>
 							</li>
 							</c:if>
 							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'dcqr')==true}">
 							<li ${requestScope.type=='dhywgl2' && requestScope.dn=='matEndowmentResult'?"class='active'":''}>
-<a href="${pageContext.request.contextPath }/matEndiwmentResultControoller/select.do?type=dhywgl2&dn=matEndowmentResult&qn=list&pagesize=10&pagenow=1">
+<a href="${pageContext.request.contextPath }/matEndiwmentResultControoller/select.do?type=dhywgl&dn=matEndowmentResult&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>代偿确认
+
 						    </a>
 							</li>
 							</c:if>

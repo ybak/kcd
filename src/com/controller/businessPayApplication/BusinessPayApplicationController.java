@@ -50,22 +50,32 @@ public class BusinessPayApplicationController {
 	@RequestMapping("/select")
 	public String select(
 			String qn,
-			String cn,
 			String type,
 			String dn,	
-			int pagesize,
-			int pagenow,
+			Integer pagesize,
+			Integer pagenow,
 			String c_cardno,
 			String periods,
 			HttpServletRequest request) throws UnsupportedEncodingException, ParseException{
 		
-		List<PageData> newpdList=new ArrayList<>();
-		
+//		List<PageData> newpdList=new ArrayList<>();
 		String param=request.getParameter("param");
 		if(StringUtils.isNotBlank(param)){
 			  param = new String(param.getBytes("ISO-8859-1"),"utf-8");
 			}
-		List<PageData> buList=businessPayService.selectBusinessPay(param);
+		int ps = 0;
+		int pn = 0;
+		if (pagesize != null && !pagesize.equals("")) {
+			ps = pagesize;
+		} else {
+			ps = 10;
+		}
+		if (pagenow != null && !pagenow.equals("")) {
+			pn = pagenow;
+		} else {
+			pn = 1;
+		}
+		List<PageData> buList=businessPayService.selectBusinessPay(param,(pn-1)*ps,ps);
 		for(PageData pd : buList){
 			
 			//判断根据身份证号查询时数据不为空
@@ -121,25 +131,24 @@ public class BusinessPayApplicationController {
 				}	
 			}	
 		}
-	
-		newpdList = limitutil.fy(buList, pagesize, pagenow);
-		int q=buList.size()%pagesize;
+		System.out.println("***************count:"+businessPayService.count());
+		int totalsize=businessPayService.count();
+		System.out.println("***************count:"+totalsize);
+		int q=totalsize%ps;
 		int totalpage=0;//总页数
 		if(q==0){
-			totalpage=buList.size()/pagesize;	    		
+			totalpage=totalsize/ps;	    		
 		}else{
-			totalpage=buList.size()/pagesize+1;
+			totalpage=totalsize/ps+1;
 		} 
-		
 		request.setAttribute("dn", dn);
-		request.setAttribute("cn", cn);
 		request.setAttribute("qn", qn);
 		request.setAttribute("type", type);	
 		request.setAttribute("totalpage",totalpage);
-		request.setAttribute("totalsize",buList.size());
-		request.setAttribute("pagesize",pagesize);
-		request.setAttribute("pagenow",pagenow);
-		request.setAttribute("newpdList", newpdList);
+		request.setAttribute("totalsize",totalsize);
+		request.setAttribute("pagesize",ps);
+		request.setAttribute("pagenow",pn);
+		request.setAttribute("newpdList", buList);
 		return "kjs_icbc/index";
 	}
 	
@@ -150,7 +159,6 @@ public class BusinessPayApplicationController {
 	@RequestMapping("/selectdetail")
 	public String selectdetail(
 			String qn,
-			String cn,
 			String type,
 			String dn,	
 			String c_cardno,
@@ -205,7 +213,6 @@ public class BusinessPayApplicationController {
 		
 		request.setAttribute("detailList", detailList);
 		request.setAttribute("dn", dn);
-		request.setAttribute("cn", cn);
 		request.setAttribute("qn", qn);
 		request.setAttribute("type", type);
 		return "kjs_icbc/index";
@@ -219,7 +226,6 @@ public class BusinessPayApplicationController {
 			String c_cardno,
 			String periods,
 			String qn,
-			String cn,
 			String type,
 			String dn,
 			HttpServletRequest request,
@@ -284,7 +290,6 @@ public class BusinessPayApplicationController {
 			businessPayService.addhk(uuList.get(0));	
 		
 			request.setAttribute("dn", dn);
-			request.setAttribute("cn", cn);
 			request.setAttribute("qn", qn);
 			request.setAttribute("type", type);
 			return "kjs_icbc/index";

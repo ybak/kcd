@@ -39,20 +39,31 @@ public class MatEndiwmentResultControoller {
 	
 	@RequestMapping("/select")
 	public String select(String qn,
-			String cn,
 			String type,
 			String dn,	
-			int pagesize,
-			int pagenow,
+			Integer pagesize,
+			Integer pagenow,
 			String id_card,
 			HttpServletRequest request) throws UnsupportedEncodingException{
-			List<PageData> newpdList=new ArrayList<>();
+//			List<PageData> newpdList=new ArrayList<>();
 			
 			String param=request.getParameter("param");
 			if(StringUtils.isNotBlank(param)){
 			  param = new String(param.getBytes("ISO-8859-1"),"utf-8");
 			}
-			List<PageData> buList=matEndiwmentResultService.selectMat(param);
+			int ps = 0;
+			int pn = 0;
+			if (pagesize != null && !pagesize.equals("")) {
+				ps = pagesize;
+			} else {
+				ps = 10;
+			}
+			if (pagenow != null && !pagenow.equals("")) {
+				pn = pagenow;
+			} else {
+				pn = 1;
+			}
+			List<PageData> buList=matEndiwmentResultService.selectMat(param,(pn-1)*ps,ps);
 				
 			for(PageData pd : buList){
 			
@@ -106,32 +117,29 @@ public class MatEndiwmentResultControoller {
 				}	
 			}		
 		}
-		newpdList = limitutil.fy(buList, pagesize, pagenow);
-		int q=buList.size()%pagesize;
-		int totalpage=0;//总页数
-		if(q==0){
-			totalpage=buList.size()/pagesize;	    		
-		}else{
-			totalpage=buList.size()/pagesize+1;
-		} 
-		
+			int totalsize=matEndiwmentResultService.count();
+			int q=totalsize%ps;
+			int totalpage=0;//总页数
+			if(q==0){
+				totalpage=totalsize/ps;	    		
+			}else{
+				totalpage=totalsize/ps+1;
+			} 
 		
 		request.setAttribute("dn", dn);
-		request.setAttribute("cn", cn);
 		request.setAttribute("qn", qn);
 		request.setAttribute("type", type);	
 		request.setAttribute("totalpage",totalpage);
-		request.setAttribute("totalsize",buList.size());
-		request.setAttribute("pagesize",pagesize);
-		request.setAttribute("pagenow",pagenow);
-		request.setAttribute("newpdList", newpdList);
+		request.setAttribute("totalsize",totalsize);
+		request.setAttribute("pagesize",ps);
+		request.setAttribute("pagenow",pn);
+		request.setAttribute("newpdList", buList);
 		return "kjs_icbc/index";
 		
 	}
 	
 	@RequestMapping("/selectDetail")
 	public String selectDetail(String qn,
-			String cn,
 			String type,
 			String dn,	
 			String id_card,
@@ -141,7 +149,6 @@ public class MatEndiwmentResultControoller {
 		List<Map> matMap = matEndiwmentResultService.selectDetail(id_card,periods);
 				
 		request.setAttribute("dn", dn);
-		request.setAttribute("cn", cn);
 		request.setAttribute("qn", qn);
 		request.setAttribute("type", type);	
 		request.setAttribute("matMap",matMap);
@@ -153,7 +160,6 @@ public class MatEndiwmentResultControoller {
 	public String addAgree(String c_cardno,
 			String periods,
 			String qn,
-			String cn,
 			String type,
 			String dn,
 			HttpServletRequest request,
@@ -187,7 +193,6 @@ public class MatEndiwmentResultControoller {
 		//修改import_repayment表中状态 身份证号，期数
 		matEndiwmentResultService.updatestate(c_cardno, periods,localTime);
 		request.setAttribute("dn", dn);
-		request.setAttribute("cn", cn);
 		request.setAttribute("qn", qn);
 		request.setAttribute("type", type);
 		return "kjs_icbc/index";

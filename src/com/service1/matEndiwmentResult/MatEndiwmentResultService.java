@@ -11,7 +11,12 @@ public interface MatEndiwmentResultService {
 	/**
 	 * 查询并分页 by zp 2019-2-16
 	 */
-	List<PageData> selectMat(@Param("param") String param);
+	List<PageData> selectMat(@Param("param") String param,@Param("pagenow") int pagenow,@Param("pagesize") int pagesize);
+	
+	 /**
+	    * 查询总条数
+	    */
+	   int count();
 	
 	/**
 	 * 查询详情

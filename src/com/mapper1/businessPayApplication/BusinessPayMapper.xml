@@ -34,9 +34,34 @@
 			and (bc.c_name like '%${param}%' 
 			OR bc.c_cardno like '%${param}%')
 		</if>
-	ORDER BY kk.dt_edit DESC	
+	 ORDER BY kk.dt_edit DESC limit #{pagenow},#{pagesize}
 	</select>
-	
+	<!-- 总条数 -->
+	<select id="count" resultType="Integer">
+		select count(*) from (select bc.c_name,
+			bc.c_cardno,
+			bc.gems_code, 
+			kk.dk_total_price,
+			kk.dt_edit,
+			kk.aj_date,	
+			kk.dk_lv,	
+			fs.name,
+			(select 
+			count(*) 
+			from 
+			import_repayment  re
+			where 
+			re.id_card=bc.c_cardno) as jd_count,
+			(select 
+			count(*)
+			from agree_compensate2 agree 
+			where 
+			agree.confirm_idCard=bc.c_cardno) as number
+			from  kj_icbc bc
+	left join kjs_icbc_kk kk on kk.icbc_id=bc.id
+	left join assess_fs fs on fs.id=bc.gems_fs_id
+	) b
+	</select>
 	<!-- 添加前查询数据 -->
 	<select id="selectCardno" parameterType="String" resultType="java.util.Map">
 		select bc.id,
