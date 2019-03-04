@@ -78,7 +78,7 @@ public class BusinessPayApplicationController {
 //			  param = new String(param.getBytes("ISO-8859-1"),"utf-8");
 //			}
 		List<PageData> buList=businessPayService.selectBusinessPay(param,(pn-1)*ps,ps);
-		System.out.println("_--------------------------param:"+param);
+		//System.out.println("_--------------------------param:"+param);
 		for(PageData pd : buList){
 			
 			//判断根据身份证号查询时数据不为空
@@ -92,15 +92,15 @@ public class BusinessPayApplicationController {
 					//遍历集合中元素
 					for(Map map:imlist){
 					double overdue_amount = (double) map.get("overdue_amount");
-					System.out.println("__________________"+overdue_amount);
+					//System.out.println("__________________"+overdue_amount);
 					BigDecimal yqwhtotal1=new BigDecimal(String.valueOf(overdue_amount));
-					System.out.println("+++++++++++++++++++++"+yqwhtotal1);
+					//System.out.println("+++++++++++++++++++++"+yqwhtotal1);
 					if(null != yqwhtotal1){
 						//得到逾期金额
 						yqwhtotal=yqwhtotal.add(yqwhtotal1);//逾期金额相加						
 					}									
 					}	
-					System.out.println("+++++++++++++++++++++"+yqwhtotal);
+					//System.out.println("+++++++++++++++++++++"+yqwhtotal);
 					pd.put("yqwhtotal", yqwhtotal);
 					
 					}
@@ -134,7 +134,7 @@ public class BusinessPayApplicationController {
 				}	
 			}	
 		}
-		System.out.println("***************count:"+businessPayService.count());
+		//System.out.println("***************count:"+businessPayService.count());
 		int totalsize=businessPayService.count();
 		System.out.println("***************count:"+totalsize);
 		int q=totalsize%ps;

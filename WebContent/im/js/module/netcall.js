@@ -59,6 +59,7 @@ function NetcallBridge(yx) {
 	      this.netcallDurationTimer = null;
 	    //音视频流配置
 	      this.sessionConfig = {
+	    	  recordType:1,//recordType: type表示录制模式，默认为0表示参与混合录制并且录制单人文件，可以配置为1表示只参与混合录制，2表示只录制单人文件
 	    	  videoQuality: Netcall.CHAT_VIDEO_QUALITY_720P, //传输的视频分辨率
 	          videoFrameRate: Netcall.CHAT_VIDEO_FRAME_RATE_NORMAL,//传输的视频帧率，实际帧率因画面采集频率和机器性能限制可能达不到期望值
 	          videoBitrate: 0,//传输的视频码率, >=100000 <= 5000000 有效(PC Agent适用)

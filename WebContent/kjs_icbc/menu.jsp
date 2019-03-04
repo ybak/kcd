@@ -412,7 +412,7 @@
 					<li><a href="#"><i class="fa fa-dollar"></i><span>贷后业务管理&nbsp;&nbsp;&nbsp;↓</span></a>
 						<ul class="treeview-menu">
 							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'sqdc')==true}">
-							<li ${requestScope.type=='dhywgl1' && requestScope.dn=='businessPayApplication'?"class='active'":''}>
+							<li ${requestScope.type=='dhywgl' && requestScope.dn=='businessPayApplication'?"class='active'":''}>
 <a href="${pageContext.request.contextPath }/businessPayApplicationController/select.do?type=dhywgl&dn=businessPayApplication&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>申请代偿
 
@@ -420,7 +420,7 @@
 							</li>
 							</c:if>
 							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'dcqr')==true}">
-							<li ${requestScope.type=='dhywgl2' && requestScope.dn=='matEndowmentResult'?"class='active'":''}>
+							<li ${requestScope.type=='dhywgl' && requestScope.dn=='matEndowmentResult'?"class='active'":''}>
 <a href="${pageContext.request.contextPath }/matEndiwmentResultControoller/select.do?type=dhywgl&dn=matEndowmentResult&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>代偿确认
 
