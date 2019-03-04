@@ -49,7 +49,7 @@ public interface MatEndiwmentResultService {
 	 /**
 	    * 查询用户信息表
 	    */
-	   Map<String, Object> selectAfree(String id_card);
+	 List<Map> selectAfree(String id_card);
 	   
 	 	
 	/**

@@ -123,8 +123,8 @@
 	</insert>
 	
 	<!-- 查询用户信息表confirm -->
-	<select id="selectconfirm" resultType="java.util.Map">
-		select * from confirm_compensatory
+	<select id="selectconfirm" resultType="java.util.Map" parameterType="string">
+		select * from confirm_compensatory where id_card=#{id_card}
 	</select>
 	
 	

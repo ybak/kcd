@@ -94,8 +94,8 @@
 	</insert>
 	
 	<!-- 查询用户信息表confirm -->
-	<select id="selectAfree" resultType="java.util.Map">
-		select * from agree_compensate
+	<select id="selectAfree" resultType="java.util.Map" parameterType="string">
+		select * from agree_compensate where id_card=#{id_card}
 	</select>
 	
 	<!-- 修改状态 -->

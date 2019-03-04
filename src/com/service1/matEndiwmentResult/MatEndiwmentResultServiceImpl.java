@@ -62,7 +62,7 @@ public class MatEndiwmentResultServiceImpl implements MatEndiwmentResultService{
 
 
 	@Override
-	public Map<String, Object> selectAfree(String id_card) {
+	public List<Map> selectAfree(String id_card) {
 		// TODO Auto-generated method stub
 		return matEndiwmentResultMapper.selectAfree(id_card);
 	}
