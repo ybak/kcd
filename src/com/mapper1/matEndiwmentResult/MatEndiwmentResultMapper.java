@@ -48,7 +48,7 @@ public interface MatEndiwmentResultMapper {
 	 /**
 	    * 查询用户信息表
 	    */
-	   Map<String, Object> selectAfree(String id_card);
+	 List<Map> selectAfree(String id_card);
 	   
 	/**
 	 * 修改状态

@@ -177,31 +177,29 @@ public class BusinessPayApplicationController {
 		if(detailList.size()>0){
 			for(Map mm : detailList){
 				String days = null;
-				System.out.println("----------------:"+mm.get("hk_time").toString());
-				if(null != mm.get("hk_time").toString()){
-				String hkdate=mm.get("hk_time").toString();
+//				System.out.println("----------------:"+mm.get("hk_time").toString());
+				if(null != mm){
+				if(null != mm.get("hk_time")){	
+				String hkdate=mm.get("hk_time").toString().substring(0, 19);
 				System.out.println("hkdate:"+hkdate);
-				int dd = localTime.compareTo(hkdate);
 				
+					//比较当前时间是否晚于还款时间
+				int dd = localTime.compareTo(hkdate);				
 				if(dd > 0){
 					System.out.println("当前时间晚于指定时间,已经过了指定时间");
 					//计算逾期天数
-					SimpleDateFormat sdf=new SimpleDateFormat("yyyy-mm-dd");
+					SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");					
 					
-					Date d1 = sdf.parse(localTime);
-					Date d2 = sdf.parse(hkdate);
-					Calendar cal = Calendar.getInstance();
-					cal.setTime(d1);
-					//当前时间
-					long time1 = cal.getTimeInMillis(); 
-					Calendar cal2 = Calendar.getInstance();
-					cal.setTime(d2);
-					//指定时间
-					long time2 = cal2.getTimeInMillis();
-					long between_days = (time1-time2)/(10003600*24); 
-					String sub = String.valueOf(between_days);
-					days = sub.substring(1);
-					System.out.println("两个日期相差："+days);				
+						Date d1 = sdf.parse(localTime);
+						Date d2 = sdf.parse(hkdate);
+						System.out.println("当前时间："+d1.getTime()+"--还款时间："+d2.getTime());
+						long dc=(d1.getTime() - d2.getTime())/1000;//除以1000转换成秒
+						System.out.println("dc:"+dc);
+						long daa=dc/(24*3600);
+						System.out.println("时间："+daa);
+						days = String.valueOf(daa);
+					System.out.println("天数："+days);
+								
 				}else if(dd < 0){
 					System.out.println("当前时间早于指定时间，还没过指定时间");
 					days="无";
@@ -210,6 +208,7 @@ public class BusinessPayApplicationController {
 					days=localTime;
 				}
 				mm.put("days", days);
+				}
 				}
 			}
 		}
@@ -243,29 +242,24 @@ public class BusinessPayApplicationController {
 			String days = null;
 			if(periodsMap.size()>0){
 				for(Map mm : periodsMap){
-					
-					String hkdate=mm.get("hk_time").toString();
+					if(null != mm){
+					if(null != mm.get("hk_time")){
+					String hkdate=mm.get("hk_time").toString().substring(0, 19);
 
 					int dd = localTime.compareTo(hkdate);
 					if(dd > 0){
 						System.out.println("当前时间晚于指定时间,已经过了指定时间");
-						//计算逾期天数
-						SimpleDateFormat sdf=new SimpleDateFormat("yyyy-mm-dd");
+						SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");					
 						
 						Date d1 = sdf.parse(localTime);
 						Date d2 = sdf.parse(hkdate);
-						Calendar cal = Calendar.getInstance();
-						cal.setTime(d1);
-						//当前时间
-						long time1 = cal.getTimeInMillis(); 
-						Calendar cal2 = Calendar.getInstance();
-						cal.setTime(d2);
-						//指定时间
-						long time2 = cal2.getTimeInMillis();
-						long between_days = (time1-time2)/(10003600*24); 
-						String sub = String.valueOf(between_days);
-						days = sub.substring(1);
-						System.out.println("两个日期相差："+days);	
+						System.out.println("当前时间："+d1.getTime()+"--还款时间："+d2.getTime());
+						long dc=(d1.getTime() - d2.getTime())/1000;//除以1000转换成秒
+						System.out.println("dc:"+dc);
+						long daa=dc/(24*3600);
+						System.out.println("时间："+daa);
+						days = String.valueOf(daa);
+					System.out.println("天数："+days);
 					}else if(dd < 0){
 						System.out.println("当前时间早于指定时间，还没过指定时间");
 						days="无";
@@ -273,8 +267,8 @@ public class BusinessPayApplicationController {
 						System.out.println("相等");
 						days=localTime;
 					}
-//					mm.put("days", days);
-			
+					 }
+					}
 				}
 			}
 			
@@ -283,12 +277,17 @@ public class BusinessPayApplicationController {
 			System.out.println("&&&&&&&&&&&&&"+c_cardno+"（（（（（（（（（（（（"+periods);
 			
 			Map<String, Object> CardnoMap = businessPayService.selectCardno(c_cardno);
+			System.out.println("----+++++++++++++----:"+CardnoMap);
 			List<Map> uuList = businessPayService.selectdetail(c_cardno, periods);
-			Map<String, Object> confirmMap = businessPayService.selectconfirm(c_cardno);
-			if(null == confirmMap){
+			List<Map> confirmMap = businessPayService.selectconfirm(c_cardno);
+			System.out.println("-------------------++++:"+confirmMap.size());
+			
+			//当用户身份证号 不重复 表中的身份证号 时执行添加
+			if(confirmMap.size() == 0){
 				//判断数据库中是否已经存在一样的数据 
-				int i = businessPayService.addBusin(CardnoMap);				
-			}		
+			 businessPayService.addBusin(CardnoMap);
+			 //否则，有一样的身份证号
+			}
 			//添加详情
 			businessPayService.addhk(uuList.get(0));	
 		

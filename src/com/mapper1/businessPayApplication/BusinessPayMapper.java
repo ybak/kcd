@@ -42,7 +42,7 @@ public interface BusinessPayMapper {
    /**
     * 查询用户信息表
     */
-   Map<String, Object> selectconfirm(String id_card);
+   List<Map> selectconfirm(String id_card);
    
    /**
     * 修改状态

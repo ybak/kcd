@@ -179,8 +179,8 @@ public class MatEndiwmentResultControoller {
 		//添加前的查询
 		Map<String, Object> cardnoMap = matEndiwmentResultService.selectid_card(c_cardno);
 		System.out.println("---------- -------"+cardnoMap);
-		Map<String, Object> afreeMap = matEndiwmentResultService.selectAfree(c_cardno);
-		if(null == afreeMap){
+		List<Map> afreeMap = matEndiwmentResultService.selectAfree(c_cardno);
+		if(afreeMap.size() == 0){
 			matEndiwmentResultService.addMat(cardnoMap);
 		}
 		//添加详情
