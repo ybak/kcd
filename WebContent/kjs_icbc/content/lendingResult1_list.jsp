@@ -9,7 +9,7 @@
 		var s=$("#page_limit_select").val();
 		var status=$("#status").val();
 		var querytype=$("#querytype").val();		
-		window.location.href ="${pageContext.request.contextPath}/lendingResult1Controller/select.do?type=wlghd&dn=lendingResult1&qn=list&pagesize="+s+"&pagenow=1";
+		window.location.href ="${pageContext.request.contextPath}/lendingResult1Controller/select.do?type=dhywgl4&dn=lendingResult1&qn=list&pagesize="+s+"&pagenow=1";
     }
     function reset(){
     	$("#myform")[0].reset()
@@ -71,12 +71,12 @@
 					    int totalpage1=Integer.parseInt(request.getAttribute("totalpage").toString());
 					    if(pagenow1>1&&pagenow1<=totalpage1){
 						%>
-						<a href="${pageContext.request.contextPath }/lendingResult1Controller/select.do?type=wlghd&dn=lendingResult1&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" class="btn btn-default">«</a>						
+						<a href="${pageContext.request.contextPath }/lendingResult1Controller/select.do?type=dhywgl4&dn=lendingResult1&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" class="btn btn-default">«</a>						
 						<%				    	
 				         }						
 						 if(pagenow1>=1&&pagenow1<totalpage1){
 						%>
-						<a href="${pageContext.request.contextPath }/lendingResult1Controller/select.do?type=wlghd&dn=lendingResult1&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" class="btn btn-default">»</a>
+						<a href="${pageContext.request.contextPath }/lendingResult1Controller/select.do?type=dhywgl4&dn=lendingResult1&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" class="btn btn-default">»</a>
                         <%
                         }
                         %>
@@ -117,7 +117,7 @@
 			<td class="text-center">${l1.dqqktotal}</td>
 			<td class="text-center"></td>
 			<td class="text-center">
-				<a href="${pageContext.request.contextPath }/lendingResult1Controller/selectdetail.do?type=wdrw&dn=lendingResult1&qn=form&cn=w1&c_cardno=${l1.c_cardno}">
+				<a href="${pageContext.request.contextPath }/lendingResult1Controller/selectdetail.do?type=dhywgl4&dn=lendingResult1&qn=form&c_cardno=${l1.c_cardno}">
 					<i class="fa fa-hand-paper-o"></i>
 				</a>
 			</td>		
@@ -131,7 +131,7 @@
 			<c:if test="${requestScope.totalpage ge '1' }">
 				<ul class="pagination no-margin">
 				       <c:if test="${requestScope.pagenow ne '1' }">
-				        <li><a href="${pageContext.request.contextPath }/lendingResult1Controller/select.do?type=wlghd&dn=lendingResult1&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" aria-label="Next"><span aria-hidden="true">«</span></a></li>
+				        <li><a href="${pageContext.request.contextPath }/lendingResult1Controller/select.do?type=dhywgl4&dn=lendingResult1&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" aria-label="Next"><span aria-hidden="true">«</span></a></li>
 				       </c:if>
 					   <%
 				       int pagenow=Integer.parseInt(request.getAttribute("pagenow").toString());
@@ -153,7 +153,7 @@
 				       if(j==pagenow){
 				       %>
 					   <li id="l<%=j %>" class="active">
-					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/lendingResult1Controller/select.do?type=wlghd&dn=lendingResult1&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
+					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/lendingResult1Controller/select.do?type=dhywgl4&dn=lendingResult1&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
 					   <%=j %>
 					   </a>
 					   </li>
@@ -161,7 +161,7 @@
 				       }else{
 					   %>
 	                   <li id="l<%=j %>" >
-					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/lendingResult1Controller/select.do?type=wlghd&dn=lendingResult1&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
+					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/lendingResult1Controller/select.do?type=dhywgl4&dn=lendingResult1&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
 					   <%=j %>					   
 					   </a>
 					   </li>					   
@@ -174,7 +174,7 @@
 		               %>
 					   <c:if test="${requestScope.pagenow lt requestScope.totalpage}">
 			               <c:if test="${requestScope.totalpage gt 5}">
-						  <li><a href="${pageContext.request.contextPath }/lendingResult1Controller/select.do?type=wlghd&dn=lendingResult1&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" aria-label="Next"><span aria-hidden="true">»</span></a></li>  
+						  <li><a href="${pageContext.request.contextPath }/lendingResult1Controller/select.do?type=dhywgl4&dn=lendingResult1&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" aria-label="Next"><span aria-hidden="true">»</span></a></li>  
 						   </c:if>
 					   </c:if>
 					     				
