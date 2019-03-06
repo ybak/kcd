@@ -429,14 +429,14 @@
 							</c:if>
 							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'hzsdc')==true}">
 							<li ${requestScope.type=='dhywgl3' && requestScope.dn=='lendingResult'?"class='active'":''}>
-							<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dhywgl3&dn=lendingResult&qn=list">
+							<a href="${pageContext.request.contextPath }/lendingResultController/select.do?type=dhywgl3&dn=lendingResult&qn=list&pagesize=10&pagenow=1">
 							<i class="fa fa-arrow-circle-o-right"></i>合作商代偿
 						    </a>
 							</li>
 							</c:if>
 							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'hzsdcqr')==true}">
-							<li ${requestScope.type=='dhywgl4' && requestScope.dn=='lendingResult'?"class='active'":''}>
-							<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dhywgl4&dn=lendingResult&qn=list">
+							<li ${requestScope.type=='dhywgl4' && requestScope.dn=='lendingResult1'?"class='active'":''}>
+							<a href="${pageContext.request.contextPath }/lendingResult1Controller/select.do?type=dhywgl3&dn=lendingResult1&qn=list&pagesize=10&pagenow=1">
 							<i class="fa fa-arrow-circle-o-right"></i>合作商代偿确认
 						    </a>
 							</li>

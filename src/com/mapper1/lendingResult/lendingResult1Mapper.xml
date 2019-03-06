@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper1.lendingResult.lendingResult1Mapper">
+	<!-- 查询所有数据 -->
+	<select id="selectlendingResult1" parameterType="pd" resultType="pd">
+		select 			
+			com.*,
+			kk.dk_total_price,
+			kk.aj_date,
+			kk.dk_lv,			
+			(select count(*) from import_repayment re
+			where re.id_card=kj.c_cardno) as jd_count 
+		from 
+			compensation_by_cooperation com
+			left join kj_icbc kj on com.id=kj.id
+			left join kjs_icbc_kk kk on kk.icbc_id=kj.id
+		where 1=1	
+			
+		<!-- 模糊查询 -->
+		<if test="param != null and param != ''">
+			and (com.c_name like '%${param}%'
+				or com.c_cardno like '%${param}%')
+		</if>
+		
+	</select>
+	
+	<!-- 添加前的查询 -->
+	<select id="selectCardno" parameterType="String" resultType="java.util.Map">
+		select * from compensation_by_cooperation
+		where
+ 			 c_cardno=#{c_cardno}			
+	</select>
+	<!-- 查询详情  判断第几期 -->
+	<select id="selectdetail" parameterType="String" resultType="java.util.Map">
+		SELECT
+			re.*,
+			kk.dk_total_price,
+			kk.aj_date,
+			kk.dk_lv,
+			( SELECT count( * ) FROM import_repayment re WHERE re.id_card = kj.c_cardno ) AS jd_count 
+		FROM
+			import_repayment re,
+			kj_icbc kj,
+			kjs_icbc_kk kk 
+		WHERE
+			kj.id = kk.icbc_id 
+			AND kj.id = re.icbc_id 
+			AND re.id_card = #{id_card}
+		<if test="periods != null and periods != '' ">
+			and repayment_periods=#{periods}  
+		</if>
+	</select>
+	
+	<!-- 添加数据到表中 -->
+	<insert id="addlendingResult1" parameterType="java.util.Map">
+		insert into compensatory_confirmation (id,gems_code,c_name,c_cardno,name,y_name,current_balance,risk_ratio) 
+		values(#{id},#{gems_code},#{c_name},#{c_cardno},#{name},#{y_name},#{current_balance},#{risk_ratio})
+	</insert>
+	
+	<!-- 添加还款计划 -->
+	<insert id="adddetail1" parameterType="java.util.Map">
+		insert into partner_details1 (id_card,repayment_periods,zc_time,zc_amount,compensatory_amount,compensation_amount_partner,apply_compensatory,compensatory_date,compensatory_state)
+		values(#{id_card},#{repayment_periods},#{zc_time},#{zc_amount},#{overdue_amount},#{overdue_amount},#{apply_compensatory},#{compensatory_date},#{compensatory_state})
+	</insert>
+	
+	<!-- 查询用户信息表 -->
+	<select id="selectconfirm" resultType="java.util.Map">
+		select * from compensatory_confirmation  where c_cardno=#{c_cardno}
+	</select>
+	
+	<!-- 修改状态 -->
+	<update id="updateflag" parameterType="String">
+		update partner_details1 set compensatory_state='已同意申请',compensatory_date=#{dcdate},zc_amount=#{myyh}
+		where
+		id_card=#{id_card} and repayment_periods=#{periods}
+	</update>
+	<!-- 修改import_repayment表中状态 -->
+	<update id="updatestate" parameterType="string">
+	  update import_repayment set compensatory_state='已同意申请',compensatory_date=#{dcdate}
+	  where id_card=#{id_card} and repayment_periods=#{periods}
+	</update>
+	<!-- 修改partner_details1表中状态 已代偿申请 -->
+	<update id="updatedetail1" parameterType="string">
+	  update partner_details1 set compensatory_state='已同意申请',compensatory_date=#{dcdate}
+	  where id_card=#{id_card} and repayment_periods=#{periods}
+	</update>
+	<!-- 修改partner_details表中状态 已代偿申请 -->
+	<update id="updatedetail" parameterType="string">
+	  update partner_details set compensatory_state='已同意申请',compensatory_date=#{dcdate}
+	  where id_card=#{id_card} and repayment_periods=#{periods}
+	</update>
+</mapper>

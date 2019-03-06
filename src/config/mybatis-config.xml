@@ -135,6 +135,9 @@
     </typeAliases>
 
        <mappers>
+       <!-- 合作商代偿 -->
+        <mapper resource="com/mapper1/lendingResult/lendingResultMapper.xml" />
+        <!-- <mapper resource="com/mapper1/lendingResult1/lendingResult1Mapper.xml" /> -->
        <!--  申请代偿 -->
         <mapper resource="com/mapper1/businessPayApplication/BusinessPayMapper.xml" />
         <!--  代偿确认 -->
