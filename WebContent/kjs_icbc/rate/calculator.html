@@ -1,96 +1,108 @@
 
 <!DOCTYPE html>
 <html>
-	<head>
-	    <meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>费率计算器</title>
-		<link rel="stylesheet" type="text/css" href="./css/index.css"/>
-	</head>
-	<body>
-		<div class="f_w">
-			<img src="img/fl.png" style="width: 101px; height: 30px; margin: 5px auto; display: block;"/>
-			<ul> 
-				<li>
-					<div class="f_w_l">
-						<span>类型:</span>
-					    <ul class="f_w_r" id="vehicle_type">
-					        <li>
-					            <input type="radio" value="0.8"/>
-					            <span>新车</span>
-					        </li>
-					        <li style="margin-left:8px;">
-					            <input type="radio" value="0.7" checked="checked"/>
-					            <span>二手车</span>
-					        </li>     
-					    </ul>
-					</div>
-					<div class="f_w_l">
-						<span>分期期数:</span>
-						 <ul class="f_w_r" id="Installment_data">
-					        <li><input type="radio" value="36" checked="checked"/><span>36</span></li>
-					        <li style="margin-left: 3px;"><input type="radio" value="24" /><span>24</span></li>
-					        <li style="margin-left: 3px;"><input type="radio" value="12" /><span>12</span></li>
-					    </ul>
-					</div>
-				</li>
-				<li class="h_s1">
-					<div class="f_w_l">
-						<span>评估价/开票价:</span>
-						<input  style="margin-top: 18px;"  id="assess_money"  class="in" min="0" type="text" />
-					</div>
-					<div class="f_w_l">
-						<span>市场费率%:</span>
-						<p class="maxtab">最大值:<font id="market_rate_max"></font></p>
-						<input  class="in" style="margin-top: 3px;"  id="market_rate" min="0" type="text" />
-					</div>
-				</li>
-				<li class="h_s1">
-					<div class="f_w_l">
-						<span>购车分期本金:</span>
-						<p class="maxtab">最大值:<font id="car_installment_max"></font></p>
-						<input  class="in" style="margin-top: 3px;" id="car_installment" min="0" type="text" />
-					</div>
-					<div class="h_s"></div>
-				</li>
-				<li class="h_s1">
-					<div class="h_s">
-						<span >金融服务费:</span>
-						<p class="maxtab">最大值:<font id="service_money_max"></font></p>
-						<input id="service_money" style="margin-top: 3px;" min="0" type="text" disabled="true"/>
-					</div>
-					<div class="h_s">
-						<span>贷款总额:</span>
-							<p class="maxtab">最大值:<font id="total_loan_max"></font></p>
-						<input style="margin-top: 3px;" id="total_loan" type="text" disabled="true"/>
-					</div>
-				</li>
-				<li>
-					<div class="h_s">
-						<span >万元系数:</span>
-						<input id="wan" min="0" type="text" disabled="true"/>
-					</div>
-					<div class="h_s">
-						<span>本息合计:</span>
-						<input  id="principalANDinterest" type="text" disabled="true"/>
-					</div>
-				</li>
-				<li style="padding-bottom: 15px;">
-					<div class="h_s">
-						<span>平均月还:</span>
-						<input  id="average_month" type="text" style="margin-top: 18px;" disabled="true"/>
-					</div>
-					<div class="h_s">
-						<span>首月还款额:</span>
-						<p style="font-size:10px;line-height: 15px; margin: 0; width:115px;text-align: center; border-radius: 2px; padding: 0; background: #09357e; color: white; display: block;">建议首月多存200元</p>
-						<input id="first_month" style="margin-top: 3px;" type="text" disabled="true"/>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</body>
-	<script src="../kjs_icbc_style/js/jquery.min.js"></script>
-	<script type="text/javascript" src="../kjs_icbc_style/layer/layer.js" ></script>
-	<script type="text/javascript" src="../kjs_icbc_style/developerLwStyle/jsArithmetic.js" ></script>
-	<script src="./js/index.js"></script>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+<title>费率计算器</title>
+<link rel="stylesheet" type="text/css" href="./css/index.css" />
+</head>
+<body>
+	<div class="f_w">
+	    <!-- 费率logo -->
+		<!--  <img src="img/fl.png" style="width: 101px; height: 30px; margin: 5px auto; display: block;"/>-->
+		<ul>
+			<li>
+				<div class="f_w_l">
+					<span>类型:</span>
+					<ul class="f_w_r" id="vehicle_type">
+						<li><input type="radio" value="0.8" /> <span>新车</span></li>
+						<li style="margin-left: 8px;"><input type="radio" value="0.7"
+							checked="checked" /> <span>二手车</span></li>
+					</ul>
+				</div>
+				<div class="f_w_l">
+					<span>分期期数:</span>
+					<ul class="f_w_r" id="Installment_data">
+						<li><input type="radio" value="36" checked="checked" /><span>36</span></li>
+						<li style="margin-left: 3px;"><input type="radio" value="24" /><span>24</span></li>
+						<li style="margin-left: 3px;"><input type="radio" value="12" /><span>12</span></li>
+					</ul>
+				</div>
+			</li>
+			<li class="h_s1">
+				<div class="f_w_l">
+					<span>评估价/开票价:</span> <input style="margin-top: 18px;"
+						id="assess_money" class="in" min="0" type="text" />
+				</div>
+				<div class="f_w_l">
+					<span>市场费率%:</span>
+					<p class="maxtab">
+						最大值:<font id="market_rate_max"></font>
+					</p>
+					<input class="in" style="margin-top: 3px;" id="market_rate" min="0"
+						type="text" />
+				</div>
+			</li>
+			<li class="h_s1">
+				<div class="f_w_l">
+					<span>购车分期本金:</span>
+					<p class="maxtab">
+						最大值:<font id="car_installment_max"></font>
+					</p>
+					<input class="in" style="margin-top: 3px;" id="car_installment"
+						min="0" type="text" />
+				</div>
+				<div class="h_s"></div>
+			</li>
+			<li class="h_s1">
+				<div class="h_s">
+					<span>金融服务费:</span>
+					<p class="maxtab">
+						最大值:<font id="service_money_max"></font>
+					</p>
+					<input id="service_money" style="margin-top: 3px;" min="0"
+						type="text" disabled="true" />
+				</div>
+				<div class="h_s">
+					<span>贷款总额:</span>
+					<p class="maxtab">
+						最大值:<font id="total_loan_max"></font>
+					</p>
+					<input style="margin-top: 3px;" id="total_loan" type="text"
+						disabled="true" />
+				</div>
+			</li>
+			<li>
+				<div class="h_s">
+					<span>万元系数:</span> <input id="wan" min="0" type="text"
+						disabled="true" />
+				</div>
+				<div class="h_s">
+					<span>本息合计:</span> <input id="principalANDinterest" type="text"
+						disabled="true" />
+				</div>
+			</li>
+			<li style="padding-bottom: 15px;">
+				<div class="h_s">
+					<span>平均月还:</span> <input id="average_month" type="text"
+						style="margin-top: 18px;" disabled="true" />
+				</div>
+				<div class="h_s">
+					<span>首月还款额:</span>
+					<p
+						style="font-size: 10px; line-height: 15px; margin: 0; width: 115px; text-align: center; border-radius: 2px; padding: 0; background: #09357e; color: white; display: block;">建议首月多存200元</p>
+					<input id="first_month" style="margin-top: 3px;" type="text"
+						disabled="true" />
+				</div>
+			</li>
+		</ul>
+	</div>
+</body>
+<script src="../kjs_icbc_style/js/jquery.min.js"></script>
+<script type="text/javascript" src="../kjs_icbc_style/layer/layer.js"></script>
+<script type="text/javascript"
+	src="../kjs_icbc_style/developerLwStyle/jsArithmetic.js"></script>
+<script src="./js/index.js"></script>
 </html>

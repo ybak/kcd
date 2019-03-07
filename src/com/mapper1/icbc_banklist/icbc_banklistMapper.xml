@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.icbc_banklist.icbc_banklistMapper">
+
+
+<!-- 查询icbc_banklist表所有信息 -->
+<select id="geticbc_banklist"  parameterType="pd" resultType="pd">
+	select * from icbc_banklist	
+</select>
+
+
+</mapper>

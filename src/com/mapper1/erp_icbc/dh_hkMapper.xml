@@ -31,7 +31,7 @@
 	
 	</select>
 	<!-- 还款 count -->
-	<select id="findlist_hk"  parameterType="pageinfo" resultType="java.util.HashMap">
+	<select id="findlist_hk" parameterType="pageinfo" resultType="java.util.HashMap">
 	
 	</select>
 	
