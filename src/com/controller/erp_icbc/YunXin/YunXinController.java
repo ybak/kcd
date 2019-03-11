@@ -542,20 +542,23 @@ public class YunXinController extends BaseController{
 	@ResponseBody
 	public Object occupy(Integer id){
 		log.info("占位icbcId->"+id);
+		yx.addOccupyTest(id, creditutil.time());
 		String bankId=yx.selectBankId(String.valueOf(id));
-		if(StringUtils.isBlank(bankId)){
-			return renderError("icbcId不存在或者bankId不存在！");
+		ScanPool1 scanPool1=null;;
+		if(id==null || StringUtils.isBlank(bankId)){
+			log.info("随机获取一个吧");
+			scanPool1=PoolCache1.defaultSeat();
+			//return renderError("icbcId不存在或者bankId不存在！");
 		}else{
 			log.info("占位bankId->"+bankId);
-			ScanPool1 scanpool =PoolCache1.aReduceBusy(bankId);
-			log.info("占位结果->"+scanpool);
-			if(scanpool!=null){
-				return renderSuccess(scanpool);
-			}else{
-				return renderError("暂且没有闲置的视频通话坐席,请稍后再试！");
-			}
+			scanPool1 =PoolCache1.aReduceBusy(bankId);
+			log.info("占位结果->"+scanPool1);
 		}
-	
+		if(scanPool1!=null){
+			return renderSuccess(scanPool1);
+		}else{
+			return renderError("暂且没有闲置的视频通话坐席,请稍后再试！");
+		}
 	}
 	/**
 	 *释放

@@ -17,6 +17,9 @@
 	<select id="getOrganization" resultType="java.util.HashMap">
 		select id,name from assess_fs
 	</select>
+	<insert id="addOccupyTest" parameterType="java.lang.String" >
+		insert into occupy_test(icbc_id,data_time) VALUES(#{icbcId},#{dataTime})
+	</insert>
 	<select id="getBank" resultType="java.util.HashMap">
 		select id,name from icbc_banklist
 	</select>

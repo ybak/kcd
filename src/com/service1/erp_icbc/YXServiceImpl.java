@@ -186,4 +186,9 @@ public class YXServiceImpl implements YXService{
 		// TODO Auto-generated method stub
 		return yxmapper.selectBankCount(id);
 	}
+	@Override
+	public Integer addOccupyTest(Integer id, String time) {
+		// TODO Auto-generated method stub
+		return yxmapper.addOccupyTest(id, time);
+	}
 }

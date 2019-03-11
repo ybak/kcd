@@ -96,6 +96,20 @@ public class PoolCache1 {
 		}
 		return null;
 	}
+	public static ScanPool1 defaultSeat(){
+		if(container.isEmpty()){
+			return null;
+		}else{
+			for (Map.Entry entry : container.entrySet()) { 
+				String key=(String) entry.getKey();
+				ScanPool1 scanPool1=aReduceBusy(key);
+				if(scanPool1!=null){
+					return scanPool1;
+				}
+			}
+			return null;
+		}
+	}
 	public static ScanPool1 deleteBusy(String mark){
 		log.info("ÊÍ·Åmark->"+mark);
 		ScanPool1 scanPool1=busy.remove(mark);//É¾³ýÃ¦ÂµÖÐµÄ
