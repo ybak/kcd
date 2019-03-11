@@ -211,19 +211,31 @@
 	-->
 	<select id="select_viedo_byid" resultType="java.util.HashMap" parameterType="java.lang.String" >
 select * from (select 
-kik.*,
+<!-- kik.*,
 ki.c_cardno,ki.loan_tpid, ki.loan_level,ki.c_name_mt,ki.c_tel_mt,ki.c_cardno_mt,ki.kk_kpj,ki.c_sex,ki.c_name_gj1,ki.c_name_gj2,ki.c_tel_gj1,ki.c_tel_gj2,ki.c_cardno_gj1,ki.c_cardno_gj2,ki.imgstep2_1ss,ki.id icbcid,
 ac.price_result,ac.source_id,ac.property_id,ac.car_status,ac.gear_box_id,ac.car_km_icbc,ac.cardt2,ac.cardt1,ac.color_id,ac.mem_states,ac.mem_citys,ac.vincode,ac.ppxh,ac.motorcode,ac.icbc_pricecs,ac.price_new,ac.c_carno,
 yb.id ybId,yb.`name` ybName,
-cb.name cbName,cm.name cmName,cs.name csName,ag.name agName,af.name afName	
+cb.name cbName,cm.name cmName,cs.name csName,ag.name agName,af.name afName -->
+
+kik.cars_type,kik.kp_price,kik.dk_price,kik.jrfw_price,kik.dk_total_price,kik.aj_type,kik.aj_date,kik.aj_bank,kik.dk_lv,
+kik.dz_type,kik.sp_address,kik.yw_address,kik.kk_car_stateid,kik.kk_car_cityid,kik.kk_loan_stateid,kik.kk_loan_cityid,kik.kk_kh,
+kik.sfje,kik.po_ysr,kik.po_xl,kik.po_xzdz,kik.po_yzbm,kik.po_gzdw,kik.po_dwdz,kik.po_zw,kik.jjlxr_c_name,kik.jjlxr_c_tel,kik.jjlxr_jdrgx,
+kik.jjlxr_xzdz,kik.zdr_hyzk,kik.zdr_grsr,kik.zdr_jtsr,kik.zdr_xl,kik.zdr_jzzk,kik.zdr_xzdz,kik.zdr_yzbm,kik.zdr_gzdw,kik.zdr_dwdh,kik.zdr_dwdz,
+kik.zdr_dwxz,kik.zdr_sshy,kik.zdr_zy,kik.zdr_zw,kik.zdr_gznx,kik.gjr1_hyzk,kik.gjr2_hyzk,kik.gjr1_xzdz,kik.gjr2_xzdz,kik.gjr1_yzbm,kik.gjr2_yzbm,
+kik.gjr1_gzdw,kik.gjr2_gzdw,kik.gjr1_dwdz,kik.gjr2_dwdz,kik.gjr1_yzdrgx,kik.gjr2_yzdrgx,kik.zdr_wsdz,kik.po_wsdz,kik.gjr1_wsdz,kik.gjr2_wsdz,
+kik.qtlxr_c_name,kik.qtlxr_c_tel,kik.qtlxr_jdrgx,kik.qtlxr_xzdz,
+ki.id,ki.c_name,ki.c_tel,ki.c_cardno,ki.gems_fs_id,ki.gems_id,ki.loan_tpid, ki.loan_level,ki.c_name_mt,ki.c_tel_mt,ki.c_cardno_mt,ki.kk_kpj,ki.c_sex,ki.c_name_gj1,ki.c_name_gj2,ki.c_tel_gj1,ki.c_tel_gj2,ki.c_cardno_gj1,ki.c_cardno_gj2,ki.imgstep2_1ss,ki.id icbcid,
+ac.price_result,ac.source_id,ac.property_id,ac.car_status,ac.gear_box_id,ac.car_km_icbc,ac.cardt2,ac.cardt1,ac.color_id,ac.mem_states,ac.mem_citys,ac.vincode,ac.ppxh,ac.motorcode,ac.icbc_pricecs,ac.price_new,ac.c_carno,
+yb.id ybId,yb.`name` ybName,
+cb.name cbName,cm.name cmName,cs.name csName,ag.name agName,af.name afName		
 from kj_icbc ki 
 left JOIN assess_cars ac on ki.id =ac.icbc_id 
-JOIN icbc_banklist yb on yb.id=ki.bank_id
-JOIN car_brand cb on cb.id=ac.brid
-JOIN car_model cm on cm.id=ac.carid
-JOIN car_series cs on cs.id=ac.seid
-JOIN assess_gems ag on ag.id=ki.gems_id
-JOIN assess_fs af on af.id=ki.gems_fs_id
+left JOIN icbc_banklist yb on yb.id=ki.bank_id
+left JOIN car_brand cb on cb.id=ac.brid
+left JOIN car_model cm on cm.id=ac.carid
+left JOIN car_series cs on cs.id=ac.seid
+left JOIN assess_gems ag on ag.id=ki.gems_id
+left JOIN assess_fs af on af.id=ki.gems_fs_id
 left JOIN kjs_icbc_kk kik  on ki.id=kik.icbc_id) a  where  a.icbcid=#{0} 
 	</select>
 	<select id="select_mq_info" resultType="java.util.HashMap" parameterType="java.lang.String">
@@ -246,12 +258,12 @@ cb.name cbName,cm.name cmName,cs.name csName,ag.name agName,af.name afName
 	from icbc_erp_video_info yvi   
 	join kj_icbc ki on yvi.ext=ki.id and yvi.id=#{0}
 	left JOIN assess_cars ac on ki.id =ac.icbc_id 
-	JOIN icbc_banklist yb on yb.id=ki.bank_id
+	left JOIN icbc_banklist yb on yb.id=ki.bank_id
 	left JOIN car_brand cb on cb.id=ac.brid
 	left JOIN car_model cm on cm.id=ac.carid
 	left JOIN car_series cs on cs.id=ac.seid
-	JOIN assess_gems ag on ag.id=ki.gems_id
-	JOIN assess_fs af on af.id=ki.gems_fs_id
+	left JOIN assess_gems ag on ag.id=ki.gems_id
+	left JOIN assess_fs af on af.id=ki.gems_fs_id
 	left JOIN kjs_icbc_kk kik  on ki.id=kik.icbc_id 
 	</select>
 <!-- 查看省 -->

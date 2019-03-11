@@ -217,7 +217,7 @@ tr{
 }
 .r_row{
 	margin: 7px 0;
-	height:25px ;
+	min-height:25px ;
 	float: left;
 }
 .r_row div{

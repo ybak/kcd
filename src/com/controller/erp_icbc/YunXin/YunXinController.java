@@ -260,14 +260,18 @@ public class YunXinController extends BaseController{
 			 }	
 		}
 		//修理下图片
-		String ss[]=map.get("imgstep2_1ss").toString().split("");
-		for(String s:ss){
-			if(!s.equals("")){
-				map.put("positive","http://a.kcway.net/assess/"+s);
-				map.remove("img");
-				break;
+		Object imgstep2_1ss=map.get("imgstep2_1ss");
+		if(imgstep2_1ss!=null && !imgstep2_1ss.toString().equals("")){
+			String ss[]=imgstep2_1ss.toString().split("");
+			for(String s:ss){
+				if(!s.equals("")){
+					map.put("positive","http://a.kcway.net/assess/"+s);
+					map.remove("img");
+					break;
+				}
 			}
 		}
+		
 		select_mq_info = yx.select_mq_info(map.get("id").toString());//改  多个面签只取第一个
 		if(select_mq_info.size()>0){
 			 map.putAll((Map)select_mq_info.get(0));//添加到集合中
