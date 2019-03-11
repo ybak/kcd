@@ -2,7 +2,7 @@
  * SDK连接 功能相关
  */
 
-var SDKBridge = function(ctr, data) {
+var SDKBridge = function(ctr) {
   var sdktoken = readCookie('sdktoken'),
     userUID = readCookie('uid'),
     that = this;
@@ -16,7 +16,6 @@ var SDKBridge = function(ctr, data) {
   this.team = [];
   this.person[userUID] = true;
   this.controller = ctr;
-  this.cache = data;
   window.nim = ctr.nim = this.nim = SDK.NIM.getInstance({
     //控制台日志，上线时应该关掉
     debug: true || {
@@ -100,120 +99,12 @@ function onConnect() {
 function onWillReconnect(obj) {
  // 此时说明 SDK 已经断开连接, 请开发者在界面上提示用户连接已断开, 而且正在重新建立连接
  console.log('即将重连');
- console.log(obj.retryCount);//重试次数
- console.log(obj.duration);//持续的时间
+ console.log("重试次数"+obj.retryCount);
+ console.log("持续的时间"+obj.duration);
 }
 function onError(error) {
  console.log(error);
 }
 
 
-/**
- * 发送普通文本消息
- * @param scene：场景，分为：P2P点对点对话，team群对话
- * @param to：消息的接收方
- * @param text：发送的消息文本
- * @param isLocal：是否是本地消息
- * @param callback：回调
- */
-SDKBridge.prototype.sendTextMessage = function(
-  scene,
-  to,
-  text,
-  isLocal,
-  callback
-) {
-  isLocal = !!isLocal;
-  var options = {
-    scene: scene || 'p2p',
-    to: to,
-    text: text,
-    isLocal: isLocal,
-    done: callback
-  };
-  this.nim.sendText(options);
-};
-
-/**
- * 获取本地系统消息记录
- * @param  {Funciton} done 回调
- * @return {void}
- */
-SDKBridge.prototype.getLocalSysMsgs = function(done) {
-  this.nim.getLocalSysMsgs({
-    done: done
-  });
-};
-
-/**
- * 获取删除本地系统消息记录
- * @param  {Funciton} done 回调
- * @return {void}
- */
-SDKBridge.prototype.deleteAllLocalSysMsgs = function(done) {
-  this.nim.deleteAllLocalSysMsgs({
-    done: done
-  });
-};
-
-/**
- * 踢人
- * @param  {int} type  设备端
- * @return {void}
- */
-SDKBridge.prototype.kick = function(type) {
-  var deviceIds = type === 0 ? this.mobileDeviceId : this.pcDeviceId;
-  this.nim.kick({
-    deviceIds: [deviceIds],
-    done: function(error, obj) {
-      alert(
-        '踢' + (type === 0 ? '移动' : 'PC') + '端' + (!error ? '成功' : '失败')
-      );
-      console.log(error);
-      console.log(obj);
-    }
-  });
-};
-
-
-
-/**
- * 获取用户信息（如果用户信息让SDK托管）上层限制每次拉取150条
- */
-SDKBridge.prototype.getUsers = function(accounts, callback) {
-  var arr1 = accounts.slice(0, 150);
-  var arr2 = accounts.slice(150);
-  var datas = [];
-  var that = this;
-  var getInfo = function() {
-    if (!accounts || accounts.length <= 0) {
-      console.warn('getUsers 方法参数 accounts 不能为空：', accounts);
-      return;
-    }
-    that.nim.getUsers({
-      accounts: arr1,
-      done: function(err, data) {
-        if (err) {
-          callback(err);
-        } else {
-          datas = datas.concat(data);
-          if (arr2.length > 0) {
-            arr1 = arr2.slice(0, 150);
-            arr2 = arr2.slice(150);
-            getInfo();
-          } else {
-            callback(err, datas);
-          }
-        }
-      }
-    });
-  };
-  getInfo();
-};
-SDKBridge.prototype.getUser = function(account, callback) {
-  this.nim.getUser({
-    account: account,
-    done: callback
-  });
-};
 

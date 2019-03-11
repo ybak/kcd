@@ -2,6 +2,7 @@
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.controller.erp_icbc.YunXin.bean.CallBack;
 import com.controller.erp_icbc.YunXin.bean.InfoCopy;
+import com.controller.erp_icbc.base.BaseController;
 import com.controller.erp_icbc.utils.PageInfo;
 import com.mapper1.erp_icbc.YXMapper;
 @Service
@@ -29,38 +31,38 @@ public class YXServiceImpl implements YXService{
 		return yxmapper.query_tokenbyid(id);
 	}
 	
-	public void insert_infocopy_duration(InfoCopy infocopy){
-		yxmapper.insert_infocopy_duration(infocopy);
+	public int insert_infocopy_duration(InfoCopy infocopy){
+		return yxmapper.insert_infocopy_duration(infocopy);
 	}
-	public void insert_infocopy_download(InfoCopy infocopy){
-		yxmapper.insert_infocopy_download(infocopy);
+	public int insert_infocopy_download(InfoCopy infocopy){
+		return yxmapper.insert_infocopy_download(infocopy);
 	}
 	public String select_infocopy(String channelId){
 		return yxmapper.select_infocopy(channelId);
 	}
-	public void update_infocopy_duration(InfoCopy infocopy){
-		 yxmapper.update_infocopy_duration(infocopy);
+	public int update_infocopy_duration(InfoCopy infocopy){
+		return yxmapper.update_infocopy_duration(infocopy);
 	}
-	public void update_infocopy_download(InfoCopy infocopy){
-		yxmapper.update_infocopy_download(infocopy);
+	public int update_infocopy_download(InfoCopy infocopy){
+		return yxmapper.update_infocopy_download(infocopy);
 	}
-	public void insert_M(String s){
-		yxmapper.insert_M( s);
+	public int insert_M(String s){
+		return yxmapper.insert_M( s);
 	}
 	public int insert_infocopy_durationM(Map infocopy){
 		return yxmapper.insert_infocopy_durationM(infocopy);
 	}
-	public void insert_infocopy_downloadM(Map infocopy){
-		yxmapper.insert_infocopy_downloadM(infocopy);
+	public int insert_infocopy_downloadM(Map infocopy){
+		return yxmapper.insert_infocopy_downloadM(infocopy);
 	}
 	public String select_infocopyM(String channelId){
 		return yxmapper.select_infocopyM(channelId);
 	}
-	public void update_infocopy_durationM(Map infocopy){
-		yxmapper.update_infocopy_durationM(infocopy);
+	public int update_infocopy_durationM(Map infocopy){
+		return yxmapper.update_infocopy_durationM(infocopy);
 	}
-	public void update_infocopy_downloadM(Map infocopy){
-		yxmapper.update_infocopy_downloadM(infocopy);
+	public int update_infocopy_downloadM(Map infocopy){
+		return yxmapper.update_infocopy_downloadM(infocopy);
 	}
 	public Map select_viedo_byid(String id){
 		return yxmapper.select_viedo_byid(id);
@@ -121,5 +123,67 @@ public class YXServiceImpl implements YXService{
 	public List select_mq_info(String id) {
 		// TODO Auto-generated method stub
 		return yxmapper.select_mq_info( id);
+	}
+	@Override
+	public List<Map> getOrganization() {
+		// TODO Auto-generated method stub
+		return yxmapper.getOrganization();
+	}
+	@Override
+	public List<Map> getBank() {
+		// TODO Auto-generated method stub
+		return yxmapper.getBank();
+	}
+	@Override
+	public String selectUidByAccid(String accid) {
+		return yxmapper.selectUidByAccid(accid);
+	}
+	@Override
+	public String getCommStates(Integer id) {
+		// TODO Auto-generated method stub
+		return yxmapper.getCommStates(id);
+	}
+	@Override
+	public String getCommCitys(Integer id) {
+		// TODO Auto-generated method stub
+		return yxmapper.getCommCitys(id);
+	}
+	@Override
+	public String getCommZones(Integer id) {
+		// TODO Auto-generated method stub
+		return yxmapper.getCommZones(id);
+	}
+	@Override
+	public Object updateVideoTokenBinding(String delmark,String bankId, String Id,String dt_edit,String mid_edit) {
+		if(StringUtils.isNotBlank(delmark) && (delmark.equals("0") || delmark.equals("1")) && StringUtils.isNotBlank(Id)){
+			 int i=yxmapper.updateVideoTokenBinding(Integer.parseInt(delmark),bankId,Id,dt_edit,mid_edit);
+			 if(i>0){
+				 return BaseController.renderSuccess("修改权限成功!");
+			 }else{
+				 return BaseController.renderError("修改权限失败!");
+			 }
+		}
+		return BaseController.renderError("请求参数不正确!");
+		
+	}
+	@Override
+	public String selectCountTokenByUid(String uid) {
+		// TODO Auto-generated method stub
+		return yxmapper.selectCountTokenByUid(uid);
+	}
+	@Override
+	public int selectCountAdminById(String id) {
+		// TODO Auto-generated method stub
+		return yxmapper.selectCountAdminById(id);
+	}
+	@Override
+	public String selectBankId(String icbcId) {
+		// TODO Auto-generated method stub
+		return yxmapper.selectBankId(icbcId);
+	}
+	@Override
+	public Integer selectBankCount(String id) {
+		// TODO Auto-generated method stub
+		return yxmapper.selectBankCount(id);
 	}
 }

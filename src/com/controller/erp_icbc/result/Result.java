@@ -26,5 +26,9 @@ public class Result {
 	public void setData(Object data) {
 		this.data = data;
 	}
-    
+	@Override
+	public String toString() {
+		return "Result [success=" + success + ", message=" + message + ", data=" + data + "]";
+	}
+	
 }

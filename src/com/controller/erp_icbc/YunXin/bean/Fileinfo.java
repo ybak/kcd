@@ -1,4 +1,9 @@
 package com.controller.erp_icbc.YunXin.bean;
+/**
+ * @Description:TODO
+ * @author:LiWang 视频面签回调
+ * @time:2018年8月22日
+ */
 public class Fileinfo {
 	private boolean caller;//是否是此通通话的发起者，若是则为true，若不是则没有此字段，可转为Boolean值
 	private String channelid;

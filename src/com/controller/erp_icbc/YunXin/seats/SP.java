@@ -1,6 +1,9 @@
 package com.controller.erp_icbc.YunXin.seats;
+/** 
+ * 重写equals方法 用来根据mark更新或者删除ScanPool1(视频通话组对象)
+ */
 public class SP {
-	private String mark;//标识
+	String mark;//标识
 	@Override
 	public boolean equals(Object obj) { 
       if(obj!=null && ((SP)obj).getMark().equals(this.mark)){

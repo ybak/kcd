@@ -5,6 +5,9 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -16,16 +19,19 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.controller.erp_icbc.YunXin.YunXinController;
 import com.controller.erp_icbc.result.Result;
 import com.controller.erp_icbc.utils.Charsets;
 import com.controller.erp_icbc.utils.StringEscapeEditor;
+import com.model1.icbc.erp.PageData;
 /**基础 controller
  * @Description:TODO
  * @author:LiWang
  * @time:2018年8月2日
  */
 public abstract class BaseController {
-
+	private static Logger log = LogManager.getLogger(BaseController.class.getName());
     public void initBinder(ServletRequestDataBinder binder) {
         /**
          * 自动转换日期类型的字段格式
@@ -41,15 +47,23 @@ public abstract class BaseController {
      * 获取当前登录用户id
      * @return {Long}
      */
-    public int getUserId() {
-        return 1314;
+    public String getUserId(HttpServletRequest request) {
+        String id=((PageData)request.getSession().getAttribute("pd")).get("id").toString();
+        log.info("获取当前登录用户唯一标识->"+id);
+        return id;
+    }
+    public static String getTime(){
+    	Date time = new Date(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String current = sdf.format(time);
+        return current;
     }
     /**
      * ajax失败
      * @param msg 失败的消息
      * @return {Object}
      */
-    public  Result renderError(String msg) {
+    public static Result renderError(String msg) {
         Result result = new Result();
         result.setSuccess(false);
         result.setMessage(msg);
@@ -60,7 +74,7 @@ public abstract class BaseController {
      * ajax成功
      * @return {Object}
      */
-    public  Result renderSuccess() {
+    public static Result renderSuccess() {
         Result result = new Result();
         return result;
     }
@@ -70,7 +84,7 @@ public abstract class BaseController {
      * @param msg 消息
      * @return {Object}
      */
-    public  Result renderSuccess(String msg) {
+    public static Result renderSuccess(String msg) {
         Result result = new Result();
         result.setMessage(msg);
         return result;

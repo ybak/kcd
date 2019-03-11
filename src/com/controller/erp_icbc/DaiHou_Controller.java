@@ -76,7 +76,7 @@ public class DaiHou_Controller extends BaseController{
 			hk.setHk_periods(request.getParameter("periods").toString());
 			hk.setHk_money(request.getParameter("money").toString());
 			hk.setKk_id(request.getParameter("ordercode").toString());
-			hk.setU_id(this.getUserId());
+			hk.setU_id(Integer.parseInt(this.getUserId(request)));
 			code=daihou.addhk(hk);
 		} catch (Exception e) {
 			code=0;

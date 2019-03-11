@@ -26,12 +26,13 @@ function readCookie(name) {
 }
 function refreshTime(){
 	var tim=readCookie('mark');
+	var bankid=readCookie('bankId');
 	if(tim!=null){
 		 setInterval(function(){
 	         $.ajax({
 	                url:'../yx/refreshtime.do',
 	                type:'POST',
-	                data:{mark:tim},
+	                data:{mark:tim,bankId:bankid},
 	                dataType:'json',
 	                success: function () {
 	                	console.log('刷新');
@@ -39,8 +40,8 @@ function refreshTime(){
 	                error: function(d){
 	                   console.log(d.status)
 	                }
-	            });
-	        },180000);//3分钟更新一下在线状态
+	            }); 
+	        },180000);//3分钟更新一下在线状态 3*60*1000=180000
 	}
 };
 

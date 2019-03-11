@@ -21,11 +21,28 @@
 	<!-- 点播 -->
 	<link href="./dist/neplayer.min.css" rel="stylesheet">
 	<script src="./dist/neplayer.min.js"></script>
+	<style>
+		.my-container{
+			 min-width: 285px;
+		}
+		.list-group-item > .row{
+			margin-top:7px;
+		}
+		.list-group-item > .row:first{
+			margin-top:0;
+		}	
+		.row-title{
+			font-size: 15px;
+			font-weight: 700
+		}		
+		.list-group-item{
+		    background-color: #E8E8E8!important;
+		}		
+	</style>
 </head>
 <body>
 	<div class="wrapper box-sizing" >
 		<div id="becall-content"  style="height: 100%; margin:20px; ">
-			<!-- 主界面开始 -->
 			<!-- 头部搜索开始-->
 			<div class="my-container">
 		        <label class="myLabel-content">姓名：</label>
@@ -39,12 +56,20 @@
 		            <input id="idNumbervalue"  autocomplete="off"   type="text" class="form-control" >
 		        </div>
 		    </div> 
+		    <div class="my-container my-container-nextline">
+		        <label class="myLabel-content">银行：</label>
+		        <div class="myText-content1 myText-content-down">
+		            <input id="bank" autocomplete="off"  type="text" class="form-control" />
+		            <input id="bankval" type="hidden">
+		            <ul id="contentSelectByBank" class="myText-content-select"></ul>
+		        </div>
+		    </div>
 		     <div class="my-container">
 		        <label class="myLabel-content">机构：</label>
-		        <div class="myText-content1 myText-content-down">
-		            <input id="organization" onfocus="funFocus()"  autocomplete="off"  type="text" class="form-control" />
+		        <div class="myText-content1 myText-content-down" id="workBox">
+		            <input id="organization" autocomplete="off"  type="text" class="form-control" />
 		            <input id="organizationval" type="hidden">
-		            <ul  class="myText-content-select"></ul>
+		            <ul id="contentSelect" class="myText-content-select"></ul>
 		        </div>
 		    </div>
 		  <!-- 第二行 -->
@@ -59,7 +84,10 @@
 					</select>	
 		        </div>
 		    </div>
-		    <div class="my-container">
+	
+		
+			<!-- 录制播放开始 -->
+			<div class="my-container">
 		        <label class="myLabel-content">视频类型：</label>
 		        <div class="myText-content">
 					<select id="viedotypevalue" class="form-control">
@@ -69,7 +97,7 @@
 					</select>	
 		        </div>
 		    </div>
-		    <div class="my-container">
+		    <div class="my-container my-container-nextline">
 		        <label class="myLabel-content">签约状态：</label>
 		         <div class="myText-content">
 					<select id="contractvalue" class="form-control">
@@ -80,7 +108,12 @@
 		        </div>
 		    </div>
 		 </div>
-		
+		<!-- 第三行 -->
+		<div class="my-container my-container-nextline">
+		        <button id="search_btn" type="button" class="btn btn-primary">搜索</button>
+		        <button id="reset" type="button" class="btn btn-info">重置</button>
+		</div>
+		<!-- 头部搜索结束-->
 		 <div class="mq_viedoplay hide" >
 		 	<!-- 录制播放开始 -->
 			 <div id="viedo-view—examine" style="margin: 0 auto;width:100%;height: 100%; ">
@@ -121,137 +154,27 @@
 								<div style="height: 1px; background: #CCCCCC;"></div>
 								<div class="mq_l_bottom">
 									<div style="height: 85%;">
-										<video style="margin: auto" id="my-video" class="video-js vjs-big-play-centered " x-webkit-airplay="allow" webkit-playsinline controls preload="auto" width="100%" height="100%" >
-										  
-										</video>
+										<video style="margin: auto" id="my-video" class="video-js vjs-big-play-centered " x-webkit-airplay="allow" webkit-playsinline controls preload="auto" width="100%" height="100%" ></video>
 									</div>
 									<input type="hidden" id="icbcid">
 									<input type="hidden" id="channelid" />
-									<div class="mq_viedo_bottom">
-													
-									</div>
+									<div class="mq_viedo_bottom"></div>
 								</div>
 							</div>
 							<div class="mq_right">
-								<div class="mq_m_b" style="height: 98%; overflow-y: auto;">
-									<table class="mq_tabl"  cellspacing="0" style="border: 1px solid #CCCCCC; ">
-										<!--<tr>
-										  <th>序号</th>
-										  <th>内容</th>
-										  <th>操作</th>
-										</tr>-->
-										<tr>
-										  <td>1、</td>
-										  <td>
-										  	<p>您好，这里是工商银行浙江分行杭州武林支行，请问您现在是否需要在我行申请一笔信用卡购车分期付款业务？</p>
-										  	  <div class="r_row">
-										  		<div>&nbsp;</div>
-										  		<input value="是" disabled="disabled"/>
-										  	</div> 
-										  </td>
-										</tr>
-										<tr>
-										  <td>2、</td>
-										  <td>
-										  	  <p>您的名字是什么？</p>
-										  	  <div class="r_row">
-										  		<div>姓名:</div>
-										  		<input id="nameB"  disabled="disabled"></input>
-										  	</div>
-										  </td>
-										</tr>
-										<tr>
-										  <td>3、</td>
-										  <td>
-										  	<p>请问您的身份证号码是多少？您的手机号码是多少？请问您的工作单位是？您的月收入是多少？您的送达地址是哪里？</p>
-										  	<div class="r_row">
-										  		<div>身份证号:</div>
-										  		<input id="idnumberB" disabled="disabled"/>
-										  	</div> 
-										  	 </div>
-										  	 	<div class="r_row">
-										  		<div>手机号:</div>
-										  		<input id="telB" disabled="disabled"/>
-										  	</div>
-										  	 <div class="r_row">
-										  		<div>工作单位:</div>
-										  		<textarea id="workB" type="text"  disabled="disabled"></textarea>
-										  	</div>
-										  	 <div class="r_row">
-										  		<div>月收入:</div>
-										  		<input id="incomeB"  disabled="disabled"/>
-											</div>
-											  <div class="r_row">
-										  		<div>送达地址:</div>
-										  		<textarea id="deliveryB"  disabled="disabled"></textarea>
-										  	</div>
-										 </td>
-										</tr>
-										<tr>
-										  <td>4、</td>
-										  <td>
-										  	  <p>请问您购买的的汽车品牌是什么？车架号是多少？</p>
-										  	  <div class="r_row">
-										  		<div>汽车品牌型号:</div>
-										  		<input id="pxB"  disabled="disabled">
-										  	  </div>
-										  	   <div class="r_row">
-										  		<div>车价:</div>
-										  		<input id="priceresultB"  disabled="disabled">
-										  	  </div>
-										  </td>
-										</tr>
-										<tr>
-										  <td>5、</td>
-										  <td>
-										  	  <p>您了解该笔贷款是由安联汽车服务有限公司担保的吗？</p>
-										  	  <div class="r_row">
-										  		<div>担保:</div>
-										  		<input  value="了解,明白等" disabled="disabled"/>
-										  	 </div>
-										  </td>
-										</tr>
-										<tr>
-										  <td>6、</td>
-										  <td>
-										  	  <p>每月还款额是多少？</p>
-										  	  <div class="r_row">
-										  		<div>月还金额:</div>
-										  		<input id="monthmontyB"  disabled="disabled"/>
-										  	 </div>
-										  </td>
-										</tr>
-										<tr>
-										  <td>7、</td>
-										  <td>
-										  	  <p>请您翻开《牡丹信用卡分期付款/抵押合同》第2页第一部分第二条，核对您申请的分期付款业务购车分期金额是多少？</p>
-										  	  <div class="r_row">
-										  		<div>购车分期金额:</div>
-										  		<input id="dkpriceB" disabled="disabled"/>
-										  	 </div>
-										  </td>
-										</tr>
-										<tr>
-										  <td>8、</td>
-										  <td>
-										  	  <p>汽车金融服务费分期金额是多少？</p>
-										  	  <div class="r_row">
-										  		<div>金融服务费分期金额:</div>
-										  		<input id="serveB" value="3000元" disabled="disabled"/>
-										  	 </div>
-										  </td>
-										</tr>
-										<tr>
-										  <td>9、</td>
-										  <td>
-										  	  <p>期限是多少年？</p>
-										  	  <div class="r_row">
-										  		<div>期限:</div>
-										  		<input id="daeB"  disabled="disabled"/>
-										  	 </div>
-										  </td>
-										</tr>	
-									</table>
+								<div class="mq_m_b" style="height: 98%;position: relative;">
+								  	<ul class="nav nav-tabs">
+								  	  <li class="active" onclick="switchoverFun('A',this,'item_')"><a href="javascript:void(0);">实时面签问答题</a></li>
+								  	  <li onclick="switchoverFun('C',this,'item_')"><a href="javascript:void(0);">客户信息</a></li>
+									  <li onclick="switchoverFun('D',this,'item_')"><a href="javascript:void(0);">贷款信息</a></li>
+									  <li onclick="switchoverFun('E',this,'item_')"><a href="javascript:void(0);">车辆信息</a></li>
+									</ul>
+									<div id="item_A" class="item1_child">
+										<table class="mq_tabl" id="pastRecords" cellspacing="0"></table>
+									</div>	
+									<div id="item_C" class="item1_child hide"></div>
+									<div id="item_D" class="item1_child hide"></div>
+									<div id="item_E" class="item1_child hide"></div>
 								</div>
 							</div>
 					</div>
@@ -271,60 +194,49 @@
 				}
 			</style>
 			<!-- 录制播放结束 -->
-			<div class="mq_arrows_box">
-			  <!-- <div class="mq_arrows"></div> -->
-			</div>
-		
+			<div class="mq_arrows_box" title=""></div>
 		 </div>
-		<!-- 第三行 -->
-		<div class="my-container my-container-nextline">
-		        <button id="search_btn" type="button" class="btn btn-primary">搜索</button>
-		        <button id="reset" type="button" class="btn btn-info">重置</button>
-		</div>
-		<!-- 头部搜索结束-->
+		 <!-- 录制播放结束 -->
 		<!--bootstrap table存放工具栏的盒子 -->
 		<div id="toolbar"></div>
 		<!--bootstrap table 存放数据的盒子 -->
-		<table   id="mytab" style=" word-break: keep-all;"> 
-		
-		</table>	
-		
-			<div class="right-panel hide" id="rightPanel">
-				<!-- 聊天面板 -->
-				<div class="chat-box show-netcall-box becall-view " id="chatBox"><!-- 对话框 -->
-					<div class="netcall-box" id="netcallBox"><!-- 网络回话盒子 -->
-						<!-- 被叫界面 -->
-						<div class="netcall-becalling-box show">
-							<img alt="用户头像" class="avatar">
-							<div class="nick"></div>
-							<p id="becallingText" class="tip"></p>
-							<div class="op">
-								<div class="normal">
-									<div class="checking-tip">检查插件中...
-										<span class="netcall-icon-checking"></span>
-									</div>
-									<button class="netcall-button blue beCallingAcceptButton" id="beCallingAcceptButton">
-										<span class="txt">接听</span>
-										<span class="netcall-icon-checking"></span>
-									</button>
-									<button class="netcall-button red beCallingRejectButton" id="beCallingRejectButton">
-										拒绝
-									</button>
+		<table id="mytab" style=" word-break: keep-all;"></table>	
+		<div class="right-panel hide" id="rightPanel">
+			<!-- 聊天面板 -->
+			<div class="chat-box show-netcall-box becall-view"><!-- 对话框 -->
+				<div class="netcall-box"><!-- 网络回话盒子 -->
+					<!-- 被叫界面 -->
+					<div class="netcall-becalling-box show">
+						<img alt="用户头像" class="avatar" src="images/default-icon.png">
+						<div class="nick"></div>
+						<p id="becallingText" class="tip"></p>
+						<div class="op">
+							<div class="normal">
+								<div class="checking-tip">检查插件中...
+									<span class="netcall-icon-checking"></span>
 								</div>
-								<div class="exception">
-									<button class="netcall-button blue" id="downloadAgentButton">下载音视频插件</button>
-									<br/>
-									<button class="netcall-button red beCallingRejectButton">拒绝</button>
-									<div class="exception-tip">拒绝调用插件申请会导致无法唤起插件,需重启浏览器</div>
-								</div>
+								<button class="netcall-button blue beCallingAcceptButton" id="beCallingAcceptButton">
+									<span class="txt">接听</span>
+									<span class="netcall-icon-checking"></span>
+								</button>
+								<button class="netcall-button red beCallingRejectButton" id="beCallingRejectButton">
+									拒绝
+								</button>
+							</div>
+							<div class="exception">
+								<button class="netcall-button blue" id="downloadAgentButton">下载音视频插件</button>
+								<br/>
+								<button class="netcall-button red beCallingRejectButton">拒绝</button>
+								<div class="exception-tip">拒绝调用插件申请会导致无法唤起插件,需重启浏览器</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- 技术方案弹框 -->
-			<div class="dialog-team-container radius5px hide" id="dialogCallMethod"></div>
-			<div id="mask" class="mask hide"></div>	
+		</div>
+		<!-- 技术方案弹框 -->
+		<div class="dialog-team-container radius5px hide" id="dialogCallMethod"></div>
+		<div id="mask" class="mask hide"></div>	
 		</div>
 	
 		<!-- BBB -->
@@ -343,10 +255,6 @@
 									<div class="l_content">人脸识别:</div>
 									<div class="r_contetn" id="manA"></div>
 								</div>
-								<!-- <div>
-									<div class="l_content">意向车型:</div>
-									<div class="r_contetn">别克GL8</div>
-								</div> -->
 								<div>
 									<div class="l_content">意向金额:</div>
 									<div class="r_contetn" id="totalpriceA"></div>
@@ -370,14 +278,14 @@
 						<div style="height: 1px; background: #CCCCCC;width: 100%;"></div>
 						<div class="mq_l_bottom">
 							<div style="height: 85%;">
-									<div class="right-panel-1 " id="rightPanel">
+									<div class="right-panel-1">
 									<!-- 聊天面板 -->
-									<div class="chat-box" id="chatBox"><!-- 对话框 -->	
-										<div class="netcall-box " id="netcallBox1"><!-- 网络回话盒子 -->
+									<div class="chat-box"><!-- 对话框 -->	
+										<div class="netcall-box" id="netcallBox"><!-- 网络回话盒子 -->
 											<div class="netcall-mask hide">
 												<div class="netcallTip"></div>
 											</div>
-											<div class="top ">
+											<div class="top">
 												<span class="fullScreenIcon toggleFullScreenButton" id="toggleFullScreenButton" title="切换全屏">&nbsp;</span>
 											</div>
 											<!-- 视频对话 -->
@@ -397,6 +305,7 @@
 													</div>
 													<div class="operation">
 														<div class="control">
+															<!-- 扩音器 -->
 															<div class="microphone control-item">
 																<div class="slider hide">
 																	<div class="txt">10</div>
@@ -404,6 +313,7 @@
 																</div>
 																<span class="icon-micro"></span>
 															</div>
+															<!-- 音量 -->
 															<div class="volume control-item">
 																<div class="slider hide">
 																	<div class="txt">10</div>
@@ -411,6 +321,7 @@
 																</div>
 																<span class="icon-volume"></span>
 															</div>
+															<!-- 摄像头 -->
 															<div class="camera control-item">
 																<span class="icon-camera"></span>
 															</div>
@@ -424,149 +335,31 @@
 											</div> 
 										</div>
 									</div>
-							</div>
-									
+								</div>		
 							</div>
 						</div>
 					</div>
 					<div class="mq_right">
-						<div class="mq_m_b" style="height: 98%; overflow-y: auto;">
-							<table class="mq_tabl"  cellspacing="0" style="border: 1px solid #CCCCCC; ">
-								<!--<tr>
-								  <th>序号</th>
-								  <th>内容</th>
-								  <th>操作</th>
-								</tr>-->
-								<tr>
-								  <td>1、</td>
-								  <td>
-								  	<p>您好，这里是工商银行浙江分行杭州武林支行，请问您现在是否需要在我行申请一笔信用卡购车分期付款业务？</p>
-								  	  <div class="r_row">
-								  		<div>&nbsp;</div>
-								  		<input value="是" disabled="disabled"/>
-								  	</div> 
-								  </td>
-								</tr>
-								<tr>
-								  <td>2、</td>
-								  <td>
-								  	  <p>您的名字是什么？</p>
-								  	  <div class="r_row">
-								  		<div>姓名:</div>
-								  		<input id="nameA"  disabled="disabled"></input>
-								  	</div>
-								  </td>
-								</tr>
-								<tr>
-								  <td>3、</td>
-								  <td>
-								  	<p>请问您的身份证号码是多少？您的手机号码是多少？请问您的工作单位是？您的月收入是多少？您的送达地址是哪里？</p>
-								  	<div class="r_row">
-								  		<div>身份证号:</div>
-								  		<input id="idnumberA"  disabled="disabled"/>
-								  	</div> 
-								  	 </div>
-								  	 	<div class="r_row">
-								  		<div>手机号:</div>
-								  		<input id="telA" disabled="disabled"/>
-								  	</div>
-								  	 <div class="r_row">
-								  		<div>工作单位:</div>
-								  		<textarea id="workA" type="text"  disabled="disabled"></textarea>
-								  	</div>
-								  	 <div class="r_row">
-								  		<div>月收入:</div>
-								  		<input id="incomeA"  disabled="disabled"/>
-									</div>
-									  <div class="r_row">
-								  		<div>送达地址:</div>
-								  		<textarea id="deliveryA"  disabled="disabled"></textarea>
-								  	</div>
-								 </td>
-								</tr>
-								<tr>
-								  <td>4、</td>
-								  <td>
-								  	  <p>请问您购买的的汽车品牌是什么？车架号是多少？</p>
-								  	  <div class="r_row">
-								  		<div>汽车品牌型号:</div>
-								  		<input id="pxA"  disabled="disabled">
-								  	  </div>
-								  	   <div class="r_row">
-								  		<div>车价:</div>
-								  		<input id="priceresultA" disabled="disabled">
-								  	  </div>
-								  </td>
-								</tr>
-								<tr>
-								  <td>5、</td>
-								  <td>
-								  	  <p>您了解该笔贷款是由安联汽车服务有限公司担保的吗？</p>
-								  	  <div class="r_row">
-								  		<div>担保:</div>
-								  		<input  value="了解,明白等" disabled="disabled"/>
-								  	 </div>
-								  </td>
-								</tr>
-								<tr>
-								  <td>6、</td>
-								  <td>
-								  	  <p>每月还款额是多少？</p>
-								  	  <div class="r_row">
-								  		<div>月还金额:</div>
-								  		<input id="monthmontyA" disabled="disabled"/>
-								  	 </div>
-								  </td>
-								</tr>
-								<tr>
-								  <td>7、</td>
-								  <td>
-								  	  <p>请您翻开《牡丹信用卡分期付款/抵押合同》第2页第一部分第二条，核对您申请的分期付款业务购车分期金额是多少？</p>
-								  	  <div class="r_row">
-								  		<div>购车分期金额:</div>
-								  		<input id="dkpriceA" value="33000元" disabled="disabled"/>
-								  	 </div>
-								  </td>
-								</tr>
-								<tr>
-								  <td>8、</td>
-								  <td>
-								  	  <p>汽车金融服务费分期金额是多少？</p>
-								  	  <div class="r_row">
-								  		<div>金融服务费分期金额:</div>
-								  		<input id="serveA" value="3000元" disabled="disabled"/>
-								  	 </div>
-								  </td>
-								</tr>
-								
-								<tr>
-								  <td>9、</td>
-								  <td>
-								  	  <p>期限是多少年？</p>
-								  	  <div class="r_row">
-								  		<div>期限:</div>
-								  		<input id="daeA" value="36年" disabled="disabled"/>
-								  	 </div>
-								  </td>
-								</tr>
-								<tr style="height: auto">
-								  <td>10、</td>
-								  <td > 
-								  	  <p>A:上述信息核对无误，请在合同第6页债务人及抵押人栏目签字。</p>
-								  	  <p>B:打开信用卡申请表第3页，抄录部分内容是否为您本人填写，如是请在申请人处签名。</p>
-								  	  <p>C:客户告知书相关内容是否已阅知，如是请在签字人处签名。</p>
-								  	  <p>D:感谢您的配合，业务办理成功后，我行会向您邮寄合同和客户告知书，请您注意查收并仔细阅读，后续如有问题，欢迎致电客户告知书上的汽车分期服务专线电话。
-请您认真阅读您与担保方签订的相关协议，该协议内容以及协议中约定的在您未按时、足额清偿债务时担保方可采取的措施等，均与工商银行无关。您办理该笔分期业务无需向我行和担保公司缴纳任何保证金和押金。
-请您务必下载和使用工银融E联，通过申请时预留手机号注册登录后，即可享受相应服务。</p>
-								  </td>
-								</tr>
-							</table>
+					
+						<div class="mq_m_b" style="height: 98%;position: relative;">
+						  	<ul class="nav nav-tabs">
+						  	  <li class="active" onclick="switchoverFun('A',this,'item1_')"><a href="javascript:void(0)">实时面签问答题</a></li>
+						  	  <li onclick="switchoverFun('C',this,'item1_')"><a href="javascript:void(0)">客户信息</a></li>
+							  <li onclick="switchoverFun('D',this,'item1_')"><a href="javascript:void(0)">贷款信息</a></li>
+							  <li onclick="switchoverFun('E',this,'item1_')"><a href="javascript:void(0)">车辆信息</a></li>
+							</ul>
+							<div id="item1_A" class="item1_child">
+								<table class="mq_tabl" id="realTime"  cellspacing="0" style="border: 1px solid #CCCCCC; "></table>
+							</div>	
+							<div id="item1_C" class="item1_child hide"></div>
+							<div id="item1_D" class="item1_child hide"></div>
+							<div id="item1_E" class="item1_child hide"></div>
 						</div>
 					</div>
 			</div>
 		</div>
 	</div>
-</div>
+	</div>
 	
 	<script>
 		// IE 11 polify
@@ -588,9 +381,12 @@
 		}
 	</script>
 	<script src="../3rd/nim_server_conf.js"></script>
-	<script src="../3rd/NIM_Web_SDK_v5.4.0.js"></script>
+<!-- 	<script src="../3rd/NIM_Web_SDK_v5.4.0.js"></script>
 	<script src="../3rd/NIM_Web_Netcall_v5.4.0.js"></script>
-	<script src="../3rd/NIM_Web_WebRTC_v5.4.0.js"></script>
+	<script src="../3rd/NIM_Web_WebRTC_v5.4.0.js"></script> - -->
+	<script src="../3rd/NIM_Web_SDK_v6.1.0.js"></script>
+	<script src="../3rd/NIM_Web_Netcall_v6.1.0.js"></script>
+	<script src="../3rd/NIM_Web_WebRTC_v6.1.0.js"></script>
 	<!-- <script src="../3rd/NIM_Web_WhiteBoard_v5.4.0.js"></script>
 	<script src="../3rd/DrawPlugin.js"></script>
 	<script src="./js/3rd/whiteboard.js"></script> -->
@@ -606,7 +402,6 @@
 				console.error(JSON.stringify(info));
 		} */
 	</script>
-
 	<script src="../3rd/platform.js"></script>
 	<script src="../3rd/rtcSupport.js"></script>
 	<script src="js/3rd/jquery-ui.min.js"></script>
@@ -640,151 +435,1452 @@
 	<script src="js/module/dialog_call_method.js"></script> <!-- 技术方案选择的弹框 -->
 	<script src="js/main.js?v=2"></script>
 	<script src="../3rd/vue.min.js"></script>
-	
 	<script type="text/javascript" src="../kjs_icbc/kjs_icbc_style/layer/layer.js"></script>
 	<script>
-	//设置面前问题表格样式
-	$(".mq_tabl tr td:first-child").css({"color":"white","font-size":"14px"});
-	$(".mq_tabl tr td:first-child:odd").css("background-color","#596790");
-	$(".mq_tabl tr td:first-child:even").css("background-color","#7a89b5");
-	$(".mq_tabl tr td:last-child:even").css("background-color","#e7e9f1");
-	$(".mq_tabl tr td:last-child:odd").css("background-color","#d5d8df");
-	 /* var custom='{"id":"420","latitude":26.056487,"longitude":119.336294,"address":"福建省福州市台江区曙光路126号宇洋中央金座"}';
-	var channelId="123456"; 
-	//在历史中审核
- 	  layer.confirm('是否通过？', {
-		  btn: ['通过','回退'] //按钮
-		}, function(index){
-			window.viedoAudit('1');
-			layer.close(index);
-		}, function(){
-		  window.viedoAudit('3');
-		});  */
-		//alert($("#my-video").parent().width())
+	var switchoverFun=function(param1,that,key){
+		$("[id^="+key+"]").addClass("hide");
+		$("#"+key+param1).removeClass("hide");
+		$(that).addClass("active").siblings().removeClass("active");
+	}
+
+	function jzzk(param1){
+		 var ss="";
+		 switch (param1){
+			case 0:
+				 ss="自有住房";
+				 break;
+			case 1:
+				 ss="租房";
+				 break;
+			case 2:
+				 ss="分期付款购房";
+				 break;
+			case 3:
+				 ss="集体宿舍";
+				 break;
+			case 4:
+				 ss="其他";
+				 break;
+		 }
+		 return ss;
+	}
+	function xl(param1){
+		if(param1){
+			 var ss="初中";
+			 switch (param1){
+				case "1":
+					 ss="小学";
+					 break;
+				case "3":
+					ss="高中";
+					break;
+				case "4":
+					 ss="大专";
+					 break;
+				case "5":
+					 ss="本科";
+					 break;
+				case "6":
+					ss="硕士";
+					break;
+				case "7":
+					 ss="博士及以上";
+					 break;
+			}
+			return ss;
+		}else{
+			return "";
+		}
+	}
+	function gx(param1){
+		var gx="";
+		switch (param1){
+			case "0":
+				gx="夫妻";
+				break;
+			case "1":
+				gx="父子";
+				break;
+			case "2":
+				gx="母子";
+				break;
+			case "3":
+				gx="兄弟";
+				break;
+			case "4":
+				gx="同事";
+				break;
+			case "5":
+				gx="朋友";
+				break;
+			case "6":
+				gx="姐妹";
+				break;
+			case "7":
+				gx="父女";
+				break;
+			case "8":
+				gx="母女";
+				break;
+			case "9":
+				gx="兄妹";
+				break;
+			case "10":
+				gx="姐弟";
+				break;
+		}
+		return gx;
+	}
 	
+	function hyzk(param1){
+		 var ss="";
+		 switch (param1){
+			case 0:
+				 ss="未婚";
+				 break;
+			case 1:
+				ss="已婚";
+				break;
+			case 2:
+				 ss="离异";
+				 break;
+			case 3:
+				 ss="丧偶";
+				 break;		
+		 }
+		 return ss;
+	}
+	function dwxz(param1){
+		 var ss="";
+		 switch (param1){
+			case 0:
+				 ss="国有";
+				 break;
+			case 1:
+				ss="集体经济";
+				break;
+			case 2:
+				 ss="私营";
+				 break;
+			case 3:
+				 ss="民营";
+				 break;	
+			case 4:
+				 ss="股份合作";
+				 break;
+			case 5:
+				ss="其他股份制";
+				break;
+			case 6:
+				 ss="个体";
+				 break;
+			case 7:
+				 ss="三资";
+				 break;	
+			case 8:
+				 ss="其他";
+				 break;	
+		 }
+		 return ss;
+	}
+	function zy(param1){
+		 var ss="";
+		 switch (param1){
+			case 0:
+				 ss="公务员";
+				 break;
+			case 1:
+				ss="事业单位员工";
+				break;
+			case 2:
+				 ss="工人";
+				 break;
+			case 3:
+				 ss="农民";
+				 break;	
+			case 4:
+		 		 ss="军人";
+				 break;
+			case 5:
+				ss="职员";
+				break;
+			case 6:
+				 ss="私人业主";
+				 break;
+			case 7:
+				 ss="学生";
+				 break;	
+			case 8:
+				 ss="自由职业";
+				 break;	
+			case 9:
+				 ss="其他";
+				 break;	
+		 }
+		 return ss;
+	
+	}
+	function zw(param1){
+		 var ss="";
+		 switch (param1){
+			case 0:
+				 ss="企业负责人";
+				 break;
+			case 1:
+				ss="总经理";
+				break;
+			case 2:
+				 ss="部门经理";
+				 break;
+			case 3:
+				 ss="职员";
+				 break;	
+		 }
+		 return ss;
+	}
+	function inNumberToBirth(str){
+		var y=str.substring(6,10);
+		var m=parseInt(str.substring(10,12));
+		var d=parseInt(str.substring(12,14));
+		return y+'-'+m+'-'+d;
+	}
+		
+	window.onload=function(){
+		refreshTime();
+	}
+	//('{"id":"420","latitude":26.056487,"longitude":119.336294,"address":"福建省福州市台江区曙光路126号宇洋中央金座"}','A','420');
+	/* 
+	monthmonty//每月还款金额
+	开票价(二手为评估价)-贷款金额(车)=首付金额车
+	贷款金额+金融服务费=贷款总额
+	*/
+	var myPlayer;//点播对象
+	function initView(dom){
+		$("#address"+dom).text("");//gps位置
+		//先清空内容
+		$("#positive"+dom).attr("src","");//照片
+		$("#visa"+dom).attr("src","");//照片
+		$("#namediv"+dom).text(""); //姓名
+		$("#idnumberAdiv"+dom).text("");//身份证号
+		$("#man"+dom).val("");//人脸识别
+		$("#totalprice"+dom).text("")//意向金额
+		$("#delivery"+dom).text("")//送达地址
+	 }
+	 //历史视频
+	 function initHistory(code,index){
+		 if(code=='1' || code=='3'){
+		  		mqViedooBttom(code);	
+		  	}else{
+		  		$(".mq_viedo_bottom").html('<div>面签状态</div><input value="'+index+'" type="hidden"><div id="poition" class="viedo_opinion"><input id="item1B" type="radio" value="1" ><label for="item1B"></label><span>通过</span></div><div id="poition" class="viedo_opinion"><input id="item2B" type="radio" value="3"><label for="item2B"></label><span>不通过</span></div> ');
+		  		$("#poition input[type='radio']").one('click',function(e){
+		  			var id=$("#icbcid").val();
+		  			var channelid=$("#channelid").val();
+		  			var auditsvalue=$(this).val();
+		  			if(!!auditsvalue && !!id && channelid){
+		  			   $.post("../yx/sutitstatus.do",
+		  					 {icbcid:id,auditstatus:auditsvalue,channel:channelid},
+		  					 function(data){
+		  				 		mqViedooBttom(auditsvalue);
+		  		   			}
+		  				);
+		  			}else{
+		  				alert('参数错误！');
+		  			}
+	  			});
+		  	}
+	 }
+	//修改历史视频通过状态
 	function mqViedooBttom(code){
 			$(".mq_viedo_bottom").html("");
 		  	if(code=='1'){
-		  		$(".mq_viedo_bottom").html('<p id="through" class="through" style="background-color: #5cb85c"> 通过</p>');
+		  		$(".mq_viedo_bottom").html('<p class="through" style="background-color: #5cb85c"> 通过</p>');
 		  	}else if(code=='3'){
-		  		$(".mq_viedo_bottom").html('<p id="through" class="through" style="background-color: #d9534f;"> 不通过</p>');
+		  		$(".mq_viedo_bottom").html('<p class="through" style="background-color: #d9534f;"> 不通过</p>');
 		  	}
 	}
-	/* viewdate('{"id":"420","latitude":26.056487,"longitude":119.336294,"address":"福建省福州市台江区曙光路126号宇洋中央金座"}','A','420');
-	 */var myPlayer;//点播对象
-	//这里使用vue有问题所以换成ajax 和jquery
-	function viewdate(value,dom,code,index){
-	if(!!value){
-		$("#address"+dom).text("");
-	  	if(dom=="A"){//如果是视频对话触发的
-	  		var jso=JSON.parse(value.replace("\\",""));//处理一个小bug
-	  		value=jso.id;
-	  		$("#address"+dom).text(jso.address); //gps
-	  	}
-	  	$(".mq_viedo_bottom").html("");
-	  	if(code=='1' || code=='3'){
-	  		mqViedooBttom(code);	
-	  	}else{
-	  		$(".mq_viedo_bottom").html('<div>面签状态</div><input id="viedoOpinionIndex" value="'+index+'" type="hidden"><div id="poition" class="viedo_opinion"><input id="item1B" type="radio" name="item" value="1" ><label for="item1B"></label><span>通过</span></div><div id="poition" class="viedo_opinion"><input id="item2B" type="radio" name="item" value="3"><label for="item2B"></label><span>不通过</span></div> ');
-	  		$("#poition input[type='radio']").on('click',function(e){
-	  			var id=$("#icbcid").val();
-	  			var channelid=$("#channelid").val();
-	  			var auditsvalue=$(this).val();
-	  			var viedoOpinionIndex=$("#viedoOpinionIndex").val();
-	  			if(!!auditsvalue && !!id && channelid){
-	  			 mqViedooBttom(auditsvalue);
-	  			 $.post("../yx/sutitstatus.do",{icbcid:id,auditstatus:auditsvalue,channel:channelid});
-	  			/* 	alert(viedoOpinionIndex)
-	  			  $("#mytab").bootstrapTable('removeByUniqueId',viedoOpinionIndex) */
-	  			}else{
-	  				alert('参数错误！');
-	  			}
-  			});
-	  	}
-	  	$("#man"+dom).val(""); 
-	  	$("#icbcid").val("");
-		//先清空内容
-		$(" #namediv"+dom).text(""); //姓名
-		$("#idnumberAdiv"+dom).text("");//身份证号
-		$("#positive"+dom).attr("src","");//照片
-		$("#visa"+dom).attr("src","");//照片
-		$("#name"+dom).val("")//姓名
-		$("#px"+dom).val("")//品牌型号
-		$("#tel"+dom).val("") //电话
-		$("#idnumber"+dom).val("") //身份证号
-		$("#delivery"+dom).text("")//送达地址
-		$("#income"+dom).val("") //月收入
-		$("#work"+dom).text("") //工作单位
-		$("#priceresult"+dom).val("") //评估价
-		$("#date"+dom).val("") //期限
-		$("#serve"+dom).val("") //金融服务费
-		$("#dkprice"+dom).val("") //购车分期金额
-		$("#totalprice"+dom).text("")//意向金额
-		$("#monthmonty"+dom).val("") //每月还款金额
-			$.ajax({
-	            url:'../yx/viedoinfo.do',
-	            type:'POST',
-	            data:{id:value,domvalue:dom},
-	            dataType:'json',
-	            success: function (data) {
-	            		$("#namediv"+dom).text(data.name);
-		        		$("#idnumberAdiv"+dom).text(data.idnumber);
-						if(data.positive!=undefined){//身份证正面
-		        			$("#positive"+dom).attr("src",data.positive);
-		        		}else{//显示默认的
-		        			$("#positive"+dom).attr("src","../kjs_icbc/kjs_icbc_style/images/error.png");
-		        		}
-		            	if(data.visa!=undefined){//面签照
-		            		$("#visa"+dom).attr("src",data.visa);
-		            	}else{
-		            		$("#visa"+dom).attr("src","../kjs_icbc/kjs_icbc_style/images/error.png");
-		            	}
-		            	$("#man"+dom).text(data.man);//人脸识别
-		        		$("#name"+dom).val(data.name)
-		        		$("#total"+dom).val(data.total)
-		        		$("#tel"+dom).val(data.tel)
-		        		$("#idnumber"+dom).val(data.idnumber)
-		        		$("#delivery"+dom).text(data.delivery)
-		        		$("#income"+dom).val(data.income)
-		        		$("#work"+dom).text(data.work)
-		        		$("#priceresult"+dom).val(data.priceresult)
-		        		$("#total"+dom).val(data.total)
-		        		$("#date"+dom).val(data.date)
-		        		$("#serve"+dom).val(data.serve)
-		        		$("#px"+dom).val(data.px)
-		        		$("#dkprice"+dom).val(data.dkprice)
-		        		$("#address"+dom).text(data.address);
-		        		if(dom=="B"){//查看历史
-		        	  		$("#icbcid").val(data.icbcid);//隐藏域 存放审核id 在历史审核的提交的时候用
-		        	  		$("#channelid").val(data.channelId);
-		        	  		if(!myPlayer){
-		        	  			//初始化播放器
-		        	  			myPlayer = neplayer('my-video');
-		        	  		}	
-		        	  		myPlayer.resize( 400, 320);
-							myPlayer.setDataSource({src:data.url,type:"video/mp4"});
-							myPlayer.play();
-		        	  	}
-		        		if(data.date && data.totalprice){//期限和总额存在
-		        			var interest={'36':1.0855,'24':1.065,'12':1.0358}[data.date] ||1.0855;
-		        			//计算月还金额
-		        			var monthmonty=number1(accDiv(number1(accMul(data.totalprice,interest)),data.date));
-		        			$("#monthmonty"+dom).val(monthmonty);
-		        		}
-		        		$("#totalprice"+dom).text(data.totalprice);
-		        	
-	            },
-	            error: function(d){
-	               console.log(d.status)
-	            }
-	        });
-		}else{
-			alert("此custom为空！")
+	function viewdate(dom,data){
+		$("#namediv"+dom).text(data.c_name);//姓名
+		$("#idnumberAdiv"+dom).text(data.c_cardno);//身份证号
+		$("#man"+dom).text(data.man);//人脸识别
+		$("#totalprice"+dom).text(data.dk_total_price);//意向金额
+    	$("#address"+dom).text((data.address+"").replace("(null)",""));//gps
+    	
+		if(data.positive!=undefined){//身份证正面
+			$("#positive"+dom).attr("src",data.positive);
+		}else{//显示默认的
+			$("#positive"+dom).attr("src","../kjs_icbc/kjs_icbc_style/images/error.png");
 		}
+    	if(data.visa!=undefined){//面签照
+    		$("#visa"+dom).attr("src",data.visa);
+    	}else{
+    		$("#visa"+dom).attr("src","../kjs_icbc/kjs_icbc_style/images/error.png");
+    	}
+    	if(dom=="B"){//查看历史
+    		$("#icbcid").val(data.id);//隐藏域 存放审核id 在历史审核的提交的时候用
+	  		$("#channelid").val(data.channelId);
+	  		if(!myPlayer){
+	  			//重新初始化播放器
+	  			myPlayer = neplayer('my-video');
+	  		}	
+	  		myPlayer.resize( 400, 320);
+			myPlayer.setDataSource({src:data.url,type:"video/mp4"});
+			myPlayer.play();
+	  	}
+		if(data.aj_date && data.dk_total_price){//期限和总额存在
+			let dklv=accDiv(data.dk_lv,"100")//8.55除以100
+			let principalAndInterest=number1(accMul(data.dk_total_price,accAdd("1",dklv)));//本息合计(存在千分位进1)=贷款总额*(1+银行利率)
+			data.principalAndInterest=principalAndInterest;
+			//计算月还金额
+			let monthmonty=number1(accDiv(principalAndInterest,data.aj_date));//本息合计/期数
+			data.monthmonty=monthmonty;
+			data.downPayment=accAdd(monthmonty,'200');//首月还款等于=月还+200
+		}
+		if(data.loan_tpid==1){
+			data.loan_tpid='卡分期';
+		}
+		if(data.loan_level==1){
+			data.loan_level='预期贷款额10万以下（含10万）';
+		}else if(data.loan_level==2){
+			data.loan_level='预期贷款额10万以上';
+		}
+		if(data.dz_type==2){
+			data.dz_type='提车垫资'
+		}else if(data.dz_type==1){
+			data.dz_type='不垫资'
+		}
+		if(data.property_id==1){
+			data.property_id='运营'
+		}else if(data.property_id==2){
+			data.property_id='非运营'
+		}
+		if(data.car_status==1){
+			data.car_status='优秀'
+		}else if(data.car_status==2){
+			data.car_status='良好'
+		}else if(data.car_status==3){
+			data.car_status='一般'
+		}
+		if(data.gear_box_id==1){
+			data.gear_box_id='自动'
+		}else if(data.gear_box_id==2){
+			data.gear_box_id='手动'
+		}
+		data.zdr_xl=xl(data.zdr_xl)
+		data.gjr1_hyzk=hyzk(data.gjr1_hyzk)
+		data.gjr2_hyzk=hyzk(data.gjr2_hyzk)
+		data.zdr_hyzk=hyzk(data.zdr_hyzk)
+		data.zdr_jzzk=jzzk(data.zdr_jzzk);
+		data.zdr_dwxz=dwxz(data.zdr_dwxz)
+		data.zdr_zw=zw(data.zdr_zw)
+		data.zdr_zy=zy(data.zdr_zy)
+		data.zdrBirth=inNumberToBirth(data.c_cardno)
+		var color_id="其他";
+		 switch (data.color_id){
+		 	case 1:
+				color_id="黑";
+				break;
+			case 2:
+				color_id="白";
+				break;
+			case 3:
+				 color_id="灰";
+				 break;
+			case 4:
+				 color_id="红";
+				 break;
+			case 5:
+				color_id="银";
+				break;
+			case 6:
+				 color_id="蓝";
+				 break;
+			case 7:
+				color_id="金";
+				break;
+			case 8:
+				 color_id="棕";
+				 break;
+			case 9:
+				 color_id="橙";
+				 break;
+			case 10:
+				color_id="黄";
+				break;
+			case 11:
+				 color_id="紫";
+				 break;
+			case 12:
+				color_id="绿";
+				break;
+			case 13:
+				 color_id="褐";
+				 break;
+			case 14:
+				 color_id="栗";
+				 break;
+			case 15:
+				color_id="米";
+				break;
+			case 16:
+				 color_id="银灰";
+				 break;
+			case 17:
+				color_id="青";
+				break;
+			case 18:
+				 color_id="香槟";
+				 break;
+			case 19:
+				 color_id="咖啡";
+				 break;
+			case 20:
+				color_id="天山";
+				break;
+		 }
+		data.color_id=color_id;
+		var item_A="";
+    	if(data.ybName.indexOf("杭州")!=-1 && data.ybName.indexOf("城站")!=-1){//杭州城战支行
+    	//if(true){
+    	 item_A=`
+			<tr>
+			  <td>1</td>
+			  <td>
+			  	<p>您好，您好，请问是${!!data.c_name?data.c_name:''}先生/女士吗？</p>
+			  	  <div class="r_row">
+			  		<div>参考答案:</div>
+			  		<input value="是" disabled="disabled"/>
+			  	</div> 
+			  </td>
+			</tr>
+			<tr>
+			  <td>2</td>
+			  <td>
+			  	  <p>我是工商银行杭州分行城站支行的工作人员，请问您现在是否需要在我行申请一笔信用卡汽车分期付款业务用于购买汽车？</p>
+			  	  <div class="r_row">
+			  		<div>参考答案:</div>
+			  		<input value="是" disabled="disabled"/>
+			  	</div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>3</td>
+			  <td>
+			  	  <p>购买的车辆是否自用？所购车辆是否已经提到？</p>
+			  	  <div class="r_row">
+			  		<div>参考答案:</div>
+			  		<input value="是" disabled="disabled"/>
+			  	</div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>4</td>
+			  <td>
+			  	  <p>请报一下您的身份证号码（合作机构业务员指导客户现场提供身份证正反面影像，客户经理进行核对）。</p>
+			  	  <div class="r_row">
+			  		<div>参考答案:</div>
+			  		<input value="${!!data.c_cardno?data.c_cardno:''}" disabled="disabled">
+			  	 </div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>5</td>
+			  <td>
+			  	  <p>问您现在的工作单位是什么？</p>
+			  	  <div class="r_row">
+			  		<div>参考答案:</div>
+			  		<input value="${!!data.zdr_gzdw?data.zdr_gzdw:''}" disabled="disabled"/>
+			  	 </div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>6</td>
+			  <td>
+			  	  <p>请问您购买的是什么品牌的汽车？</p>
+			  	  <div class="r_row">
+			  		<div>参考答案:</div>
+			  		<input value="${!!data.ppxh?data.ppxh:''}" disabled="disabled"/>
+			  	 </div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>7</td>
+			  <td>
+			  	  <p>请问征信查询授权书是您本人签字吗？</p>
+			  	  <div class="r_row">
+			  		<div>参考答案</div>
+			  		<input value="是" disabled="disabled"/>
+			  	 </div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>8</td>
+			  <td>
+			  	  <p>请问您办理业务所需的个人信息材料都是您本人提供并签字的吗？</p>
+			  	  <div class="r_row">
+			  		<div>参考答案</div>
+			  		<input value="是" disabled="disabled"/>
+			  	 </div>
+			  </td>
+			</tr>
+			
+			<tr>
+			  <td>9</td>
+			  <td>
+			  	  <p>您了解该笔贷款是由浙江鑫宝行担保有限公司担保的吗？</p>
+			  	  <div class="r_row">
+			  		<div>参考答案</div>
+			  		<input value="是" disabled="disabled"/>
+			  	 </div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>10</td>
+			  <td>
+			  	<p>请您翻开《牡丹信用卡透支分期付款/抵押合同》 第一页确认相关信息。您申请信用卡汽车分期业务用于购买吉利品牌的汽车，车辆交易总价 ${!!data.kp_price?data.kp_price:''}元，您自行支付的首付款 ${!!data.sfje?data.sfje:''}元，您申请透支金额 ${!!data.dk_price?data.dk_price:''}元用于支付剩余交易款项，申请透支金额 ${!!data.jrfw_price?data.jrfw_price:''}元用于支付汽车金融服务费，合计透支金额 ${!!data.dk_total_price?data.dk_total_price:''}元。您首月需还款 ${!!data.downPayment?data.downPayment:''}元，以后每月还款 ${!!data.monthmonty?data.monthmonty:''}元， {贷款期数/${!!data.aj_date?data.aj_date:''}}年总计需还款 ${!!data.principalAndInterest?data.principalAndInterest:''}元。以上信息您是否确认无误？</p>
+			 	 <div class="r_row">
+			  		<div>参考答案</div>
+			  		<input value="是" disabled="disabled"/>
+			  	 </div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>11</td>
+			  <td>
+			  	  <p>在您足额偿清合同约定的所有债务之前，您所购车辆的商业保险保单的第一受益人为工商银行，请问您是否同意？</p>
+			  	  <div class="r_row">
+			  		<div>参考答案</div>
+			  		<input value="是" disabled="disabled"/>
+			  	 </div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>12</td>
+			  <td>
+			  	  <p>我行审批通过后将根据您的授权对您的信用卡进行激活并将您的分期款项汇给浙江鑫宝行担保有限公司账户，您是否有异议？</p>
+			  	  <div class="r_row">
+			  		<div>参考答案</div>
+			  		<input value="否" disabled="disabled"/>
+			  	 </div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>13</td>
+			  <td> 
+			  	  <p>A:请您务必在合同上填写正确的手机号码和联系地址。</p>
+			  	  <p>B:现在请您在信用卡分期表、分期付款/抵押合同以及客户告知书上签字（客户经理须通过视频识别签字资料，并关注客户签字画面）。</p>
+			  	  <p>C:请您认真阅读您与担保方签订的相关协议，该协议内容以及协议中约定的在您未按时、足额清偿债务时担保方可采取的措施等，均与工商银行无关。您办理该笔分期业务无需向我行和担保公司缴纳任何保证金和押金。</p>
+			  	  <p>D:请您务必下载和使用工银融E联，通过申请时预留手机号注册登录后，即可享受相应服务。</p>
+			  	  <p>E:感谢您的配合，业务办理成功后，我行会向您邮寄合同和客户告知书，
+请您注意查收并仔细阅读，后续如有问题，欢迎致电客户告知书上的汽车分期服务专线电话。</p>
+			  </td>
+			</tr>`;
+    	}else{
+    		item_A=`<tr>
+			  <td>1、</td>
+			  <td>
+			  	<p>您好，这里是工商银行浙江分行杭州武林支行，请问您现在是否需要在我行申请一笔信用卡购车分期付款业务？</p>
+			  	  <div class="r_row">
+			  		<div>&nbsp;</div>
+			  		<input value="是" disabled="disabled"/>
+			  	</div> 
+			  </td>
+			</tr>
+			<tr>
+			  <td>2、</td>
+			  <td>
+			  	  <p>您的名字是什么？</p>
+			  	  <div class="r_row">
+			  		<div>姓名:</div>
+			  		<input value="${!!data.c_name?data.c_name:''}"  disabled="disabled"></input>
+			  	</div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>3、</td>
+			  <td>
+			  	<p>请问您的身份证号码是多少？您的手机号码是多少？请问您的工作单位是？您的月收入是多少？您的送达地址是哪里？</p>
+			  	<div class="r_row">
+			  		<div>身份证号:</div>
+			  		<input value="${!!data.c_cardno?data.c_cardno:''}" disabled="disabled"/>
+			  	</div> 
+			  	 </div>
+			  	 	<div class="r_row">
+			  		<div>手机号:</div>
+			  		<input value="${!!data.c_tel?data.c_tel:''}"  disabled="disabled"/>
+			  	</div>
+			  	 <div class="r_row">
+			  		<div>工作单位:</div>
+			  		<textarea type="text"  disabled="disabled">${!!data.zdr_gzdw?data.zdr_gzdw:''}</textarea>
+			  	</div>
+			  	 <div class="r_row">
+			  		<div>月收入:</div>
+			  		<input value="${!!data.zdr_grsr?data.zdr_grsr:''}" disabled="disabled"/>
+				</div>
+				  <div class="r_row">
+			  		<div>送达地址:</div>
+			  		<textarea disabled="disabled">${!!data.zdr_wsdz?data.zdr_wsdz:''}</textarea>
+			  	</div>
+			 </td>
+			</tr>
+			<tr>
+			  <td>4、</td>
+			  <td>
+			  	  <p>请问您购买的的汽车品牌是什么？车架号是多少？</p>
+			  	  <div class="r_row">
+			  		<div>汽车品牌型号:</div>
+			  		<input value="${!!data.ppxh?data.ppxh:''}" disabled="disabled">
+			  	  </div>
+			  	   <div class="r_row">
+			  		<div>车价:</div>
+			  		<input value="${!!data.price_result?data.price_result:'0'}"   disabled="disabled"> 
+			  	  </div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>5、</td>
+			  <td>
+			  	  <p>您了解该笔贷款是由安联汽车服务有限公司担保的吗？</p>
+			  	  <div class="r_row">
+			  		<div>担保:</div>
+			  		<input  value="了解,明白等" disabled="disabled"/>
+			  	 </div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>6、</td>
+			  <td>
+			  	  <p>每月还款额是多少？</p>
+			  	  <div class="r_row">
+			  		<div>月还金额:</div>
+			  		<input value="${!!data.monthmonty?data.monthmonty:''}"  disabled="disabled"/>
+			  	 </div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>7、</td>
+			  <td>
+			  	  <p>请您翻开《牡丹信用卡分期付款/抵押合同》第2页第一部分第二条，核对您申请的分期付款业务购车分期金额是多少？</p>
+			  	  <div class="r_row">
+			  		<div>购车分期金额:</div>
+			  		<input value="${!!data.dk_price?data.dk_price:''}" disabled="disabled"/>
+			  	 </div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>8、</td>
+			  <td>
+			  	  <p>汽车金融服务费分期金额是多少？</p>
+			  	  <div class="r_row">
+			  		<div>金融服务费:</div>
+			  		<input value="${!!data.jrfw_price?data.jrfw_price:''}" disabled="disabled"/>
+			  	 </div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>9、</td>
+			  <td>
+			  	  <p>期限是多少年？</p>
+			  	  <div class="r_row">
+			  		<div>期限:</div>
+			  		<input value="${!!data.aj_date?data.aj_date:''}" disabled="disabled"/>
+			  	 </div>
+			  </td>
+			</tr>
+			<tr>
+			  <td>10</td>
+			  <td > 
+			  	  <p>A:上述信息核对无误，请在合同第6页债务人及抵押人栏目签字。</p>
+			  	  <p>B:打开信用卡申请表第3页，抄录部分内容是否为您本人填写，如是请在申请人处签名。</p>
+			  	  <p>C:客户告知书相关内容是否已阅知，如是请在签字人处签名。</p>
+			  	  <p>D:感谢您的配合，业务办理成功后，我行会向您邮寄合同和客户告知书，请您注意查收并仔细阅读，后续如有问题，欢迎致电客户告知书上的汽车分期服务专线电话。
+请您认真阅读您与担保方签订的相关协议，该协议内容以及协议中约定的在您未按时、足额清偿债务时担保方可采取的措施等，均与工商银行无关。您办理该笔分期业务无需向我行和担保公司缴纳任何保证金和押金。
+请您务必下载和使用工银融E联，通过申请时预留手机号注册登录后，即可享受相应服务。</p>
+			  </td>
+			</tr>
+			`;
+    	}	
+
+		var item_D=
+		`<ul style="padding: 0;">
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">开票价(元)<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.kp_price?data.kp_price:''}" type="text">
+					</div>
+					<label class="col-sm-3">评估价(元)<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.price_result?data.price_result:''}" type="text">
+					</div>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">贷款本金(元)<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.dk_price?data.dk_price:''}" type="text">
+					</div>
+					<label class="col-sm-3">金融服务费(元)<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.jrfw_price?data.jrfw_price:''}" type="text">
+					</div>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">贷款总额(元)<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.dk_total_price?data.dk_total_price:''}" type="text">
+					</div>
+					<label class="col-sm-3">首付款(元)<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.sfje?data.sfje:''}" type="text">
+					</div>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">首付比例(%)<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.sfbl?data.sfbl:''}" type="text">
+					</div>
+					<label class="col-sm-3">按揭模式<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.loan_tpid?data.loan_tpid:''}" type="text">
+					</div>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">按揭银行<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.ybName?data.ybName:''}" type="text">
+					</div>
+					<label class="col-sm-3">按揭期限<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.aj_date?data.aj_date:''}" type="text">
+					</div>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">贷款利率(%)<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.dk_lv?data.dk_lv:''}" type="text">
+					</div>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">开票所在地<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.kk_loan_stateid?data.kk_loan_stateid:' '}-${!!data.kk_loan_cityid?data.kk_loan_cityid:' '}" type="text">
+					</div>
+					<label class="col-sm-3">上牌所在地<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.kk_car_stateid?data.kk_car_stateid:' '}-${!!data.kk_car_cityid?data.kk_car_cityid:' '}" type="text">
+					</div>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">放贷帐号<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.kk_kh?data.kk_kh:''}" type="text">
+					</div>
+					<label class="col-sm-3">车辆使用人<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.c_name?data.c_name:''}" type="text">
+					</div>
+				</div>	
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">是否公证<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="" type="text">
+					</div>
+					<label class="col-sm-3">是否垫资<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.dz_type?data.dz_type:''}" type="text">
+					</div>
+				</div>	
+			</li>
+		</ul>`;
+		var item_E=
+		`<ul style="padding: 0;">
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">关联客户<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.c_name?data.c_name:''}" type="text">
+					</div>
+					<label class="col-sm-3">国产/进口<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.source_id?(data.source_id==1?'国产':'进口'):''}" type="text">
+					</div>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">车辆类型<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.cars_type?(data.cars_type==1?'新车':'二手车'):''}" type="text">
+					</div>
+					<label class="col-sm-3">使用性质<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.property_id?data.property_id:''}" type="text">
+					</div>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">车辆状况(元)<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.car_status?data.car_status:''}" type="text">
+					</div>
+					<label class="col-sm-3">变速箱<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.gear_box_id?data.gear_box_id:''}" type="text">
+					</div>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">品牌车型<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.csName?data.csName:' '}-${!!data.csName?data.csName:' '}-${!!data.cmName?data.cmName:' '}" type="text">
+					</div>
+					<label class="col-sm-3">行驶里程(公里)<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.car_km_icbc?data.car_km_icbc:''}" type="text">
+					</div>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">出厂日期<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.cardt2?data.cardt2:''}" type="text">
+					</div>
+					<label class="col-sm-3">初次登记日期<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.cardt1?data.cardt1:''}" type="text">
+					</div>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">车辆颜色<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.color_id?data.color_id:''}" type="text">
+					</div>
+					<label class="col-sm-3">上牌地址<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.mem_states?data.mem_states:' '}-${!!data.mem_citys?data.mem_citys:' '}" type="text">
+					</div>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">原车主姓名<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.c_name?data.c_name:''}" type="text">
+					</div>
+					<label class="col-sm-3">原车牌号<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.c_carno?data.c_carno:''}" type="text">
+					</div>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">车架号<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.vincode?data.vincode:''}" type="text">
+					</div>
+					<label class="col-sm-3">品牌型号<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.ppxh?data.ppxh:''}" type="text">
+					</div>
+				</div>	
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">发动机号<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.motorcode?data.motorcode:''}" type="text">
+					</div>
+					<label class="col-sm-3">预期价格(元)<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.icbc_pricecs?data.icbc_pricecs:''}" type="text">
+					</div>
+				</div>	
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">新车指导价(元)<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.price_new?data.price_new:''}" type="text">
+					</div>
+					<label class="col-sm-3">最终评估价(元)<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.price_result?data.price_result:''}" type="text">
+					</div>
+				</div>	
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">现车牌号<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="${!!data.c_carno?data.c_carno:''}" type="text">
+					</div>
+					<label class="col-sm-3">登记证书编号<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="" type="text">
+					</div>
+				</div>	
+			</li>
+			<li class="list-group-item">
+				<div style="margin-bottom: 20px;">
+					<label class="col-sm-3">购车发票号<i>*</i></label>
+					<div class="col-sm-3">
+						<input readonly="readonly" value="" type="text">
+					</div>
+				</div>	
+			</li>
+		</ul>`;
+
+		var item_C=
+			`<ul style="padding: 0;">
+				<li class="list-group-item">
+						<div class="row row_top">
+							<label class="col-sm-3 control-label">业务员姓名<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.agName?data.agName:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">机构<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.afName?data.afName:''}" type="text">
+							</div>
+						</div>
+				</li>
+				<li class="list-group-item">
+						<div class="row">
+							<p class="col-sm-12 row-title">主贷人信息</p>
+						</div>
+						<div class="row row_top">
+							<label class="col-sm-3 control-label">姓名<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.c_name?data.c_name:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">拼音<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">出生日期<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.zdrBirth?data.zdrBirth:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">身份证号<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.c_cardno?data.c_cardno:''}" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">性别<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.c_sex?(data.c_sex==1?'男':'女'):''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">手机号码<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.c_tel?data.c_tel:''}" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">婚姻状况<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.zdr_hyzk?data.zdr_hyzk:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">有无子女<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">赌博记录<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">法院经济案<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">最高学历<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.zdr_xl?data.zdr_xl:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">邮编<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.zdr_yzbm?data.zdr_yzbm:''}" type="text">
+							</div>
+						</div>
+					
+						<div class="row">
+							<label class="col-sm-3 control-label">居住壮况<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.zdr_jzzk?data.zdr_jzzk:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">现住地址<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.zdr_xzdz?data.zdr_xzdz:''}" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">工作单位<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.zdr_gzdw?data.zdr_gzdw:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">单位电话<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.zdr_dwdh?data.zdr_dwdh:''}" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">单位地址<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.zdr_dwdz?data.zdr_dwdz:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">单位性质<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.zdr_dwxz?data.zdr_dwxz:''}" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">职业<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.zdr_zy?data.zdr_zy:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">职务<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.zdr_zw?data.zdr_zw:''}" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">月收入(元)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.zdr_grsr?data.zdr_grsr:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">工作年限(年)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.zdr_gznx?data.zdr_gznx:''}" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">文书送达地址<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.zdr_wsdz?data.zdr_wsdz:''}" type="text">
+							</div>
+						</div>	
+				</li>
+				
+				<li class="list-group-item">
+						<div class="row">
+							<p class="col-sm-12 row-title">共还人信息</p>
+						</div>
+						<div class="row" style="text-float:left">
+							<label class="col-sm-12">共还人一</label>
+						</div>
+						<div class="row row_top">
+							<label class="col-sm-3 control-label">姓名<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.c_name_gj1?data.c_name_gj1:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">关系<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.gjr1_yzdrgx?data.gjr1_yzdrgx:''}" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3">月收入(元)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">学历<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3">现住地址<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.gjr1_xzdz?data.gjr1_xzdz:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">邮政编码<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.gjr1_yzbm?data.gjr1_yzbm:''}" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3">工作单位<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.gjr1_gzdw?data.gjr1_gzdw:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">单位地址<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.gjr1_dwdz?data.gjr1_dwdz:''}" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3">文书送达地址<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.gjr1_wsdz?data.gjr1_wsdz:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">主要从事或职务<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3">联系人级别<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">联系人电话区号<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3">手机号码<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.c_tel_gj1?data.c_tel_gj1:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">性别<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3">婚姻状况<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.gjr1_hyzk?data.gjr1_hyzk:''}" type="text">
+							</div>
+							<label class="col-sm-3">身份证号<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.c_cardno_gj1?data.c_cardno_gj1:''}" type="text">
+							</div>
+						</div>
+						<div class="row" style="text-float:left">
+							<label class="col-sm-12">共还人二</label>
+						</div>
+						<div class="row row_top">
+							<label class="col-sm-3 control-label">姓名<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.c_name_gj2?data.c_name_gj2:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">关系<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.gjr2_yzdrgx?data.gjr2_yzdrgx:''}" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3">月收入(元)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">学历<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3">现住地址<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.gjr2_xzdz?data.gjr2_xzdz:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">邮政编码<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.gjr2_yzbm?data.gjr2_yzbm:''}" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3">工作单位<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.gjr2_gzdw?data.gjr2_gzdw:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">单位地址<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.gjr2_dwdz?data.gjr2_dwdz:''}" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3">文书送达地址<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.gjr2_wsdz?data.gjr2_wsdz:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">主要从事或职务<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3">联系人级别<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">联系人电话区号<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3">手机号码<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.c_tel_gj2?data.c_tel_gj2:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">性别<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3">婚姻状况<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.gjr2_hyzk?data.gjr2_hyzk:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">身份证号<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.c_cardno_gj2?data.c_cardno_gj2:''}" type="text">
+							</div>
+						</div>
+				</li>
+				
+				<li class="list-group-item">
+						<div class="row">
+							<p class="col-sm-12 row-title">紧急联系人</p>
+						</div>
+						<div class="row" style="text-float:left">
+							<label class="col-sm-12">亲属</label>
+						</div>
+						<div class="row row_top">
+							<label class="col-sm-3 control-label">姓名<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.jjlxr_c_name?data.jjlxr_c_name:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">电话<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.jjlxr_c_tel?data.jjlxr_c_tel:''}" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">与主贷人关系<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.jjlxr_jdrgx?data.jjlxr_jdrgx:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">现住地址<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.jjlxr_xzdz?data.jjlxr_xzdz:''}" type="text">
+							</div>
+						</div>
+						<div class="row" style="text-float:left">
+							<label class="col-sm-12">其他</label>
+						</div>
+						<div class="row row_top">
+							<label class="col-sm-3 control-label">姓名<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.qtlxr_c_name?data.qtlxr_c_name:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">电话<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.qtlxr_c_tel?data.qtlxr_c_tel:''}" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">与主贷人关系<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.qtlxr_jdrgx?data.qtlxr_jdrgx:''}" type="text">
+							</div>
+							<label class="col-sm-3 control-label">现住地址<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="${!!data.qtlxr_xzdz?data.qtlxr_xzdz:''}" type="text">
+							</div>
+						</div>
+					</div>
+				</li>
+				<li class="list-group-item">
+						<div class="row">
+							<p class="col-sm-12 row-title">家庭信息</p>
+						</div>
+						<div class="row row_top">
+							<label class="col-sm-3 control-label">家庭月收入(元)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">供养人数<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">人均月收入(元)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">月负债(万元)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">净资产(元)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">负债(元)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">净资产贷款比<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">年均存款(元)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">人均住房面积(平方)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">住房存款净值(万元)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">有价证券净值(万元)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">实物资产净值(万元)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">对外投资净值(万元)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">自建房净值(万元)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+					</div>
+				</li>
+				
+				<li class="list-group-item">
+						<div class="row">
+							<p class="col-sm-12 row-title">房产信息</p>
+						</div>
+						<div class="row row_top">
+							<label class="col-sm-3 control-label">房屋权属人<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">关系<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">产权证号<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">是否共有资产<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">建购价格(万)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">所占份额(%)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">房屋性质<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">房屋面积(平方)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">房屋地址<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">房产抵押情况<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">买入日期<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+							<label class="col-sm-3 control-label">评估价格(万)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+						<div class="row">
+							<label class="col-sm-3 control-label">购房欠款余额(万)<i>*</i></label>
+							<div class="col-sm-3">
+								<input readonly="readonly" value="" type="text">
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>`;
+								
+		if(dom=="B"){//历史
+			$("#item_E").html(item_E)
+			$("#item_D").html(item_D)
+			$("#item_C").html(item_C)
+			$("#pastRecords").html(item_A);
+		}else if(dom=='A'){//实时
+			$("#item1_E").html(item_E)
+			$("#item1_D").html(item_D)
+			$("#item1_C").html(item_C)
+			$("#realTime").html(item_A);
+		}
+		//设置面前问题表格样式
+		$(".mq_tabl tr td:first-child").css({"color":"white","font-size":"14px"});
+		$(".mq_tabl tr td:first-child:odd").css("background-color","#596790");
+		$(".mq_tabl tr td:first-child:even").css("background-color","#7a89b5");
+		$(".mq_tabl tr td:last-child:even").css("background-color","#e7e9f1");
+		$(".mq_tabl tr td:last-child:odd").css("background-color","#d5d8df");
 	}
-  	window.onload=function(){
-		refreshTime();
-	} 
  	//关闭浏览器之前的js动作 兼容多浏览器
 	window.onbeforeunload = function(e) {
 	var evt = e ? e : (window.event ? window.event : null); //此方法专门兼容firefox的解决方案
@@ -793,10 +1889,11 @@
  	//释放登陆的accid
 	function destroysession(){
 		var tim=readCookie("mark");
+		var bankid=readCookie('bankId');
 		$.ajax({
             url:'../yx/outlogin.do',
             type:'POST',
-            data:{mark:tim},
+            data:{mark:tim,bankId:bankid},
             dataType:'json',
             success: function () {
             	console.log('退出');
@@ -814,6 +1911,10 @@
             height: tableHeight()
         })
     })
+    
+    
+    
+    
 	 /*------ 机构开始 */
      var jsonObj;//用来存储全局数据集
 	 var b=true;//记录是否进行一次请求
@@ -822,68 +1923,164 @@
   	 var selec=$(".myText-content-select");//获得document对象 
   	 var organizationval=$("#organizationval"); 
   	 var organization=$("#organization");
-  	//失去焦点的时候
-	function funblur(){
-  		 if(!organizationval.val()){//没有点击下拉框
-  			organization.val("");//清空输入框
-  			selec.hide();//隐藏下拉框
-  			c=false;
-  		 }
-  	 }
-	//得到焦点的时候
-	function  funFocus(){
-		if(c){
-			selec.show();
+  	//动态 搜索 列表 提取2019-1-12 LiWang
+ 	(function(){
+		//构造函数
+		var dynamicSearchList=function(config){
+			//是否请求过
+			this._whetherRequest=false;
+			//是否存在搜索数据
+			this.searchData=false; 
+			this._arr=[];//存储原始列表数据
+			this.init(config)
 		}
-	}
-	
-	//input 改变的时候
-	organization.bind('input propertychange keyup', function(even) {
-		if(event.target==this){
-			if(b){//json没有初始化
-				$.post('../yx/cl.do',function(data){
-					jsonObj=data;
-					b=false;//表示已经初始化成功了
-				},'json');
-			}
-			//查到数据集 并且搜索框里面有值
-			if(jsonObj && organization.val() && organization.val()!=""){
-				var v=organization.val();
-				u="";//用来存储html代码
-				selec.html("");
-				$.each(jsonObj, function(index,value) {
-					var tit=value.name;
-			  		var dom=value.id;
-					//存在
-			  		if(tit.toString().indexOf(v)!=-1){
-			  			u+='<li class="myText-content-option" value='+dom
-			  				+'>'
-							+tit
-							+'</li>';
-			  		}
-				});
-				if(u!=""){//查找到内容
-					c=true;//表示已经存在数据了
-					selec.html(u);
-					selec.show();
-					/* 绑定点击事件 */
-					selec.on("click","li",function(){
-						  organization.val($(this).text());
-						  organizationval.val($(this).val())
-						  selec.hide();//隐藏
-					});
-				}else{//表示没有查到数据
-					c=false;//下拉框没有数据
-					return
-				}
-				
-			}else{//当搜索框里面内容进行人为的清空时
-				selec.hide();//隐藏下拉列表
-				organizationval.val("");//清空值
-				c=false;//输入框被清空 则下拉框也不会存在数据
-			}
+		dynamicSearchList.prototype={
+			init:function(config){
+				this._searchBox=document.getElementById(config.searchBox);
+				this._itemMarkBox=document.getElementById(config.itemMarkBox)
+				this._listBox=document.getElementById(config.listBox);
+				this._requestUrl=config.requestUrl;
+				this.workBox=document.getElementById(config.workBox);
+				this.eventBind();
+			},
+			//输入框事件绑定
+			eventBind(){
+				let _this=this;
+				workBox.addEventListener("click",function(even){
+					console.log("阻止事件冒泡")
+					even.stopPropagation();
+				})
+				document.addEventListener('click', function(even){
+					_this._listBox.style.display="none";
+				    even.stopPropagation();
+				})
+				this._searchBox.addEventListener("input",function(){
+					console.log("输入查询条件")
+					_this.search(this.value);
+				})
+				this._searchBox.addEventListener("focus",function(even){	
+					console.log("得到焦点")
+					if(_this.searchData){
+						_this._listBox.style.display="block";
+					}
+				})
+				this._searchBox.addEventListener("blur",function(even){
+					if(!!_this.instantValue){
+						_this._searchBox.value=_this.instantValue;
+					}else{
+						_this._searchBox.value=null; 
+					}
+				})
+			},
+			//搜索
+			search(val){
+					let _this=this;
+					this.httpRequest();
+					if(this._whetherRequest && !!val){
+						console.log("search data")
+						let idS=[];
+						let H="";//用来存储html代码
+						this._listBox.innerHTML="";
+						for(let i=0;i<_this._arr.length;i++){
+							let item=_this._arr[i];
+							let id=item.id;
+							let name=item.name;
+							//存在
+					  		if(name.toString().indexOf(val)!=-1){
+					  			idS.push(item);
+					  			H+=`<li class="myText-content-option" id="${id}" value="${id}">${name}</li>`;
+					  		}
+						}
+						if(H!=""){//查找到内容
+							this.searchData=true;//表示已经存在数据了
+							this._listBox.innerHTML=H;
+							this._listBox.style.display="block";
+							for(let i of idS){
+								document.getElementById(i.id).addEventListener("click", function(even){
+									_this.instantValue=i.name;
+									_this._itemMarkBox.value=i.id;
+									_this._searchBox.value=i.name;
+									_this._listBox.style.display="none";
+									even.stopPropagation();
+								});
+							}
+						}else{//表示没有查到数据
+							this.searchData=false;//下拉框没有数据
+							return
+						}
+					}else{//当搜索框里面内容进行人为的清空时
+						console.log("reset")
+						this.instantValue=null;
+						this._listBox.style.display="none";
+						this._itemMarkBox.value="";
+						this.searchData=false;//输入框被清空 则下拉框也不会存在数据
+					}
+			},
+			//Get 请求 http://www.w3school.com.cn/xmldom/dom_http.asp
+ 			httpRequest(){
+ 				let _this=this;
+ 				//如果已经请求过 直接返回
+ 				if(_this._whetherRequest){
+ 					return;
+ 					
+ 				//!!!!!!!!!!!!!start 
+ 				//这里正式环境else下面的代码块 不需要
+ 				}/* else{
+					_this._arr=JSON.parse('[{"name":"大1","id":1},{"name":"大小不分","id":2},{"name":"大2","id":3},{"name":"大3","id":4}]')
+					_this._whetherRequest=true;
+					return;
+				} */
+ 				//!!!!!!!!!!!!!end
+ 				
+ 				var request;
+ 				if (window.XMLHttpRequest){ 
+ 			　　　　// code for IE7+, Firefox, Chrome, Opera, Safari 
+ 			　　　　request=new XMLHttpRequest(); 
+ 			　　	}else{// code for IE6, IE5 
+ 			　　　　request=new ActiveXObject("Microsoft.XMLHTTP"); 
+ 			　　	} 
+ 				if (request==null){ 
+ 			　　　　alert('您的浏览器不支持AJAX！'); 
+ 			　　　　return; 
+ 			　　	}
+ 				/*open() 方法已调用，但是 send() 方法未调用。请求还没有被发送。*/
+ 			    request.open( "GET", _this._requestUrl);
+ 			    request.onreadystatechange = function(){
+ 			        if (request.readyState==4 && request.status==200){ 
+ 			         //服务器接收到的响应体（不包括头部），或者如果还没有接收到数据的话，就是空字符串。
+ 					  console.log("查询成功")
+ 					 _this._whetherRequest=true;
+ 				　　　　// 处理返回结果 
+ 					 _this._arr=JSON.parse(request.responseText);
+ 				　　} 
+ 			    }
+ 			    request.send(null);
+ 			}
 		}
-	});
+		window.dynamicSearchList=dynamicSearchList;
+	})()
+/* 
+--------------------- 
+作者：LiWang_it 
+来源：CSDN 
+原文：https://blog.csdn.net/lwang_IT/article/details/86592905 
+版权声明：本文为博主原创文章，转载请附上博文链接！ */
+ 	new dynamicSearchList({
+		searchBox:"organization",
+		itemMarkBox:"organizationval",
+		listBox:"contentSelect",
+		requestUrl:"../yx/cl.do",
+		workBox:"workBox"
+	})
+  	 
+  	//银行
+  	new dynamicSearchList({
+  			searchBox:"bank",
+  			itemMarkBox:"bankval",
+  			listBox:"contentSelectByBank",
+  			requestUrl:"../yx/getBank.do",
+  			workBox:"workBox"
+  	})
 
 	/*------ 机构结束*/
 		//查询按钮事件
@@ -892,10 +2089,7 @@
     })
     //重置按钮
     $("#reset").click(function(){
-    	$('#namevalue').val("");//姓名
-    	$('#idNumbervalue').val("");
-    	$('#organization').val("");//机构
-    	$('#organizationval').val("");
+    	$(".my-container input").val("");
     	$('#viedotypevalue').find('option[id="selected"]').prop("selected",true);
     	$('#contractvalue').find('option[id="selected"]').prop("selected",true);
     	$('#viedostartsvalue').find('option[id="selected"]').prop("selected",true);
@@ -909,7 +2103,7 @@
     		 myPlayer.pause();//暂停播放
     	 }
 	})
-	
+	//视频id 列数  视频面签状态
  	function mq_viedoplay(value,index,code){
 	    //是否第一次打开	
 	     if(b==index){//如果是再次点击
@@ -919,13 +2113,26 @@
 	    	 }
 	    	 return;
 	     }else{
-	     	 viewdate(value,"B",code,index);
+	    	 initView("B");
+	    	 initHistory(code,index)
+	    	 //请求数据
+	    	 $.ajax({
+		        url:'../yx/viedoinfo.do',
+		        type:'POST',
+		        data:{id:value,domvalue:"B"},
+		        dataType:'json',
+		        success: function (data) {
+		        	viewdate("B",data)
+		        },
+		        error: function (XMLHttpRequest, textStatus, errorThrown) {
+		        	var prefix="请求历史视频异常";
+		            console.log(prefix+":(状态码)"+XMLHttpRequest.status);
+		            console.log(prefix+"请求客户信息异常:(状态)"+XMLHttpRequest.readyState);
+		            console.log(prefix+"请求客户信息异常:(错误信息) "+textStatus);
+		        }
+	    	 })
 	    	 b=index;//标记一下点击的索引
-	    	 $(".mq_viedoplay").toggleClass("hide",false);
-	    	/*  $(".mq_arrows_box").animate({top:175+index*38+'px'},'fast',function(){
-	
-			 });	 */
-	    	 
+	    	 $(".mq_viedoplay").toggleClass("hide",false); 
 	     }
 	}
     //请求服务数据时所传参数
@@ -940,6 +2147,7 @@
             organization:$('#organizationval').val(),//机构
             viedotype:$('#viedotypevalue').val(),//视频类型
             contract:$('#contractvalue').val(),//签约状态
+            bank:$("#bankval").val(),//银行
             viedostartsvalue:$("#viedostartsvalue").val()
         }
     }
@@ -981,6 +2189,13 @@
                 field:'cname',
                 width:145,
                 align:'center'
+            },
+            {
+                title:'按揭银行',
+                field:'ybName',
+                align:'center',
+                width:145
+                //sortable:true //是否启用排序 
             },
             {
                 title:'所属机构',
@@ -1028,7 +2243,12 @@
                 title:'GPS',
                 field:'address',
                 align:'center',
-                width:200
+                width:200,
+                formatter: function(value, row, index){
+                	if(!!value){
+                		return value.replace("(null)","");
+                	}
+                }
             },
 		    {
                 field:'url',
@@ -1079,6 +2299,5 @@
     }
     /* --------- 结束-------*/
 </script>	
-	<!-- <script src="js/module/whiteboard.js"></script> -->
 </body>
 </html>

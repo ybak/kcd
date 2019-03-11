@@ -10,10 +10,116 @@
 <!-- 	<update id="update_YX_account" parameterType="java.util.HashMap">
 		UPDATE  assess_gems SET token=#{token},accid=#{accid} WHERE id=#{id};
 	</update> -->
+	<select id="selectUidByAccid" resultType="java.lang.String" parameterType="java.lang.String" >
+	select uid from icbc_erp_token where accid=#{0}
+	</select>	
+	<!-- 查询出所有的机构 -->
+	<select id="getOrganization" resultType="java.util.HashMap">
+		select id,name from assess_fs
+	</select>
+	<select id="getBank" resultType="java.util.HashMap">
+		select id,name from icbc_banklist
+	</select>
+	<update id="updateVideoTokenBinding"> 
+		update icbc_erp_token 
+		<set>
+      		<if test="bankId != null" >
+      			bank_id=#{bankId},
+      		</if>
+      		<if test="delmark != null" >
+      			delmark=#{delmark},
+      		</if>
+      		<if test="mid_edit != null" >
+      			mid_edit=#{mid_edit},
+      		</if>
+      		<if test="dt_edit != null" >
+      			dt_edit=#{dt_edit} 
+      		</if>
+      	</set>
+		where uid=#{Id}
+	</update>
+	<select id="selectBankId" resultType="string" parameterType="string">
+		select bank_id from kj_icbc where id=#{0}
+	</select>
+	<select id="selectCountAdminById" resultType="integer" parameterType="string">
+	select count(*) from assess_admin  where id=#{0}
+	</select>
 	<!-- 添加云信账户  -->
-	<insert id="add_YX_account" parameterType="java.util.HashMap" >
-		insert into icbc_erp_token(token,accid,employcode) values(#{token},#{accid},#{employcode})
+	<insert id="add_YX_account" parameterType="java.util.HashMap" keyProperty="id" useGeneratedKeys="true" >
+		insert into icbc_erp_token
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="token != null" >
+		token,
+		</if>
+		<if test="accid != null" >
+		accid,
+		</if>
+		<if test="employcode != null" >
+		employcode,
+		</if>
+		<if test="uid != null" >
+		uid,
+		</if>
+		<if test="parentid != null" >
+		parentid,
+		</if>
+			<if test="mid_add != null" >
+		mid_add,
+		</if>
+			<if test="mid_edit != null" >
+		mid_edit,
+		</if>
+			<if test="dt_add != null" >
+		dt_add,
+		</if>
+			<if test="dt_edit != null" >
+		dt_edit,
+		</if>
+			<if test="delmark != null" >
+		delmark,
+		</if>
+		<if test="bankId != null" >
+		bank_id,
+		</if>
+	  </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="token != null" >
+			#{token},
+			</if>
+			<if test="accid != null" >
+			#{accid},
+			</if>
+			<if test="employcode != null" >
+			#{employcode},
+			</if>
+			<if test="uid != null" >
+			#{uid},
+			</if>
+			<if test="parentid != null" >
+			#{parentid},
+			</if>
+			<if test="mid_add != null" >
+			#{mid_add},
+			</if>
+	
+			<if test="mid_edit != null" >
+			#{mid_edit},
+			</if>
+			<if test="dt_add != null" >
+			#{dt_add},
+			</if>
+			<if test="dt_edit != null" >
+			#{dt_edit},
+			</if>
+			<if test="delmark != null" >
+			#{delmark},
+			</if>
+			<if test="bankId != null" >
+			#{bankId},
+			</if>
+		</trim>
 	</insert>
+	
 	<!-- 查询所有云信账户 没有用到 -->
 	<select id="query_token" resultType="java.util.HashMap" parameterType="java.lang.String">
 		select token,accid,employcode from icbc_erp_token where employcode=#{code} 
@@ -21,9 +127,11 @@
 			limit 0,${size}
 		</if>
 	</select> 
-	
+	<select id="selectCountTokenByUid" resultType="java.lang.String" parameterType="java.lang.String" >
+	select delmark from icbc_erp_token where uid=#{0}
+	</select>
 	<select id="query_tokenbyid" resultType="scanpool" parameterType="java.lang.String">
-		select a.id mark,a.accid auditAccid ,a.token auditToken,b.accid clientAccid,b.token clientToken from  icbc_erp_token a,icbc_erp_token b where a.id=b.parentid  and a.uid=#{0}
+		select a.bank_id bankId,a.id mark,a.delmark,a.accid auditAccid ,a.token auditToken,b.accid clientAccid,b.token clientToken from  icbc_erp_token a,icbc_erp_token b where a.id=b.parentid and a.uid=#{0}
 	</select>
 	<!-- 记录上传回调信息 -->
 	<insert id="addcallback" parameterType="map">
@@ -95,47 +203,101 @@
 	<insert id="insert_M" parameterType="java.lang.String">
 		insert into icbc_erp_video_info(te) values(#{0})
 	</insert>
-	<!-- 来电客户信息 征信表（正面照片 车牌 姓名） 开卡表 开票价 总额 期限 金融服务费 面签表 相似度 评估表 车辆品牌型号   意向金额 等-->
+	<select id="selectBankCount"  parameterType="java.lang.String" resultType="integer">
+		select count(*) from icbc_banklist where id=#{0}
+	</select>
+	<!-- 来电客户信息 征信表（正面照片 车牌 姓名） 开卡表 开票价 总额 期限 金融服务费 面签表 相似度 评估表 车辆品牌型号   意向金额 等
+	priceresult 车辆评估价
+	-->
 	<select id="select_viedo_byid" resultType="java.util.HashMap" parameterType="java.lang.String" >
-	select concat('http://a.kcway.net/assess/',ki.imgstep2_1) positive,ki.c_name name,ki.c_cardno  idnumber,ki.c_tel tel,kik.zdr_wsdz delivery,kik.zdr_grsr income,
-kik.zdr_gzdw work,kik.dk_price dkprice, kik.kp_price carprice,kik.dk_total_price totalprice, ac.price_result priceresult,kik.aj_date date,kik.jrfw_price serve,ac.ppxh px,ac.icbc_pricecs want
+select * from (select 
+kik.*,
+ki.c_cardno,ki.loan_tpid, ki.loan_level,ki.c_name_mt,ki.c_tel_mt,ki.c_cardno_mt,ki.kk_kpj,ki.c_sex,ki.c_name_gj1,ki.c_name_gj2,ki.c_tel_gj1,ki.c_tel_gj2,ki.c_cardno_gj1,ki.c_cardno_gj2,ki.imgstep2_1ss,ki.id icbcid,
+ac.price_result,ac.source_id,ac.property_id,ac.car_status,ac.gear_box_id,ac.car_km_icbc,ac.cardt2,ac.cardt1,ac.color_id,ac.mem_states,ac.mem_citys,ac.vincode,ac.ppxh,ac.motorcode,ac.icbc_pricecs,ac.price_new,ac.c_carno,
+yb.id ybId,yb.`name` ybName,
+cb.name cbName,cm.name cmName,cs.name csName,ag.name agName,af.name afName	
 from kj_icbc ki 
-JOIN assess_cars ac on ki.id =ac.icbc_id and ki.id=#{0} 
-JOIN kjs_icbc_kk kik  on ki.id=kik.icbc_id 
+left JOIN assess_cars ac on ki.id =ac.icbc_id 
+JOIN icbc_banklist yb on yb.id=ki.bank_id
+JOIN car_brand cb on cb.id=ac.brid
+JOIN car_model cm on cm.id=ac.carid
+JOIN car_series cs on cs.id=ac.seid
+JOIN assess_gems ag on ag.id=ki.gems_id
+JOIN assess_fs af on af.id=ki.gems_fs_id
+left JOIN kjs_icbc_kk kik  on ki.id=kik.icbc_id) a  where  a.icbcid=#{0} 
 	</select>
 	<select id="select_mq_info" resultType="java.util.HashMap" parameterType="java.lang.String">
 		select concat('http://a.kcway.net/assess/',kim.imgurl_sfzyz) visa,kim.api_result2 man from kjs_icbc_mq kim where icbc_id=#{0}  order by id desc
 	</select>
-	<!-- 点击历史视频的时候   -->
-	<select id="select_viedo_byid2" resultType="java.util.HashMap" parameterType="java.lang.String" >	
-	select concat('http://a.kcway.net/assess/',ki.imgstep2_1) positive,ki.c_name name,ki.c_cardno  idnumber,ki.c_tel tel,kik.zdr_wsdz delivery,kik.zdr_grsr income,
-	kik.zdr_gzdw work,kik.dk_price dkprice, kik.kp_price carprice,kik.dk_total_price totalprice, ac.price_result priceresult,kik.aj_date date,kik.jrfw_price serve,ac.ppxh px,ac.icbc_pricecs want,yvi.address address,yvi.url,ki.id icbcid,yvi.channelId
+	<!-- 点击历史视频的时候   cnName 品牌 cmName类型 csName 系列-->
+	<select id="select_viedo_byid2" resultType="java.util.HashMap" parameterType="java.lang.String" >
+	select 
+kik.cars_type,kik.kp_price,kik.dk_price,kik.jrfw_price,kik.dk_total_price,kik.aj_type,kik.aj_date,kik.aj_bank,kik.dk_lv,
+kik.dz_type,kik.sp_address,kik.yw_address,kik.kk_car_stateid,kik.kk_car_cityid,kik.kk_loan_stateid,kik.kk_loan_cityid,kik.kk_kh,
+kik.sfje,kik.po_ysr,kik.po_xl,kik.po_xzdz,kik.po_yzbm,kik.po_gzdw,kik.po_dwdz,kik.po_zw,kik.jjlxr_c_name,kik.jjlxr_c_tel,kik.jjlxr_jdrgx,
+kik.jjlxr_xzdz,kik.zdr_hyzk,kik.zdr_grsr,kik.zdr_jtsr,kik.zdr_xl,kik.zdr_jzzk,kik.zdr_xzdz,kik.zdr_yzbm,kik.zdr_gzdw,kik.zdr_dwdh,kik.zdr_dwdz,
+kik.zdr_dwxz,kik.zdr_sshy,kik.zdr_zy,kik.zdr_zw,kik.zdr_gznx,kik.gjr1_hyzk,kik.gjr2_hyzk,kik.gjr1_xzdz,kik.gjr2_xzdz,kik.gjr1_yzbm,kik.gjr2_yzbm,
+kik.gjr1_gzdw,kik.gjr2_gzdw,kik.gjr1_dwdz,kik.gjr2_dwdz,kik.gjr1_yzdrgx,kik.gjr2_yzdrgx,kik.zdr_wsdz,kik.po_wsdz,kik.gjr1_wsdz,kik.gjr2_wsdz,
+kik.qtlxr_c_name,kik.qtlxr_c_tel,kik.qtlxr_jdrgx,kik.qtlxr_xzdz,
+ki.id,ki.c_name,ki.c_tel,ki.c_cardno,ki.gems_fs_id,ki.gems_id,ki.loan_tpid, ki.loan_level,ki.c_name_mt,ki.c_tel_mt,ki.c_cardno_mt,ki.kk_kpj,ki.c_sex,ki.c_name_gj1,ki.c_name_gj2,ki.c_tel_gj1,ki.c_tel_gj2,ki.c_cardno_gj1,ki.c_cardno_gj2,ki.imgstep2_1ss,ki.id icbcid,
+ac.price_result,ac.source_id,ac.property_id,ac.car_status,ac.gear_box_id,ac.car_km_icbc,ac.cardt2,ac.cardt1,ac.color_id,ac.mem_states,ac.mem_citys,ac.vincode,ac.ppxh,ac.motorcode,ac.icbc_pricecs,ac.price_new,ac.c_carno,
+yb.id ybId,yb.`name` ybName,yvi.address address,yvi.url,
+cb.name cbName,cm.name cmName,cs.name csName,ag.name agName,af.name afName		
 	from icbc_erp_video_info yvi   
 	join kj_icbc ki on yvi.ext=ki.id and yvi.id=#{0}
 	left JOIN assess_cars ac on ki.id =ac.icbc_id 
-	JOIN kjs_icbc_kk kik  on ki.id=kik.icbc_id 
+	JOIN icbc_banklist yb on yb.id=ki.bank_id
+	left JOIN car_brand cb on cb.id=ac.brid
+	left JOIN car_model cm on cm.id=ac.carid
+	left JOIN car_series cs on cs.id=ac.seid
+	JOIN assess_gems ag on ag.id=ki.gems_id
+	JOIN assess_fs af on af.id=ki.gems_fs_id
+	left JOIN kjs_icbc_kk kik  on ki.id=kik.icbc_id 
 	</select>
-
-<!-- 查看历史   大状态表 公司表  视频表 左链接 小状态-->
+<!-- 查看省 -->
+<select id="getCommStates" resultType="string" parameterType="java.lang.Integer">
+select name from comm_states where id=4
+</select>
+<!-- 查看市 -->
+<select id="getCommCitys" resultType="string" parameterType="java.lang.Integer">
+select name from comm_citys where id=#{0}
+</select>
+<!-- 查看区 -->
+<select id="getCommZones" resultType="string" parameterType="java.lang.Integer">
+select name from comm_zones where id=#{0}
+</select>
+<!-- 查看历史   大状态表 公司表  银行表 视频表 左链接 小状态-->
 <select id="select_operating" resultType="java.util.HashMap" parameterType="pageinfo" >
-	 select b.* from ( select yvi.address,yvi.url,yvi.id yid,fs.name,ieki.icbc_id icbcid,ieki.id iekiid,ieki.c_name cname,ieki.dt_edit editime, yvi.vid vid,iekir.result_1_code code,yvi.viedotype 
+	 select b.* from (select 
+yvi.address,yvi.url,yvi.id yid,yvi.vid vid,iekir.result_1_code code,yvi.viedotype,
+fs.name,
+ieki.icbc_id icbcid,ieki.id iekiid,ieki.c_name cname,ieki.dt_edit editime,
+yb.id ybId,yb.`name` ybName
 from icbc_erp_video_info yvi 
 join icbc_erp_kj_icbc ieki on yvi.ext=ieki.icbc_id  and ieki.type_id=6
 join assess_fs fs on ieki.gems_fs_id=fs.id  
 <include refid="condition-viedo"></include>
-left JOIN icbc_erp_kj_icbc_result iekir ON iekir.id=yvi.vid ) b  
+left JOIN icbc_erp_kj_icbc_result iekir ON iekir.id=yvi.vid 
+join kj_icbc ki on ki.id=ieki.icbc_id
+JOIN icbc_banklist yb on yb.id=ki.bank_id) b  
 <include refid="condition-viedo1"></include>
 order by yid desc
 limit ${from},${size}
 </select>
 <!-- 查看历史分页 -->
 <select id="select_operating_count" resultType="int" parameterType="pageinfo" >
-	 select count(*) from ( select yvi.address,yvi.url,yvi.id yid,fs.name,ieki.icbc_id icbcid,ieki.id iekiid,ieki.c_name cname,ieki.dt_edit editime, yvi.vid vid,iekir.result_1_code code
+	 select count(*) from ( select 
+yvi.address,yvi.url,yvi.id yid,yvi.vid vid,iekir.result_1_code code,yvi.viedotype,
+fs.name,
+ieki.icbc_id icbcid,ieki.id iekiid,ieki.c_name cname,ieki.dt_edit editime,
+yb.id ybId,yb.`name` ybName
 from icbc_erp_video_info yvi 
 join icbc_erp_kj_icbc ieki on yvi.ext=ieki.icbc_id  and ieki.type_id=6
-join assess_fs fs on ieki.gems_fs_id=fs.id  
+join assess_fs fs on ieki.gems_fs_id=fs.id 
 <include refid="condition-viedo"></include>
-left JOIN icbc_erp_kj_icbc_result iekir ON iekir.id=yvi.vid ) b  
+left JOIN icbc_erp_kj_icbc_result iekir ON iekir.id=yvi.vid 
+join kj_icbc ki on ki.id=ieki.icbc_id
+JOIN icbc_banklist yb on yb.id=ki.bank_id) b  
 <include refid="condition-viedo1"></include>
 </select>
 <sql id="condition-viedo1">
@@ -153,6 +315,10 @@ left JOIN icbc_erp_kj_icbc_result iekir ON iekir.id=yvi.vid ) b
 				<if test="condition.viedostartsvalue=='2'.toString()">
 					and b.code is null
 				</if>
+			</if>
+			<!-- 银行 -->
+			<if test="condition.bank !=null and  condition.bank !=''">
+			   	  	and b.ybId=#{condition.bank}
 			</if>
 	</if>
 </sql>

@@ -15,22 +15,22 @@ public interface YXService {
 	List query_tokenbyid(String id);
 	List query_token(String label, int count);
 	
-	void insert_infocopy_duration(InfoCopy infocopy);
-	void insert_infocopy_download(InfoCopy infocopy);
+	int insert_infocopy_duration(InfoCopy infocopy);
+	int insert_infocopy_download(InfoCopy infocopy);
 	String select_infocopy(String channelId);
-	void update_infocopy_duration(InfoCopy infocopy);
-	void update_infocopy_download(InfoCopy infocopy);
+	int update_infocopy_duration(InfoCopy infocopy);
+	int update_infocopy_download(InfoCopy infocopy);
 	//视频面前在视频表中添加一个记录
 	int insert_infocopy_viedo(Map map);
 	//视频面前在视频表中更新一个记录
 	int update_infocopy_viedo(Map map);
 	
-	void insert_M(String s);
+	int insert_M(String s);
 	int insert_infocopy_durationM(Map infocopy);
-	void insert_infocopy_downloadM(Map infocopy);
+	int insert_infocopy_downloadM(Map infocopy);
 	String select_infocopyM(String channelId);
-	void update_infocopy_durationM(Map infocopy);
-	void update_infocopy_downloadM(Map infocopy);
+	int update_infocopy_durationM(Map infocopy);
+	int update_infocopy_downloadM(Map infocopy);
 	
 	Map select_viedo_byid(String id);
 	//历史免签
@@ -48,4 +48,15 @@ public interface YXService {
 	int update_kjicbc(Map map);//更新
 	int update_infocopy_viedo_vid(Map map);
 	int updata_mq_status(String bcstatus,String icbcid);
+	List<Map> getOrganization();
+	List<Map> getBank();
+	String selectUidByAccid(String accid);
+	String getCommStates(Integer id);
+	String getCommCitys(Integer id);
+	String getCommZones(Integer id);
+	Object updateVideoTokenBinding(String delmark,String bankId,String Id,String dt_edit,String mid_edit);
+	String selectCountTokenByUid(String uid);
+	int selectCountAdminById(String id);
+	String selectBankId(String icbcId);
+	Integer selectBankCount(String id);
 }
