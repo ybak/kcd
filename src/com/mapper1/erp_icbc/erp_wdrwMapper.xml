@@ -291,7 +291,6 @@ LEFT JOIN icbc_erp_commtaskname  taskname on taskname.`status`=kir.status
 LEFT JOIN assess_fs fs on icbc.gems_fs_id=fs.id
 LEFT JOIN assess_gems gems on icbc.gems_id=gems.id
 where kir.icbc_id=#{icbc_id} and kir.type_id=#{type_id} 
-and kir.qryid=#{qryid}
 ORDER BY kir.id asc
 </if>
 <!-- 处理过程 评估板块 -->
@@ -315,7 +314,7 @@ LEFT JOIN icbc_erp_commtaskname  taskname on taskname.`status`=kir.status
 LEFT JOIN assess_fs fs on admin.icbc_erp_fsid=fs.id
 LEFT JOIN assess_gems gems on admin.gemsid=gems.id
 where kir.icbc_id=#{icbc_id} 
-and kir.type_id=#{type_id} and kir.qryid=#{qryid}
+and kir.type_id=#{type_id}
 ORDER BY kir.id asc
 </if>
 <!--处理过程-【其他没有表的板块公用 】-->
@@ -338,7 +337,6 @@ LEFT JOIN assess_fs fs on eki.gems_fs_id=fs.id
 LEFT JOIN assess_gems gems on eki.gems_id=gems.id
 where kir.icbc_id=#{icbc_id} 
 and kir.type_id=#{type_id}
-and kir.qryid=#{qryid}
 and kir.status!=0
 ORDER BY kir.id asc
 </if>
@@ -365,7 +363,6 @@ LEFT JOIN assess_fs fs on kk.gems_fs_id=fs.id
 LEFT JOIN assess_gems gems on kk.gems_id=gems.id
 where kir.icbc_id=#{icbc_id} 
 and kir.type_id=#{type_id}
-and kir.qryid=#{qryid}
 ORDER BY kir.id asc
 </if>
 <!--处理过程  视频面签板块  -->
@@ -390,7 +387,6 @@ LEFT JOIN assess_fs fs on mq.gems_fs_id=fs.id
 LEFT JOIN assess_gems gems on mq.gems_id=gems.id
 where kir.icbc_id=#{icbc_id} 
 and kir.type_id=#{type_id}
-and kir.qryid=#{qryid}
 ORDER BY kir.id asc
 </if>
 <!-- 处理过程  汽车贷款 -->
@@ -415,7 +411,6 @@ LEFT JOIN assess_fs fs on dk.gems_fs_id=fs.id
 LEFT JOIN assess_gems gems on dk.gems_id=gems.id
 where kir.icbc_id=#{icbc_id} 
 and kir.type_id=#{type_id}
-and kir.qryid=#{qryid}
 ORDER BY kir.id asc
 </if>
 <!-- 资金分配 -->
@@ -438,7 +433,6 @@ LEFT JOIN assess_fs fs on eki.gems_fs_id=fs.id
 LEFT JOIN assess_gems gems on eki.gems_id=gems.id
 where kir.icbc_id=#{icbc_id} 
 and kir.type_id=#{type_id}
-and kir.qryid=#{qryid}
 ORDER BY kir.id asc
 </if>
 <!-- 查询征信所有 -->

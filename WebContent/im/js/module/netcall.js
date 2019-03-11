@@ -723,7 +723,7 @@ fn.hangup = function () {
 //    this.stopRemoteStream();//(己方本地操作，对端不受影响)关闭对方画面
 //    this.stopLocalStream();//(己方本地操作，对端不受影响)关闭自己画面
     /**状态重置 */
-    if(this.netcallDuration>0 || this.netcallDuration!='00分00秒'){
+    if(this.netcallDuration!=0 && this.netcallDuration!='00分00秒'){
     	console.log("通话时长大于0->"+this.netcallDuration)
     	window.hangupexit(this.channelId,this.beCalledInfo.custom,this.netcallDuration,this.beCallData.c_name);
     }else{
@@ -777,7 +777,7 @@ fn.onHangup = function (obj) {
 //            this.setDeviceAudioIn(false);
 //            this.setDeviceAudioOut(false);
         }.bind(this));
-        if(this.netcallDuration>0 || this.netcallDuration!='00分00秒'){
+        if(this.netcallDuration!=0 && this.netcallDuration!='00分00秒'){
         	console.log("通话时长大于0->"+this.netcallDuration)
         	window.hangupexit(this.channelId,this.beCalledInfo.custom,this.netcallDuration,this.beCallData.c_name);
         }else{

@@ -412,29 +412,31 @@
 					<li><a href="#"><i class="fa fa-dollar"></i><span>贷后业务管理&nbsp;&nbsp;&nbsp;↓</span></a>
 						<ul class="treeview-menu">
 							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'sqdc')==true}">
-							<li ${requestScope.type=='dhywgl1' && requestScope.dn=='businessPayApplication'?"class='active'":''}>
-							<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dhywgl1&dn=businessPayApplication&qn=list">
+							<li ${requestScope.type=='dhywgl' && requestScope.dn=='businessPayApplication'?"class='active'":''}>
+<a href="${pageContext.request.contextPath }/businessPayApplicationController/select.do?type=dhywgl&dn=businessPayApplication&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>申请代偿
+
 						    </a>
 							</li>
 							</c:if>
 							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'dcqr')==true}">
-							<li ${requestScope.type=='dhywgl2' && requestScope.dn=='matEndowmentResult'?"class='active'":''}>
-							<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dhywgl2&dn=matEndowmentResult&qn=list">
+							<li ${requestScope.type=='dhywgl' && requestScope.dn=='matEndowmentResult'?"class='active'":''}>
+<a href="${pageContext.request.contextPath }/matEndiwmentResultControoller/select.do?type=dhywgl&dn=matEndowmentResult&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>代偿确认
+
 						    </a>
 							</li>
 							</c:if>
 							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'hzsdc')==true}">
 							<li ${requestScope.type=='dhywgl3' && requestScope.dn=='lendingResult'?"class='active'":''}>
-							<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dhywgl3&dn=lendingResult&qn=list">
+							<a href="${pageContext.request.contextPath }/lendingResultController/select.do?type=dhywgl3&dn=lendingResult&qn=list&pagesize=10&pagenow=1">
 							<i class="fa fa-arrow-circle-o-right"></i>合作商代偿
 						    </a>
 							</li>
 							</c:if>
 							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'hzsdcqr')==true}">
-							<li ${requestScope.type=='dhywgl4' && requestScope.dn=='lendingResult'?"class='active'":''}>
-							<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dhywgl4&dn=lendingResult&qn=list">
+							<li ${requestScope.type=='dhywgl4' && requestScope.dn=='lendingResult1'?"class='active'":''}>
+							<a href="${pageContext.request.contextPath }/lendingResult1Controller/select.do?type=dhywgl4&dn=lendingResult1&qn=list&pagesize=10&pagenow=1">
 							<i class="fa fa-arrow-circle-o-right"></i>合作商代偿确认
 						    </a>
 							</li>

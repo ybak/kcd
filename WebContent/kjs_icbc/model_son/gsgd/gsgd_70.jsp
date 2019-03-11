@@ -22,7 +22,7 @@
 	<!-- ngIf: notUseButton -->
 		<input type="hidden" name="adminid" value="${sessionScope.pd.id}">
 		<input type="hidden" name="type_id" value="${requestScope.type_id}"> 
-		<input type="hidden" name="icbc_id" value="${pd.icbc_id}"> 
+		<input type="hidden" name="icbc_id" value="${requestScope.icbc_id}"> 
 	<div class="form-group ng-scope">
 		<label class="col-sm-2 control-label">材料审核<span class="red">*</span></label>
 		<div class="col-sm-3">

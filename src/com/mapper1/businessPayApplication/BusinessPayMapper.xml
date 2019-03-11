@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.mapper1.businessPayApplication.BusinessPayMapper">
+	<!--查询全部数据 -->
+	<select id="selectBusinessPay" parameterType="string" resultType="pd">		
+			select bc.c_name,
+			bc.c_cardno,
+			bc.gems_code, 
+			kk.dk_total_price,
+			kk.dt_edit,
+			kk.aj_date,	
+			kk.dk_lv,	
+			fs.name,
+			(select 
+			count(*) 
+			from 
+			import_repayment  re
+			where 
+			re.id_card=bc.c_cardno) as jd_count,
+			(select 
+			count(*)
+			from agree_compensate2 agree 
+			where 
+			agree.confirm_idCard=bc.c_cardno) as number
+			from  kj_icbc bc
+	left join kjs_icbc_kk kk on kk.icbc_id=bc.id
+	left join assess_fs fs on fs.id=bc.gems_fs_id
+	where 1=1
+		<if test="param != null and param != ''">	
+			and bc.c_name like '%${param}%' 
+			OR bc.c_cardno like '%${param}%'
+		</if>
+	 ORDER BY kk.dt_edit DESC limit #{pagenow},#{pagesize}
+	</select>
+	<!-- 总条数 -->
+	<select id="count" resultType="Integer">
+		select count(*) from (select bc.c_name,
+			bc.c_cardno,
+			bc.gems_code, 
+			kk.dk_total_price,
+			kk.dt_edit,
+			kk.aj_date,	
+			kk.dk_lv,	
+			fs.name,
+			(select 
+			count(*) 
+			from 
+			import_repayment  re
+			where 
+			re.id_card=bc.c_cardno) as jd_count,
+			(select 
+			count(*)
+			from agree_compensate2 agree 
+			where 
+			agree.confirm_idCard=bc.c_cardno) as number
+			from  kj_icbc bc
+	left join kjs_icbc_kk kk on kk.icbc_id=bc.id
+	left join assess_fs fs on fs.id=bc.gems_fs_id
+	) b
+	</select>
+	<!-- 添加前查询数据 -->
+	<select id="selectCardno" parameterType="String" resultType="java.util.Map">
+		select bc.id,
+			bc.c_name,
+			bc.c_cardno,
+			bc.gems_code, 
+			kk.dk_total_price,
+			kk.dt_edit,
+			kk.aj_date,
+			fs.name,
+			(select 
+			count(*) 
+			from 
+			import_repayment  re
+			where 
+			re.id_card=bc.c_cardno) as jd_count,
+			(select 
+			count(*)
+			from agree_compensate2 agree 
+			where 
+			agree.confirm_idCard=bc.c_cardno) as number
+			from  kj_icbc bc
+	left join kjs_icbc_kk kk on kk.icbc_id=bc.id
+	left join assess_fs fs on fs.id=bc.gems_fs_id
+	where bc.c_cardno=#{c_cardno}
+	</select>
+	
+	<!-- 查询详情 -->
+	<select id="selectdetail" parameterType="String" resultType="java.util.Map">
+		select * from import_repayment where id_card=#{id_card} 
+		<if test="periods != null and periods != '' ">
+			and repayment_periods=#{periods}
+		</if>
+		order by repayment_periods asc
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="addBusin" parameterType="java.util.Map">
+		insert into 
+		confirm_compensatory(
+		id,gems_code,c_name,id_card,cooperative_partner,loan_amount,credit_time,advance_payment) 
+		values(#{id},#{gems_code},#{c_name},#{c_cardno},#{name},#{dk_total_price},#{dt_edit},#{number})
+	</insert>
+	
+	<!-- 添加还款计划 -->
+	<insert id="addhk" parameterType="java.util.Map">
+		insert into 
+		confirm_compenatory2(
+		confirm_idCard,repayment_periods,overdue_date,overdue_days,apply_compensatory,
+		compensatory_date,advances_amount,compensatory_state) 
+		values(
+		#{id_card},
+		#{repayment_periods},
+		#{hk_time},
+		#{overdue_days},
+		#{apply_compensatory},
+		#{compensatory_date},
+		#{overdue_amount},
+		#{compensatory_state})
+	</insert>
+	
+	<!-- 查询用户信息表confirm -->
+	<select id="selectconfirm" resultType="java.util.Map" parameterType="string">
+		select * from confirm_compensatory where id_card=#{id_card}
+	</select>
+	
+	
+	<!-- 修改状态 -->
+	<update id="updateflag" parameterType="string">
+			update import_repayment 
+			set compensatory_state='正在处理',apply_compensatory=#{date},overdue_days=#{day} 
+			where 
+			id_card=#{id_card} and repayment_periods=#{periods}
+	</update>
+</mapper>

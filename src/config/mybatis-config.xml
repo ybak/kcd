@@ -3,280 +3,295 @@
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-    <typeAliases>
-         <!-- 可视化数据 -->
-         <typeAlias  alias="kj_icbc"  type="com.model1.ManagementCenter.kj_icbc"/>
-         <typeAlias  alias="assess_fs"  type="com.model1.ManagementCenter.assess_fs"/>
-         
-         <typeAlias alias="comm_zones"  type="com.model1.city.comm_zones"/>
-         <!--  -->
-         <typeAlias alias="pd"  type="com.model1.icbc.erp.PageData"/>
-         <typeAlias alias="hk" type="com.model1.icbc.erp.HK"/>
-         <typeAlias alias="pageinfo" type="com.controller.erp_icbc.utils.PageInfo"/> 
-         <typeAlias alias="scanpool" type="com.controller.erp_icbc.YunXin.seats.ScanPool1"/> 
-         <typeAlias alias="infocopy" type="com.controller.erp_icbc.YunXin.bean.InfoCopy"/>
-         <!-- 云信回调接收 -->
-         <typeAlias type="com.controller.erp_icbc.YunXin.bean.CallBack" alias="callBacK"/>
-    	 <!-- CarEvaluation 车辆评估  start -->
-         <typeAlias alias="AssessCars"  type="com.model.newAdd.AssessCars"/>
-         <typeAlias alias="AssessBclientCheck"  type="com.model.newAdd.AssessBclientCheck"/> 	
-         <typeAlias alias="AssessCarsItem"  type="com.model.newAdd.AssessCarsItem"/>
-         <typeAlias alias="CarModell"  type="com.model1.newAdd.CarModell"/>
-         <typeAlias alias="CarBrand"  type="com.model1.newAdd.CarBrand"/>
-         <typeAlias alias="CarSeries"  type="com.model1.newAdd.CarSeries"/>
+	<typeAliases>
+		<!-- 可视化数据 -->
+		<typeAlias alias="kj_icbc" type="com.model1.ManagementCenter.kj_icbc" />
+		<typeAlias alias="assess_fs" type="com.model1.ManagementCenter.assess_fs" />
 
-         <!-- CarEvaluation 车辆评估  end -->
-    
-    	 <!-- Test KJS start-->
-         <typeAlias alias="mgcert"  type="com.model1.mgcert"/>	
-         <typeAlias alias="mgcar"  type="com.model1.mgcar"/>	
-         <typeAlias alias="mgcert_result"  type="com.model1.mgcert_result"/>
-         <typeAlias alias="mgcar_result"  type="com.model1.mgcar_result"/>
-		 <!-- Test KJS end-->
-    	
-          <!-- BMS start -->
-         <typeAlias alias="BmsCpyclient"  type="com.model.newAdd.BmsCpyclient"/>	
-         <typeAlias alias="BmsUser"  type="com.model.newAdd.BmsUser"/>	
-          <!-- 简版征信end -->
-         <typeAlias  alias="pdfdownload"  type="com.model.newAdd.pdfdownload"/>
-         <typeAlias alias="hmd" type="com.model.hmd"/>
-         <typeAlias alias="apply_mx" type="com.model.apply_mx"/>
-         <typeAlias alias="gskh" type="com.model.gskh"/>
-         <typeAlias alias="txl" type="com.model.txl"/>
-         <typeAlias alias="dsj" type="com.model.dsj"/>
-         <typeAlias alias="credit" type="com.model.credit"/>
-         <typeAlias alias="history" type="com.model.history"/>
-         <typeAlias alias="pdfover" type="com.model.pdfover"/>
-         <typeAlias alias="finance" type="com.model.finance"/>
-         <typeAlias alias="customer" type="com.model.customer"/>
-         <typeAlias alias="company" type="com.model.company"/>
-         <typeAlias alias="grywls" type="com.model.grywls"/>
-         <typeAlias alias="user" type="com.model.user"/>
-         <typeAlias alias="img" type="com.model.img"/>
-         <typeAlias alias="apply" type="com.model.apply"/>
-         <typeAlias alias="authorize" type="com.model.authorize"/>
-         <typeAlias alias="yw" type="com.model.yw"/>
-         <typeAlias alias="bb" type="com.model.bb"/>
-         <typeAlias alias="mdxx" type="com.model.mdxx"/>
-         <typeAlias alias="ykdbb" type="com.model.ykdbb"/>
-         <typeAlias alias="gsrykh" type="com.model.gsrykh"/>
-         <typeAlias alias="queryzx" type="com.model1.queryzx"/>
-         <typeAlias alias="fs" type="com.model1.fs"/>
-         <typeAlias alias="gems" type="com.model1.gems"/>
-         <typeAlias alias="admin" type="com.model1.admin"/>
-         <!-- 进件-->
-         <typeAlias alias="mgcar" type="com.model1.mgcar"/>
-         <typeAlias alias="mgcert" type="com.model1.mgcert"/>
-         <typeAlias alias="archives" type="com.model1.archives"/>
-         <typeAlias alias="bx" type="com.model1.bx"/>
-         <typeAlias alias="thjl" type="com.model1.thjl"/>
-         <typeAlias alias="zx" type="com.model1.zx"/>
-         <typeAlias alias="yhkls" type="com.model1.yhkls"/>
-         <typeAlias alias="ylds" type="com.model1.ylds"/>
-         <typeAlias alias="ylqy" type="com.model1.ylqy"/>
-         <typeAlias alias="carmodel" type="com.model1.carmodel"/>
-         <typeAlias alias="bank" type="com.model1.bank"/>
-         <typeAlias alias="fsdy" type="com.model1.fsdy"/>          
-         <!--  --> 
-         <!-- 资金方进件-->
-         <typeAlias alias="zjfhistory" type="com.model1.zjf.zjfhistory"/>
-         <typeAlias alias="fshistory" type="com.model1.zjf.fshistory"/>  
-         <typeAlias alias="zjferrmsg" type="com.model1.zjf.zjferrmsg"/>
-         <!-- ssm -->
-          <typeAlias alias="ssm" type="com.model.newAdd.ssm"/>
-          <typeAlias alias="queryBx"  type="com.model.newAdd.queryBx"/>
-           <!-- 简版征信star -->
-         <typeAlias  alias="jbzx"  type="com.model.jbapi.jbzx"/>
-         <typeAlias  alias="jbzxhistory"  type="com.model.jbapi.jbzxapihistory"/> 
-         <typeAlias  alias="zxjb"  type="com.model.zxjb"/>
-         <typeAlias  alias="jbzxapiuser"  type="com.model.jbapi.jbzxapiuser"/>
-         <typeAlias  alias="jbzxuser"  type="com.model.jbapi.jbzxuser"/>
-         <typeAlias  alias="jbzxuser"  type="com.model.jbapi.jbzxuser"/>
-         <typeAlias  alias="CbsSuccessfulPurchaseQueryReport"  type="com.model.CBS.CbsSuccessfulPurchaseQueryReport"/>           
-         <typeAlias  alias="CbsSuccessfulPurchaseQueryReportExample"  type="com.model.CBS.CbsSuccessfulPurchaseQueryReportExample"/>           
-         <typeAlias  alias="apikchistory"  type="com.model.jbapi.apikchistory"/>
-         <!-- 违章查询 -->
-         <typeAlias  alias="peccancy"  type="com.model.wzfind.peccancy"/>
-         <!-- 工行进件 -->
-         <typeAlias  alias="icbc"  type="com.model.icbc.icbc"/>
-         <typeAlias  alias="icbc_zx"  type="com.model.icbc.icbc_zx"/>
-         <typeAlias  alias="icbc_yw"  type="com.model.icbc.icbc_yw"/>
-         <typeAlias  alias="icbc_ajbank"  type="com.model.icbc.icbc_ajbank"/>
-         <typeAlias  alias="icbc_produce"  type="com.model.icbc.icbc_produce"/>
-         <typeAlias  alias="assess_cars_item"  type="com.model.icbc.assess_cars_item"/>
-         <typeAlias  alias="assess_cars"  type="com.model.icbc.assess_cars"/>
-         <typeAlias  alias="icbc_cars"  type="com.model.icbc.assess_cars"/>
-         <typeAlias  alias="assess_carspg"  type="com.model.icbc.assess_carspg"/>
-         <typeAlias  alias="assess_color"  type="com.model.icbc.assess_color"/>
-         <typeAlias  alias="icbc_result"  type="com.model.icbc.icbc_result"/>
-         <typeAlias  alias="icbc_preaudit"  type="com.model.icbc.icbc_preaudit"/>
-         <typeAlias  alias="icbc_kk"  type="com.model.icbc.icbc_kk"/>
-         <typeAlias  alias="citys"  type="com.model1.city.citys"/>
-         <typeAlias  alias="states"  type="com.model1.city.states"/>
-         <typeAlias  alias="icbc_dk"  type="com.model1.icbc.icbc_dk"/>
-         <typeAlias  alias="icbc_cardk"  type="com.model.icbc.icbc_cardk"/>
-         <typeAlias  alias="icbc_mq"  type="com.model1.icbc.icbc_mq"/>
-         <typeAlias  alias="icbc_mq_result"  type="com.model1.icbc.icbc_mq_result"/>
-         <typeAlias  alias="bclient_check"  type="com.model.icbc.bclient_check"/>
-         <typeAlias  alias="ftpzip"  type="com.model1.icbc.icbc_ftpzip"/>
-         <typeAlias  alias="admin_msg"  type="com.model1.send.admin_msg"/>
-        
-         <!-- 车型库 -->
-         <typeAlias  alias="brand"  type="com.model1.carbrand"/>
-         <typeAlias  alias="series"  type="com.model1.carseries"/>
-         <!-- 保险 -->
-         <typeAlias  alias="bx1"  type="com.model.cars.bx1"/>
-         <typeAlias  alias="bx_result"  type="com.model.cars.bx_result"/>
-         <!-- 扣费 充值 -->
-         <typeAlias  alias="moneyfs_1"  type="com.model1.money.moneyfs_1"/>
-         <typeAlias  alias="moneyfs"  type="com.model1.money.moneyfs"/>
-         <!-- pdf合同 -->
-        
-    </typeAliases>
+		<typeAlias alias="comm_zones" type="com.model1.city.comm_zones" />
+		<!-- -->
+		<typeAlias alias="pd" type="com.model1.icbc.erp.PageData" />
+		<typeAlias alias="hk" type="com.model1.icbc.erp.HK" />
+		<typeAlias alias="pageinfo" type="com.controller.erp_icbc.utils.PageInfo" />
+		<typeAlias alias="scanpool"
+			type="com.controller.erp_icbc.YunXin.seats.ScanPool1" />
+		<typeAlias alias="infocopy"
+			type="com.controller.erp_icbc.YunXin.bean.InfoCopy" />
+		<!-- 云信回调接收 -->
+		<typeAlias type="com.controller.erp_icbc.YunXin.bean.CallBack"
+			alias="callBacK" />
+		<!-- CarEvaluation 车辆评估 start -->
+		<typeAlias alias="AssessCars" type="com.model.newAdd.AssessCars" />
+		<typeAlias alias="AssessBclientCheck" type="com.model.newAdd.AssessBclientCheck" />
+		<typeAlias alias="AssessCarsItem" type="com.model.newAdd.AssessCarsItem" />
+		<typeAlias alias="CarModell" type="com.model1.newAdd.CarModell" />
+		<typeAlias alias="CarBrand" type="com.model1.newAdd.CarBrand" />
+		<typeAlias alias="CarSeries" type="com.model1.newAdd.CarSeries" />
 
-       <mappers>
-        <!-- 还款情况 -->
-        <mapper resource="com/mapper1/Repayment/RepaymentMapper.xml" />
-        <mapper resource="com/mapper1/Excel/recordMapper.xml" />
-        <mapper resource="com/mapper1/Excel/uploadExcelMapper.xml" />
-		<!-- 拖车管理-->
-		<mapper resource="com/mapper1/sxx/TrailerManagementMapper.xml" />
-		<!-- 诉讼管理-->
-        <mapper resource="com/mapper1/sxx/LitigationManagementMapper.xml" />
-        <!-- 车辆抵押-->
-        <mapper resource="com/mapper1/sxx/VehicleMortgageMapper.xml" />
-        <!-- 银行贷款 -->
-        <mapper resource="com/mapper1/sxx/FinancialExcelMapper.xml" />
-        <!-- 可视化数据 -->
-        <mapper resource="com/mapper1/ManagementCenter/kj_icbcMapper.xml" />
-        <mapper resource="com/mapper1/ManagementCenter/assess_fsMapper.xml" />
-        
-        <mapper resource="com/mapper1/icbc1/comm_zonesMapper.xml" />
-        <mapper resource="com/mapper1/erp_icbc/erp_loanBeforeMapper.xml" />
-       <!-- erpmapper -->
-        <mapper resource="com/mapper1/erp_icbc/fs_detailsMapper.xml" />
-        <mapper resource="com/mapper1/erp_icbc/erp_wdrwMapper.xml" />
-        <mapper resource="com/mapper1/erp_icbc/erp_userrootMapper.xml" />
-        <mapper resource="com/mapper1/erp_icbc/erp_fiveModelMapper.xml" />
-        <mapper resource="com/mapper1/erp_icbc/erp_icbcMapper.xml" />
-        <mapper resource="com/mapper1/erp_icbc/YXMapper.xml"/>
-        	<!-- 贷后管理 -->
-         <mapper resource="com/mapper1/erp_icbc/dh_hkMapper.xml" />
-    	<!-- CarEvaluation 车辆评估  start -->
-        <mapper resource="com/mapper/newAdd/AssessCarsMapper.xml" />
-        <mapper resource="com/mapper/newAdd/AssessBclientCheckMapper.xml" />
-        <mapper resource="com/mapper/newAdd/AssessCarsItemMapper.xml" />
-        <mapper resource="com/mapper1/newAdd/CarModelMapper.xml" />
-        <mapper resource="com/mapper1/newAdd/CarBrandMapper.xml" />
-        <mapper resource="com/mapper1/newAdd/CarSeriesMapper.xml" />
-        <!-- CarEvaluation 车辆评估  end -->
-    	<!-- Test KJS start-->
-        <mapper resource="com/mapper1/newAdd/TestKJSmgcertMapper.xml" />
-        <mapper resource="com/mapper1/newAdd/TestKJSmgcarMapper.xml" />
-        <mapper resource="com/mapper1/newAdd/TestKJSmgCertResultMapper.xml" />
-        <mapper resource="com/mapper1/newAdd/TestKJSmgCarResultMapper.xml" />
-		<!-- Test KJS end-->
+		<!-- CarEvaluation 车辆评估 end -->
+
+		<!-- Test KJS start -->
+		<typeAlias alias="mgcert" type="com.model1.mgcert" />
+		<typeAlias alias="mgcar" type="com.model1.mgcar" />
+		<typeAlias alias="mgcert_result" type="com.model1.mgcert_result" />
+		<typeAlias alias="mgcar_result" type="com.model1.mgcar_result" />
+		<!-- Test KJS end -->
+
 		<!-- BMS start -->
-        <mapper resource="com/mapper/newAdd/BmsUserMapper.xml" />
-        <mapper resource="com/mapper/newAdd/BmsClientMapper.xml" />
-        <!-- 简版征信 end-->
-        <mapper resource="com/mapper/newAdd/PDFdownloadMapper.xml" />
-        <mapper resource="com/mapper/hmdMapper.xml" />
-        <mapper resource="com/mapper/apply_mxMapper.xml" />
-        <mapper resource="com/mapper/gskhMapper.xml" />
-        <mapper resource="com/mapper/gsrykhMapper.xml" />
-        <mapper resource="com/mapper/txlMapper.xml" />
-        <mapper resource="com/mapper/dsjMapper.xml" />
-        <mapper resource="com/mapper/creditMapper.xml" />
-        <mapper resource="com/mapper/historyMapper.xml" />
-        <mapper resource="com/mapper/pdfoverMapper.xml" />
-        <mapper resource="com/mapper/financeMapper.xml" />
-        <mapper resource="com/mapper/companyMapper.xml"  />
-        <mapper resource="com/mapper/customerMapper.xml"  />
-        <mapper resource="com/mapper/grywlsMapper.xml"  />
-        <mapper resource="com/mapper/userMapper.xml"  />
-        <mapper resource="com/mapper/imgMapper.xml"  />
-        <mapper resource="com/mapper/applyMapper.xml"  />
-        <mapper resource="com/mapper/authorizeMapper.xml"  />
-        <mapper resource="com/mapper/ywMapper.xml"  />
-        <mapper resource="com/mapper/bbMapper.xml"  />
-        <mapper resource="com/mapper/ykdbbMapper.xml"  />
-        <mapper resource="com/mapper1/queryzxMapper.xml"  />
-        <mapper resource="com/mapper1/fsMapper.xml"  />
-        <mapper resource="com/mapper1/gemsMapper.xml"  />
-        <mapper resource="com/mapper1/adminMapper.xml"  />
-        <!-- 进件 -->
-        <mapper resource="com/mapper1/mgcarMapper.xml"  />
-        <mapper resource="com/mapper1/mgcertMapper.xml"  />
-        <mapper resource="com/mapper1/archivesMapper.xml"  />
-        <mapper resource="com/mapper1/bxMapper.xml"  />
-        <mapper resource="com/mapper1/thjlMapper.xml"  />
-        <mapper resource="com/mapper1/zxMapper.xml"  /> 
-        <mapper resource="com/mapper1/yhklsMapper.xml"  />
-        <mapper resource="com/mapper1/ylqyMapper.xml"  />
-        <mapper resource="com/mapper1/carmodelMapper.xml"  />
-        <mapper resource="com/mapper1/bankMapper.xml"  />
-        <mapper resource="com/mapper1/yldsMapper.xml"  />
-        <mapper resource="com/mapper1/fsdyMapper.xml"  />
-        
-        <!-- 资金方进件-->
-        <mapper resource="com/mapper1/zjf/zjfhistoryMapper.xml"  />
-        <mapper resource="com/mapper1/zjf/fshistoryMapper.xml"/>
-        <mapper resource="com/mapper1/zjf/zjferrmsgMapper.xml"/>
-        <!-- ssm -->
-        <mapper resource="com/mapper/newAdd/ssmMapper.xml"  />
-        <!-- 简版征信star-->
-        <mapper resource="com/mapper/zx/apikchistoryMapper.xml" />
-        <mapper resource="com/mapper/zx/jbzxMapper.xml" />
-        <mapper resource="com/mapper/zx/jbzxhistoryMapper.xml" />
-        <mapper resource="com/mapper/zx/jbzxuserMapper.xml" />
-        <mapper resource="com/mapper/zx/jbzxapiuserMapper.xml" />
-        <!--  查博士 -->
-        <mapper resource="com/mapper/CBS/CbsSuccessfulPurchaseQueryReportMapper.xml"/>
-        <mapper resource="com/mapper/newAdd/queryBxMapper.xml" />
-        <!-- 违章查询 -->
-        <mapper resource="com/mapper/wzfind/peccancyMapper.xml" />
-         <!-- 工行进件-->
-        <mapper resource="com/mapper/icbc/icbcMapper.xml" />
-        <mapper resource="com/mapper1/icbc1/newicbcMapper.xml" />
-        <mapper resource="com/mapper/icbc/assess_carsMapper.xml" />
-        <mapper resource="com/mapper/icbc/assess_cars_itemMapper.xml" />
-        <mapper resource="com/mapper/icbc/icbc_resultMapper.xml" />
-        <mapper resource="com/mapper1/icbc1/icbc_result1Mapper.xml" />
-        <mapper resource="com/mapper/icbc/assess_carspgMapper.xml" />
-        <mapper resource="com/mapper/icbc/assess_colorMapper.xml" />
-        <mapper resource="com/mapper/icbc/icbc_zxMapper.xml" />
-        <mapper resource="com/mapper1/icbc1/newicbc_preauditMapper.xml" />
-        <mapper resource="com/mapper/icbc/icbc_kkMapper.xml" />
-        <mapper resource="com/mapper/icbc/icbc_cardkMapper.xml" />
-        <mapper resource="com/mapper/icbc/bclient_checkMapper.xml" />
-        <mapper resource="com/mapper1/icbc1/statesMapper.xml" />
-        <mapper resource="com/mapper1/icbc1/citysMapper.xml" />
-        <mapper resource="com/mapper1/icbc1/newicbc_kkMapper.xml" />
-        <mapper resource="com/mapper1/icbc1/icbc_dkMapper.xml" />
-        <mapper resource="com/mapper1/car/newassess_cars_itemMapper.xml" />
-        <mapper resource="com/mapper1/car/icbc_cars_resultMapper.xml" />
-        <mapper resource="com/mapper1/car/icbc_carsMapper.xml" />
-        <mapper resource="com/mapper1/icbc1/icbc_mq_resultMapper.xml" />
-        <mapper resource="com/mapper1/icbc1/icbc_mqMapper.xml" />
-        <mapper resource="com/mapper1/icbc1/ftpzipMapper.xml" />
-        <mapper resource="com/mapper1/send/admin_msgMapper.xml" />
-        <!-- 车型库 -->
-        <mapper resource="com/mapper1/car/brandMapper.xml" />
-        <mapper resource="com/mapper1/car/seriesMapper.xml" />
-        <!-- 保险 -->
-        <mapper resource="com/mapper/cars/bx1Mapper.xml" />
-        <mapper resource="com/mapper/cars/bx_resultMapper.xml" />
-        <mapper resource="com/mapper/guazi/GuaziRecordsMapper.xml" />
-        <!-- 扣费 充值 -->
-        <mapper resource="com/mapper1/money/moneyfs_1Mapper.xml" />
-        <mapper resource="com/mapper1/money/moneyfsMapper.xml" />
-        <!-- PDF合同生成-->
-        <mapper resource="com/mapper1/htpdf/IcbcApplicationMapper.xml" />
-        <!-- 商户管理 -->
-        <mapper resource="com/mapper1/admin/assess_gemsMapper.xml" />
-        
-       </mappers>   
+		<typeAlias alias="BmsCpyclient" type="com.model.newAdd.BmsCpyclient" />
+		<typeAlias alias="BmsUser" type="com.model.newAdd.BmsUser" />
+		<!-- 简版征信end -->
+		<typeAlias alias="pdfdownload" type="com.model.newAdd.pdfdownload" />
+		<typeAlias alias="hmd" type="com.model.hmd" />
+		<typeAlias alias="apply_mx" type="com.model.apply_mx" />
+		<typeAlias alias="gskh" type="com.model.gskh" />
+		<typeAlias alias="txl" type="com.model.txl" />
+		<typeAlias alias="dsj" type="com.model.dsj" />
+		<typeAlias alias="credit" type="com.model.credit" />
+		<typeAlias alias="history" type="com.model.history" />
+		<typeAlias alias="pdfover" type="com.model.pdfover" />
+		<typeAlias alias="finance" type="com.model.finance" />
+		<typeAlias alias="customer" type="com.model.customer" />
+		<typeAlias alias="company" type="com.model.company" />
+		<typeAlias alias="grywls" type="com.model.grywls" />
+		<typeAlias alias="user" type="com.model.user" />
+		<typeAlias alias="img" type="com.model.img" />
+		<typeAlias alias="apply" type="com.model.apply" />
+		<typeAlias alias="authorize" type="com.model.authorize" />
+		<typeAlias alias="yw" type="com.model.yw" />
+		<typeAlias alias="bb" type="com.model.bb" />
+		<typeAlias alias="mdxx" type="com.model.mdxx" />
+		<typeAlias alias="ykdbb" type="com.model.ykdbb" />
+		<typeAlias alias="gsrykh" type="com.model.gsrykh" />
+		<typeAlias alias="queryzx" type="com.model1.queryzx" />
+		<typeAlias alias="fs" type="com.model1.fs" />
+		<typeAlias alias="gems" type="com.model1.gems" />
+		<typeAlias alias="admin" type="com.model1.admin" />
+		<!-- 进件 -->
+		<typeAlias alias="mgcar" type="com.model1.mgcar" />
+		<typeAlias alias="mgcert" type="com.model1.mgcert" />
+		<typeAlias alias="archives" type="com.model1.archives" />
+		<typeAlias alias="bx" type="com.model1.bx" />
+		<typeAlias alias="thjl" type="com.model1.thjl" />
+		<typeAlias alias="zx" type="com.model1.zx" />
+		<typeAlias alias="yhkls" type="com.model1.yhkls" />
+		<typeAlias alias="ylds" type="com.model1.ylds" />
+		<typeAlias alias="ylqy" type="com.model1.ylqy" />
+		<typeAlias alias="carmodel" type="com.model1.carmodel" />
+		<typeAlias alias="bank" type="com.model1.bank" />
+		<typeAlias alias="fsdy" type="com.model1.fsdy" />
+		<!-- -->
+		<!-- 资金方进件 -->
+		<typeAlias alias="zjfhistory" type="com.model1.zjf.zjfhistory" />
+		<typeAlias alias="fshistory" type="com.model1.zjf.fshistory" />
+		<typeAlias alias="zjferrmsg" type="com.model1.zjf.zjferrmsg" />
+		<!-- ssm -->
+		<typeAlias alias="ssm" type="com.model.newAdd.ssm" />
+		<typeAlias alias="queryBx" type="com.model.newAdd.queryBx" />
+		<!-- 简版征信star -->
+		<typeAlias alias="jbzx" type="com.model.jbapi.jbzx" />
+		<typeAlias alias="jbzxhistory" type="com.model.jbapi.jbzxapihistory" />
+		<typeAlias alias="zxjb" type="com.model.zxjb" />
+		<typeAlias alias="jbzxapiuser" type="com.model.jbapi.jbzxapiuser" />
+		<typeAlias alias="jbzxuser" type="com.model.jbapi.jbzxuser" />
+		<typeAlias alias="jbzxuser" type="com.model.jbapi.jbzxuser" />
+		<typeAlias alias="CbsSuccessfulPurchaseQueryReport"
+			type="com.model.CBS.CbsSuccessfulPurchaseQueryReport" />
+		<typeAlias alias="CbsSuccessfulPurchaseQueryReportExample"
+			type="com.model.CBS.CbsSuccessfulPurchaseQueryReportExample" />
+		<typeAlias alias="apikchistory" type="com.model.jbapi.apikchistory" />
+		<!-- 违章查询 -->
+		<typeAlias alias="peccancy" type="com.model.wzfind.peccancy" />
+		<!-- 工行进件 -->
+		<typeAlias alias="icbc" type="com.model.icbc.icbc" />
+		<typeAlias alias="icbc_zx" type="com.model.icbc.icbc_zx" />
+		<typeAlias alias="icbc_yw" type="com.model.icbc.icbc_yw" />
+		<typeAlias alias="icbc_ajbank" type="com.model.icbc.icbc_ajbank" />
+		<typeAlias alias="icbc_produce" type="com.model.icbc.icbc_produce" />
+		<typeAlias alias="assess_cars_item" type="com.model.icbc.assess_cars_item" />
+		<typeAlias alias="assess_cars" type="com.model.icbc.assess_cars" />
+		<typeAlias alias="icbc_cars" type="com.model.icbc.assess_cars" />
+		<typeAlias alias="assess_carspg" type="com.model.icbc.assess_carspg" />
+		<typeAlias alias="assess_color" type="com.model.icbc.assess_color" />
+		<typeAlias alias="icbc_result" type="com.model.icbc.icbc_result" />
+		<typeAlias alias="icbc_preaudit" type="com.model.icbc.icbc_preaudit" />
+		<typeAlias alias="icbc_kk" type="com.model.icbc.icbc_kk" />
+		<typeAlias alias="citys" type="com.model1.city.citys" />
+		<typeAlias alias="states" type="com.model1.city.states" />
+		<typeAlias alias="icbc_dk" type="com.model1.icbc.icbc_dk" />
+		<typeAlias alias="icbc_cardk" type="com.model.icbc.icbc_cardk" />
+		<typeAlias alias="icbc_mq" type="com.model1.icbc.icbc_mq" />
+		<typeAlias alias="icbc_mq_result" type="com.model1.icbc.icbc_mq_result" />
+		<typeAlias alias="bclient_check" type="com.model.icbc.bclient_check" />
+		<typeAlias alias="ftpzip" type="com.model1.icbc.icbc_ftpzip" />
+		<typeAlias alias="admin_msg" type="com.model1.send.admin_msg" />
+
+		<!-- 车型库 -->
+		<typeAlias alias="brand" type="com.model1.carbrand" />
+		<typeAlias alias="series" type="com.model1.carseries" />
+		<!-- 保险 -->
+		<typeAlias alias="bx1" type="com.model.cars.bx1" />
+		<typeAlias alias="bx_result" type="com.model.cars.bx_result" />
+		<!-- 扣费 充值 -->
+		<typeAlias alias="moneyfs_1" type="com.model1.money.moneyfs_1" />
+		<typeAlias alias="moneyfs" type="com.model1.money.moneyfs" />
+		<!-- pdf合同 -->
+
+	</typeAliases>
+
+	<mappers>
+		<!-- 工行银行列表 -->
+		<mapper resource="com/mapper1/icbc_banklist/icbc_banklistMapper.xml" />
+		<!-- 合作商代偿 -->
+		<mapper resource="com/mapper1/lendingResult/lendingResultMapper.xml" />
+		<!-- <mapper resource="com/mapper1/lendingResult1/lendingResult1Mapper.xml" 
+			/> -->
+		<!-- 申请代偿 -->
+		<mapper resource="com/mapper1/businessPayApplication/BusinessPayMapper.xml" />
+		<!-- 代偿确认 -->
+		<mapper resource="com/mapper1/matEndiwmentResult/MatEndiwmentResultMapper.xml" />
+		<!-- 还款情况 -->
+		<mapper resource="com/mapper1/Repayment/RepaymentMapper.xml" />
+		<mapper resource="com/mapper1/Excel/recordMapper.xml" />
+		<mapper resource="com/mapper1/Excel/uploadExcelMapper.xml" />
+		<!-- 拖车管理 -->
+		<mapper resource="com/mapper1/sxx/TrailerManagementMapper.xml" />
+		<!-- 诉讼管理 -->
+		<mapper resource="com/mapper1/sxx/LitigationManagementMapper.xml" />
+		<!-- 车辆抵押 -->
+		<mapper resource="com/mapper1/sxx/VehicleMortgageMapper.xml" />
+		<!-- 银行贷款 -->
+		<mapper resource="com/mapper1/sxx/FinancialExcelMapper.xml" />
+		<!-- 可视化数据 -->
+		<mapper resource="com/mapper1/ManagementCenter/kj_icbcMapper.xml" />
+		<mapper resource="com/mapper1/ManagementCenter/assess_fsMapper.xml" />
+
+		<mapper resource="com/mapper1/icbc1/comm_zonesMapper.xml" />
+		<mapper resource="com/mapper1/erp_icbc/erp_loanBeforeMapper.xml" />
+		<!-- erpmapper -->
+		<mapper resource="com/mapper1/erp_icbc/fs_detailsMapper.xml" />
+		<mapper resource="com/mapper1/erp_icbc/erp_wdrwMapper.xml" />
+		<mapper resource="com/mapper1/erp_icbc/erp_userrootMapper.xml" />
+		<mapper resource="com/mapper1/erp_icbc/erp_fiveModelMapper.xml" />
+		<mapper resource="com/mapper1/erp_icbc/erp_icbcMapper.xml" />
+		<mapper resource="com/mapper1/erp_icbc/YXMapper.xml" />
+		<!-- 贷后管理 -->
+		<mapper resource="com/mapper1/erp_icbc/dh_hkMapper.xml" />
+		<!-- CarEvaluation 车辆评估 start -->
+		<mapper resource="com/mapper/newAdd/AssessCarsMapper.xml" />
+		<mapper resource="com/mapper/newAdd/AssessBclientCheckMapper.xml" />
+		<mapper resource="com/mapper/newAdd/AssessCarsItemMapper.xml" />
+		<mapper resource="com/mapper1/newAdd/CarModelMapper.xml" />
+		<mapper resource="com/mapper1/newAdd/CarBrandMapper.xml" />
+		<mapper resource="com/mapper1/newAdd/CarSeriesMapper.xml" />
+		<!-- CarEvaluation 车辆评估 end -->
+		<!-- Test KJS start -->
+		<mapper resource="com/mapper1/newAdd/TestKJSmgcertMapper.xml" />
+		<mapper resource="com/mapper1/newAdd/TestKJSmgcarMapper.xml" />
+		<mapper resource="com/mapper1/newAdd/TestKJSmgCertResultMapper.xml" />
+		<mapper resource="com/mapper1/newAdd/TestKJSmgCarResultMapper.xml" />
+		<!-- Test KJS end -->
+		<!-- BMS start -->
+		<mapper resource="com/mapper/newAdd/BmsUserMapper.xml" />
+		<mapper resource="com/mapper/newAdd/BmsClientMapper.xml" />
+		<!-- 简版征信 end -->
+		<mapper resource="com/mapper/newAdd/PDFdownloadMapper.xml" />
+		<mapper resource="com/mapper/hmdMapper.xml" />
+		<mapper resource="com/mapper/apply_mxMapper.xml" />
+		<mapper resource="com/mapper/gskhMapper.xml" />
+		<mapper resource="com/mapper/gsrykhMapper.xml" />
+		<mapper resource="com/mapper/txlMapper.xml" />
+		<mapper resource="com/mapper/dsjMapper.xml" />
+		<mapper resource="com/mapper/creditMapper.xml" />
+		<mapper resource="com/mapper/historyMapper.xml" />
+		<mapper resource="com/mapper/pdfoverMapper.xml" />
+		<mapper resource="com/mapper/financeMapper.xml" />
+		<mapper resource="com/mapper/companyMapper.xml" />
+		<mapper resource="com/mapper/customerMapper.xml" />
+		<mapper resource="com/mapper/grywlsMapper.xml" />
+		<mapper resource="com/mapper/userMapper.xml" />
+		<mapper resource="com/mapper/imgMapper.xml" />
+		<mapper resource="com/mapper/applyMapper.xml" />
+		<mapper resource="com/mapper/authorizeMapper.xml" />
+		<mapper resource="com/mapper/ywMapper.xml" />
+		<mapper resource="com/mapper/bbMapper.xml" />
+		<mapper resource="com/mapper/ykdbbMapper.xml" />
+		<mapper resource="com/mapper1/queryzxMapper.xml" />
+		<mapper resource="com/mapper1/fsMapper.xml" />
+		<mapper resource="com/mapper1/gemsMapper.xml" />
+		<mapper resource="com/mapper1/adminMapper.xml" />
+		<!-- 进件 -->
+		<mapper resource="com/mapper1/mgcarMapper.xml" />
+		<mapper resource="com/mapper1/mgcertMapper.xml" />
+		<mapper resource="com/mapper1/archivesMapper.xml" />
+		<mapper resource="com/mapper1/bxMapper.xml" />
+		<mapper resource="com/mapper1/thjlMapper.xml" />
+		<mapper resource="com/mapper1/zxMapper.xml" />
+		<mapper resource="com/mapper1/yhklsMapper.xml" />
+		<mapper resource="com/mapper1/ylqyMapper.xml" />
+		<mapper resource="com/mapper1/carmodelMapper.xml" />
+		<mapper resource="com/mapper1/bankMapper.xml" />
+		<mapper resource="com/mapper1/yldsMapper.xml" />
+		<mapper resource="com/mapper1/fsdyMapper.xml" />
+
+		<!-- 资金方进件 -->
+		<mapper resource="com/mapper1/zjf/zjfhistoryMapper.xml" />
+		<mapper resource="com/mapper1/zjf/fshistoryMapper.xml" />
+		<mapper resource="com/mapper1/zjf/zjferrmsgMapper.xml" />
+		<!-- ssm -->
+		<mapper resource="com/mapper/newAdd/ssmMapper.xml" />
+		<!-- 简版征信star -->
+		<mapper resource="com/mapper/zx/apikchistoryMapper.xml" />
+		<mapper resource="com/mapper/zx/jbzxMapper.xml" />
+		<mapper resource="com/mapper/zx/jbzxhistoryMapper.xml" />
+		<mapper resource="com/mapper/zx/jbzxuserMapper.xml" />
+		<mapper resource="com/mapper/zx/jbzxapiuserMapper.xml" />
+		<!-- 查博士 -->
+		<mapper resource="com/mapper/CBS/CbsSuccessfulPurchaseQueryReportMapper.xml" />
+		<mapper resource="com/mapper/newAdd/queryBxMapper.xml" />
+		<!-- 违章查询 -->
+		<mapper resource="com/mapper/wzfind/peccancyMapper.xml" />
+		<!-- 工行进件 -->
+		<mapper resource="com/mapper/icbc/icbcMapper.xml" />
+		<mapper resource="com/mapper1/icbc1/newicbcMapper.xml" />
+		<mapper resource="com/mapper/icbc/assess_carsMapper.xml" />
+		<mapper resource="com/mapper/icbc/assess_cars_itemMapper.xml" />
+		<mapper resource="com/mapper/icbc/icbc_resultMapper.xml" />
+		<mapper resource="com/mapper1/icbc1/icbc_result1Mapper.xml" />
+		<mapper resource="com/mapper/icbc/assess_carspgMapper.xml" />
+		<mapper resource="com/mapper/icbc/assess_colorMapper.xml" />
+		<mapper resource="com/mapper/icbc/icbc_zxMapper.xml" />
+		<mapper resource="com/mapper1/icbc1/newicbc_preauditMapper.xml" />
+		<mapper resource="com/mapper/icbc/icbc_kkMapper.xml" />
+		<mapper resource="com/mapper/icbc/icbc_cardkMapper.xml" />
+		<mapper resource="com/mapper/icbc/bclient_checkMapper.xml" />
+		<mapper resource="com/mapper1/icbc1/statesMapper.xml" />
+		<mapper resource="com/mapper1/icbc1/citysMapper.xml" />
+		<mapper resource="com/mapper1/icbc1/newicbc_kkMapper.xml" />
+		<mapper resource="com/mapper1/icbc1/icbc_dkMapper.xml" />
+		<mapper resource="com/mapper1/car/newassess_cars_itemMapper.xml" />
+		<mapper resource="com/mapper1/car/icbc_cars_resultMapper.xml" />
+		<mapper resource="com/mapper1/car/icbc_carsMapper.xml" />
+		<mapper resource="com/mapper1/icbc1/icbc_mq_resultMapper.xml" />
+		<mapper resource="com/mapper1/icbc1/icbc_mqMapper.xml" />
+		<mapper resource="com/mapper1/icbc1/ftpzipMapper.xml" />
+		<mapper resource="com/mapper1/send/admin_msgMapper.xml" />
+		<!-- 车型库 -->
+		<mapper resource="com/mapper1/car/brandMapper.xml" />
+		<mapper resource="com/mapper1/car/seriesMapper.xml" />
+		<!-- 保险 -->
+		<mapper resource="com/mapper/cars/bx1Mapper.xml" />
+		<mapper resource="com/mapper/cars/bx_resultMapper.xml" />
+		<mapper resource="com/mapper/guazi/GuaziRecordsMapper.xml" />
+		<!-- 扣费 充值 -->
+		<mapper resource="com/mapper1/money/moneyfs_1Mapper.xml" />
+		<mapper resource="com/mapper1/money/moneyfsMapper.xml" />
+		<!-- PDF合同生成 -->
+		<mapper resource="com/mapper1/htpdf/IcbcApplicationMapper.xml" />
+		<!-- 商户管理 -->
+		<mapper resource="com/mapper1/admin/assess_gemsMapper.xml" />
+
+	</mappers>
 
 
-    </configuration>    
+</configuration>    
