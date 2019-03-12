@@ -16,6 +16,15 @@ public interface settleService {
 	 * @return
 	 */
 	List<PageData> selectsettle(@Param(value="param") String param,@Param("pagenow")int pagenow,@Param("pagesize")int pagesize);
+	
+	/**
+	 * 查询列表页所有数据并模糊查询
+	 * @param param
+	 * @param pd
+	 * @return
+	 */
+	List<Map> selectsettle2();
+	
 	/**
 	 * 查询总条数
 	 */

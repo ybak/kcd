@@ -305,11 +305,11 @@
 							${status.index+1}
 						</td>
 						<td class="text-center hidden-xs">
-							${inputMap.present_date }
+							${fn:substring(inputMap.present_date,0,19) }
 						</td>
 						<td class="text-center">
 							<span class="s-font-blue">
-								<c:if test="${inputMap.type_id eq 0 }">
+							<c:if test="${inputMap.type_id eq 0 }">
 								电催
 							</c:if>
 							<c:if test="${inputMap.type_id eq 1 }">

@@ -103,6 +103,7 @@
 						<th class="text-center">操作</th>
 					</tr>
 					
+					<c:if test="${ not empty newpdList}">
 					<c:forEach var="newpdList" items="${newpdList}">
 					
 						<tr>
@@ -143,7 +144,7 @@
 							${newpdList.cars_tel }
 						</td>
 						<td class="text-center">
-							已结清
+							拖车完成
 						</td>
 						<td class="text-center">
 							
@@ -155,7 +156,61 @@
 					</tr>
 					
 					</c:forEach>
+					</c:if>
+					<c:if test="${not empty settMap }">
+					<c:forEach var="settMap" items="${settMap}">
 					
+						<tr>
+						<td class="text-center hidden-xs">
+						<input name="delid"  type="checkbox">
+						</td>
+						<td class="text-center hidden-xs">
+							${settMap.id_code }
+						</td>
+						<td class="text-center">
+							<span class="s-font-blue">
+								${settMap.c_name }
+							</span>
+						</td>
+						<td class="text-center">
+							<span class="s-font-blue">
+								${settMap.c_cardno }
+							</span>
+						</td>
+						<td class="text-center">
+							${settMap.loans_bank }
+						</td>
+						<td class="text-center">
+							<c:if test="${settMap.cars_type == '1'}">
+								新车
+							</c:if>
+							<c:if test="${settMap.cars_type == '0'}">
+								二手车
+							</c:if>
+						</td>
+						<td class="text-center">
+							${settMap.gems_name }
+						</td>
+						<td class="text-center">
+							${settMap.gems_fs_name }
+						</td>
+						<td class="text-center">
+							${settMap.cars_tel }
+						</td>
+						<td class="text-center">
+							诉讼完成
+						</td>
+						<td class="text-center">
+							
+							<a href="${pageContext.request.contextPath }/settleController/selectdetail.do?type=cqcl_wjq&dn=settle&qn=form&icbc_id=${settMap.icbc_id}">
+								<i class="fa fa-hand-paper-o"></i>
+							</a>
+						</td>
+						
+					</tr>
+					
+					</c:forEach>
+					</c:if>
 				</tbody>
 			</table>
 		</div>

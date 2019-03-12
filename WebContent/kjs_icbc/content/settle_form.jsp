@@ -229,7 +229,7 @@
 			   <c:forEach var="map" items="${scheduleMap }" varStatus="status">
 				<tr>
 					<td class="text-center">${status.index+1 }</td>
-					<td class="text-center">${map.should_date}</td>
+					<td class="text-center">${fn:substring(map.should_date,0,19)}</td>
 					<td class="text-center">${map.should_money}</td>
 					<td class="text-center">${map.practical_money}</td>
 					<td class="text-center">
@@ -282,7 +282,7 @@
 						<th class="text-center hidden-xs">日期时间</th>
 						<th class="text-center">记录类型</th>
 						<th class="text-center">操作人员</th>
-						<th class="text-center">查看</th>
+						<!-- <th class="text-center">查看</th> -->
 					</tr>
 					<c:forEach items="${inputMap }" var="inputMap" varStatus="status">
 					<tr>
@@ -293,7 +293,7 @@
 							${status.index+1 }
 						</td>
 						<td class="text-center hidden-xs">
-							${inputMap.present_date }
+							${fn:substring(inputMap.present_date,0,19) }
 						</td>
 						<td class="text-center">
 							<span class="s-font-blue">
@@ -314,11 +314,11 @@
 						<td class="text-center">
 							${pd.name }
 						</td>
-						<td class="text-center">
+						<!-- <td class="text-center">
 							<p>
 								<i class="fa fa-search-plus" onclick="toggleModel()"></i>
 							</p>
-						</td>
+						</td> -->
 
 					</tr>
 					</c:forEach>

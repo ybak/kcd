@@ -89,6 +89,11 @@ public class settleServiceImpl implements settleService {
 		// TODO Auto-generated method stub
 		return settleMapper.count1();
 	}
+	@Override
+	public List<Map> selectsettle2() {
+		// TODO Auto-generated method stub
+		return settleMapper.selectsettle2();
+	}
 
 
 //	//ÐÞ¸Ä×´Ì¬

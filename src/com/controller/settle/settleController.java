@@ -90,7 +90,7 @@ public class settleController {
 		}else{
 			totalpage=totalsize/ps+1;
 		} 
-
+		List<Map> settMap = settleService.selectsettle2();
 		
 		request.setAttribute("dn", dn);
 		request.setAttribute("qn", qn);
@@ -100,6 +100,7 @@ public class settleController {
 		request.setAttribute("pagenow",pn);
 		request.setAttribute("totalsize",totalsize);
 		request.setAttribute("newpdList", newpdList);
+		request.setAttribute("settMap", settMap);
 		log.info("½á¹û"+newpdList);
 		
 		return "kjs_icbc/index";

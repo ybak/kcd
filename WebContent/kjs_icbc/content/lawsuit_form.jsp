@@ -229,7 +229,7 @@
 			   <c:forEach var="map" items="${scheduleMap }" varStatus="status">
 				<tr>
 					<td class="text-center">${status.index+1 }</td>
-					<td class="text-center">${map.should_date}</td>
+					<td class="text-center">${fn:substring(map.should_date,0,19)}</td>
 					<td class="text-center">${map.should_money}</td>
 					<td class="text-center">${map.practical_money}</td>
 					<td class="text-center">
@@ -293,7 +293,7 @@
 							${status.index+1 }
 						</td>
 						<td class="text-center hidden-xs">
-							${inputMap.present_date }
+							${fn:substring(inputMap.present_date,0,19) }
 						</td>
 						<td class="text-center">
 							<span class="s-font-blue">

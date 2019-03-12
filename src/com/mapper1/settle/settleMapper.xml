@@ -7,21 +7,29 @@
 	<!-- 查询列表页所有数据 -->
 	<select id="selectsettle" parameterType="pd" resultType="pd">
 		SELECT
-			tr.*,
-			la.* 
+			*
 		FROM
-			icbc_trailer tr,
-			icbc_lawsuit la 
+			icbc_trailer 
 		WHERE
-			tr.`status` = 2 
-			OR la.`status` =1
+			`status` = 2 
 		<!-- 模糊查询 -->
 		<if test="param != null and param != ''">
-			and (tr.c_name like '%${param}%'
-			or tr.c_cardno like '%${param}%')
+			and (c_name like '%${param}%'
+			or c_cardno like '%${param}%')
 		</if>
-		group by tr.icbc_id 
+		group by icbc_id 
 		limit #{pagenow},#{pagesize} 
+	</select>
+	
+		<!-- 查询列表页所有数据 -->
+	<select id="selectsettle2"  resultType="map">
+		SELECT
+			*
+		FROM
+			icbc_lawsuit 
+		WHERE
+			`status` = 1 
+		group by icbc_id 
 	</select>
 		
 	<!-- 总条数 -->

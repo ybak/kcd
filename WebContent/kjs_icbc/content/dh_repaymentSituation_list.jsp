@@ -156,7 +156,7 @@
 					
 						<td class="text-center">
 							<!-- 还款情况详情 -->
-							<a href="${pageContext.request.contextPath }/repaymentController/selectBorrow.do?type=wdrw&dn=dh_repaymentSituation&qn=form&cn=w1&id=${pd.id}&c_cardno=${pd.c_cardno}">
+							<a href="${pageContext.request.contextPath }/repaymentController/selectBorrow.do?type=wdrw&dn=dh_repaymentSituation&qn=form&cn=w1&icbc_id=${pd.id}">
 								<i class="fa fa-hand-paper-o"></i>
 							</a>
 						</td>
