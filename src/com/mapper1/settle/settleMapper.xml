@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.settle.settleMapper">
+
+	
+	<!-- 查询列表页所有数据 -->
+	<select id="selectsettle" parameterType="pd" resultType="pd">
+		SELECT
+			tr.*,
+			la.* 
+		FROM
+			icbc_trailer tr,
+			icbc_lawsuit la 
+		WHERE
+			tr.`status` = 2 
+			OR la.`status` =1
+		<!-- 模糊查询 -->
+		<if test="param != null and param != ''">
+			and (tr.c_name like '%${param}%'
+			or tr.c_cardno like '%${param}%')
+		</if>
+		group by tr.icbc_id 
+		limit #{pagenow},#{pagesize} 
+	</select>
+		
+	<!-- 总条数 -->
+	<select id="count" resultType="Integer">
+		select count(*) FROM
+			icbc_trailer 
+		WHERE
+			`status` = 2 
+
+	</select>
+	
+		<!-- 总条数 -->
+	<select id="count1" resultType="Integer">
+		select count(*) 
+		FROM		
+			icbc_lawsuit 
+		WHERE
+			`status` =1
+			
+	</select>
+
+	<!-- 查询客户个人信息 -->
+	<select id="selectgrxx" resultType="java.util.Map" parameterType="string">
+		select ki.id,
+			 ki.gems_code,
+		  	 ki.c_name,
+			 ki.c_tel ,
+			 ki.c_cardno,
+			 kik.cars_type,
+			 ass.c_carno,
+			 ag.`name` gems_name,
+			 af.`name` fs_name,
+			 kik.zdr_xzdz,
+			 kik.zdr_gzdw,
+			 kik.zdr_dwdh,
+			 kik.zdr_dwdz,
+			 yl.name yl_name
+		from kj_icbc ki,
+				kjs_icbc_kk kik,
+			 assess_fs af,
+			 assess_gems ag ,
+			 assess_cars ass,
+			 yl_banklist yl
+		where ki.id=kik.icbc_id 
+			and ki.gems_fs_id=af.id 
+			and ki.gems_id=ag.id
+			and ki.id=ass.icbc_id
+			and ki.bank_id=yl.id
+			and ki.id=#{icbc_id}
+	</select>
+	<!-- 查询车辆信息 -->
+	<select id="selectclxx" resultType="java.util.Map" parameterType="string">
+		SELECT
+		ass.c_carno,
+		ass.icbc_pricecs,
+		ass.cars_type,
+		ass.motorcode,
+		dit.carvin,
+		kj.id
+	FROM
+		kj_icbc kj,
+		assess_cars ass,
+		kjs_icbc_preaudit dit 
+	WHERE
+		kj.id = ass.icbc_id 
+		AND kj.id = dit.icbc_id 
+		and kj.id=#{icbc_id}
+	</select>
+	<!-- 查询贷款方案 -->
+	<select id="selectdkfa" resultType="java.util.Map" parameterType="string">
+		SELECT
+			kk.dk_total_price,
+			kk.kp_price,
+			kk.sfje,
+			kk.aj_date,
+			kk.dk_lv,
+			kk.jrfw_price,
+			kk.dk_price,
+			yh.NAME y_name,
+			kj.id 
+		FROM
+			yl_banklist yh,
+			kj_icbc kj,
+			kjs_icbc_kk kk 
+		WHERE
+			kj.id = kk.icbc_id 
+			AND yh.id = kj.bank_id 
+			AND kj.id = #{icbc_id}
+	</select>
+	<!-- 查询客户逾期 -->
+	<select id="selectschedule" resultType="java.util.Map" parameterType="string">
+		select * from icbc_repayment_schedule where icbc_id=#{icbc_id} and overdue=1 order by should_date asc
+	</select>
+	
+	
+	<!-- 查询记录栏数据 -->
+	<select id="selectinput" resultType="java.util.Map" parameterType="int">
+		select * from icbc_electricity where icbc_id=#{icbc_id}
+	</select>
+
+
+
+	<!-- 添加录入到表中-->
+	<insert id="addTc1" parameterType="java.util.Map">
+		insert into icbc_electricity(icbc_id,oc_name,id_card,operator,present_date,value,type_id) 
+		values(#{icbc_id},#{oc_name},#{id_card},#{operator},
+		SYSDATE(),#{value},3)
+	</insert>
+
+
+	<!-- <update id="updateTcStatus" parameterType="string">
+		update icbc_settle set status=1
+	  	where icbc_id=#{icbc_id}
+	</update> -->
+
+
+
+
+</mapper>

@@ -18,61 +18,98 @@
 	margin-top:10px;  
 }
 </style>
+<<script type="text/javascript">
+function appli(a){
+	$.ajax({
+		type: "POST",
+        url: "${pageContext.request.contextPath }/electricityController/applica.do",
+        data: {icbc_id:a},
+        success:function(data){  
+                location.reload(true);
+            }
+        
+	})
+}
+
+function appliss(a){
+	$.ajax({
+		type: "POST",
+        url: "${pageContext.request.contextPath }/electricityController/applicass.do",
+        data: {icbc_id:a},
+        success:function(data){  
+                location.reload(true);
+            }
+        
+	})
+}
+
+function login(){
+	$.ajax({
+		type: "POST",
+        url: "${pageContext.request.contextPath }/electricityController/dcsubmit.do?icbc_id=${grxxMap.id}",
+        data: $('#form1').serialize(),
+        success:function(data){  
+                location.reload(true);
+            }
+        
+	})
+}
+</script>
 	<div class="content-wrapper" style="min-height: 943px;padding-right:30px; padding-left: 30px;">
 		<div style="margin-top:10px; display:flex; justify-content: space-between;">
 	      <h4 class="modal-title" >客户信息:</h4>
 	      <div style="display: inline-flex;">   
 		      <h4 style="line-height:30px">操作选项:</h4>	
-		      <image src="./../image/smcs.png" title="申请上门催收" style="height:30px;width:25px;margin-left:10px;"></image>  
-		      <image src="./../image/sqtc.png" title="申请拖车" style="height:30px;width:25px;margin-left:35px;"></image>   
-		      <image src="./../image/sqss.png" title="申请诉讼" style="height:30px;width:25px;margin-left:40px;"></image>  
+		     <!--   <image src="./../image/smcs.png" title="申请上门催收" style="height:30px;width:25px;margin-left:10px;"></image> --> 
+		      <image src="./../image/sqtc.png" title="申请拖车" style="height:30px;width:25px;margin-left:35px;" onclick="appli('${grxxMap.id}')"></image>  
+		      <image src="./../image/sqss.png" title="申请诉讼" style="height:30px;width:25px;margin-left:40px;" onclick="appliss('${grxxMap.id}')"></image>  
 	      </div>	  
 	    </div>
 	    <div class="modal-body">
 		    <div class="row" >
 		    	<label class="col-sm-1" >订单编号:<i class="red">*</i></label>
 		  		<div class="col-sm-2">
-		  			123464
+		  			${grxxMap.gems_code }
 			    </div>
 			    <label class="col-sm-1">主贷人姓名:<i class="red">*</i></label>
 				<div class="col-sm-2">
-		      		李四
+		      		${grxxMap.c_name }
 				</div>
 				<label class="col-sm-1" >电话:<i class="red">*</i></label>
 		  		<div class="col-sm-2">
-					13464975464
+					${grxxMap.c_tel }
 			    </div>
 			     <label class="col-sm-1" >身份证:<i class="red">*</i></label>
 				<div class="col-sm-2">
-					411325166545855
+					${grxxMap.c_cardno }
 				</div> 
 			</div>
 			<div class="row">
 		    	<label class="col-sm-1" >业务员::<i class="red">*</i></label>
 		  		<div class="col-sm-2">
-		  			大幅度
+		  			${grxxMap.gems_name }
 			    </div>
 			    <label class="col-sm-1">代理团队:<i class="red">*</i></label>
 				<div class="col-sm-2">
-		      		我是团队
+		      		${grxxMap.fs_name }
 				</div>
 				<label class="col-sm-1" >现住地址:<i class="red">*</i></label>
 		  		<div class="col-sm-2">
-					上海市浦东新区上岗新村 博大汽车公园
+					${grxxMap.zdr_xzdz }
 			    </div>
 			     <label class="col-sm-1" >单位名称:<i class="red">*</i></label>
 				<div class="col-sm-2">
-					快车道
+					${grxxMap.zdr_gzdw }
 				</div> 
 			</div>
 			<div class="row" >
 		    	<label class="col-sm-1" >单位电话:<i class="red">*</i></label>
 		  		<div class="col-sm-2">
-		  			1236-799779
+		  			${grxxMap.zdr_dwdh }
 			    </div>
 			    <label class="col-sm-1">单位地址:<i class="red">*</i></label>
 				<div class="col-sm-2">
-		      		上海市浦东新区上岗新村 博大汽车公园
+		      		${grxxMap.zdr_dwdz }
 				</div> 
 			</div>
 		</div>
@@ -84,45 +121,45 @@
 		    <div class="row" >
 		    	<label class="col-sm-1" >车辆价格:<i class="red">*</i></label>
 		  		<div class="col-sm-2">
-		  			123464
+		  			
 			    </div>
 			    <label class="col-sm-1">评估价格:<i class="red">*</i></label>
 				<div class="col-sm-2">
-		      		李四
+		      		${clxxMap.icbc_pricecs}
 				</div>
 				<label class="col-sm-1" >品牌:<i class="red">*</i></label>
 		  		<div class="col-sm-2">
-					13464975464
+					
 			    </div>
 			     <label class="col-sm-1" >车辆型号:<i class="red">*</i></label>
 				<div class="col-sm-2">
-					411325166545855
+					
 				</div> 
 			</div>
 	
 			<div class="row" >
 		    	<label class="col-sm-1" >车辆类型:<i class="red">*</i></label>
 		  		<div class="col-sm-2">
-		  			123464
+		  			${clxxMap.cars_type }
 			    </div>
 			    <label class="col-sm-1">车架号:<i class="red">*</i></label>
 				<div class="col-sm-2">
-		      		李四
+		      		${clxxMap.carvin }
 				</div>
 				<label class="col-sm-1" >发动机号:<i class="red">*</i></label>
 		  		<div class="col-sm-2">
-					13464975464
+					${clxxMap.motorcode }
 			    </div>
 			     <label class="col-sm-1" >车牌:<i class="red">*</i></label>
 				<div class="col-sm-2">
-					411325166545855
+					${clxxMap.c_carno }
 				</div> 
 			</div>
 			
 			<div class="row" >
 		    	<label class="col-sm-1" >颜色:<i class="red">*</i></label>
 		  		<div class="col-sm-2">
-		  			123464
+		  			暂无
 			    </div>
 			</div>
 		</div>
@@ -136,57 +173,57 @@
 		    <div class="row" >
 		    	<label class="col-sm-1" >车辆价格:<i class="red">*</i></label>
 		  		<div class="col-sm-2">
-		  			123464
+		  			
 			    </div>
 			    <label class="col-sm-1">业务产品名称:<i class="red">*</i></label>
 				<div class="col-sm-2">
-		      		李四
+		      		
 				</div>
 				<label class="col-sm-1" >贷款银行:<i class="red">*</i></label>
 		  		<div class="col-sm-2">
-					13464975464
+					
 			    </div>
 			     <label class="col-sm-1" >执行利率:<i class="red">*</i></label>
 				<div class="col-sm-2">
-					411325166545855
+					${dkxxMap.dk_lv }
 				</div> 
 			</div>
 	
 			<div class="row" >
 		    	<label class="col-sm-1" >首付金额:<i class="red">*</i></label>
 		  		<div class="col-sm-2">
-		  			123464
+		  			
 			    </div>
 			    <label class="col-sm-1">实际贷款额:<i class="red">*</i></label>
 				<div class="col-sm-2">
-		      		李四
+		      		
 				</div>
 				<label class="col-sm-1" >首付比例:<i class="red">*</i></label>
 		  		<div class="col-sm-2">
-					13464975464
+					
 			    </div>
 			     <label class="col-sm-1" >贷款期数:<i class="red">*</i></label>
 				<div class="col-sm-2">
-					411325166545855
+					${dkxxMap.aj_date }
 				</div> 
 			</div>
 			
 			<div class="row" >
 		    	<label class="col-sm-1" style="" >银行分期本金:<i class="red">*</i></label>
 		  		<div class="col-sm-2">
-		  			123464
+		  		
 			    </div>
 			    <label class="col-sm-1">金融服务费:<i class="red">*</i></label>
 				<div class="col-sm-2">
-		      		李四
+		      		${dkxxMap.jrfw_price }
 				</div>
 				<label class="col-sm-1" >本息合计:<i class="red">*</i></label>
 		  		<div class="col-sm-2">
-					13464975464
+					${dkxxMap.jrfw_price }
 			    </div>
 			     <label class="col-sm-1" >首月还款:<i class="red">*</i></label>
 				<div class="col-sm-2">
-					411325166545855
+					${dkxxMap.jrfw_price }
 				</div> 
 			</div>
 		</div>
@@ -206,34 +243,53 @@
 					<th class="text-center">逾期金额</th>
 					<th class="text-center">核销日期</th>
 				</tr>
-			   <c:forEach begin="1" end="12" var="i" varStatus="status">
+			   <c:forEach var="map" items="${scheduleMap }" varStatus="status">
 				<tr>
-					<td class="text-center">${status.index}</td>
-					<td class="text-center">2020-12-27</td>
-					<td class="text-center">10000</td>
-					<td class="text-center">10000</td>
-					<td class="text-center">否</td>
-					<td class="text-center">0</td>
-					<td class="text-center">2019-12-27</td>
+					<td class="text-center">${status.index+1 }</td>
+					<td class="text-center">${fn:substring(map.should_date,0,19)}</td>
+					<td class="text-center">${map.should_money}</td>
+					<td class="text-center">${map.practical_money}</td>
+					<td class="text-center">
+					<c:if test="${map.overdue == 1}">
+						是
+					</c:if>
+					<c:if test="${map.overdue == 0}">
+						否
+					</c:if>
+					</td>
+					<td class="text-center">${map.overdue_money}</td>
+					<td class="text-center">暂无</td>
 			    </tr>
 			   </c:forEach>
 	       </table>
 	  </div>
+	  <form id="form1" onsubmit="return false" action="##"  method="post">
 	  <div style="margin-top:10px;">
-	      <h4 class="modal-title">电催录入栏:</h4>
-	      <textarea style="border:1px solid #ccc;margin-top:10px;height:150px" class="form-control"></textarea>		
+	      <h4 class="modal-title">电催录入栏:</h4>	      
+	      <textarea style="border:1px solid #ccc;margin-top:10px;height:150px" id="value" name="value" class="form-control"></textarea>		
 	  </div>
 	  <div style="height:50px;margin:20px 0 0 0;">
-	  	 <button type="button" class="btn btn-info search-btn" style="float:right">提交</button>
+	  	 <button type="button" class="btn btn-info search-btn" style="float:right" onclick="login()">提交</button>
 	</div>
-
+</form>
 	  <div style="">
 	  	<div style="display: flex;">
-	      <h4 class="modal-title" style="margin-bottom: 10px;">电催记录栏:</h4>					
+	      <h4 class="modal-title" style="margin-bottom: 10px;">记录栏:</h4>					
 		  <div class="foot-page" style="margin: -8px 10px;">			
 				<ul class="pagination no-margin">				       
-				    <li><a href="" aria-label="Next"><span aria-hidden="true">上一页</span></a></li>				  
-					<li><a href="" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>  				
+				    <li>
+				    
+				    <a href="#" aria-label="Next"><span aria-hidden="true">上一页</span></a>
+				    
+				  
+				    </li>
+				    				  
+					<li>
+					
+					<a href="#" aria-label="Next"><span aria-hidden="true">下一页</span></a>
+					
+					
+					</li>  				
 				</ul>
 	   
 			</div>  
@@ -249,32 +305,47 @@
 				<tbody>	
 					<tr>
 						<th style="width:3%" class="text-center hidden-xs"><input class="check_all" type="checkbox"></th>
+						<th class="text-center hidden-xs">序号</th>
 						<th class="text-center hidden-xs">日期时间</th>
-						<th class="text-center">电催类型</th>
+						<th class="text-center">记录类型</th>
 						<th class="text-center">操作人员</th>
-						<th class="text-center">查看</th>
+						<!-- <th class="text-center">查看</th> -->
 					</tr>
-					<c:forEach begin="0" end="4" var="i">
+					<c:forEach items="${newpdList }" var="newpd" varStatus="status">
 					<tr>
 						<td class="text-center hidden-xs">
 						<input name="delid"  type="checkbox">
 						</td>
-						<td class="text-center hidden-xs">
-							2019-01-24
+						<td class="text-center">
+							${status.index+1 }
+						</td>
+						<td class="text-center">
+							${fn:substring(newpd.present_date,0,19)}
 						</td>
 						<td class="text-center">
 							<span class="s-font-blue">
-								人工电催
+							<c:if test="${newpd.type_id eq 0 }">
+								电催
+							</c:if>
+							<c:if test="${newpd.type_id eq 1 }">
+								拖车
+							</c:if>
+							<c:if test="${newpd.type_id eq 2 }">
+								诉讼
+							</c:if>
+							<c:if test="${newpd.type_id eq 3 }">
+								已结清
+							</c:if>
 							</span>
 						</td>
 						<td class="text-center">
-							张三
+							${newpd.operator }
 						</td>
-						<td class="text-center">
+						<!-- <td class="text-center">
 							<p>
 								<i class="fa fa-search-plus" onclick="toggleModel()"></i>
 							</p>
-						</td>
+						</td> -->
 
 					</tr>
 					</c:forEach>

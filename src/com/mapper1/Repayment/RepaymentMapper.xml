@@ -4,12 +4,13 @@
 <mapper namespace="com.mapper1.Repayment.RepaymentMapper">
 	<!--查询全部数据 -->
 	<select id="selectRepayment" parameterType="pd" resultType="pd">
-	select bc.id,bc.c_name,kk.dk_price,kk.gems_code,kk.aj_date,kk.dt_edit,bc.c_cardno,bc.loan_tpid,kk.dk_lv,kk.dk_total_price,aa.icbc_pricecs 
+select DISTINCT bc.id,bc.c_name,kk.dk_price,kk.dk_total_price,kk.gems_code,aa.icbc_pricecs,kk.aj_date,kk.dt_edit,bc.c_cardno,bc.loan_tpid,kk.dk_lv 
 		from 
 		kjs_icbc_kk kk,
 		kj_icbc bc,
-		assess_cars aa 
-		where kk.icbc_id=bc.id and bc.id=aa.icbc_id 
+		assess_cars aa,
+		icbc_erp_kj_icbc_result kj 
+		where kk.icbc_id=bc.id and bc.id=aa.icbc_id and kj.status=62 and kj.result_1_code=1 and bc.id=kj.icbc_id
 		<if test="param != null and param != ''">
 			 and bc.c_name like '%${param}%' or bc.c_cardno like '%${param}%'
 		</if>
@@ -17,7 +18,7 @@
 	</select>
 	
 	
- 	<select id="selectBorrow" parameterType="int" resultType="java.util.Map">
+ 	<select id="selectBorrow" parameterType="string" resultType="java.util.Map">
 	    select distinct bc.id
 			,bc.c_name
 			,kk.dk_price
@@ -39,18 +40,23 @@
 		kj_icbc bc,
 		assess_cars aa,
 		yl_banklist yb
-		where kk.icbc_id = bc.id and bc.id = aa.icbc_id and bc.bank_id = yb.id and aa.bc_status=3 and bc.id = #{id} LIMIT 1
+		where kk.icbc_id = bc.id and bc.id = aa.icbc_id and bc.bank_id = yb.id 
+		and aa.bc_status=3 
+		and bc.id = #{icbc_id} LIMIT 1
 	</select> 
 	 
 	<!--  还款计划 -->
 	<select id="selectschedule" parameterType="String" resultType="java.util.Map">
-		select * from import_repayment where id_card=#{id_card}
+		select * from icbc_repayment_schedule where icbc_id=#{icbc_id}
 	
 	</select>
 	
+
+	
 	<!-- 贷后信息 -->
-	<select id="selectafter" parameterType="String" resultType="java.util.Map">
+	<select id="selectafter" parameterType="string" resultType="java.util.Map">
 		select distinct
+		bc.id,
 		bc.c_name_gj1,
 		bc.c_tel_gj1,
 		bc.c_cardno_gj1,	
@@ -59,10 +65,10 @@
 		bc.c_cardno_gj2,
 		bc.c_cardno,
 		kk.jjlxr_c_name,kk.jjlxr_c_tel,kk.jjlxr_jdrgx 
-	from kj_icbc bc,kjs_icbc_kk kk where bc.id=kk.icbc_id and bc.id=#{c_cardno}
+	from kj_icbc bc,kjs_icbc_kk kk where bc.id=kk.icbc_id and bc.id=#{icbc_id}
 	</select>
 	
-	<!-- 主贷人信息 -->
+	<!-- 查询主贷人详情信息 模态框 -->
 	<select id="selectzdr" parameterType="String" resultType="java.util.Map">
 		select distinct
 		bc.c_name,
@@ -75,6 +81,56 @@
 		kk.zdr_dwdh,
 		kk.zdr_dwdz,
 		kk.zdr_grsr 
-		from kj_icbc bc,kjs_icbc_kk kk where bc.id=kk.icbc_id and bc.id=#{c_cardno}
+		from kj_icbc bc,kjs_icbc_kk kk where bc.id=kk.icbc_id and bc.id=#{icbc_id}
 	</select>
+	<!-- 查询贷款期数 -->
+	<select id="selectrepay" resultType="int" parameterType="int">
+		select aj_date from kjs_icbc_kk where icbc_id=#{icbc_id}
+	
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="addrepay" parameterType="java.util.Map" >
+		insert into 
+		icbc_repayment_schedule(
+		should_date,should_money,icbc_id,cardno,name) 
+		values(#{should_date},#{should_money},#{icbc_id},#{cardno},#{name})
+	</insert>
+	
+	 <select id="selectID" parameterType="int" resultType="java.util.Map">
+	    select distinct bc.id
+			,bc.c_name
+			,kk.aj_date
+			,bc.c_cardno
+			,kk.dk_lv
+		from 
+		kjs_icbc_kk kk,
+		kj_icbc bc 
+		where kk.icbc_id = bc.id
+		and bc.id = #{id}
+	</select> 
+	
+	<!-- 查询银行导入还款记录-->
+	<select id="selectimport" resultType="java.util.Map">
+		select DISTINCT ir.id,
+			 ir.name,
+			 ir.id_card,
+			 ir.balance_card,
+			 ir.overdue_amount,
+			 ir.add_time
+		from import_repayment ir  
+				
+	
+	</select>
+	<!-- 修改还款记录 -->
+	<update id="updateschedule" parameterType="java.util.Map">
+		update icbc_repayment_schedule set 
+			practical_money=#{practical_money} ,
+			overdue_money=#{overdue_money} ,
+			practical_date=#{practical_date} ,
+			overdue= #{overdue} 
+			where cardno = #{cardno} 
+			and YEAR(should_date) =YEAR(#{practical_date})
+			and MONTH(should_date) =MONTH(#{practical_date})
+	</update>
 </mapper>

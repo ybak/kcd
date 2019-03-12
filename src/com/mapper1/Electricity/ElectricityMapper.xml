@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mapper1.Electricity.ElectricityMapper">
+  <!-- 查询数据 -->
+	<select id="select" resultType="pd" parameterType="string">
+					select DISTINCT oc.*,yb.name y_name,
+			fs.name fs_name,iekir.fk_money 
+			from 
+			(select * from overdue_customers where oc_status = 0
+			and DAY(SYSDATE()) - day(add_date) > 3) oc
+			left join icbc_erp_kj_icbc_result iekir on oc.icbc_id=iekir.icbc_id
+			left join kj_icbc bc on bc.id=oc.icbc_id
+			LEFT join assess_fs fs on bc.gems_fs_id=fs.id
+			left join yl_banklist yb on bc.bank_id = yb.id								
+		<if test="param != null and param != ''">	
+			and oc.c_name like '%${param}%' 
+			OR oc.c_cardno like '%${param}%'
+		</if>
+		GROUP BY oc.icbc_id
+		ORDER BY oc.gems_code DESC limit #{pagenow},#{pagesize}
+	</select>
+	
+	<select id="count" resultType="Integer">
+		select count(*) from (select DISTINCT oc.*,yb.name y_name,
+			fs.name fs_name,iekir.fk_money 
+			from 
+			(select * from overdue_customers where oc_status = 0
+			and DAY(SYSDATE()) - day(add_date) > 3) oc
+			left join icbc_erp_kj_icbc_result iekir on oc.icbc_id=iekir.icbc_id
+			left join kj_icbc bc on bc.id=oc.icbc_id
+			LEFT join assess_fs fs on bc.gems_fs_id=fs.id
+			left join yl_banklist yb on bc.bank_id = yb.id
+			GROUP BY oc.icbc_id	) v
+	</select>
+
+		<!-- 插入电催录入栏数据-->
+	<insert id="addInput" parameterType="java.util.Map">
+		insert into icbc_electricity(icbc_id,oc_name,id_card,operator,present_date,value,type_id) 
+		values(#{icbc_id},#{oc_name},#{id_card},#{operator},
+		SYSDATE(),#{value},0)
+	</insert>
+	
+	<!-- 查询记录栏数据 -->
+	<select id="selectinput" resultType="java.util.Map" parameterType="string">
+		select * from icbc_electricity where icbc_id=#{icbc_id}
+	</select>
+	<!-- 查询客户逾期 -->
+	<select id="selectschedule" resultType="java.util.Map" parameterType="string">
+		select * from icbc_repayment_schedule where icbc_id=#{icbc_id} and overdue=1 order by should_date asc
+	</select>
+	
+	<!-- 查询客户个人信息 -->
+	<select id="selectgrxx" resultType="java.util.Map" parameterType="string">
+		select ki.id,
+			 ki.gems_code,
+		  	 ki.c_name,
+			 ki.c_tel ,
+			 ki.c_cardno,
+			 kik.cars_type,
+			 ass.c_carno,
+			 ag.`name` gems_name,
+			 af.`name` fs_name,
+			 kik.zdr_xzdz,
+			 kik.zdr_gzdw,
+			 kik.zdr_dwdh,
+			 kik.zdr_dwdz,
+			 yl.name yl_name
+		from kj_icbc ki,
+				kjs_icbc_kk kik,
+			 assess_fs af,
+			 assess_gems ag ,
+			 assess_cars ass,
+			 yl_banklist yl
+		where ki.id=kik.icbc_id 
+			and ki.gems_fs_id=af.id 
+			and ki.gems_id=ag.id
+			and ki.id=ass.icbc_id
+			and ki.bank_id=yl.id
+			and ki.id=#{icbc_id}
+	</select>
+	
+	<insert id="applica">
+		insert into icbc_trailer
+		(icbc_id,id_code,c_name,c_cardno,loans_bank,
+		cars_type,gems_name,gems_fs_name,cars_tel,status)
+		values
+		(#{id},#{gems_code},#{c_name},#{c_cardno},#{yl_name},#{cars_type},#{gems_name},#{zdr_gzdw},#{c_cardno},0)
+	</insert>
+	
+	<insert id="applicass">
+		insert into icbc_lawsuit
+		(icbc_id,id_code,c_name,c_cardno,loans_bank,
+		cars_type,gems_name,gems_fs_name,cars_tel,status)
+		values
+		(#{id},#{gems_code},#{c_name},#{c_cardno},#{yl_name},#{cars_type},#{gems_name},#{zdr_gzdw},#{c_cardno},0)
+	</insert>
+	
+	<!-- 查询车辆信息 -->
+	<select id="selectclxx" resultType="java.util.Map" parameterType="string">
+		SELECT
+		ass.c_carno,
+		ass.icbc_pricecs,
+		ass.cars_type,
+		ass.motorcode,
+		dit.carvin,
+		kj.id
+	FROM
+		kj_icbc kj,
+		assess_cars ass,
+		kjs_icbc_preaudit dit 
+	WHERE
+		kj.id = ass.icbc_id 
+		AND kj.id = dit.icbc_id 
+		and kj.id=#{icbc_id}
+	</select>
+	
+	<!-- 查询贷款信息 -->
+	<select id="selectdkxx" resultType="java.util.Map" parameterType="string">
+		SELECT
+			kk.aj_bank,
+			kk.aj_date,
+			kk.dk_lv,
+			kk.jrfw_price,
+			kk.dk_price,
+			kj.id
+		from 
+			kj_icbc kj,
+			kjs_icbc_kk kk
+		where kj.id=kk.icbc_id
+			and kj.id=#{icbc_id}
+	</select>
+	
+	<!-- 修改逾期表中状态 拖车 -->
+	<update id="updatestate">
+			update
+			overdue_customers
+			set
+			oc_status=2
+			where 
+			icbc_id=#{icbc_id}
+	</update>
+	
+	<!-- 修改逾期表中状态 诉讼 -->
+	<update id="updateSSstate">
+			update
+			overdue_customers
+			set
+			oc_status=1
+			where 
+			icbc_id=#{icbc_id}
+	</update>
+	
+	
+</mapper>

@@ -41,7 +41,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-
+import com.Repayment.controller.RepaymenttestController;
 import com.controller.erp_icbc.base.BaseController;
 
 import com.model1.icbc.erp.PageData;
@@ -63,99 +63,13 @@ public class UploadExcelController extends BaseController{
 	private com.mapper1.Excel.recordMapper recordMapper;
 	@Autowired
 	private recordService recordService;  
-	
+	@Autowired
+	private RepaymenttestController repaymenttest;
 	private Logger logger  = Logger.getLogger(UploadExcelController.class);
 	private final  String xls = "xls";  
 	private final  String xlsx = "xlsx"; 
 	//客户姓名 身份证号 还款卡号 卡余额 逾期金额 连续违约次数 最大违约次数 导入日期 在保余额 
 	private static String[] ss={"name","id_card","repayment_card","balance_card","overdue_amount","continuity","maximum","add_time","balance_on"};
-
-//	/**
-//	 * 往数据库中添加表中数据
-//	 * @param list
-//	 * @return
-//	 * @throws IOException 
-//	 * @throws BiffException
-//	 */
-//	@RequestMapping("/addExcel.do")
-//	@ResponseBody
-//	public String  addExcel(
-//			
-//			HttpServletRequest request,HttpServletResponse response,RecordUtil recordUtil) throws BiffException, IOException{  
-//		    MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-//	        CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile("file");
-//	        String relatDir1=new SimpleDateFormat("yyyy/MM/dd/").format(new Date());
-//	        //文件夹不存在则创建
-//	        File fdir = new File("D:/eclipse/kcd/WebContent/upload/"+relatDir1);
-//	        if (!fdir.exists()) { fdir.mkdirs(); }
-//
-//	        String oriName = file.getOriginalFilename();
-//	        File tempFile = new File(fdir.getPath()+File.separator+oriName);
-//	        log.info("文件保存地址->"+tempFile);
-//	        file.transferTo(tempFile);
-//	       
-////	        Map<String,String> rowMap=new HashMap<String,String>();
-////	        String[] string= new String[4];//创建ss.length个二维数组，每个数组中有x条数据
-////			// 获得工作簿对象 
-////			Workbook workbook = Workbook.getWorkbook(tempFile); 
-////			// 获得所有工作表 
-////			Sheet[] sheets = workbook.getSheets(); 
-////			// 遍历工作表 
-////			if (sheets != null) { 
-////				for (Sheet sheet : sheets) { 
-////					// 获得行数 
-////					int rows = sheet.getRows(); 
-////					// 获得列数 
-////					int cols = sheet.getColumns(); 
-////					// 读取数据 
-////					for (int row = 1; row < rows; row++) { 
-////						
-////						for (int col = 0; col < cols; col++) {
-////							Cell cell = sheet.getCell(col, row); 
-////							rowMap.put(ss[col], cell.getContents());
-////							//log.info("-------->"+cell.getContents());
-////							
-////						}
-////						log.info("添加还款数据->"+rowMap);
-////						
-////						int addCount=uploadExcelMapper.addExcel(rowMap);
-////						
-////						log.info("add->"+addCount);
-////						//list.add(rowMap);
-////					} 
-////				} 				
-////			} 
-//	        
-//	        
-//			
-//			
-//			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式     new Date()为获取当前系统时间
-//			PageData pdsession= (PageData)request.getSession().getAttribute("pd");//获取session信息
-//			Map<String, String> map=new HashMap<String,String>();
-//			map.put("uuid", CommonUtil.getUUID());//序列号
-//			map.put("oriName", oriName);//文件名称
-//		    map.put("dt_add", df.format(new Date()));//导入时间	
-//			map.put("financial_products", "");
-//			map.put("mid_add", pdsession.get("name").toString());//获取操作人员
-//			recordMapper.addRecord(map);
-//			
-//			
-//		   
-//			
-//			//map集合转换为JSON对象
-//			//创建二维数组
-//	        //JSONArray json = new JSONArray(string);
-//			//将JSON对象传递给前端AJAX接收
-//			response.setContentType("text/html;charset=UTF-8");
-//			response.setContentType("application/json");
-//			PrintWriter pw = response.getWriter();
-//			//pw.print(json); // 轨迹图条件，取少量数据
-//			pw.flush();
-//			pw.close();
-//			
-//			//workbook.close(); 
-//			return null;
-//	}
 	
 	
 	/**
@@ -375,7 +289,7 @@ public class UploadExcelController extends BaseController{
      */  
 	@RequestMapping("/readExcel.do")
 	@ResponseBody
-    public Map readExcel(HttpServletRequest request,HttpServletResponse response) throws IOException{  
+    public Map readExcel(String id_card,HttpServletRequest request,HttpServletResponse response) throws IOException{  
         
     	MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile("file"); 	
@@ -399,7 +313,12 @@ public class UploadExcelController extends BaseController{
         Map<String,String> rowMap=new HashMap<String,String>();
         List<String[]> list = new ArrayList<String[]>();  
         if(workbook != null){  
-            for(int sheetNum = 0;sheetNum < workbook.getNumberOfSheets();sheetNum++){  
+            for(int sheetNum = 0;sheetNum < workbook.getNumberOfSheets();sheetNum++){ 
+            	
+            	//查询有几条相同数据
+            	Integer c = 0;
+                        	
+            	
                 //获得当前sheet工作表  
                 Sheet sheet = workbook.getSheetAt(sheetNum);  
                 if(sheet == null){  
@@ -425,17 +344,39 @@ public class UploadExcelController extends BaseController{
                     for(int cellNum = firstCellNum; cellNum < lastCellNum;cellNum++){  
                         Cell cell = row.getCell(cellNum);  
                         cells[cellNum] = getCellValue(cell);
+                        if(cellNum == 1){
+                        	System.out.println(cell+"***");
+                        	System.out.println(cells[cellNum]+"***");
+                        	//查询有几条相同数据                       	
+                        	c=recordService.count(cells[cellNum]);
+                        	System.out.println("-------"+cell);
+                        }
                         rowMap.put(ss[cellNum], cells[cellNum]);
-						
-					
-					
+
                     }  
+                  
+                    System.out.println(c+"****");
+                    
+                    c = c + 1;
+                    
+                    rowMap.put("repayment_periods", c+"");
                     uploadExcelMapper.addExcel(rowMap);
                     //list.add(cells);  
                 }  
             }  
             //workbook.close();  
         }  
+        
+        //点导入还款查询到逾期客户并添加到数据库
+        List<Map> listOverdue=recordService.selectOverdue(id_card);
+        for(int i=0;i<listOverdue.size();i++){
+        	recordService.addOverdue(listOverdue.get(i));
+        }
+        
+        System.out.println("逾期客户"+listOverdue);
+
+        
+        
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式     new Date()为获取当前系统时间
 		PageData pdsession= (PageData)request.getSession().getAttribute("pd");//获取session信息
 		Map<String, String> map=new HashMap<String,String>();
@@ -446,20 +387,13 @@ public class UploadExcelController extends BaseController{
 		map.put("filepath", "upload/"+relatDir1+oriName);
 		map.put("mid_add", pdsession.get("name").toString());//获取操作人员
 		recordMapper.addRecord(map);
-		//map集合转换为JSON对象
-		//创建二维数组
-       // JSONArray json = new JSONArray(string);
-		//将JSON对象传递给前端AJAX接收
-//		response.setContentType("text/html;charset=UTF-8");
-//		response.setContentType("application/json");
-//		PrintWriter pw = response.getWriter();
-//		//pw.print(json); // 轨迹图条件，取少量数据
-//		pw.flush();
-//		pw.close();
-		//workbook.close();
+		repaymenttest.selectImport();
 		Map result =new HashMap();
 		result.put("msg","导入成功");
 		result.put("code","1");
+		
+		
+		
 		return result;
     }  
     public void checkFile(MultipartFile file) throws IOException{  

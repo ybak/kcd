@@ -47,7 +47,7 @@
 	  		<div class="col-sm-2">
 				<c:if test="${lborrow.loan_tpid==1}">
 								  卡分期
-								</c:if>
+				</c:if>
 		    </div>
 		     <label class="col-sm-1" >车辆价格:<i class="red">*</i></label>
 			<div class="col-sm-2">
@@ -88,7 +88,7 @@
 		</div>
 	</div>
 	
-	<c:if test="${not empty mapschedule }">
+	
 	<div  style="padding-top:20px;">
       <h4 class="modal-title"  id="aayyclModalLabel">还款计划:</h4>	       
     </div>	
@@ -104,44 +104,30 @@
 				<th class="text-center">逾期金额</th>
 				<th class="text-center">核销日期</th>
 			</tr>		   
+			<c:forEach items="${mapschedule}" var="map"  varStatus="status">
 			<tr>
-				<td class="text-center">1</td>
-				<td class="text-center">${mapschedule.zc_time }</td>
-				<td class="text-center">${mapschedule.b3}</td>
+				<td class="text-center">${status.index+1 }</td>
+				<td class="text-center">${map.should_date }</td>
+				<td class="text-center">${map.should_money}</td>
 
-				<td class="text-center">${mapschedule.balance_card}</td>
+				<td class="text-center">${map.practical_money}</td>
 
 				<td class="text-center">
-				<c:if test="${mapschedule.overdue_amount!=0 }">
+				<c:if test="${map.overdue == 1 }">
 				是
 				</c:if>
-				<c:if test="${mapschedule.overdue_amount == 0 }">
+				<c:if test="${map.overdue == 0 }">
 				否
 				</c:if>
 				</td>
-				<td class="text-center">${mapschedule.overdue_amount}</td>
-				<td class="text-center">暂无</td>
+				<td class="text-center">${map.overdue_money}</td>
+				<td class="text-center">${map.hx_date }</td>
 		    </tr>
-		    <c:forEach begin="2" end="36" var="i" varStatus="status">
-		    <tr>
-				<td class="text-center">${status.index}</td>
-				<td class="text-center">${mapschedule.zc_time }</td>
-				<td class="text-center">${mapschedule.b3}</td>
-
-				<td class="text-center">0</td>
-
-				<td class="text-center">
-				
-				否
-				
-				</td>
-				<td class="text-center">0</td>
-				<td class="text-center">暂无</td>
-		    </tr>
-		   </c:forEach>
+		    </c:forEach>
+		    
        </table>
      </div>
-     </c:if>
+    
     <div  style="padding-top:20px;">
       <h4 class="modal-title"  id="aayyclModalLabel">贷后信息:</h4>	       
     </div>	

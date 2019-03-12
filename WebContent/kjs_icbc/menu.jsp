@@ -497,15 +497,15 @@
 			        <!--客户逾期名单  -->
 			        <c:if  test="${fn:contains(sessionScope.pd.purview_map,'khyqmd')==true}">
 			        <li>
-					<a href="#"> <i class="fa fa-user"></i> 
+					<a href="${pageContext.request.contextPath }/overdueController/select.do?type=khyqmd&dn=overdue&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-user"></i> 
 				    <span>客户逾期名单</span>
 				    </a>
 					</li>
 					</c:if>
-			        <!--催缴作业  -->
+			         <!--催缴作业  -->
 			        <c:if  test="${fn:contains(sessionScope.pd.purview_map,'dczy')==true}">
 			        <li ${requestScope.dn=='dh_electricOperation'?"class='active'":'' or requestScope.dn=='dh_repaymentTelReminders'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/erp/index.do?type=khhkgl&dn=dh_electricOperation&qn=list"> <i class="fa fa-file-text"></i> 
+					<a href="${pageContext.request.contextPath}/electricityController/select.do?type=dczy&dn=dh_electricOperation&qn=list"> <i class="fa fa-file-text"></i> 
 				    <span>电催作业 </span>
 				    </a>
 					</li>
@@ -518,17 +518,17 @@
 				    </a>
 				    <ul class="treeview-menu">
 					<li ${requestScope.type=='tcglnot'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/trailerManagementController/mortgageRecord.do?type=tcglnot&dn=TrailerManagement&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
+					<a href="${pageContext.request.contextPath}/trailernotAcceptedController/select1.do?type=tc_ysl&dn=TrailernotAccepted1&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>拖车(已受理)</span>
 				    </a>
 					</li>
 					<li ${requestScope.type=='tcglalready'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/trailerManagementController/mortgageRecord.do?type=tcglalready&dn=TrailerManagement&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
+					<a href="${pageContext.request.contextPath}/trailernotAcceptedController/select.do?type=tc_wsl&dn=TrailernotAccepted&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>拖车(未受理)</span>
 				    </a>
 					</li>
 					<li ${requestScope.type=='tcglnot'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/trailerManagementController/mortgageRecord.do?type=tcglnot&dn=TrailerManagement&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
+					<a href="${pageContext.request.contextPath}/trailernotAcceptedController/select2.do?type=tc_wc&dn=TrailernotAccepted2&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>拖车(完成)</span>
 				    </a>
 					</li>
@@ -543,12 +543,12 @@
 					    </a>
 					    <ul class="treeview-menu">
 							<li ${requestScope.type=='ssglnot'?"class='active'":''}>
-								<a href="${pageContext.request.contextPath}/litigationManagementController/mortgageRecord.do?type=ssglnot&dn=LitigationManagement&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
+								<a href="${pageContext.request.contextPath}/lawsuitController/select1.do?type=ssgl&dn=lawsuit1&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 							    <span>已处理</span>
 							    </a>
 							</li>
 							<li ${requestScope.type=='ssglalready'?"class='active'":''}>
-								<a href="${pageContext.request.contextPath}/litigationManagementController/mortgageRecord.do?type=ssglalready&dn=LitigationManagement&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
+								<a href="${pageContext.request.contextPath}/lawsuitController/select.do?type=ssgl&dn=lawsuit&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 							    <span>待处理</span>
 							    </a>
 							</li>
@@ -580,18 +580,12 @@
 				    <ul class="treeview-menu">
 				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl_yjq')==true}">
 						<li ${requestScope.type=='cqclalready'?"class='active'":''}>
-						<a href="${pageContext.request.contextPath}/settlementController/mortgageRecord.do?type=cqclalready&dn=Settlement&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
+						<a href="${pageContext.request.contextPath}/settleController/select.do?type=cqcl_yjq&dn=settle&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 					    <span>已结清</span>
 					    </a>
 						</li>
 					</c:if>
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl_wjq')==true}">
-						<li ${requestScope.type=='cqclnot'?"class='active'":''}>
-						<a href="${pageContext.request.contextPath}/settlementController/mortgageRecord.do?type=cqclnot&dn=Settlement&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
-					    <span>未结清</span>
-					    </a>
-						</li>
-					</c:if>
+
 				    </ul>
 					</li>
 					</c:if>

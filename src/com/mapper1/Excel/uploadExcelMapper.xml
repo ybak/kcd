@@ -3,22 +3,64 @@
 <mapper namespace="com.mapper1.Excel.uploadExcelMapper" >
 	<!-- excel表格中的数据导入数据库 -->
 	<insert id="addExcel" parameterType="map">
-		insert into import_repayment (name,id_card,repayment_card,balance_card,overdue_amount,continuity,maximum,add_time,balance_on)
-		values(#{name},#{id_card},#{repayment_card},#{balance_card},#{overdue_amount},#{continuity},#{maximum},#{add_time},#{balance_on})
-		<!-- <foreach collection="list" item="map" index="index" separator=","> -->
-		
-	<!-- 	(#{map.id},#{map.name},#{map.IdCard},#{map.RepaymentCard},#{map.balanceCard},
-		#{map.OverdueAmount},#{map.continuity},#{map.Maximum},#{map.add_time},#{map.balanceOn}) -->
-		<!-- </foreach>  -->
+		insert into import_repayment (name,id_card,repayment_card,repayment_periods,balance_card,overdue_amount,continuity,maximum,add_time,balance_on)
+		values(#{name},#{id_card},#{repayment_card},#{repayment_periods},#{balance_card},#{overdue_amount},#{continuity},#{maximum},#{add_time},#{balance_on})
 	</insert>
 	
+	
+	  
+	<!-- 根据身份证号查询数据条数 -->
+	<select id="count" resultType="Integer">
+		SELECT
+			count(*)
+		FROM
+			import_repayment 
+		WHERE
+			id_card = #{id_card}
+	</select>
+	
+	<!-- 根据身份证号查询逾期名单 -->
+	<select id="selectOverdue" parameterType="String" resultType="java.util.Map">
+		SELECT
+			* 
+		FROM
+			(
+		SELECT DISTINCT
+			bc.id,
+			re.overdue_amount,
+			bc.c_name,
+			kk.dk_price,
+			kk.gems_code,
+			kk.aj_date,
+			kk.dt_edit,
+			bc.c_cardno,
+			bc.loan_tpid,
+			kk.dk_lv
+		FROM
+			import_repayment re,
+			kjs_icbc_kk kk,
+			kj_icbc bc,
+			assess_cars aa,
+			icbc_erp_kj_icbc_result kj 
+		WHERE
+			kk.icbc_id = bc.id 
+			AND bc.id = aa.icbc_id 
+			AND kj.STATUS = 62 
+			AND kj.result_1_code = 1 
+			AND bc.id = kj.icbc_id 
+			AND re.id_card = bc.c_cardno 
+			) success 
+		WHERE
+			success.c_cardno IN (
+		SELECT
+			DISTINCT id_card
+		FROM
+			import_repayment 
+			) and overdue_amount != 0 
+	</select>
+	<!-- 把逾期客户添加到表中 -->
+	<insert id="addOverdue" parameterType="java.util.Map">
+		insert into overdue_customers (gems_code,c_name,c_cardno,overdue_amount,icbc_id,add_date,oc_status) values(#{gems_code},#{c_name},#{c_cardno},#{overdue_amount},#{id},sysdate(),0)
+	</insert>
 
-	<!-- 根据身份证查询用户 -->
-	<select id="selectByIdCard">
-	
-	</select>
-	<!-- 查询下次应该还款的期数 -->
-	<select id="selectLastRepaymentDate">
-	
-	</select>
 </mapper>

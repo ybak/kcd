@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +36,6 @@ public class RepaymenttestController {
 	@RequestMapping("/select")
 	public String select(
 			String qn,
-			String cn,
 			String type,
 			String dn,	
 			int pagesize,
@@ -91,7 +91,6 @@ public class RepaymenttestController {
 			
 		}		
 		request.setAttribute("dn", dn);
-		request.setAttribute("cn", cn);
 		request.setAttribute("qn", qn);
 		request.setAttribute("type", type);	
 		request.setAttribute("totalpage",totalpage);
@@ -109,21 +108,18 @@ public class RepaymenttestController {
 			log.info("参数名:"+paraName+",参数值："+request.getParameter(paraName));
 		}
 	}
-	
+
 	//查询主贷人信息表
 	@RequestMapping("/selectBorrow")
 	public String selectBorrow(String qn
-								,String cn
 								,String type
 								,String dn
 								,HttpServletRequest request
-								,Integer id
 								,String c_cardno
+								,String icbc_id
 								){
 		
-		System.out.println("id_card========================================="+c_cardno);
-		
-		Map<String, Object> lborrow = repaymentService.selectBorrow(id);
+		Map<String, Object> lborrow = repaymentService.selectBorrow(icbc_id);
 				
 			log.info("map2->"+lborrow);
 			if(null != lborrow){
@@ -151,38 +147,19 @@ public class RepaymenttestController {
 			
 			
 		//查询还款计划
-			Map<String, Object> mapschedule = repaymentService.selectschedule(c_cardno);
+			List<Map> mapschedule = repaymentService.selectschedule(icbc_id);
 			
 			log.info("map3->"+mapschedule);
-			
-			//实还金额
-			BigDecimal b1 = null;
-			BigDecimal b2 = null;
-			BigDecimal b3 = null;
-			if(null != mapschedule){
-				 b1=new BigDecimal(mapschedule.get("balance_card").toString());
-				System.out.println("456789"+b1);
-				//逾期金额
-				 b2=new BigDecimal(mapschedule.get("overdue_amount").toString());
-//					应还金额=实还金额+逾期金额
-				 b3=b1.add(b2);
-				 mapschedule.put("b3", b3);
-			}
-			
-
-			
-			
-			
+		//查询import_repayment
 			//查询贷后信息
-			List<Map> mapafter = repaymentService.selectafter(id);
+			List<Map> mapafter = repaymentService.selectafter(icbc_id);
 			log.info("map4->"+mapafter);
 //			System.out.println("234577980---------------------"+mapafter.get(0).get("c_name_gj2 "));
 			
 			//查询主贷人信息
-			Map<String, Object> mapzdr = repaymentService.selectzdr(id);
+			Map<String, Object> mapzdr = repaymentService.selectzdr(icbc_id);
 			log.info("map5->"+mapzdr);
 		request.setAttribute("dn", dn);
-		request.setAttribute("cn", cn);
 		request.setAttribute("qn", qn);
 		request.setAttribute("type", type);
 		request.setAttribute("lborrow", lborrow);
@@ -192,7 +169,25 @@ public class RepaymenttestController {
 		return "kjs_icbc/index";
 		
 	}
-	
+	//查询修改还款记录
+	public void selectImport(){
+		List<Map> repayMap = repaymentService.selectimport();
+		Map<String, Object> map=new HashMap<>();
+		for(int i=0;i<repayMap.size();i++){
+			map.put("practical_money", Math.round((double) repayMap.get(i).get("balance_card")*100)/100.00);
+			map.put("overdue_money", Math.round((double) repayMap.get(i).get("overdue_amount")*100)/100.00);
+			map.put("practical_date", repayMap.get(i).get("add_time"));
+			map.put("cardno", repayMap.get(i).get("id_card"));
+			if(Math.round((double) repayMap.get(i).get("overdue_amount")) != 0){
+				map.put("overdue", 1);
+			}else{
+				map.put("overdue", 0);
+			}
+			repaymentService.updateschedule(map);
+		}
+		
+
+	}
 	
 	
 }
