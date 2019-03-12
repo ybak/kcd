@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.erp_icbc.icbc_dsjMapper">
+
+<insert id="savekjs_icbc_dsj" parameterType="pd" keyProperty="id" useGeneratedKeys="true">
+insert into kjs_icbc_dsj
+<trim prefix="(" suffix=")" suffixOverrides=",">
+<if test="id != null and id!=''">id,</if>
+<if test="dt_edit != null and dt_edit!=''">dt_edit,</if>
+<if test="dt_add != null and dt_add!=''">dt_add,</if>
+<if test="result1 != null and result1!=''">result1,</if>
+<if test="result2 != null and result2!=''">result2,</if>
+<if test="result3 != null and result3!=''">result3,</if>
+<if test="result4 != null and result4!=''">result4,</if>
+<if test="icbc_id != null and icbc_id!=''">icbc_id,</if>
+</trim>
+values
+<trim prefix="(" suffix=")" suffixOverrides=",">
+<if test="id != null and id!=''">#{id},</if>
+<if test="dt_edit != null and dt_edit!=''">#{dt_edit},</if>
+<if test="dt_add != null and dt_add!=''">#{dt_add},</if>
+<if test="result1 != null and result1!=''">#{result1},</if>
+<if test="result2 != null and result2!=''">#{result2},</if>
+<if test="result3 != null and result3!=''">#{result3},</if>
+<if test="result4 != null and result4!=''">#{result4},</if>
+<if test="icbc_id != null and icbc_id!=''">#{icbc_id},</if>
+</trim>
+</insert>
+     
+<!-- 单个查询id  -->
+<select id="findbyid" parameterType="pd" resultType="pd">
+    select * from kjs_icbc_dsj where icbc_id=#{icbc_id}
+</select>
+
+
+<update id="upkjs_icbc_dsj" parameterType="pd">
+update kjs_icbc_dsj
+<trim prefix="set" suffixOverrides=",">
+<if test="dt_edit != null and dt_edit!=''">dt_edit=#{dt_edit},</if>
+<if test="dt_add != null and dt_add!=''">dt_edit=#{dt_add},</if>
+<if test="result1 != null and result1!=''">result1=#{result1},</if>
+<if test="result2 != null and result2!=''">result2=#{result2},</if>
+<if test="result3 != null and result3!=''">result3=#{result3},</if>
+<if test="result4 != null and result4!=''">result4=#{result4},</if>
+</trim>
+where id=#{id}
+</update>
+
+
+</mapper>

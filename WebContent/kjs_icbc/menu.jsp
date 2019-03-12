@@ -409,19 +409,21 @@
                     </c:if>
 
                     <c:if  test="${fn:contains(sessionScope.pd.purview_map,'dhywgl')==true}">
-					<li><a href="#"><i class="fa fa-dollar"></i><span>贷后业务管理&nbsp;&nbsp;&nbsp;↓</span></a>
+                     <li><a href="">
+                     <i class="fa fa-dollar"></i>
+                     <span>贷后业务管理&nbsp;&nbsp;&nbsp;↓</span></a>
 						<ul class="treeview-menu">
 							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'sqdc')==true}">
-							<li ${requestScope.type=='dhywgl' && requestScope.dn=='businessPayApplication'?"class='active'":''}>
-<a href="${pageContext.request.contextPath }/businessPayApplicationController/select.do?type=dhywgl&dn=businessPayApplication&qn=list">
+							<li ${requestScope.type=='dhywgl' && requestScope.dn=='Applicationcompensatory'?"class='active'":''}>
+<a href="${pageContext.request.contextPath }/businessPayApplicationController/select.do?type=dhywgl&dn=Applicationcompensatory&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>申请代偿
 
 						    </a>
 							</li>
 							</c:if>
 							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'dcqr')==true}">
-							<li ${requestScope.type=='dhywgl' && requestScope.dn=='matEndowmentResult'?"class='active'":''}>
-<a href="${pageContext.request.contextPath }/matEndiwmentResultControoller/select.do?type=dhywgl&dn=matEndowmentResult&qn=list">
+							<li ${requestScope.type=='dhywgl' && requestScope.dn=='compensatoryaffirm'?"class='active'":''}>
+<a href="${pageContext.request.contextPath }/matEndiwmentResultControoller/select.do?type=dhywgl&dn=compensatoryaffirm&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>代偿确认
 
 						    </a>
@@ -496,7 +498,7 @@
 					</c:if>
 			        <!--客户逾期名单  -->
 			        <c:if  test="${fn:contains(sessionScope.pd.purview_map,'khyqmd')==true}">
-			        <li>
+			        <li ${requestScope.type=='khyqmd'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath }/overdueController/select.do?type=khyqmd&dn=overdue&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-user"></i> 
 				    <span>客户逾期名单</span>
 				    </a>
@@ -517,17 +519,17 @@
 				    <span>拖车管理 </span>
 				    </a>
 				    <ul class="treeview-menu">
-					<li ${requestScope.type=='tcglnot'?"class='active'":''}>
+					<li ${requestScope.type=='tc_ysl'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/trailernotAcceptedController/select1.do?type=tc_ysl&dn=TrailernotAccepted1&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>拖车(已受理)</span>
 				    </a>
 					</li>
-					<li ${requestScope.type=='tcglalready'?"class='active'":''}>
+					<li ${requestScope.type=='tc_wsl'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/trailernotAcceptedController/select.do?type=tc_wsl&dn=TrailernotAccepted&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>拖车(未受理)</span>
 				    </a>
 					</li>
-					<li ${requestScope.type=='tcglnot'?"class='active'":''}>
+					<li ${requestScope.type=='tc_wc'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/trailernotAcceptedController/select2.do?type=tc_wc&dn=TrailernotAccepted2&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>拖车(完成)</span>
 				    </a>
@@ -542,13 +544,13 @@
 					    <span>诉讼管理</span>
 					    </a>
 					    <ul class="treeview-menu">
-							<li ${requestScope.type=='ssglnot'?"class='active'":''}>
-								<a href="${pageContext.request.contextPath}/lawsuitController/select1.do?type=ssgl&dn=lawsuit1&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
+							<li ${requestScope.type=='ssgl1'?"class='active'":''}>
+								<a href="${pageContext.request.contextPath}/lawsuitController/select1.do?type=ssgl1&dn=lawsuit1&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 							    <span>已处理</span>
 							    </a>
 							</li>
-							<li ${requestScope.type=='ssglalready'?"class='active'":''}>
-								<a href="${pageContext.request.contextPath}/lawsuitController/select.do?type=ssgl&dn=lawsuit&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
+							<li ${requestScope.type=='ssgl2'?"class='active'":''}>
+								<a href="${pageContext.request.contextPath}/lawsuitController/select.do?type=ssgl2&dn=lawsuit&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 							    <span>待处理</span>
 							    </a>
 							</li>
@@ -579,7 +581,7 @@
 				    </a>
 				    <ul class="treeview-menu">
 				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl_yjq')==true}">
-						<li ${requestScope.type=='cqclalready'?"class='active'":''}>
+						<li ${requestScope.type=='cqcl_yjq'?"class='active'":''}>
 						<a href="${pageContext.request.contextPath}/settleController/select.do?type=cqcl_yjq&dn=settle&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 					    <span>已结清</span>
 					    </a>

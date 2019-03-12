@@ -8,7 +8,7 @@
 		where
 		oc_status=0
 		<if test="param != null and param != ''">
-	 	 and bc.c_name like '%${param}%' or bc.c_cardno like '%${param}%'
+	 	 and c_name like '%${param}%' or c_cardno like '%${param}%'
 		</if>
 	</select> 
 </mapper>

@@ -112,6 +112,15 @@
 </c:if>
 
 <c:if test="${erp15.status eq '11'}">
+	<script type="text/javascript">						
+		$(document).ready(function(){				
+		var clpg_3=document.getElementById("clpg_"+'${erp15.status}'+"_"+'${status.index+1 }').value;
+		var json = jQuery.parseJSON(clpg_3);
+		document.getElementById("price_result_3"+"_"+'${status.index+1 }').value=json.price_result;
+		document.getElementById("price_new_3"+"_"+'${status.index+1 }').value=json.price_new;
+		document.getElementById("icbc_pricecs_3"+"_"+'${status.index+1 }').value=json.icbc_pricecs;
+		});
+	</script>
 <li class="text-primary">
 <em>${status.index+1 }.${erp15.taskname_name }：</em>
 <div class="big-conte" style="display: none;">  
@@ -126,8 +135,9 @@
 <div style="float:left;margin-left:20px;width:260px;" class="ng-binding">
 <strong>处理人：</strong>${erp15.gname1 }</div>
 <strong style="margin-left:10px;"><i>处理信息：</i></strong><br>
-<!-- ngIf: taskAct.pageName!='cudp'||'_cudp'.indexOf(taskAct.pageName)<=-1 -->
-<!-- ngInclude: '/modules/'+taskAct.menuCode+'/'+taskAct.pageName+'.html' -->
+				<textarea id="clpg_${erp15.status}_${status.index+1 }"
+					name="clpg_${erp15.status}_${status.index+1 }"
+					style="display: none;">${erp15.result_1_value }</textarea>
 <div class="task_margin ng-scope"  style="border:1px solid #ccc; border-radius: 10px;background-color:#F7F7F7; padding-top:10px;">
 <form name="modalForm" class="form-horizontal ng-pristine ng-valid ng-scope ng-valid-required" >
 	<div class="form-group ng-scope">
@@ -148,14 +158,16 @@
 			<label class="col-sm-2 control-label">新车指导价</label>
 			<div class="col-sm-3">
 				<div class="input-group date ng-isolate-scope ng-not-empty ng-valid ng-valid-required" >
-					<input class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text" name="price_new"  value="${requestScope.pd.price_new}"><span class="input-group-addon">元</span>
+					<input class="form-control" type="text" id="price_new_3_${status.index+1 }" name="price_new_3_${status.index+1 }"  value="">
+					<span class="input-group-addon">元</span>
 				</div>
 			</div> 
 		</span><!-- end ngIf: currentUser.orgType!='HAFU' -->
 			<label class="col-sm-2 control-label">期望评估价</label>
 			<div class="col-sm-3">
 				<div class="input-group date ng-isolate-scope ng-not-empty ng-valid ng-valid-required" >
-					<input class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text" name="icbc_pricecs"  value="${requestScope.pd.icbc_pricecs}" ><span class="input-group-addon">元</span>
+					<input class="form-control" type="text" id="icbc_pricecs_3_${status.index+1 }" name="icbc_pricecs_3_${status.index+1 }"  value="" >
+					<span class="input-group-addon">元</span>
 				</div>
 			</div> 
 		</div> 
@@ -164,21 +176,23 @@
 			<label class="col-sm-2 control-label">建议评估价</label>
 			<div class="col-sm-3">
 				<div class="input-group date ng-isolate-scope ng-not-empty ng-valid ng-valid-required" >
-					<input class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text"  value="" ><span class="input-group-addon">元</span>
+					<input disabled="disabled" class="form-control" id="jypgj_3_${status.index+1 }" name="jypgj_3_${status.index+1 }" type="text"  value="" >
+					<span class="input-group-addon">元</span>
 				</div>
 			</div> 
 		</span><!-- end ngIf: currentUser.orgType!='HAFU' -->
 			<label class="col-sm-2 control-label">最终评估价<i class="red">*</i></label>
 			<div class="col-sm-3">
 				<div class="input-group date ng-isolate-scope ng-not-empty ng-valid ng-valid-required" >
-					<input class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="text" id="price_result" name="price_result" value="${requestScope.pd.price_result}"><span class="input-group-addon">元</span>
+					<input class="form-control" type="text" id="price_result_3_${status.index+1 }" name="price_result_3_${status.index+1 }" value="">
+					<span class="input-group-addon">元</span>
 				</div>
 			</div> 
 		</div> 
 		<div class="form-group">
 			<label class="col-sm-2 control-label">备注</label>
 			<div class="col-sm-8">
-				<input class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text" name="remark" value="${erp15.result_1_msg}">
+				<input class="form-control" type="text" name="remark" value="${erp15.result_1_msg}">
 			</div>
 		</div> 
 	</div>

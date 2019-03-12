@@ -149,7 +149,7 @@ em {
 								if (item.match('imgstep')) {
 									//alert(json[item].length);
 									if(json[item]!=null&&json[item].length>1){
-										if(item=="imgstep2_5s"){
+										if(item=="imgstep2_1ss"){
 											var arry=json[item];
 											for(var i=0;i<arry.length;i++){
 												if(arry[i]!=null&&arry[i].length>0){

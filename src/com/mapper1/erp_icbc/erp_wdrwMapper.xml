@@ -200,7 +200,7 @@ select * from  icbc_erp_kj_icbc where id=#{id}
 </if>
 <if test="dn=='icbc_erp_kj_icbc'">
 select 
-icbc.*,
+*,
 fs.`name` as fsname,
 gems.`name` as gemsname,
 cars.id as carsid,

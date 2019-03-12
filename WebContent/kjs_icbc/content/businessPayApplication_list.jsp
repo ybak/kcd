@@ -68,7 +68,7 @@ laydate.render({
 					</div>
 					</div>
 					<div class="col-sm-2 admin-page-top hidden-xs">
-							<select id="page_limit_select" onchange="window.location.href='${pageContext.request.contextPath }/erp/loanBefore_list.do?type=wdrw&dn=businessPayApplication&cn=${requestScope.cn}&qn=list&selectMsg=${requestScope.selectMsg}&pagenow=${requestScope.pagenow}&pagesize='+this.value+'&fsid=1'" class="form-control">
+							<select id="page_limit_select" onchange="window.location.href='${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dqywgl6&dn=businessPayApplication&cn=${requestScope.cn}&qn=list&selectMsg=${requestScope.selectMsg}&pagenow=${requestScope.pagenow}&pagesize='+this.value+'&fsid=1'" class="form-control">
 														<option value="10" ${requestScope.pagesize==10?"selected='selected'":''}>每页10条</option>
 														<option value="20" ${requestScope.pagesize==20?"selected='selected'":''}>每页20条</option>
 														<option value="30" ${requestScope.pagesize==30?"selected='selected'":''}>每页30条</option>
@@ -86,12 +86,12 @@ laydate.render({
 					    int totalpage1=Integer.parseInt(request.getAttribute("totalpage").toString());
 					    if(pagenow1>1&&pagenow1<=totalpage1){
 						%>
-						<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=wdrw&dn=businessPayApplication&cn=${requestScope.cn }&qn=list&selectMsg=${requestScope.selectMsg}&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}&fsid=${requestScope.fsid }" class="btn btn-default">«</a>						
+						<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dqywgl6&dn=businessPayApplication&cn=${requestScope.cn }&qn=list&selectMsg=${requestScope.selectMsg}&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}&fsid=${requestScope.fsid }" class="btn btn-default">«</a>						
 						<%				    	
 				         }						
 						 if(pagenow1>=1&&pagenow1<totalpage1){
 						%>
-						<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=wdrw&dn=businessPayApplication&cn=${requestScope.cn }&qn=list&selectMsg=${requestScope.selectMsg}&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}&fsid=${requestScope.fsid }" class="btn btn-default">»</a>
+						<a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dqywgl6&dn=businessPayApplication&cn=${requestScope.cn }&qn=list&selectMsg=${requestScope.selectMsg}&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}&fsid=${requestScope.fsid }" class="btn btn-default">»</a>
                         <%
                         }
                         %>
@@ -151,7 +151,7 @@ laydate.render({
 			<td class="hidden-xs text-center">代收代付购车本金</td> -->
 			<td class="text-center">
 				<div class="table-button text-center">
-					<a title="" href="${pageContext.request.contextPath}/erp/loanBefore_form.do?type=wdrw&dn=businessPayApplication&qn=form&cn=w1&icbc_id=${pd.icbc_id}&date=${pd.date}" class="btn btn-default">
+					<a title="" href="${pageContext.request.contextPath}/erp/loanBefore_form.do?type=dqywgl6&dn=businessPayApplication&qn=form&icbc_id=${pd.icbc_id}&date=${pd.date}" class="btn btn-default">
 					<i class="fa fa-pencil"></i></a>
 				</div>
 			</td>
@@ -187,7 +187,7 @@ laydate.render({
 			<c:if test="${requestScope.totalpage ge '1' }">
 				<ul class="pagination no-margin">
 				       <c:if test="${requestScope.pagenow ne '1' }">
-				        <li><a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=wdrw&dn=businessPayApplication&cn=${requestScope.cn }&qn=list&selectMsg=${requestScope.selectMsg}&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}&fsid=${requestScope.fsid }" aria-label="Next"><span aria-hidden="true">«</span></a></li>
+				        <li><a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dqywgl6&dn=businessPayApplication&cn=${requestScope.cn }&qn=list&selectMsg=${requestScope.selectMsg}&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}&fsid=${requestScope.fsid }" aria-label="Next"><span aria-hidden="true">«</span></a></li>
 				       </c:if>
 					   <%
 				       int pagenow=Integer.parseInt(request.getAttribute("pagenow").toString());
@@ -209,7 +209,7 @@ laydate.render({
 				       if(j==pagenow){
 				       %>
 					   <li id="l<%=j %>" class="active">
-					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=wdrw&dn=businessPayApplication&cn=${requestScope.cn }&qn=list&selectMsg=${requestScope.selectMsg}&pagesize=${requestScope.pagesize}&pagenow=<%=j %>&fsid=${requestScope.fsid }">
+					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dqywgl6&dn=businessPayApplication&cn=${requestScope.cn }&qn=list&selectMsg=${requestScope.selectMsg}&pagesize=${requestScope.pagesize}&pagenow=<%=j %>&fsid=${requestScope.fsid }">
 					   <%=j %>
 					   </a>
 					   </li>
@@ -217,7 +217,7 @@ laydate.render({
 				       }else{
 					   %>
 	                   <li id="l<%=j %>" >
-					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=wdrw&dn=businessPayApplication&cn=${requestScope.cn }&qn=list&selectMsg=${requestScope.selectMsg}&pagesize=${requestScope.pagesize}&pagenow=<%=j %>&fsid=${requestScope.fsid }">
+					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dqywgl6&dn=businessPayApplication&cn=${requestScope.cn }&qn=list&selectMsg=${requestScope.selectMsg}&pagesize=${requestScope.pagesize}&pagenow=<%=j %>&fsid=${requestScope.fsid }">
 					   <%=j %>					   
 					   </a>
 					   </li>					   
@@ -230,7 +230,7 @@ laydate.render({
 		               %>
 					   <c:if test="${requestScope.pagenow lt requestScope.totalpage}">
 			               <c:if test="${requestScope.totalpage gt 5}">
-						  <li><a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=wdrw&dn=businessPayApplication&cn=${requestScope.cn }&qn=list&selectMsg=${requestScope.selectMsg}&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}&fsid=${requestScope.fsid }" aria-label="Next"><span aria-hidden="true">»</span></a></li>  
+						  <li><a href="${pageContext.request.contextPath }/erp/loanBefore_list.do?type=dqywgl6&dn=businessPayApplication&cn=${requestScope.cn }&qn=list&selectMsg=${requestScope.selectMsg}&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}&fsid=${requestScope.fsid }" aria-label="Next"><span aria-hidden="true">»</span></a></li>  
 						   </c:if>
 					   </c:if>
 					     				

@@ -147,7 +147,7 @@
   		and ki.id=iekir.icbc_id 
   		and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
   		GROUP BY iekir.result_1_code 
-  		ORDER BY iekir.result_1_code
+  		ORDER BY iekir.result_1_code LIMIT 0,2
   </select>
   <!-- 客户年龄查询统计    ok -->
   <select id="selectclientage" parameterType="assess_fs" resultType="java.util.Map">

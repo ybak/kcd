@@ -209,6 +209,21 @@
 			</div>
 		</div>
 		<div class="form-group">
+			<label class="col-sm-2 control-label">绑定银行(视频面签绑定)</label>
+			<div class="col-sm-10">
+				<div class="row inline-from">
+					<div class="col-sm-4">
+						<select name="bank_id" id="bank_id" class="form-control">
+						<option value="0">请选择</option>
+						<c:forEach items="${requestScope.banklist }" var="b">
+						<option value="${b.id }">${b.name }</option>
+						</c:forEach>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="col-sm-2 control-label">职称</label>
 			<div class="col-sm-10">
 				<div class="row inline-from">
@@ -232,6 +247,27 @@
 			</div>
 </div>
   <script>
+//绑定银行视频面签功能
+/* function bindbank(){
+	var Id=$("#bank_id").val();
+	var bankId=$("#bank_id").val();
+	$.ajax({
+        url:"${pageContext.request.contextPath }/erp/addRealTimeVideoBinding.do",
+        type:"post",
+        data:form,
+        processData:false,
+        contentType:false,
+        success:function(data){
+         alert("提交成功!");
+        },
+        error:function(e){
+         alert("错误！！");
+        }
+    });
+	
+} */
+  
+  
   $(document).ready(function () {
 	  getcpname('${requestScope.pd.gemscp}','${requestScope.pd.fsid}','${requestScope.pd.gemsid}','${requestScope.pd.upac_id}','${requestScope.cn}');
   });
