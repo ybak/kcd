@@ -56,7 +56,7 @@ String dateString = formatter.format(date);
 		<span class="ng-scope">
 	    	<label class="col-sm-2 control-label">车牌号码<i class="red">*</i></label>
 			<div class="col-sm-3">
-				 <input id="cphm" name="cphm" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
+				 <input id="cphm" name="cphm" value="${pd.c_cardno }" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
 			</div>
 		</span><!-- end ngIf: rootData.taskDefKey=='loanOrder_postget_asun'||rootData.taskDefKey=='loanOrder_postget_bank'||taskAct.activityId=='loanOrder_postget_asun'||taskAct.activityId=='loanOrder_postget_bank' -->
 	</div>

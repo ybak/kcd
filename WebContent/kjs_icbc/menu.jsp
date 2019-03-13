@@ -391,15 +391,15 @@
 							</li>
 						</c:if>
 						<c:if  test="${fn:contains(sessionScope.pd.purview_map,'dzjl')==true}">
-							<li ${requestScope.type=='dqywgl7' && requestScope.dn=='matEndowmentResult'?"class='active'":''}>
-							<a href="${pageContext.request.contextPath }/erp/matEndowentResult_list.do?type=dqywgl7&dn=matEndowmentResult&qn=list">
+							<li ${requestScope.type=='dqywgl7' && requestScope.dn=='matEndowmentResultHzj'?"class='active'":''}>
+							<a href="${pageContext.request.contextPath }/erp/matEndowentResult_list.do?type=dqywgl7&dn=matEndowmentResultHzj&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>垫资记录
 						    </a>
 							</li>
 						</c:if>	
 						<c:if  test="${fn:contains(sessionScope.pd.purview_map,'fkjl')==true}">
-							<li ${requestScope.type=='dqywgl8' && requestScope.dn=='lendingResult'?"class='active'":''}>
-							<a href="${pageContext.request.contextPath }/erp/lengding_list.do?type=dqywgl8&dn=lendingResult&qn=list">
+							<li ${requestScope.type=='dqywgl8' && requestScope.dn=='lendingResultHzj'?"class='active'":''}>
+							<a href="${pageContext.request.contextPath }/erp/lengding_list.do?type=dqywgl8&dn=lendingResultHzj&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>放款记录
 						    </a>
 							</li>
@@ -425,7 +425,6 @@
 							<li ${requestScope.type=='dhywgl' && requestScope.dn=='compensatoryaffirm'?"class='active'":''}>
 <a href="${pageContext.request.contextPath }/matEndiwmentResultControoller/select.do?type=dhywgl&dn=compensatoryaffirm&qn=list">
 							<i class="fa fa-arrow-circle-o-right"></i>代偿确认
-
 						    </a>
 							</li>
 							</c:if>
@@ -519,21 +518,27 @@
 				    <span>拖车管理 </span>
 				    </a>
 				    <ul class="treeview-menu">
+				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'tc_ysl')==true}">
 					<li ${requestScope.type=='tc_ysl'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/trailernotAcceptedController/select1.do?type=tc_ysl&dn=TrailernotAccepted1&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>拖车(已受理)</span>
 				    </a>
 					</li>
+					</c:if>
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'tc_wsl')==true}">
 					<li ${requestScope.type=='tc_wsl'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/trailernotAcceptedController/select.do?type=tc_wsl&dn=TrailernotAccepted&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>拖车(未受理)</span>
 				    </a>
 					</li>
+					</c:if>
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'tc_wc')==true}">
 					<li ${requestScope.type=='tc_wc'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/trailernotAcceptedController/select2.do?type=tc_wc&dn=TrailernotAccepted2&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>拖车(完成)</span>
 				    </a>
 					</li>
+					</c:if>
 				    </ul>
 					</li>
 					</c:if>
@@ -544,16 +549,20 @@
 					    <span>诉讼管理</span>
 					    </a>
 					    <ul class="treeview-menu">
+					    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'ssgl_ycl')==true}">
 							<li ${requestScope.type=='ssgl1'?"class='active'":''}>
 								<a href="${pageContext.request.contextPath}/lawsuitController/select1.do?type=ssgl1&dn=lawsuit1&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 							    <span>已处理</span>
 							    </a>
 							</li>
+						</c:if>
+						<c:if  test="${fn:contains(sessionScope.pd.purview_map,'ssgl_dcl')==true}">
 							<li ${requestScope.type=='ssgl2'?"class='active'":''}>
 								<a href="${pageContext.request.contextPath}/lawsuitController/select.do?type=ssgl2&dn=lawsuit&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 							    <span>待处理</span>
 							    </a>
 							</li>
+						</c:if>
 					    </ul>
 					</li>
 					</c:if>
@@ -587,7 +596,13 @@
 					    </a>
 						</li>
 					</c:if>
-
+                    <%-- <c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl_wjq')==true}">
+						<li ${requestScope.type=='cqcl_wjq'?"class='active'":''}>
+						<a href="${pageContext.request.contextPath}/settleController/select.do?type=cqcl_wjq&dn=settle&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
+					    <span>未结清</span>
+					    </a>
+					    </li>
+					</c:if> --%>
 				    </ul>
 					</li>
 					</c:if>

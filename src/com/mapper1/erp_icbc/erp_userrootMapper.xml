@@ -325,6 +325,7 @@ gems.imgurl as gemsimgurl,
 gems.ssbm as gemsssbm,
 t3.up_id as fs_up_id,
 fs1.name as up_name,
+t.bank_id as t_bank_id,
 gems.mobile as mobile
  from (
               select t1.*,
@@ -337,6 +338,7 @@ gems.mobile as mobile
 LEFT JOIN assess_admin admin ON t3.id=admin.icbc_erp_fsid
 LEFT JOIN assess_gems gems ON gems.id=admin.gemsid
 LEFT JOIN assess_fs fs1 ON fs1.id=t3.up_id
+LEFT JOIN icbc_erp_token t ON t.uid=admin.id
 where (admin.id and t3.ischild != 0) or t3.id=#{fsid} 
 order by admin.dt_edit desc) t4
 where t4.deltag=0

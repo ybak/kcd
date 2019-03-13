@@ -32,14 +32,14 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">快递公司<i class="red">*</i></label>
 		<div class="col-sm-3">
-			<input id="yhdksh_57_kdgs" name="yhdksh_57_kdgs" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+			<input id="yhdksh_57_kdgs" name="yhdksh_57_kdgs" class="form-control">
 		</div>
 		<!-- ngIf: rootData.taskDefKey == 'loanOrder_postinfo_send'||($parent.taskAct.activityId=='loanOrder_postinfo_send'&&notUseButton) -->
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">快递单号<i class="red">*</i></label>
 		<div class="col-sm-3">
-			<input type="text" id="yhdksh_57_kddh" name="yhdksh_57_kddh" class="form-control ng-pristine ng-untouched ng-valid ng-empty">
+			<input type="text" id="yhdksh_57_kddh" name="yhdksh_57_kddh" class="form-control">
 		</div>
 		<label class="col-sm-1 control-label">寄出日期<i class="red">*</i></label>
 		<div class="col-sm-3">

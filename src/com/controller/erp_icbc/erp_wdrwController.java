@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -458,6 +459,7 @@ public class erp_wdrwController {
 	 * @param request
 	 * @throws IOException
 	 */
+	@Transactional
 	@RequestMapping(value = "erp/erp_dygd_76.do")
 	@ResponseBody
 	public void erp_dygd_76(String cphm, String dywcrq, String djzsh,
@@ -470,6 +472,7 @@ public class erp_wdrwController {
 		JSONObject json_result = new JSONObject();// json数据
 		PageData erp_result = new PageData();// erp进度
 		PageData erp_type = new PageData();// erp板块
+		icbc icbc = new icbc();// 主订单表
 
 		json_result.put("nowstatus", 76);
 		json_result.put("icbc_id", icbc_id);
@@ -506,8 +509,16 @@ public class erp_wdrwController {
 		erp_result.put("jsonAll", "");
 		erp_result.put("dn", "icbc_erp_kj_icbc_result");
 		erp_result.put("result_1_value", json_result.toString());
+		// 更新icbc表
+		icbc.setDygd_wcdate(dywcrq);
+		icbc.setId(icbc_id);
+		icbc.setDygd_djzsh(djzsh);
+		icbc.setDygd_dyblry(dyblry);
+
 		erp_wdrwService.update(erp_type);
 		erp_wdrwService.save(erp_result);
+		newicbcService.upicbc(icbc);
+
 	}
 
 	/**

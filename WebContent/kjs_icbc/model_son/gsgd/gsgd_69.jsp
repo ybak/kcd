@@ -25,11 +25,11 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">客户姓名<span class="red">*</span></label>
 		<div class="col-sm-3">
-			<input name="name" id="name" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
+			<input name="name" id="name" value="${pd.c_name }" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
 		</div>
 		<label class="col-sm-2 control-label">编号<span class="red">*</span></label><!--AX年份000001  -->
 		<div class="col-sm-3">
-			<input name="code" id="code" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
+			<input name="code" id="code" value="${pd.gems_code }" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
 		</div>
 	</div>
 	<div class="form-group">

@@ -61,7 +61,7 @@
 							type="text"></textarea>
 					</div>
 				</div>
-				<div class="form-group">
+<%-- 				<div class="form-group">
 					<label class="col-sm-2 control-label">银行电审</label>
 					<div class="col-sm-6">
 						<input type="radio" value="1"	${requestScope.yhds_code eq '1'?"checked='checked'":'' }		 									
@@ -74,7 +74,7 @@
 							name="ds_status"
 							class="ng-pristine ng-untouched ng-valid ng-not-empty">不通过
 					</div>
-				</div>
+				</div> --%>
 				<!-- 根据action确定操作  -->
 				<!-- ngIf: !notUseButton -->
 <div class="modal-footer">

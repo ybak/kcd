@@ -95,7 +95,7 @@
 								<label class="checkbox-inline"><input name="qbrw" id="qbrw" value="0" onclick="check(this)" type="checkbox">全部任务</label>
 								<label class="checkbox-inline"><input name="wdrw" id="wdrw" value="0" onclick="check(this)" type="checkbox">我的任务</label>
 								<label class="checkbox-inline"><input name="wdcy" id="wdcy" value="0" onclick="check(this)" type="checkbox">我参与的任务</label>
-								<label class="checkbox-inline"><input name="wdqd" id="wdqd" value="0" onclick="check(this)" type="checkbox">我启动的任务</label>
+								<!-- <label class="checkbox-inline"><input name="wdqd" id="wdqd" value="0" onclick="check(this)" type="checkbox">我启动的任务</label> -->
 								</td>
 				                </tr>				
 				                <tr >
@@ -235,7 +235,7 @@
 								</td>
 				                </tr>	
 				                <tr >
-								<td><label class="checkbox-inline"><input name="zxsp" id="zxsp" value="0" onclick="checkfl(this)" type="checkbox">在线视频</label>
+								<td><label class="checkbox-inline"><input name="zxsp" id="zxsp" value="0" onclick="checkfl(this)" type="checkbox">视频面签</label>
 								</td>
 								<td> 
 								</td>
@@ -311,7 +311,9 @@
 								<td>
 								<label class="checkbox-inline"><input name="ssgl" id="ssgl" value="0" onclick="checkfl(this)" type="checkbox">诉讼管理 </label>
 								</td>
-                                <td>
+                                <td d="ssgl1" name="node">
+                                <label class="checkbox-inline"><input name="ssgl_ysl" id="ssgl_ycl" value="0" onclick="check(this)" type="checkbox">已处理</label>
+                                <label class="checkbox-inline"><input name="ssgl_wsl" id="ssgl_dcl" value="0" onclick="check(this)" type="checkbox">待处理</label>
                                 </td>
                                 </tr>
                                 <!-- 保险管理 -->
@@ -388,7 +390,8 @@
                                 <label class="checkbox-inline"><input name="pgjsh_11" id="pgjsh_11" value="0" onclick="check(this)" type="checkbox">评估价审核</label>							
                                 </td>
                                 </tr>	
-                                <tr>
+                                <!-- 银行电审 暂时不用 -->
+<!--                                 <tr>
                                 
 								<td id="4">
 								<label class="checkbox-inline"><input name="yhds" id="yhds" value="0" onclick="checkfl(this)" type="checkbox">银行电审</label>
@@ -396,7 +399,7 @@
                                 <td id="yhds1" name="node">
                                 <label class="checkbox-inline"><input name="dsjg_15" id="dsjg_15" value="0" onclick="check(this)" type="checkbox">电审结果</label>							
                                 </td>
-                                </tr>	
+                                </tr> -->	
                                 <tr>
 
 								<td id="5">

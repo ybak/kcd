@@ -21,6 +21,8 @@
 <div class="task_margin ng-scope"  style="border:1px solid #ccc; border-radius: 10px;background-color:#F7F7F7; padding-top:10px;">
 <form id="yhdksh_62" name="modalForm" class="form-horizontal ng-pristine ng-valid ng-scope ng-valid-required" >
 	<input type="hidden" name="adminid" value="${sessionScope.pd.id}">
+	<input type="hidden" name="gems_id" value="${sessionScope.pd.gems_id}">
+	<input type="hidden" name="gems_fs_id" value="${sessionScope.pd.fs_id}">
 	<input type="hidden" name="type_id" value="${requestScope.type_id}"> 
 	<input type="hidden" name="icbc_id" value="${requestScope.icbc_id}"> 
 	<div id="haha" class="form-group">

@@ -1,183 +1,185 @@
 package com.controller.erp_icbc.modal;
 
 public class zhqx_modal {
-	//其他参数
-	private String   dn;
-	private String   qn;
-	private String   type;
-	private String   cn;
-	private Integer  id;
-	private String  name;
-	private Integer modal_tag;//模板标记 1 是  0否
-	private Integer qx_type;//权限类型 默认0 ， 1 代理商， 2审核员/管理员 
-	//权限
-	//1.管理中心
-	private String   glzx;
-	
-	//2.工作任务
-	private String   gzrw;
-	private String   qbrw;
-	private String   wdrw;
-	private String   wdcy;
-	private String   wdqd;
-	
-	//3.账户管理
-	private String   zhgl;
-	private String   gsgl;
-	private String   gsgladd;
-	private String   gsgldelete;
-	private String   gsglupdate;
-	private String   rygl;
-	private String   zhqxadd;
-	private String   zhqxdelete;
-	private String   zhqxupdate;
-	private String   zhqx;
-	private String   rygladd;
-	private String   rygldelete;
-	private String   ryglupdate;
-	
-	//4.武林工行贷
-	private String   wlghd;
-	private String   zx;
-	private String   qcpg;
-	private String   kk;
-	private String   ssmq;
-	private String   qcdk;
-	private String   clhs;
-	   //4.杭州城站支行
-		private String   hzczzh;
-		private String   zx1;
-		private String   qcpg1;
-		private String   ssmq1;
-		private String   qcdk1;
-		private String   clhs1;
-		//4.哈尔滨顾乡支行
-		private String   hebgxzh;
-		private String   zx2;
-		private String   qcpg2;
-		private String   ssmq2;
-		private String   qcdk2;
-		private String   clhs2;
-		//4.台州路桥支行
-		private String   tzlqzh;
-		private String   zx3;
-		private String   qcpg3;
-		private String   ssmq3;
-		private String   qcdk3;
-		private String   clhs3;
-		//4.南京江宁支行
-		private String   njjnzh;
-		private String   zx4;
-		private String   qcpg4;
-		private String   ssmq4;
-		private String   qcdk4;
-		private String   clhs4;
-	//5.贷后管理
-	private String   dhgl;
-	private String   yhhkxq;
-	private String   yhhklr;
-	private String   dclcjyq;
-	private String   dclzjyq;
-	private String   dclgjyq;
-	private String   dcltc;
-	private String   dclgs;
-	private String   dhx;
-	private String   yhx;
-	
-	//6.财务管理
-	private String   cwgl;
-	private String   khdkmx;
-	private String   dqywgl;
-	private String   ywfksq;
-	private String   dzjl;
-	private String   fkjl;
-	private String   dhywgl;
-	private String   sqdc;
-	private String   dcqr;
-	private String   hzsdc;
-	private String   hzsdcqr;
-	private String   gsdz;
-	private String   cwgl_yhdk;
-	private String   cwsz;
-	//车辆抵押
-	private String   cldy;
-	//GPS安装
-	private String   gpsaz;
-	//GPS管理
-	private String   gpsgl;
-	//客户还款管理
-	private String   khhkgl;
-	private String   khhklr;
-	private String   khhkqk;
-	//客户逾期名单
-	private String   khyqmd;
-	//电催作业
-	private String   dczy;
-	//拖车管理
-	private String   tcgl;
-	private String   tc_ysl;
-	private String   tc_wsl;
-	private String   tc_wc;
-	//诉讼管理
-	private String   ssgl;
-	//保险管理 
-	private String   bxgl;
-	//车险理赔 
-	private String   cxlp;
-	//结清处理
-	private String   cqcl;
-	private String   cqcl_yjq;
-	private String   cqcl_wjq;
-	//7.在线视频
-	private String   zxsp;
-	//8.处理过程
-	private String   clgc;
-	
-	//9.征信查询
-	private String   zxcx;
-	private String   cxjg_3;
-	//10.征信通融
-	private String   zxtr;
-	private String   zxyhyj_6;
-	private String   trsh_7;
+	// 其他参数
+	private String dn;
+	private String qn;
+	private String type;
+	private String cn;
+	private Integer id;
+	private String name;
+	private Integer modal_tag;// 模板标记 1 是 0否
+	private Integer qx_type;// 权限类型 默认0 ， 1 代理商， 2审核员/管理员
+	// 权限
+	// 1.管理中心
+	private String glzx;
 
-	//11.车辆评估
+	// 2.工作任务
+	private String gzrw;
+	private String qbrw;
+	private String wdrw;
+	private String wdcy;
+	private String wdqd;
+
+	// 3.账户管理
+	private String zhgl;
+	private String gsgl;
+	private String gsgladd;
+	private String gsgldelete;
+	private String gsglupdate;
+	private String rygl;
+	private String zhqxadd;
+	private String zhqxdelete;
+	private String zhqxupdate;
+	private String zhqx;
+	private String rygladd;
+	private String rygldelete;
+	private String ryglupdate;
+
+	// 4.武林工行贷
+	private String wlghd;
+	private String zx;
+	private String qcpg;
+	private String kk;
+	private String ssmq;
+	private String qcdk;
+	private String clhs;
+	// 4.杭州城站支行
+	private String hzczzh;
+	private String zx1;
+	private String qcpg1;
+	private String ssmq1;
+	private String qcdk1;
+	private String clhs1;
+	// 4.哈尔滨顾乡支行
+	private String hebgxzh;
+	private String zx2;
+	private String qcpg2;
+	private String ssmq2;
+	private String qcdk2;
+	private String clhs2;
+	// 4.台州路桥支行
+	private String tzlqzh;
+	private String zx3;
+	private String qcpg3;
+	private String ssmq3;
+	private String qcdk3;
+	private String clhs3;
+	// 4.南京江宁支行
+	private String njjnzh;
+	private String zx4;
+	private String qcpg4;
+	private String ssmq4;
+	private String qcdk4;
+	private String clhs4;
+	// 5.贷后管理
+	private String dhgl;
+	private String yhhkxq;
+	private String yhhklr;
+	private String dclcjyq;
+	private String dclzjyq;
+	private String dclgjyq;
+	private String dcltc;
+	private String dclgs;
+	private String dhx;
+	private String yhx;
+
+	// 6.财务管理
+	private String cwgl;
+	private String khdkmx;
+	private String dqywgl;
+	private String ywfksq;
+	private String dzjl;
+	private String fkjl;
+	private String dhywgl;
+	private String sqdc;
+	private String dcqr;
+	private String hzsdc;
+	private String hzsdcqr;
+	private String gsdz;
+	private String cwgl_yhdk;
+	private String cwsz;
+	// 车辆抵押
+	private String cldy;
+	// GPS安装
+	private String gpsaz;
+	// GPS管理
+	private String gpsgl;
+	// 客户还款管理
+	private String khhkgl;
+	private String khhklr;
+	private String khhkqk;
+	// 客户逾期名单
+	private String khyqmd;
+	// 电催作业
+	private String dczy;
+	// 拖车管理
+	private String tcgl;
+	private String tc_ysl;
+	private String tc_wsl;
+	private String tc_wc;
+	// 诉讼管理
+	private String ssgl;
+	private String ssgl_ysl;
+	private String ssgl_wsl;
+	// 保险管理
+	private String bxgl;
+	// 车险理赔
+	private String cxlp;
+	// 结清处理
+	private String cqcl;
+	private String cqcl_yjq;
+	private String cqcl_wjq;
+	// 7.在线视频
+	private String zxsp;
+	// 8.处理过程
+	private String clgc;
+
+	// 9.征信查询
+	private String zxcx;
+	private String cxjg_3;
+	// 10.征信通融
+	private String zxtr;
+	private String zxyhyj_6;
+	private String trsh_7;
+
+	// 11.车辆评估
 	private String clpg;
 	private String pgjsh_11;
-	//12.银行电审
+	// 12.银行电审
 	private String yhds;
 	private String dsjg_15;
-	//13.开卡申请
+	// 13.开卡申请
 	private String kksq;
 	private String sfhcjg_19;
 	private String fkkkjg_20;
-	//14.视频面签
+	// 14.视频面签
 	private String spmq;
 	private String jgfk_24;
-	//15.跨区域业务审批
+	// 15.跨区域业务审批
 	private String kqyywsp;
 	private String zgsh_27;
 	private String zjlsh_29;
-	//16.汽车贷款
+	// 16.汽车贷款
 	private String qcdksh;
 	private String zysh_33;
 	private String zgsh_35;
 	private String jlsh_37;
 	private String zjsh_39;
-	//17.内审通融
+	// 17.内审通融
 	private String nstr;
 	private String jgzjl_42;
 	private String trshyj_43;
 	private String trzg_44;
 	private String trjl_45;
-	//18.资金分配
+	// 18.资金分配
 	private String zjfp;
 	private String qrsqdz_48;
 	private String zjfp_49;
 	private String cz_50;
 	private String sslr_51;
 	private String cwqrdz_52;
-	//19.银行贷款申请
+	// 19.银行贷款申请
 	private String yhdksq;
 	private String jgjscl_57;
 	private String jtsjqr_58;
@@ -187,13 +189,13 @@ public class zhqx_modal {
 	private String skqr_62;
 	private String bcclqr_63;
 	private String bccl_64;
-	//20.公司归档
+	// 20.公司归档
 	private String gsgd;
 	private String jtzzgd_67;
 	private String zzgd_68;
 	private String shybcl_69;
 	private String xzrk_70;
-	//21.抵押归档
+	// 21.抵押归档
 	private String dygd;
 	private String gzjl_73;
 	private String dycljsjg_74;
@@ -204,12 +206,12 @@ public class zhqx_modal {
 	private String dyclzyh_79;
 	private String yhsjqr_80;
 	private String lryhcyqk_81;
-	//22.业务信息修改
+	// 22.业务信息修改
 	private String ywxxxg;
 	private String ywglb_84;
 	private String xtyw_85;
 	private String ywxxxgsq_96;
-	//23.退单退费
+	// 23.退单退费
 	private String tdtf;
 	private String shytdsh_88;
 	private String tdsjxz_89;
@@ -218,7 +220,7 @@ public class zhqx_modal {
 	private String gsqrdz_92;
 	private String cljh_93;
 	private String jgsjqr_94;
-	//24.客户管理
+	// 24.客户管理
 	private String khgl;
 	private String zdrxx;
 	private String ghrxx;
@@ -226,20 +228,20 @@ public class zhqx_modal {
 	private String srxx;
 	private String jtxx;
 	private String fcxx;
-	//25.贷款管理
+	// 25.贷款管理
 	private String dkgl;
-	//26.车辆信息
+	// 26.车辆信息
 	private String clxx;
-	//27.资质审查
-	private String zzsc	;
-	private String sfrz	;
-	private String sjhm	;
+	// 27.资质审查
+	private String zzsc;
+	private String sfrz;
+	private String sjhm;
 	private String mzmd;
 	private String grfxxx;
 	private String bjgcxxx;
 	private String fqzbg;
 	private String zxbg;
-	//28.影音材料
+	// 28.影音材料
 	private String yycl;
 	private String yycl11;
 	private String yycl2;
@@ -251,77 +253,80 @@ public class zhqx_modal {
 	private String yycl8;
 	private String yycl9;
 	private String yycl10;
-	//29.收费明细
+	// 29.收费明细
 	private String sfmx;
-	//30.收费明细
+	// 30.收费明细
 	private String clhsqk;
-	//31.生成模板
+	// 31.生成模板
 	private String scmb;
-	//32.任务处理
+	// 32.任务处理
 	private String rwcl;
-	//33.2018-08-30 新增融资
+	// 33.2018-08-30 新增融资
 	private String financing;
 	private String financing_101;
 	private String financing_102;
 	private String financing_103;
-	//权限集合
+	// 权限集合
 	private String gpurview_map;
-	//权限组字符串
+
+	// 权限组字符串
 	public String getGpurview_map() {
-		gpurview_map=glzx+","
-                +gzrw+","+wdrw+","+wdcy+","+wdqd+","+qbrw+","
-                +zhgl+","+gsgl+","+rygl+","+zhqx+","+gsgladd+","+gsgldelete+","+gsglupdate+","+zhqxadd+","+zhqxdelete+","+zhqxupdate+","+rygladd+","+rygldelete+","+ryglupdate+","
-                +wlghd+","+zx+","+qcpg+","+kk+","+ssmq+","+qcdk+","
-                +hzczzh+","+zx1+","+qcpg1+","+ssmq1+","+qcdk1+","
-                +hebgxzh+","+zx2+","+qcpg2+","+ssmq2+","+qcdk2+","
-                +tzlqzh+","+zx3+","+qcpg3+","+ssmq3+","+qcdk3+","
-                +njjnzh+","+zx4+","+qcpg4+","+ssmq4+","+qcdk4+","
-                +dhgl+","+yhhkxq+","+yhhklr+","+dclcjyq+","+dclzjyq+","+dclgjyq+","+dcltc+","+dclgs+","+dhx+","+yhx+","
-                +cwgl+","+khdkmx+","+dqywgl+","+ywfksq+","+dzjl+","+fkjl+","+dhywgl+","+sqdc+","+dcqr+","+hzsdc+","+hzsdcqr+","+gsdz+","+cwgl_yhdk+","+cwsz+","
-                +zxsp+","
-                +zxsp+","
-                +cldy+","
-                +gpsaz+","
-                +gpsgl+","
-                +khhkgl+","+khhklr+","+khhkqk+","
-                +khyqmd+","
-                +dczy+","
-                +tcgl+","+tc_ysl+","+tc_wsl+","+tc_wc+","
-                +ssgl+","
-                +bxgl+","
-                +cxlp+","
-                +cqcl+","+cqcl_yjq+","+cqcl_wjq+","
-                +zxcx+","+cxjg_3+","
-                +zxtr+","+zxyhyj_6+","+trsh_7+","
-                +clpg+","+pgjsh_11+","
-                +yhds+","+dsjg_15+","
-                +kksq+","+sfhcjg_19+","+fkkkjg_20+","
-                +spmq+","+jgfk_24+","
-                +kqyywsp+","+zgsh_27+","+zjlsh_29+","
-                +qcdksh+","+zysh_33+","+zgsh_35+","+jlsh_37+","+zjsh_39+","
-                +nstr+","+jgzjl_42+","+trshyj_43+","+trzg_44+","+trjl_45+","
-                +zjfp+","+qrsqdz_48+","+zjfp_49+","+cz_50+","+sslr_51+","+cwqrdz_52+","
-                +yhdksq+","+jgjscl_57+","+jtsjqr_58+","+yhsjqr_59+","+yhspjg_60+","+yhfkjg_61+","+skqr_62+","+bcclqr_63+","+bccl_64+","
-                +gsgd+","+jtzzgd_67+","+zzgd_68+","+shybcl_69+","+xzrk_70+","
-                +dygd+","+gzjl_73+","+dycljsjg_74+","+jgsjqr_75+","+dyqkjl_76+","+dycljh_77+","+shsjqr_78+","+dyclzyh_79+","+yhsjqr_80+","+lryhcyqk_81+","
-                +ywxxxg+","+ywglb_84+","+xtyw_85+","+ywxxxgsq_96+","
-                +tdtf+","+shytdsh_88+","+tdsjxz_89+","+shjltdsh_90+","+jghkjf_91+","+gsqrdz_92+","+cljh_93+","+jgsjqr_94+","
-                +khgl+","+zdrxx+","+ghrxx+","+qtlxr+","+srxx+","+jtxx+","+fcxx+","
-                +dkgl+","
-                +clxx+","
-                +zzsc+","+sfrz+","+sjhm+","+mzmd+","+grfxxx+","+bjgcxxx+","+fqzbg+","+zxbg+","
-                +yycl+","+yycl11+","+yycl2+","+yycl3+","+yycl4+","+yycl5+","+yycl6+","+yycl7+","+yycl8+","+yycl9+","+yycl10+","
-                +sfmx+","
-                +clhsqk+","
-                +rwcl+","
-                +financing+","+financing_101+","+financing_102+","+financing_103+","
-                ;
-		return gpurview_map.replace("null,","");
+		gpurview_map = glzx + "," + gzrw + "," + wdrw + "," + wdcy + "," + wdqd
+				+ "," + qbrw + "," + zhgl + "," + gsgl + "," + rygl + ","
+				+ zhqx + "," + gsgladd + "," + gsgldelete + "," + gsglupdate
+				+ "," + zhqxadd + "," + zhqxdelete + "," + zhqxupdate + ","
+				+ rygladd + "," + rygldelete + "," + ryglupdate + "," + wlghd
+				+ "," + zx + "," + qcpg + "," + kk + "," + ssmq + "," + qcdk
+				+ "," + hzczzh + "," + zx1 + "," + qcpg1 + "," + ssmq1 + ","
+				+ qcdk1 + "," + hebgxzh + "," + zx2 + "," + qcpg2 + "," + ssmq2
+				+ "," + qcdk2 + "," + tzlqzh + "," + zx3 + "," + qcpg3 + ","
+				+ ssmq3 + "," + qcdk3 + "," + njjnzh + "," + zx4 + "," + qcpg4
+				+ "," + ssmq4 + "," + qcdk4 + "," + dhgl + "," + yhhkxq + ","
+				+ yhhklr + "," + dclcjyq + "," + dclzjyq + "," + dclgjyq + ","
+				+ dcltc + "," + dclgs + "," + dhx + "," + yhx + "," + cwgl
+				+ "," + khdkmx + "," + dqywgl + "," + ywfksq + "," + dzjl + ","
+				+ fkjl + "," + dhywgl + "," + sqdc + "," + dcqr + "," + hzsdc
+				+ "," + hzsdcqr + "," + gsdz + "," + cwgl_yhdk + "," + cwsz
+				+ "," + zxsp + "," + zxsp + "," + cldy + "," + gpsaz + ","
+				+ gpsgl + "," + khhkgl + "," + khhklr + "," + khhkqk + ","
+				+ khyqmd + "," + dczy + "," + tcgl + "," + tc_ysl + ","
+				+ tc_wsl + "," + tc_wc + "," + ssgl + "," + ssgl_ysl + ","
+				+ ssgl_wsl + "," + bxgl + "," + cxlp + "," + cqcl + ","
+				+ cqcl_yjq + "," + cqcl_wjq + "," + zxcx + "," + cxjg_3 + ","
+				+ zxtr + "," + zxyhyj_6 + "," + trsh_7 + "," + clpg + ","
+				+ pgjsh_11 + "," + yhds + "," + dsjg_15 + "," + kksq + ","
+				+ sfhcjg_19 + "," + fkkkjg_20 + "," + spmq + "," + jgfk_24
+				+ "," + kqyywsp + "," + zgsh_27 + "," + zjlsh_29 + "," + qcdksh
+				+ "," + zysh_33 + "," + zgsh_35 + "," + jlsh_37 + "," + zjsh_39
+				+ "," + nstr + "," + jgzjl_42 + "," + trshyj_43 + "," + trzg_44
+				+ "," + trjl_45 + "," + zjfp + "," + qrsqdz_48 + "," + zjfp_49
+				+ "," + cz_50 + "," + sslr_51 + "," + cwqrdz_52 + "," + yhdksq
+				+ "," + jgjscl_57 + "," + jtsjqr_58 + "," + yhsjqr_59 + ","
+				+ yhspjg_60 + "," + yhfkjg_61 + "," + skqr_62 + "," + bcclqr_63
+				+ "," + bccl_64 + "," + gsgd + "," + jtzzgd_67 + "," + zzgd_68
+				+ "," + shybcl_69 + "," + xzrk_70 + "," + dygd + "," + gzjl_73
+				+ "," + dycljsjg_74 + "," + jgsjqr_75 + "," + dyqkjl_76 + ","
+				+ dycljh_77 + "," + shsjqr_78 + "," + dyclzyh_79 + ","
+				+ yhsjqr_80 + "," + lryhcyqk_81 + "," + ywxxxg + "," + ywglb_84
+				+ "," + xtyw_85 + "," + ywxxxgsq_96 + "," + tdtf + ","
+				+ shytdsh_88 + "," + tdsjxz_89 + "," + shjltdsh_90 + ","
+				+ jghkjf_91 + "," + gsqrdz_92 + "," + cljh_93 + "," + jgsjqr_94
+				+ "," + khgl + "," + zdrxx + "," + ghrxx + "," + qtlxr + ","
+				+ srxx + "," + jtxx + "," + fcxx + "," + dkgl + "," + clxx
+				+ "," + zzsc + "," + sfrz + "," + sjhm + "," + mzmd + ","
+				+ grfxxx + "," + bjgcxxx + "," + fqzbg + "," + zxbg + ","
+				+ yycl + "," + yycl11 + "," + yycl2 + "," + yycl3 + "," + yycl4
+				+ "," + yycl5 + "," + yycl6 + "," + yycl7 + "," + yycl8 + ","
+				+ yycl9 + "," + yycl10 + "," + sfmx + "," + clhsqk + "," + rwcl
+				+ "," + financing + "," + financing_101 + "," + financing_102
+				+ "," + financing_103 + ",";
+		return gpurview_map.replace("null,", "");
 	}
 
 	public void setGpurview_map(String gpurview_map) {
 		this.gpurview_map = gpurview_map;
 	}
+
 	public String getDn() {
 		return dn;
 	}
@@ -1821,6 +1826,7 @@ public class zhqx_modal {
 	public void setGsdz(String gsdz) {
 		this.gsdz = gsdz;
 	}
+
 	public String getCwsz() {
 		return cwsz;
 	}
@@ -1981,8 +1987,20 @@ public class zhqx_modal {
 		this.cwgl_yhdk = cwgl_yhdk;
 	}
 
+	public String getSsgl_ysl() {
+		return ssgl_ysl;
+	}
 
-	
-	
+	public void setSsgl_ysl(String ssgl_ysl) {
+		this.ssgl_ysl = ssgl_ysl;
+	}
+
+	public String getSsgl_wsl() {
+		return ssgl_wsl;
+	}
+
+	public void setSsgl_wsl(String ssgl_wsl) {
+		this.ssgl_wsl = ssgl_wsl;
+	}
 
 }

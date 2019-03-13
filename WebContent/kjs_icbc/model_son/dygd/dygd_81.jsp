@@ -32,13 +32,13 @@ String dateString = formatter.format(date);
      <div class="form-group">
 		<label class="col-sm-2 control-label">车牌号码<i class="red">*</i></label>
 		<div class="col-sm-3">
-			<input id="cphm" name="cphm" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required ng-valid-pattern ng-valid-maxlength" type="text" pattern="([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF])|([DF]([A-HJ-NP-Z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1})" maxlength="8" ng-model="task.plateNum" cg-required="" required="required">
+			<input id="cphm" name="cphm" value="${pd.c_cardno }" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required ng-valid-pattern ng-valid-maxlength" type="text" pattern="([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF])|([DF]([A-HJ-NP-Z0-9])[0-9]{4})))|([京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1})" maxlength="8" ng-model="task.plateNum" cg-required="" required="required">
 		</div>
 		<div>
 			<label class="col-sm-2 control-label">抵押完成日期<i class="red">*</i></label>
 			<div class="col-sm-3">
 				<div class="input-group date ng-isolate-scope ng-not-empty ng-valid ng-valid-required" >
-                <input id="dywcrq" name="dywcrq"  class="form-control" type="text">
+                <input id="dywcrq" name="dywcrq"  value="${pd.dygd_wcdate}" class="form-control" type="text">
                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 </div>
 			</div>
@@ -47,11 +47,11 @@ String dateString = formatter.format(date);
 		<div class="form-group">
 		 <label class="col-sm-2 control-label">登记证书号<i class="red">*</i></label>
 		    <div class="col-sm-3">
-			  <input id="djzsh" name="djzsh"  class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
+			  <input id="djzsh" name="djzsh"  value="${pd.dygd_djzsh}" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
 		    </div>
 		     <label class="col-sm-2 control-label">抵押办理人员<i class="red">*</i></label>
 		    <div class="col-sm-3">
-			  <input id="dyblry" name="dyblry" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
+			  <input id="dyblry" name="dyblry" value="${pd.dygd_dyblry}" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
 		    </div>
 		</div>
 		<div class="form-group">
@@ -64,9 +64,9 @@ String dateString = formatter.format(date);
 	      <label class="col-sm-2 control-label">车辆类别</label>
 		   <!-- ngIf: rootData.editFlag!='1' && rootData.editFlag!='-1' -->
 		   <div class="col-sm-3 ng-scope">
-			<input type="radio" value="国产" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="cllb">国产
+			<input type="radio" value="国产" ${pd.source_id eq '1'?"checked='checked'":'' } class="ng-pristine ng-untouched ng-valid ng-not-empty" name="cllb">国产
 	            &nbsp;&nbsp;&nbsp;&nbsp;
-	        <input type="radio" value="进口" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="cllb">进口
+	        <input type="radio" value="进口" ${pd.source_id eq '2'?"checked='checked'":'' } class="ng-pristine ng-untouched ng-valid ng-not-empty" name="cllb">进口
 		    </div><!-- end ngIf: rootData.editFlag!='1' && rootData.editFlag!='-1' -->
 		</div>
 
