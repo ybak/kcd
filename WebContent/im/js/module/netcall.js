@@ -832,7 +832,7 @@ fn.onBeCalling = function (obj, scene) {
         netcall.control(tmp);
         return;
     }
-    /*{"timetag":1550823353987,"type":2,"channelId":50817379631128,"account":"507da3a2ddd113ec9166fb8e58005fb5","uid":2498098925,"turnServerList":["223.112.179.146:80","223.112.179.146:8080","223.112.179.146:16285"],"sturnServerList":["223.112.179.146:3478","223.112.179.146:3479"],"proxyServerList":[],"accountUidMap":{"507da3a2ddd113ec9166fb8e58005fb5":2509901713,"c6fa296f9c17c8032be6593a5d02269b":2498098925},"clientConfig":"{\"net\":{\"record\":true,\"dtunnel\":true,\"p2p\":false}}","custom":"{\"id\":\"706\",\"latitude\":26.056487,\"longitude\":119.336294,\"address\":\"福建省福州市台江区曙光路126号宇洋中央金座\"}","pushConfig":{"enable":"1","needBadge":"1","needPushNick":"1","pushContent":"","custom":"{\"id\":\"706\",\"latitude\":26.056487,\"longitude\":119.336294,\"address\":\"福建省福州市台江区曙光路126号宇洋中央金座\"}","pushPayload":"","sound":"","webrtcEnable":"1"},"serverMap":"{\"webrtcarray\":[\"webrtcgwcn.netease.im/?ip=223.112.179.146:5060\",\"webrtcgwhz.netease.im/?ip=223.112.179.146:5060\"],\"wechatapparray\":[\"webrtcgwcn.netease.im/?ip=223.112.179.146:5061\",\"webrtcgwhz.netease.im/?ip=223.112.179.146:5061\"],\"token\":\"mljxyxct3qgh8h6rw41waxpunnje1n5rqwuw3s7k\",\"detectTurnAddrs\":[\"223.112.179.146:80\",\"113.108.226.138:80\",\"117.158.188.82:80\"],\"turnaddrs\":[[\"223.112.179.146:80\",\"223.112.179.146:8080\",\"223.112.179.146:16285\"]],\"grey\":false,\"webrtc\":\"webrtcgwcn.netease.im/?ip=223.112.179.146:5060\"}"}*/
+    /*{"timetag":1550823353987,"type":2,"channelId":50817379631128,"account":"507da3a2ddd113ec9166fb8e58005fb5","uid":2498098925,"turnServerList":["223.112.179.146:80","223.112.179.146:8080","223.112.179.146:16285"],"sturnServerList":["223.112.179.146:3478","223.112.179.146:3479"],"proxyServerList":[],"accountUidMap":{"507da3a2ddd113ec9166fb8e58005fb5":2509901713,"c6fa296f9c17c8032be6593a5d02269b":2498098925},"clientConfig":"{\"net\":{\"record\":true,\"dtunnel\":true,\"p2p\":false}}","custom":"{\"id\":\"706\",\"latitude\":26.056487,\"longitude\":119.336294,\"address\":\"福建省\"}","pushConfig":{"enable":"1","needBadge":"1","needPushNick":"1","pushContent":"","custom":"{\"id\":\"706\",\"latitude\":26.056487,\"longitude\":119.336294,\"address\":\"福建省福州市台江区曙光路126号宇洋中央金座\"}","pushPayload":"","sound":"","webrtcEnable":"1"},"serverMap":"{\"webrtcarray\":[\"webrtcgwcn.netease.im/?ip=223.112.179.146:5060\",\"webrtcgwhz.netease.im/?ip=223.112.179.146:5060\"],\"wechatapparray\":[\"webrtcgwcn.netease.im/?ip=223.112.179.146:5061\",\"webrtcgwhz.netease.im/?ip=223.112.179.146:5061\"],\"token\":\"mljxyxct3qgh8h6rw41waxpunnje1n5rqwuw3s7k\",\"detectTurnAddrs\":[\"223.112.179.146:80\",\"113.108.226.138:80\",\"117.158.188.82:80\"],\"turnaddrs\":[[\"223.112.179.146:80\",\"223.112.179.146:8080\",\"223.112.179.146:16285\"]],\"grey\":false,\"webrtc\":\"webrtcgwcn.netease.im/?ip=223.112.179.146:5060\"}"}*/
     //设置状态:被叫中
     this.beCalling = true;
     this.channelId=channelId;
@@ -851,7 +851,8 @@ fn.onBeCalling = function (obj, scene) {
     }.bind(this), 62 * 1000)
     //p2p场景
     this.beCalledInfo = obj;
-    //this.beCalledInfo.custom='{"id":"706","latitude":111,"longitude":000,"address":"上海市"}';
+    //this.beCalledInfo.custom='{"id":"706",\"latitude\":26.056487,\"longitude\":119.336294,"address":"上海市"}';
+    //obj.custom='{"id":"706",\"latitude\":26.056487,\"longitude\":119.336294,"address":"上海市"}';
     this.netcallActive = true;
     this.netcallAccount = obj.account;//即帐号
     this.doOpenChatBox();
@@ -950,73 +951,85 @@ fn.onCallAccepted = function (obj) {
 };
 //(己方本地操作，对端不受影响)关闭/开启对方声音
 fn.setDeviceAudioOut = function (state) {
+    var that = this
     $(".icon-volume").toggleClass("icon-disabled", !state);
-    this.deviceAudioOutOn = !!state;
-
+    that.deviceAudioOutOn = !!state;
     if (state) {
-        this.log("开启扬声器");
-        return this.netcall.startDevice({
+        that.log("开启扬声器");
+        return that.netcall.startDevice({
             type: Netcall.DEVICE_TYPE_AUDIO_OUT_CHAT
         }).then(function () {
-            this.log("开启扬声器成功");
-        }.bind(this)).catch(function () {
-            console.log("开启扬声器失败");
-            this.log("开启扬声器失败");
-            this.onDeviceNoUsable(Netcall.DEVICE_TYPE_AUDIO_OUT_CHAT);
-        }.bind(this));
+            that.netcall.setPlayVolume(255);
+            that.log("开启扬声器成功");
+        }).catch(function () {
+            that.log("开启扬声器失败");
+            that.onDeviceNoUsable(Netcall.DEVICE_TYPE_AUDIO_OUT_CHAT);
+        });
     } else {
-        this.log("关闭扬声器");
-        return this.netcall.stopDevice(Netcall.DEVICE_TYPE_AUDIO_OUT_CHAT).then(function () {
-            this.log("关闭扬声器成功");
-        }.bind(this)).catch(function () {
-            this.log("关闭扬声器失败");
-        }.bind(this));
+        that.log("关闭扬声器");
+        return that.netcall.stopDevice(Netcall.DEVICE_TYPE_AUDIO_OUT_CHAT).then(function () {
+            that.log("关闭扬声器成功");
+        }).catch(function () {
+            that.log("关闭扬声器失败");
+        });
     }
 };
+
 //开启摄像头，将本地视频发送对端
 fn.setDeviceVideoIn = function (state) {
+    var that = this
     $(".icon-camera").toggleClass("icon-disabled", !state);
-    this.deviceVideoInOn = !!state;
+    that.deviceVideoInOn = !!state;
+
     if (state) {
-        this.log("开启摄像头");
-        return this.netcall.startDevice({ //开启设备
-            type: Netcall.DEVICE_TYPE_VIDEO/*,
-            width: this.videoCaptureSize.width,
-            height: this.videoCaptureSize.height */
+        that.log("开启摄像头");
+        return that.netcall.startDevice({
+            type: Netcall.DEVICE_TYPE_VIDEO
+            /* width: that.videoCaptureSize.width,
+             height: that.videoCaptureSize.height */
         }).then(function () {
-            this.videoType = 'video'
-            this.log("开启摄像头成功，通知对方己方开启了摄像头");
+            that.videoType = 'video'
+            that.log("开启摄像头成功，通知对方己方开启了摄像头");
             // 通知对方自己开启了摄像头
-            this.netcall.control({
+            that.netcall.control({
                 command: Netcall.NETCALL_CONTROL_COMMAND_NOTIFY_VIDEO_ON
             });
             $(".netcall-video-local").toggleClass("empty", false);
             $(".netcall-video-local .message").text("");
-            this.startLocalStream()
-            this.updateVideoShowSize(true, false)
-        }.bind(this)).catch(function (err) {
+
+            that.startLocalStream()
+            that.updateVideoShowSize(true, false)
+
+        }).catch(function (err) {
             console.error(err)
-            this.videoType = null
+            that.videoType = null
             // 通知对方自己的摄像头不可用
-            this.log("开启摄像头失败，通知对方己方摄像头不可用", err);
-            //更新对应的UI 和通知对方
-            this.onDeviceNoUsable(Netcall.DEVICE_TYPE_VIDEO);
-        }.bind(this));
+            that.log("开启摄像头失败，通知对方己方摄像头不可用", err);
+            that.onDeviceNoUsable(Netcall.DEVICE_TYPE_VIDEO);
+
+            that.netcall.control({
+                command: Netcall.NETCALL_CONTROL_COMMAND_SELF_CAMERA_INVALID
+            });
+            $(".netcall-video-local").toggleClass("empty", true);
+            $(".netcall-video-local .message").text("摄像头不可用");
+            $(".netcall-box .camera.control-item").toggleClass("no-device", true).attr("title", "摄像头不可用");
+        });
+
     } else {
-        this.videoType = null
-        this.log("关闭摄像头");
-        return this.netcall.stopDevice(Netcall.DEVICE_TYPE_VIDEO).then(function () {
+        that.videoType = null
+        that.log("关闭摄像头");
+        return that.netcall.stopDevice(Netcall.DEVICE_TYPE_VIDEO).then(function () {
             // 通知对方自己关闭了摄像头
-            this.log("关闭摄像头成功，通知对方我方关闭了摄像头");
-            this.netcall.control({
+            that.log("关闭摄像头成功，通知对方我方关闭了摄像头");
+            that.netcall.control({
                 command: Netcall.NETCALL_CONTROL_COMMAND_NOTIFY_VIDEO_OFF
             });
             $(".netcall-video-local").toggleClass("empty", true);
             $(".netcall-video-local .message").text("您关闭了摄像头");
-        }.bind(this)).catch(function (e) {
-            this.videoType = null
-            this.log("关闭摄像头失败");
-        }.bind(this));
+        }).catch(function (e) {
+            that.videoType = null
+            that.log("关闭摄像头失败");
+        });
     }
 };
 

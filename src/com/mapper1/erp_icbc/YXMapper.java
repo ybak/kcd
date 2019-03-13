@@ -57,5 +57,6 @@ public interface YXMapper {
 	int selectCountAdminById(String id);
 	String selectBankId(String icbcId);
 	Integer selectBankCount(String id);
-	Integer addOccupyTest(@Param("icbcId") Integer id,@Param("dataTime")String time);
+	Integer addOccupyTest(Map map);
+	int updateServerPath(@Param("serverPath")String serverPath,@Param("id")String Id);
 }

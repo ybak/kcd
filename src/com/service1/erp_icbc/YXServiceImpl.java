@@ -187,8 +187,13 @@ public class YXServiceImpl implements YXService{
 		return yxmapper.selectBankCount(id);
 	}
 	@Override
-	public Integer addOccupyTest(Integer id, String time) {
+	public Integer addOccupyTest(Map map) {
 		// TODO Auto-generated method stub
-		return yxmapper.addOccupyTest(id, time);
+		return yxmapper.addOccupyTest(map);
+	}
+	@Override
+	public int updateServerPath(String serverPath, String Id) {
+		// TODO Auto-generated method stub
+		return yxmapper.updateServerPath(serverPath,Id);
 	}
 }

@@ -49,7 +49,7 @@ public class IcbcApplicationController extends BaseController{
 	//pdf处理
 	@RequestMapping(value="/ptreating.do",produces="application/json;charset=utf-8")
 	@ResponseBody
-	public BaseResult query1(HttpServletResponse response,HttpServletRequest request){
+	public Object query1(HttpServletResponse response,HttpServletRequest request){
 		String s=request.getParameter("id");
 		response.setContentType("text/html;charset=UTF-8");
 	    response.setCharacterEncoding("UTF-8");
@@ -76,7 +76,6 @@ public class IcbcApplicationController extends BaseController{
             </select>*/
 			log.info("查询原始合同数据->"+map);
 			DocumentHandlerParent dh;
-			String ss;
 			try {
 				if(map.get("bankId").toString().equals("2")){//工行武林支行
 					dh=new DocumentHandler2("/htpdf",request,map);
@@ -84,13 +83,12 @@ public class IcbcApplicationController extends BaseController{
 					dh=new DocumentHandler3("/HangZhouChengZhan",request,map);
 				}
 				//DocumentHandler3 
-				 ss = dh.fillTemplate();
+				 return dh.fillTemplate();
 			} catch (Exception e) {
 				log.error("error->"+JSONObject.toJSONString(e.getStackTrace()));
 				// TODO Auto-generated catch block
 				return resultError(e.getMessage());
 			}
-			return resultSuccess(ss);
 		}
 	}
 	//zip下载

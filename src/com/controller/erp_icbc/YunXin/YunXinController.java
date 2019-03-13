@@ -1,8 +1,17 @@
 package com.controller.erp_icbc.YunXin;
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +38,6 @@ import com.controller.erp_icbc.utils.EmptyUtil;
 import com.controller.erp_icbc.utils.PageInfo;
 import com.controller.htpdf.DataConversionParent;
 import com.controller.htpdf.DoubleUtil;
-import com.model1.icbc.erp.PageData;
 import com.service1.erp_icbc.YXService;
 import com.util.creditutil;
 import com.util.duoying.MD5;
@@ -227,7 +235,7 @@ public class YunXinController extends BaseController{
 	/*来电用户的信息*/
 	@RequestMapping(value="viedoinfo.do")
 	@ResponseBody
-	public Map selectViedobyid(String id,String domvalue){
+	public Object selectViedobyid(String id,String domvalue){
 		Map map=null;
 		List select_mq_info=null;
 		String icbcid="-1";
@@ -237,28 +245,28 @@ public class YunXinController extends BaseController{
 		}else if(domvalue.equals("B")){
 			 map=(Map) yx.select_viedo_byid2(id).get(0);
 			 log.info("查看历史视频返回元数据->{}"+JSON.toJSONString(map));
-			 if(map.get("kk_car_stateid")!=null){
-				map.put("kk_car_stateid",yx.getCommStates(Integer.parseInt(map.get("kk_car_stateid").toString()))); 
-			 }
-			 if(map.get("kk_car_cityid")!=null){
-				map.put("kk_car_cityid",yx.getCommCitys(Integer.parseInt(map.get("kk_car_cityid").toString()))); 
-			 }
-			 if(map.get("kk_loan_stateid")!=null){
-				map.put("kk_loan_stateid",yx.getCommStates(Integer.parseInt(map.get("kk_loan_stateid").toString()))); 
-			 }
-			 if(map.get("kk_loan_cityid")!=null){
-				map.put("kk_loan_cityid",yx.getCommCitys(Integer.parseInt(map.get("kk_loan_cityid").toString()))); 
-			 }
-			 if(map.get("mem_states")!=null){
-				map.put("mem_states",yx.getCommStates(Integer.parseInt(map.get("mem_states").toString()))); 
-			 }
-			 if(map.get("mem_citys")!=null){
-				map.put("mem_citys",yx.getCommCitys(Integer.parseInt(map.get("mem_citys").toString()))); 
-			 }
-			 if(map.get("kk_kpj")!=null && Integer.parseInt(DataConversionParent.subZeroAndDot(map.get("kk_kpj").toString()))>0 &&  map.get("sfje")!=null){
-				 map.put("sfbl",DataConversionParent.subZeroAndDot(DoubleUtil.mul(DoubleUtil.div( map.get("sfje").toString(),map.get("kk_kpj").toString(),4),"100")));
-			 }	
 		}
+		 if(map.get("kk_car_stateid")!=null){
+			map.put("kk_car_stateid",yx.getCommStates(Integer.parseInt(map.get("kk_car_stateid").toString()))); 
+		 }
+		 if(map.get("kk_car_cityid")!=null){
+			map.put("kk_car_cityid",yx.getCommCitys(Integer.parseInt(map.get("kk_car_cityid").toString()))); 
+		 }
+		 if(map.get("kk_loan_stateid")!=null){
+			map.put("kk_loan_stateid",yx.getCommStates(Integer.parseInt(map.get("kk_loan_stateid").toString()))); 
+		 }
+		 if(map.get("kk_loan_cityid")!=null){
+			map.put("kk_loan_cityid",yx.getCommCitys(Integer.parseInt(map.get("kk_loan_cityid").toString()))); 
+		 }
+		 if(map.get("mem_states")!=null){
+			map.put("mem_states",yx.getCommStates(Integer.parseInt(map.get("mem_states").toString()))); 
+		 }
+		 if(map.get("mem_citys")!=null){
+			map.put("mem_citys",yx.getCommCitys(Integer.parseInt(map.get("mem_citys").toString()))); 
+		 }
+		 if(map.get("kk_kpj")!=null && Integer.parseInt(DataConversionParent.subZeroAndDot(map.get("kk_kpj").toString()))>0 &&  map.get("sfje")!=null){
+			 map.put("sfbl",DataConversionParent.subZeroAndDot(DoubleUtil.mul(DoubleUtil.div( map.get("sfje").toString(),map.get("kk_kpj").toString(),4),"100")));
+		 }	
 		//修理下图片
 		Object imgstep2_1ss=map.get("imgstep2_1ss");
 		if(imgstep2_1ss!=null && !imgstep2_1ss.toString().equals("")){
@@ -271,7 +279,6 @@ public class YunXinController extends BaseController{
 				}
 			}
 		}
-		
 		select_mq_info = yx.select_mq_info(map.get("id").toString());//改  多个面签只取第一个
 		if(select_mq_info.size()>0){
 			 map.putAll((Map)select_mq_info.get(0));//添加到集合中
@@ -319,7 +326,9 @@ public class YunXinController extends BaseController{
 	public Result selectvideo(){
 		return renderSuccess(yx.select_YX_video());
 	}
-
+	
+	
+	
 	//设置上传成功后的回调地址 {"ret":{},"requestId":"vodc59a1e37-9654-4314-89fb-406b5661086f","code":200}
 	public static String setCallBack(){
 		Map map=new HashMap(2);
@@ -360,7 +369,8 @@ public class YunXinController extends BaseController{
 			Integer watermarkId,
 			String userDefInfo,
 			Integer transOffset,
-			Integer transDuration){
+			Integer transDuration,
+			String id){
 			if(!EmptyUtil.isEmpty(originFileName)){
 				JSONObject jsonobject=new JSONObject();
 				jsonobject.put("originFileName", originFileName);
@@ -374,7 +384,17 @@ public class YunXinController extends BaseController{
 				jsonobject.put("userDefInfo", userDefInfo);
 				jsonobject.put("transOffset", transOffset);
 				jsonobject.put("transDuration", transDuration);
-				return tokenDispose(HttpYX.doPost(YXConstant.InitUpload,jsonobject.toJSONString()),"1");
+				
+		
+				String obj=HttpYX.doPost(YXConstant.InitUpload,jsonobject.toJSONString());
+				Map map=new HashMap<>();
+				map.put("icbcId", id);
+				map.put("dataTime",creditutil.time());
+				map.put("result", obj);
+				map.put("describe","文件上传初始化");
+				int i=yx.addOccupyTest(map);
+				log.info("添加调用记录->addCount:+"+i);
+				return tokenDispose(obj,"1");
 			}else{
 				return renderError("请输入上传文件的原始名称(包含后缀名)!");
 			}
@@ -542,7 +562,6 @@ public class YunXinController extends BaseController{
 	@ResponseBody
 	public Object occupy(Integer id){
 		log.info("占位icbcId->"+id);
-		yx.addOccupyTest(id, creditutil.time());
 		String bankId=yx.selectBankId(String.valueOf(id));
 		ScanPool1 scanPool1=null;;
 		if(id==null || StringUtils.isBlank(bankId)){
@@ -554,7 +573,17 @@ public class YunXinController extends BaseController{
 			scanPool1 =PoolCache1.aReduceBusy(bankId);
 			log.info("占位结果->"+scanPool1);
 		}
+		Map map=new HashMap<>();
+		map.put("icbcId", id);
+		map.put("dataTime",creditutil.time());
+		map.put("result", JSON.toJSONString(scanPool1));
+		map.put("describe","获取视频通话账号");
+		int i=yx.addOccupyTest(map);
+		String Id=map.get("id").toString();
+		log.info("添加调用记录->addCount:+"+i+",主键:"+Id);
+		
 		if(scanPool1!=null){
+			scanPool1.setId(Id);
 			return renderSuccess(scanPool1);
 		}else{
 			return renderError("暂且没有闲置的视频通话坐席,请稍后再试！");
@@ -621,11 +650,21 @@ public class YunXinController extends BaseController{
 	 */
 	@RequestMapping(value="sur.do")
 	@ResponseBody
-	public Object setUploadReduce(){
+	public Object setUploadReduce(String id){
 		List list = yx.query_token("2",-1);
 		Random random = new Random();
 		int n = random.nextInt(list.size());
-		return renderSuccess(list.get(n));
+		
+		Map map=new HashMap<>();
+		Object object=list.get(n);
+		map.put("icbcId", id);
+		map.put("dataTime",creditutil.time());
+		map.put("result", JSON.toJSONString(object));
+		map.put("describe", "获取随机上传账号");
+		int i=yx.addOccupyTest(map);
+		log.info("添加调用记录->addCount:+"+i);
+		
+		return renderSuccess(object);
 	}
 	/**
 	 * @param infocopy  信息抄送 自定义消息
@@ -704,7 +743,7 @@ public class YunXinController extends BaseController{
             		
 				} catch (Exception e) {
 					log.info("抄送处理异常->"+JSON.toJSONString(e.getStackTrace()));
-					yx.insert_M(body);//如果错误直接保存
+					yx.insert_M(body+"----error:"+JSON.toJSONString(e.getStackTrace()));//如果错误直接保存
 				}
             }
             // TODO: 比较md5、checkSum是否一致，以及后续业务处理
@@ -729,7 +768,47 @@ public class YunXinController extends BaseController{
         } else
             return null;
     }
-	public static void main(String[] args){
+	//private static String viedo_download_server_root="C:\\Users\\Administrator\\Desktop\\word\\haha1\\upload";
+    //private static String play_first="C:\\Users\\Administrator\\Desktop\\word\\haha1\\upload";
+
+    
+   private static String viedo_download_server_root="DIMG/assess/upload/";
+    private static String play_first="http://a.kcway.net/assess/";
+    private static HashMap map=new HashMap<>();
+	@RequestMapping(value="dsdb.do")
+	@ResponseBody
+    public Object downloadServiceDatabase(String id,String url){
+    	if(StringUtils.isBlank(id)){
+    		return renderError("参数不正确");
+    	}
+    	log.info("id是否存在->"+map.get("id"));
+    	if(map.get(id)==null){
+    		//删除云端的视频
+        	String[] s=url.split("/");
+        	try {
+        		map.put(id,creditutil.time());
+        		String last=s[s.length-1];
+        		log.info("原视频文件名->"+last);
+        		String download_path= viedo_download_server_root+last;
+        		String play_path=play_first+last;
+        		log.info("下载地址->"+download_path);
+        		log.info("播放地址->"+play_path);
+    			downloadFile(url,download_path);
+    			//更新数据库播放地址
+    			int updateCount=yx.updateServerPath(play_path,id);
+    			log.info("更新播放地址->id:"+id+",count"+updateCount);
+    			return renderSuccess(play_path);
+    		} catch (Exception e) {
+    			log.info("下载视频到本地服务器异常"+e.getStackTrace());
+    			return renderError("下载失败，失败原因："+e.getMessage());
+    		}finally {
+				map.remove(id);
+			}
+    	}else{
+    		return renderError(map.get(id).toString()+"正在下载中，请等待...");
+    	}
+    }
+	public static void main(String[] args) throws Exception{
 		//信息时长抄送测试
 /*		InfoCopy infocopy=new InfoCopy();
 		infocopy.setChannelId("62654898432013131");
@@ -778,7 +857,7 @@ public class YunXinController extends BaseController{
 		
 		//添加好友
 		//System.out.println(HttpYX.addBuddy("c6fa296f9c17c8032be6593a5d02269b", "507da3a2ddd113ec9166fb8e58005fb5"));
-		System.out.print(DataConversionParent.subZeroAndDot("0.0"));
+		//System.out.print(DataConversionParent.subZeroAndDot("0.0"));
 		//循环删除好友 开始
 		//获取所有的审核
 		/*List list0 = yx.query_token("0",-1);
@@ -818,6 +897,10 @@ public class YunXinController extends BaseController{
 //				break;
 //			}
 //		}
-		
+		//视频下载
+		Long l=System.currentTimeMillis();
+		downloadFile("http://jdvod6ep5thqk.vod.126.net/jdvod6ep5thqk/0-50870502883509-0-mix.mp4","C:\\Users\\Administrator\\Desktop\\word\\haha1\\upload\\0-6324213347287310-0-mix.mp4");
+		Long l1=System.currentTimeMillis();
+		System.out.println(l1-l);
 	}
 }

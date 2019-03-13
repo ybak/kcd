@@ -1,6 +1,10 @@
 package com.controller.erp_icbc.base;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -165,4 +169,36 @@ public abstract class BaseController {
 		headers.setContentDispositionFormData("attachment", fileName);
 		return new ResponseEntity<Resource>(resource, headers, status);
 	}
+	/**
+     * TODO 下载文件到本地
+     * @author nadim  
+     * @date Sep 11, 2015 11:45:31 AM
+     * @param fileUrl 远程地址
+     * @param fileLocal 本地路径
+     * @throws Exception 
+     */
+    public static void downloadFile(String fileUrl,String fileLocal) throws Exception {
+       log.info("下载地址->"+fileUrl);
+       URL url = new URL(fileUrl);
+       HttpURLConnection urlCon = (HttpURLConnection) url.openConnection();
+//       urlCon.setConnectTimeout(6000);
+//       urlCon.setReadTimeout(6000);
+       int code = urlCon.getResponseCode();
+       if (code != HttpURLConnection.HTTP_OK) {
+           throw new Exception("文件读取失败"+code);
+       }
+       BufferedInputStream bufferedInputStream = new  BufferedInputStream(urlCon.getInputStream());
+       File file=new File(fileLocal);
+       if(!file.exists()){
+    	   file.createNewFile();
+       }
+       FileOutputStream fileOutputStream = new FileOutputStream(fileLocal);
+       int count=0;
+       byte[] b = new byte[100];
+       while((count = bufferedInputStream.read(b)) != -1) {                
+           fileOutputStream.write(b, 0,count);
+       }
+       bufferedInputStream.close();
+       fileOutputStream.close();
+  }
 }

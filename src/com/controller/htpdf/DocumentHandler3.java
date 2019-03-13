@@ -16,7 +16,7 @@ public class DocumentHandler3 extends DocumentHandlerParent{
 	}
 	private static Logger log = LogManager.getLogger(DocumentHandler3.class.getName());
 	@SuppressWarnings("unchecked")
-	public String fillTemplate () throws Exception{
+	public Object fillTemplate () throws Exception{
 		
 		String pgj=map.get("pgj").toString();
 		map.put("pgj1",pgj);//∆¿π¿º€‘≠÷µ 

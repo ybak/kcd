@@ -18,7 +18,7 @@ public class DocumentHandler2 extends DocumentHandlerParent{
 	private final static String[] NPDF={"3.pdf","4.pdf","39.pdf","51.pdf"};
 	//这里抛弃只使用 list 和addAll()方法的形势
 	@SuppressWarnings("unchecked")
-	public String fillTemplate () throws Exception{
+	public Object fillTemplate () throws Exception{
 			addn();//生成完毕
     		//数据处理
 			map.put("a","安联汽车服务有限");//委托授权书中
@@ -108,7 +108,7 @@ public class DocumentHandler2 extends DocumentHandlerParent{
 			copys(NPDF);
 			pdfs(DPDF);
 			addn();//打包中
-			String s=endAssembly();
+			Object s=endAssembly();
      	    addn();//生成完毕
      	    return s;
 		}

@@ -154,8 +154,19 @@
 								<div style="height: 1px; background: #CCCCCC;"></div>
 								<div class="mq_l_bottom">
 									<div style="height: 85%;">
-										<video style="margin: auto" id="my-video" class="video-js vjs-big-play-centered " x-webkit-airplay="allow" webkit-playsinline controls preload="auto" width="100%" height="100%" ></video>
-									</div>
+										<div id="loadEffect" class="loadEffect hid">
+									        <span></span>
+									        <span></span>
+									        <span></span>
+									        <span></span>
+									        <span></span>
+									        <span></span>
+									        <span></span>
+									        <span></span>
+									         <p style="color: #929292; position: absolute;top: 40px;left: 25px; font-size: 16px;">下载中</p>
+										</div>
+										 <video id="my-video" style="margin: auto" id="my-video" class="hide video-js vjs-big-play-centered " x-webkit-airplay="allow" webkit-playsinline controls preload="auto" width="100%" height="100%" ></video>
+									 </div>
 									<input type="hidden" id="icbcid">
 									<input type="hidden" id="channelid" />
 									<div class="mq_viedo_bottom"></div>
@@ -192,6 +203,76 @@
 				    background-size: 24px;
 				    border-radius: 50%;
 				}
+				
+				.loadEffect{
+		            width: 100px;
+		            height: 100px;
+		            position: relative;
+		            margin: 0 auto;
+		            top: 100px;
+		        }
+		        .loadEffect span{
+		            display: inline-block;
+		            width: 16px;
+		            height: 16px;
+		            border-radius: 50%;
+		            background: #969696;
+		            position: absolute;
+		            -webkit-animation: load 1.04s ease infinite;
+		        }
+		        @-webkit-keyframes load{
+		            0%{
+		                opacity: 1;
+		            }
+		            100%{
+		                opacity: 0.2;
+		            }
+		        }
+		        .loadEffect span:nth-child(1){
+		            left: 0;
+		            top: 50%;
+		            margin-top:-8px;
+		            -webkit-animation-delay:0.13s;
+		        }
+		        .loadEffect span:nth-child(2){
+		            left: 14px;
+		            top: 14px;
+		            -webkit-animation-delay:0.26s;
+		        }
+		        .loadEffect span:nth-child(3){
+		            left: 50%;
+		            top: 0;
+		            margin-left: -8px;
+		            -webkit-animation-delay:0.39s;
+		        }
+		        .loadEffect span:nth-child(4){
+		            top: 14px;
+		            right:14px;
+		            -webkit-animation-delay:0.52s;
+		        }
+		        .loadEffect span:nth-child(5){
+		            right: 0;
+		            top: 50%;
+		            margin-top:-8px;
+		            -webkit-animation-delay:0.65s;
+		        }
+		        .loadEffect span:nth-child(6){
+		            right: 14px;
+		            bottom:14px;
+		            -webkit-animation-delay:0.78s;
+		        }
+		        .loadEffect span:nth-child(7){
+		            bottom: 0;
+		            left: 50%;
+		            margin-left: -8px;
+		            -webkit-animation-delay:0.91s;
+		        }
+		        .loadEffect span:nth-child(8){
+		            bottom: 14px;
+		            left: 14px;
+		            -webkit-animation-delay:1.04s;
+		        }
+									
 			</style>
 			<!-- 录制播放结束 -->
 			<div class="mq_arrows_box" title=""></div>
@@ -698,6 +779,17 @@
 		  		$(".mq_viedo_bottom").html('<p class="through" style="background-color: #d9534f;"> 不通过</p>');
 		  	}
 	}
+	function myPlayerFun(param1){
+		if(!myPlayer){
+  			//重新初始化播放器
+  			myPlayer = neplayer('my-video');
+  		}		        
+    	myPlayer.resize( 400, 320);
+		myPlayer.setDataSource({src:param1,type:"video/mp4"});
+		myPlayer.play();
+		$("#my-video").toggleClass("hide",false)
+		$("#loadEffect").toggleClass("hide",true)
+	}
 	function viewdate(dom,data){
 		$("#namediv"+dom).text(data.c_name);//姓名
 		$("#idnumberAdiv"+dom).text(data.c_cardno);//身份证号
@@ -716,15 +808,44 @@
     		$("#visa"+dom).attr("src","../kjs_icbc/kjs_icbc_style/images/error.png");
     	}
     	if(dom=="B"){//查看历史
+			$("#loadEffect").toggleClass("hide",false)
     		$("#icbcid").val(data.id);//隐藏域 存放审核id 在历史审核的提交的时候用
 	  		$("#channelid").val(data.channelId);
-	  		if(!myPlayer){
-	  			//重新初始化播放器
-	  			myPlayer = neplayer('my-video');
-	  		}	
-	  		myPlayer.resize( 400, 320);
-			myPlayer.setDataSource({src:data.url,type:"video/mp4"});
-			myPlayer.play();
+	  		if(!data.serverPath){
+	  			console.log("没有下载到服务器，开始下载")
+	  			//播放视频区域 变成下载中..... 
+	  			$.ajax({
+	   		        url:'../yx/dsdb.do',
+	   		        type:'POST',
+	   		        data:{id:data.yviId,url:data.url},
+	   		        dataType:'json',
+	   		        success: function (data1) {
+						console.log("下载成功返回->"+data1);
+	   		        	if(data1.success){
+	   		        		myPlayerFun(data1.message);
+	   		        	}else{
+	   		        		if(data1.message.indexOf("下载中")!=-1){
+	   	    					//将播放界面变成下载中的
+	   	    					
+	   	    				}else{
+	   	    					/*setTimeout(function(){
+		   		        			layer.msg(data1.message);
+		   		        		},300) */
+		   		        		layer.msg(data1.message);
+	   		        		}
+	   		        	}
+	   		        },
+	   		        error: function (XMLHttpRequest, textStatus, errorThrown) {
+	   		        	var prefix="下载视频到服务器异常";
+	   		            console.log(prefix+":(状态码)"+XMLHttpRequest.status);
+	   		            console.log(prefix+"请求客户信息异常:(状态)"+XMLHttpRequest.readyState);
+	   		            console.log(prefix+"请求客户信息异常:(错误信息) "+textStatus);
+	   		        }
+	   	    	 })
+	        }else{
+	        	console.log("已下载到服务器准备播放")
+	        	myPlayerFun(data.serverPath);
+	        }
 	  	}
 		if(data.aj_date && data.dk_total_price){//期限和总额存在
 			let dklv=accDiv(data.dk_lv,"100")//8.55除以100
@@ -2122,7 +2243,7 @@
 		        data:{id:value,domvalue:"B"},
 		        dataType:'json',
 		        success: function (data) {
-		        	viewdate("B",data)
+		        	viewdate("B",data);
 		        },
 		        error: function (XMLHttpRequest, textStatus, errorThrown) {
 		        	var prefix="请求历史视频异常";
@@ -2161,6 +2282,15 @@
     		return "<p style='color:#ccc;font-size:16px' class='glyphicon glyphicon-off' title='暂且没有视频'></p>";
     	}
     }
+    /* function downloadFormatter(value, row, index) {
+    	if(!!value){//存在播放url
+    		var result="";
+            result += "<a href='javascript:;' class='btn btn-xs green' onclick=\"mq_viedoplay('"+row.yid+"','"+index+"','"+row.code+"')\" title='查看'><span style='color:#5bc0de;font-size:16px' class='glyphicon glyphicon-off'></span></a>";
+           	return result;
+    	}else{//不存在播放url
+    		return "<p style='color:#ccc;font-size:16px' class='glyphicon glyphicon-off' title='暂且没有视频'></p>";
+    	}
+    } */
 	//生成用户数据
     $('#mytab').bootstrapTable({
         url:"../yx/selectOperatingFalse.do",//要请求数据的文件路径  
@@ -2256,7 +2386,14 @@
                 width: 200,
                 align: 'center',
                 formatter: actionFormatter
-            }
+            }/* ,
+            {
+                field:'url',
+                title: '查看详情',
+                width: 200,
+                align: 'center',
+                formatter: downloadFormatter
+            } */
 
         ],
         locale:'zh-CN',//中文支持,

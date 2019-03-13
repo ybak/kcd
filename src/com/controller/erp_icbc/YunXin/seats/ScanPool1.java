@@ -4,6 +4,7 @@ package com.controller.erp_icbc.YunXin.seats;
  * @author:LiWang
  */
 public class ScanPool1 extends SP{
+	private String Id;
 	//当前时间-开始占用的时间 =被占用的时间长度
 	private Long createTime=0L;
 	private Integer delmark;
@@ -23,6 +24,14 @@ public class ScanPool1 extends SP{
 	public ScanPool1(int onlinetime,int validtime){
 		this.onlinetime=onlinetime;
 		this.validtime=validtime;
+	}
+
+	public String getId() {
+		return Id;
+	}
+
+	public void setId(String id) {
+		Id = id;
 	}
 
 	public Integer getDelmark() {

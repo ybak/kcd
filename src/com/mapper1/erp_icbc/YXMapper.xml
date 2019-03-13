@@ -17,8 +17,36 @@
 	<select id="getOrganization" resultType="java.util.HashMap">
 		select id,name from assess_fs
 	</select>
-	<insert id="addOccupyTest" parameterType="java.lang.String" >
-		insert into occupy_test(icbc_id,data_time) VALUES(#{icbcId},#{dataTime})
+	<insert id="addOccupyTest" parameterType="map" keyProperty="id" useGeneratedKeys="true">
+		insert into occupy_test
+		 <trim prefix="(" suffix=")" suffixOverrides="," >
+			 <if test="icbcId != null" >
+				icbc_id,
+			</if>
+			<if test="dataTime != null" >
+				data_time,
+			</if>
+			<if test="result != null" >
+				result,
+			</if>
+			<if test="describe != null" >
+				describe_,
+			</if>
+		 </trim>
+		 <trim prefix="values (" suffix=")" suffixOverrides="," >
+		 	<if test="icbcId != null" >
+			#{icbcId},
+			</if>
+			<if test="dataTime != null" >
+			#{dataTime},
+			</if>
+			<if test="result != null" >
+			#{result},
+			</if>
+			<if test="describe != null" >
+			#{describe},
+			</if>
+		 </trim>
 	</insert>
 	<select id="getBank" resultType="java.util.HashMap">
 		select id,name from icbc_banklist
@@ -41,6 +69,11 @@
       	</set>
 		where uid=#{Id}
 	</update>
+	
+	<update id="updateServerPath">
+		update icbc_erp_video_info set server_path=#{serverPath} where id=#{id}
+	</update>
+	
 	<select id="selectBankId" resultType="string" parameterType="string">
 		select bank_id from kj_icbc where id=#{0}
 	</select>
@@ -256,7 +289,7 @@ kik.gjr1_gzdw,kik.gjr2_gzdw,kik.gjr1_dwdz,kik.gjr2_dwdz,kik.gjr1_yzdrgx,kik.gjr2
 kik.qtlxr_c_name,kik.qtlxr_c_tel,kik.qtlxr_jdrgx,kik.qtlxr_xzdz,
 ki.id,ki.c_name,ki.c_tel,ki.c_cardno,ki.gems_fs_id,ki.gems_id,ki.loan_tpid, ki.loan_level,ki.c_name_mt,ki.c_tel_mt,ki.c_cardno_mt,ki.kk_kpj,ki.c_sex,ki.c_name_gj1,ki.c_name_gj2,ki.c_tel_gj1,ki.c_tel_gj2,ki.c_cardno_gj1,ki.c_cardno_gj2,ki.imgstep2_1ss,ki.id icbcid,
 ac.price_result,ac.source_id,ac.property_id,ac.car_status,ac.gear_box_id,ac.car_km_icbc,ac.cardt2,ac.cardt1,ac.color_id,ac.mem_states,ac.mem_citys,ac.vincode,ac.ppxh,ac.motorcode,ac.icbc_pricecs,ac.price_new,ac.c_carno,
-yb.id ybId,yb.`name` ybName,yvi.address address,yvi.url,
+yb.id ybId,yb.`name` ybName,yvi.address address,yvi.url,yvi.server_path serverPath,yvi.id yviId,
 cb.name cbName,cm.name cmName,cs.name csName,ag.name agName,af.name afName		
 	from icbc_erp_video_info yvi   
 	join kj_icbc ki on yvi.ext=ki.id and yvi.id=#{0}

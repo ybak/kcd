@@ -66,7 +66,7 @@ public abstract class DocumentHandlerParent{
 //		 File file=new File(root_Directory);
 //		 System.out.print(file.getPath());
 //	 }
-	protected abstract String fillTemplate() throws Exception;
+	protected abstract Object fillTemplate() throws Exception;
 	static{
 		try {
 			bfChinese= BaseFont.createFont( "STSongStd-Light" ,"UniGB-UCS2-H",BaseFont.NOT_EMBEDDED);
@@ -93,8 +93,12 @@ public abstract class DocumentHandlerParent{
 		}
 		//创建此抽象路径名指定的目录，包括所有必需但不存在的父目录
     	//当且仅当此抽象路径名表示的文件或目录存在时，返回 true；否则返回 false 
-		if(file.mkdirs()){
-			fileAccessAuthority(file);
+    	try {
+			if (file.createNewFile()){
+				fileAccessAuthority(file);
+			}
+		} catch (IOException e) {
+			log.info(file.toString()+"目录创建异常！");
 		}
 	} 
 	//https://blog.csdn.net/u014457793/article/details/24638673
@@ -125,30 +129,38 @@ public abstract class DocumentHandlerParent{
     	log.info("is write allow : " + file.canWrite());
 	}
 	//最后执行
-	protected String endAssembly(){
+	protected Object endAssembly(){
 		File[] arr = file.listFiles();
-	    arr=sort(arr);//排序
-	    //下载的文件名
-	    md5p=MD5.sign(file.getName(),"UTF-8");
-	    //最大pdf文件全路径 
-	    StringBuilder pdfpath=new StringBuilder(stair_file).append(md5p).append(".pdf");
-	   	try {
-	   	  //组合结果pdf
-		  merge(arr,pdfpath.toString());
-		  //返回给客户端的下载路径
-		  String s8=new StringBuilder(savepdfpath).append(md5p).append(".pdf").toString();
-		  return s8;
-	    } catch (Exception e) {
-	    	DeleteFile.deleteDir(new File(pdfpath.toString()));
-    		log.error("pdf容器异常->"+e);
-    		throw new RuntimeException("pdf容器异常");
-		}finally {
-			//无论成功或者失败 删除world
-	    	try {
-	    		ProgressSingleton.remove(sessionid);
-			} catch (NullPointerException e) {
-				//键为null
-			}
+		if(arr.length>0){
+			 arr=sort(arr);//排序
+			    //下载的文件名
+			    md5p=MD5.sign(file.getName(),"UTF-8");
+			    //最大pdf文件全路径 
+			    StringBuilder pdfpath=new StringBuilder(stair_file).append(md5p).append(".pdf");
+			   	try {
+			   	  //组合结果pdf
+				  String s7=merge(arr,pdfpath.toString());
+				  //返回给客户端的下载路径
+				  String s8=new StringBuilder(savepdfpath).append(md5p).append(".pdf").toString();
+				  BaseResult baseResult=new BaseResult();
+				  baseResult.setCode(1);
+				  baseResult.setLoadf(s7);
+				  baseResult.setMessage(s8);
+				  return baseResult;
+			    } catch (Exception e) {
+			    	DeleteFile.deleteDir(new File(pdfpath.toString()));
+		    		log.error("pdf容器异常->"+e);
+		    		throw new RuntimeException("pdf容器异常");
+				}finally {
+					//无论成功或者失败 删除world
+			    	try {
+			    		ProgressSingleton.remove(sessionid);
+					} catch (NullPointerException e) {
+						//键为null
+					}
+				}
+		}else{
+			throw new RuntimeException("文档数为0");
 		}
 	}
 	//pdf填充 .pdf文件集 输出目录 数据集
@@ -258,7 +270,7 @@ public abstract class DocumentHandlerParent{
 		}
 	}
 	//pdf整合
-	private static void merge(File[] filePathList,String mergeName) throws Exception{
+	private static String merge(File[] filePathList,String mergeName) throws Exception{
 		PdfCopyFields copyFields = null;
 		File file=new File(mergeName);
 		//当且仅当不存在具有此抽象路径名指定名称的文件时，不可分地创建一个新的空文件。检查文件是否存在，
@@ -277,6 +289,8 @@ public abstract class DocumentHandlerParent{
 			}
 		}
 		copyFields.close();
+		//返回文件的全路径
+		return file.getAbsolutePath();
 	}
 	protected static int getLetterFirstIndex(String s){
 		int index=0;

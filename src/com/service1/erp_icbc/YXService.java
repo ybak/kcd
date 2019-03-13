@@ -59,5 +59,6 @@ public interface YXService {
 	int selectCountAdminById(String id);
 	String selectBankId(String icbcId);
 	Integer selectBankCount(String id);
-	Integer addOccupyTest(Integer id,String time);
+	Integer addOccupyTest(Map map);
+	int updateServerPath(String serverPath,String Id);
 }
