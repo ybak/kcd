@@ -189,8 +189,7 @@ public abstract class BaseController {
        }
        BufferedInputStream bufferedInputStream = new  BufferedInputStream(urlCon.getInputStream());
        if(!file.exists()){
-    	   file.mkdir();//创建目录
-    	   file.createNewFile();//创建文件
+     	   file.createNewFile();//创建文件
        }
        FileOutputStream fileOutputStream = new FileOutputStream(file);
        int count=0;
