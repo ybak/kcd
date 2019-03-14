@@ -1,7 +1,9 @@
 package com.controller.erp_icbc.base;
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -11,6 +13,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -211,4 +214,38 @@ public abstract class BaseController {
        bufferedInputStream.close();
        fileOutputStream.close();
   }
+    public static void urlToWeb(String farUrl, HttpServletResponse response) throws Exception{
+    	 URL url = new URL(farUrl);
+         HttpURLConnection urlCon = (HttpURLConnection) url.openConnection();
+         int code = urlCon.getResponseCode();
+         if (code != HttpURLConnection.HTTP_OK) {
+             throw new Exception("文件读取失败"+code);
+         }
+         BufferedInputStream bis=null;
+         BufferedOutputStream bos=null;
+         try{
+           bis = new  BufferedInputStream(urlCon.getInputStream());
+           String[] ss=farUrl.split("/");
+           response.setContentType("application/x-msdownload;");
+           /* 设置文件头：最后一个参数是设置下载文件名(假如我们叫a.ini)   */
+	       response.setHeader("Content-disposition", "attachment; filename=" +ss[ss.length-1]);
+	       bos = new BufferedOutputStream(response.getOutputStream());
+	       byte[] buff = new byte[2048];
+	       int bytesRead;
+	       while (-1 != (bytesRead = bis.read(buff, 0, buff.length)))
+	         bos.write(buff, 0, bytesRead);
+	       	bos.flush();
+		 }catch (Exception e) {
+		    	 e.printStackTrace();  
+		 } finally {
+	         try {
+	             if (bis != null) {
+	               bis.close();
+	             }
+	             if (bos != null) {
+	               bos.close();
+	             }
+	           } catch (Exception e){}
+	     }
+    }
 }

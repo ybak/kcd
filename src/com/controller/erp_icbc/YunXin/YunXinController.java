@@ -1,17 +1,9 @@
 package com.controller.erp_icbc.YunXin;
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +11,7 @@ import java.util.Random;
 import java.util.UUID;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.LogManager;
@@ -317,9 +310,10 @@ public class YunXinController extends BaseController{
 	    		map.put("channelid",MD5.sign(UUID.randomUUID().toString().replace("-", "").toLowerCase(),"utf-8"));
 	    		map.put("viedotype", 0);
 	    		map.put("te", redundant.toString());
-				yx.addcallback(map);
+				int i=yx.addcallback(map);
+				log.info("上传成功添加->"+i);
 			} catch (Exception e) {
-				//yx.insert_M(body);//如果错误直接保存
+				yx.insert_M(body+"----error:"+getErrorInfoFromException(e));//如果错误直接保存
 			}
 	}
 	@RequestMapping(value="selectvideo.do")
@@ -729,7 +723,10 @@ public class YunXinController extends BaseController{
             						url=fileinfo2.getString("url");
             						if(b && url.indexOf("mp4")!=-1){//mix：是否为混合录制文件，true：混合录制文件；false：单人录制文件 并且为mp4格式
             							channeid = yx.select_infocopy(fileinfo2.getString("channelid"));//判断是否存在通道id
-            							map.put("fi", fileinfo2);//这里解决同一次抄送，可能会抄给你不同channel ID 的信息的	
+            							map.put("fi", fileinfo2);//这里解决同一次抄送，可能会抄给你不同channel ID 的信息的
+            							map.put("url", fileinfo2.get("url"));
+            							map.put("vid", fileinfo2.get("vid"));
+            							map.put("channelid", fileinfo2.get("fileinfo2"));
             							 if(channeid!=null){//存在 修改
             								 int i=yx.update_infocopy_downloadM(map);
             								 log.info("更新下载地址信息->"+i);
@@ -768,13 +765,21 @@ public class YunXinController extends BaseController{
         } else
             return null;
     }
+    /*@RequestMapping(value="downloadClient.do")
+	@ResponseBody
+    public void downloadClient(String url,HttpServletResponse response) throws Exception{
+    	log.info("下载->"+url);
+    	super.urlToWeb(url, response);
+    }*/
     private static HashMap map=new HashMap<>();
 	@RequestMapping(value="dsdb.do")
 	@ResponseBody
-    public Object downloadServiceDatabase(String id,String url){
+    public Object downloadServiceDatabase(String id){
     	if(StringUtils.isBlank(id)){
     		return renderError("参数不正确");
     	}
+    	Map map1=yx.selectUrlAndVidById(id);
+    	String url=map1.get("url").toString();
     	log.info("id是否存在->"+map.get("id"));
     	if(map.get(id)==null){
     		//删除云端的视频
@@ -791,6 +796,11 @@ public class YunXinController extends BaseController{
     			downloadFile(url,file);
     			//更新数据库播放地址
     			int updateCount=yx.updateServerPath(play_path,id);
+    			if(updateCount>0){//更新成功
+    				//刪除原視頻
+    				 String result=HttpYX.delteViedo(map1.get("vid").toString());
+    				 log.info("刪除视频源文件返回->"+result);
+    			}
     			log.info("更新播放地址->id:"+id+",count"+updateCount);
     			return renderSuccess(play_path+"---"+file.getAbsolutePath());
     		} catch (Exception e) {

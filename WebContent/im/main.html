@@ -500,6 +500,7 @@
 	<script src="js/widget/uiKit.js?v=2"></script> <!-- widget/uiKit.js 云信的ui组件库，开发这可以使用该组件来快速开发工程 -->
 	<script src="js/widget/minAlert.js"></script> <!-- 弹框 -->
 	<script src="js/module/base.js"></script>
+	<script src="js/download.js"></script>
 	 <!-- <script src="js/module/message.js"></script>  --> <!-- 消息逻辑 -->
 	<!-- <script src="js/module/sysMsg.js"></script> --> <!-- 系统消息  -->
 	<!-- <script src="js/module/personCard.js"></script> --> <!-- 个人名片 -->
@@ -817,7 +818,7 @@
 	  			$.ajax({
 	   		        url:'../yx/dsdb.do',
 	   		        type:'POST',
-	   		        data:{id:data.yviId,url:data.url},
+	   		        data:{id:data.yviId},
 	   		        dataType:'json',
 	   		        success: function (data1) {
 						console.log("下载成功返回->"+JSON.stringify(data1));
@@ -2283,15 +2284,18 @@
     		return "<p style='color:#ccc;font-size:16px' class='glyphicon glyphicon-off' title='暂且没有视频'></p>";
     	}
     }
-    /* function downloadFormatter(value, row, index) {
+    function downloadClient(url){
+    	download(url)
+    }
+     function downloadFormatter(value, row, index) {	
     	if(!!value){//存在播放url
     		var result="";
-            result += "<a href='javascript:;' class='btn btn-xs green' onclick=\"mq_viedoplay('"+row.yid+"','"+index+"','"+row.code+"')\" title='查看'><span style='color:#5bc0de;font-size:16px' class='glyphicon glyphicon-off'></span></a>";
+            result += "<a style='color:#5bc0de' href='javascript:;' onclick=\"downloadClient('"+value+"')\" class='btn btn-xs green'>下载</a>";
            	return result;
     	}else{//不存在播放url
-    		return "<p style='color:#ccc;font-size:16px' class='glyphicon glyphicon-off' title='暂且没有视频'></p>";
+    		return "<p style='color:#ccc;font-size:12px'>暂时没有视频</p>";
     	}
-    } */
+    } 
 	//生成用户数据
     $('#mytab').bootstrapTable({
         url:"../yx/selectOperatingFalse.do",//要请求数据的文件路径  
@@ -2387,14 +2391,14 @@
                 width: 200,
                 align: 'center',
                 formatter: actionFormatter
-            }/* ,
+		    } ,
             {
                 field:'url',
-                title: '查看详情',
+                title: '下载到本地',
                 width: 200,
                 align: 'center',
                 formatter: downloadFormatter
-            } */
+            } 
 
         ],
         locale:'zh-CN',//中文支持,

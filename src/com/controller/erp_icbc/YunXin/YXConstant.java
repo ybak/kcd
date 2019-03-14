@@ -19,4 +19,6 @@ public class YXConstant {
 	public static final String Libs="http://wanproxy.127.net/lbs";
 	//设置上传完成的回调地址
 	public static final String SetCallBack="https://vcloud.163.com/app/vod/upload/setcallback";
+	//刪除視頻原文件
+	public static String deleteViedo="https://vcloud.163.com/app/vod/video/videoDelete";
 }

@@ -45,6 +45,15 @@ public class HttpYX {
 		map.put("type",1);
 		return HttpYX.doPost(YXConstant.CreateMobileUpload,map);
 	}
+	//刪除視頻文件
+	public static String delteViedo(String vid){
+		Map map=new HashMap(1);
+		map.put("vid", vid);
+		return HttpYX.doPost(YXConstant.deleteViedo,map);
+	}
+/*	public static void main(String[] args){
+		System.out.println("返回"+delteViedo("2372955600"));
+	}*/
 	/**添加好友
 	 * @param accid网易云通信ID，最大长度32字符，必须保证一个 APP内唯一（只允许字母、数字、半角下划线_、@、半角点以及半角-组成，不区分大小写，会统一小写处理，请注意以此接口返回结果中的accid为准）。
 	 * @param faccid 被添加accid

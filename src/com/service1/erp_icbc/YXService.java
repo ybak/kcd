@@ -61,4 +61,5 @@ public interface YXService {
 	Integer selectBankCount(String id);
 	Integer addOccupyTest(Map map);
 	int updateServerPath(String serverPath,String Id);
+	Map selectUrlAndVidById(String Id);
 }

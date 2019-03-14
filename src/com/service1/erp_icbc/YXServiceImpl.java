@@ -196,4 +196,9 @@ public class YXServiceImpl implements YXService{
 		// TODO Auto-generated method stub
 		return yxmapper.updateServerPath(serverPath,Id);
 	}
+	@Override
+	public Map selectUrlAndVidById(String Id) {
+		// TODO Auto-generated method stub
+		return yxmapper.selectUrlAndVidById(Id);
+	}
 }

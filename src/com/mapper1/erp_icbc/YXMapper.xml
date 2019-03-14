@@ -171,7 +171,7 @@
 	</select>
 	<!-- 记录上传回调信息 -->
 	<insert id="addcallback" parameterType="map">
-		insert into icbc_erp_video_info(viedotype,url,ext,address,channelid,te) values(#{viedotype},#{origAddr},#{user_defined.id},#{user_defined.address},#{channelid},#{te})
+		insert into icbc_erp_video_info(viedotype,url,ext,address,channelid,te,vid) values(#{viedotype},#{origAddr},#{user_defined.id},#{user_defined.address},#{channelid},#{te},#{vid})
 	</insert>
 	<!-- 查询上传回调信息 没有用到 -->
 	<!-- <select id="selectcallback" resultType="callBacK">
@@ -221,11 +221,15 @@
 	</insert>
 	<!-- 添加下载抄送 -->
 	<insert id="insert_infocopy_downloadM" parameterType="java.util.HashMap" >
-		insert into icbc_erp_video_info(url,channelid,viedotype,download_info) values(#{fi.url},#{fi.channelid},#{viedotype},#{download_info})
+		insert into icbc_erp_video_info(url,channelid,viedotype,download_info,vid) values(#{fi.url},#{fi.channelid},#{viedotype},#{download_info},#{fi.vid})
 	</insert>
 	<!-- 查询通道id是否存在 -->
 	<select id="select_infocopyM" parameterType="java.lang.String" resultType="java.lang.String">
 		select channelId from icbc_erp_video_info where channelId=#{0}
+	</select>
+	<!-- 视频下载删除 -->
+	<select id="selectUrlAndVidById" parameterType="java.lang.String" resultType="map">
+		select url,vid from icbc_erp_video_info where id=#{0}
 	</select>
 	<!-- 更新时长通话记录抄送 -->
 	<update id="update_infocopy_durationM" parameterType="java.util.HashMap">
@@ -233,7 +237,7 @@
 	</update>
 	<!-- 更新时长通话记录抄送 -->
 	<update id="update_infocopy_downloadM" parameterType="java.util.HashMap">
-		update icbc_erp_video_info set url=#{fi.url},download_info=#{download_info} where channelId=#{fi.channelid}
+		update icbc_erp_video_info set url=#{url},download_info=#{download_info},vid=#{vid} where channelId=#{channelid}
 	</update>
 
 	<insert id="insert_M" parameterType="java.lang.String">
