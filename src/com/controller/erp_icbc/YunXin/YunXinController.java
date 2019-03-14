@@ -11,8 +11,6 @@ import java.util.Random;
 import java.util.UUID;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -726,7 +724,7 @@ public class YunXinController extends BaseController{
             							map.put("fi", fileinfo2);//这里解决同一次抄送，可能会抄给你不同channel ID 的信息的
             							map.put("url", fileinfo2.get("url"));
             							map.put("vid", fileinfo2.get("vid"));
-            							map.put("channelid", fileinfo2.get("fileinfo2"));
+            							map.put("channelid", fileinfo2.get("channelid"));
             							 if(channeid!=null){//存在 修改
             								 int i=yx.update_infocopy_downloadM(map);
             								 log.info("更新下载地址信息->"+i);

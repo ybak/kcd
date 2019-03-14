@@ -221,7 +221,7 @@
 	</insert>
 	<!-- 添加下载抄送 -->
 	<insert id="insert_infocopy_downloadM" parameterType="java.util.HashMap" >
-		insert into icbc_erp_video_info(url,channelid,viedotype,download_info,vid) values(#{fi.url},#{fi.channelid},#{viedotype},#{download_info},#{fi.vid})
+		insert into icbc_erp_video_info(url,channelid,viedotype,download_info,vid) values(#{url},#{channelid},#{viedotype},#{download_info},#{vid})
 	</insert>
 	<!-- 查询通道id是否存在 -->
 	<select id="select_infocopyM" parameterType="java.lang.String" resultType="java.lang.String">
