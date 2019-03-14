@@ -15,16 +15,13 @@ String dateString = formatter.format(date);
 	//执行一个laydate实例
 	laydate.render({
 		elem : '#dz_date' //指定元素
-			
 	});
-	
 </script>
 <script>
 lay('#version').html('-v' + laydate.v);
 //执行一个laydate实例
 laydate.render({
-	elem : '#hf_date' //指定元素
-		
+	elem : '#hf_date' //指定元素	
 });
 </script>
 <c:if  test="${fn:contains(sessionScope.pd.purview_map,'zjfp_49')==true}">
@@ -63,7 +60,7 @@ laydate.render({
 		<label class="col-sm-2 control-label">垫资日期</label>
 		<div class="col-sm-3">
 	 <div class="input-group">
-     <input class="form-control" id="dz_date" name="dz_date" type="text">
+     <input class="form-control layui-input" id="dz_date" name="dz_date" type="text">
      <span class="input-group-addon">
      <i class="fa fa-calendar"></i></span>
      </div>

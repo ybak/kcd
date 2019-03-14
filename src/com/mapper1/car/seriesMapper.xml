@@ -9,4 +9,10 @@ select * from car_series
 <select id="findseriesbyid" resultType="series" parameterType="series">
 select * from car_series where id=#{id}
 </select>
+<select id="findseries_v2" resultType="series">
+select * from car_series_v2
+</select>
+<select id="findseriesbyid_v2" resultType="series" parameterType="series">
+select * from car_series_v2 where id=#{id}
+</select>
 </mapper>

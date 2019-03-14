@@ -10,14 +10,6 @@
 	long date = new Date().getTime();
 	String dateString = formatter.format(date);
 %>
-<script>
-	lay('#version').html('-v' + laydate.v);
-	//执行一个laydate实例
-	laydate.render({
-		elem : '#dk_date' //指定元素
-
-	});
-</script>
 <c:if  test="${fn:contains(sessionScope.pd.purview_map,'cz_50')==true}">
 <li class="text-primary"><em>出账</em>
 	<div class="big-conte" style="display: block;">
@@ -89,8 +81,8 @@
 					<label class="col-sm-2 control-label">打款日期</label>
 					<div class="col-sm-3">
 						<div
-							class="input-group date ng-isolate-scope ng-not-empty ng-valid">
-							<input id="dk_date" name="dk_date" class="form-control" type="text"><span
+							class="input-group">
+							<input data-provide="datepicker" id="dk_date" name="dk_date" class="form-control datepicker" type="text"><span
 								class="input-group-addon"><i class="fa fa-calendar"></i></span>
 						</div>
 					</div>
@@ -117,6 +109,12 @@
 </div>
 </form>
 <script type="text/javascript">
+$('.datepicker').datepicker({
+	format: 'yyyy-mm-dd',
+	language: 'zh-CN'
+});
+
+
 function erp(){
 	var gems_fs_id = $("#gems_fs_id").val();
 	var kh_bank = $("#kh_bank").val();

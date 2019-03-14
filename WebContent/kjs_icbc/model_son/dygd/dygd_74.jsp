@@ -38,7 +38,7 @@ String dateString = formatter.format(date);
 		<div  class="ng-scope">
 			<label class="col-sm-2 control-label">合同编码<i class="red">*</i></label>
 		  <div class="col-sm-3">
-			<input id="htbm" name="htbm" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" value="">
+			<input id="htbm" name="htbm"  class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" value="">
 		  </div>
 		</div><!-- end ngIf: rootData.taskDefKey == 'loanOrder_postinfo_send'||($parent.taskAct.activityId=='loanOrder_postinfo_send'&&notUseButton) -->
 	</div>

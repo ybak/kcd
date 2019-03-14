@@ -48,20 +48,21 @@ String dateString = formatter.format(date);
     <input id="yw_id" name="yw_id" value="${requestScope.yw_id }" type="hidden" />
 	<input id="gems_id" name="gems_id" value="${requestScope.pd.gemsid }" type="hidden" />	
 	<input id="fs_id" name="fs_id" value="${requestScope.pd.fsid }" type="hidden" />
-	<input id="dz_type" name="dz_type" value="${pd.dz_type}" type="hidden"    />	<div class="form-group">
+	<input id="dz_type" name="dz_type" value="${pd.dz_type}" type="hidden"    />	
+	<div class="form-group">
 		<label class="col-sm-2 control-label">收件确认<i class="red">*</i></label>
-		<div class="col-sm-3">
-			<input type="radio" value="已收到"  class="ng-pristine ng-untouched ng-valid ng-not-empty" name="sjqr" id="sjqr">已收到
+		<div class="col-sm-2">
+			<input type="radio" value="已收到"  name="sjqr" id="sjqr">已收到
 	            &nbsp;&nbsp;&nbsp;&nbsp;
-	        <input type="radio" value="未收到" class="ng-pristine ng-untouched ng-valid ng-not-empty" name="sjqr" id="sjqr" >未收到
+	        <input type="radio" value="未收到"  name="sjqr" id="sjqr" >未收到
 		</div>
-		<label class="col-sm-3 control-label">收件日期<i class="red">*</i></label>
-		<div class="col-sm-3">
-			<div class="input-group date ng-isolate-scope ng-not-empty ng-valid">
-  <input name="ksrq" id="ksrq" class="form-control" type="text">
-  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-</div>
-		</div>
+		<label class="col-sm-2 control-label">收件日期<i class="red">*</i></label>
+		<div class="col-sm-2">
+	<div class="input-group date ng-isolate-scope ng-not-empty ng-valid">
+    <input name="ksrq" id="ksrq" class="form-control" type="text">
+    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+    </div>
+	</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">材料复核结果<i class="red">*</i></label>

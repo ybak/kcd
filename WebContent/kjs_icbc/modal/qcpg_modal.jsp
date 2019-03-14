@@ -45,8 +45,16 @@
 
        <script>
 		   $(document).ready(function(){
-			  
-			fun2(document.getElementById("pg_brid").value);
+			  var pg_brid=document.getElementById("pg_brid").value;
+			  var pg_brid_v2=document.getElementById("pg_brid_v2").value;
+			 if(pg_brid_v2>0){
+				 //alert("v2");
+				 fun2_v2(pg_brid_v2);
+			 }else{
+				 //alert("v1");
+				 fun2(pg_brid);
+			 }
+			 
 			
 		   });
 			function fun2(selectedBrid){
@@ -72,6 +80,29 @@
 			    });
 			   	fun(selectedBrid);
 			}
+			function fun2_v2(selectedBrid){
+				/* 				alert(selectedBrid); */
+								//第一个
+								var s = "<option value='0'>**品牌**</option>"; 
+							   	$.ajax({ 
+							   		url:"${pageContext.request.contextPath}/getAllCarBrand_v2.do",
+							   	    type:"POST",
+							           success: function(dataCarBrand){
+							           	 var con = "";  
+							           	$("#brid1").empty();
+							           	 $.each($.parseJSON(dataCarBrand),function(index,carBrand){
+							           		
+							           		if(carBrand.id==selectedBrid){
+							           			con += "<option  selected='selected' value="+carBrand.id+">"+carBrand.first+" "+carBrand.name+"</option>";
+							           		}else{
+							           			con += "<option  value="+carBrand.id+">"+carBrand.first+" "+carBrand.name+"</option>";	        			
+							           		}
+							           	 });
+							           	$("#brid1").append(s+con);
+							           }
+							    });
+							   	fun_v2(selectedBrid);
+							}
 			
 			function fun(selectedBrid){
 				//第二个
@@ -100,13 +131,62 @@
 				
 			   	}
 			}
-			
+			function fun_v2(selectedBrid){
+				//第二个
+			    
+			   	var selectedSeid ='${pd.seid_v2}';
+			   	
+			   	if(selectedBrid!=0){
+				$.ajax({ 
+					url:"${pageContext.request.contextPath}/getCarSeries_v2.do",
+					data:{brid:selectedBrid},
+				    type:"POST",
+				       success: function(dataCarSeries){
+				       	var con = "<option value='0'>**车系**</option>"; 
+				       	$("#seid1").empty();
+				       	 $.each($.parseJSON(dataCarSeries),function(index,carSeries){
+				       		if(selectedSeid==carSeries.id){
+				       		 	con += "<option selected='selected' value="+carSeries.id+">"+carSeries.name+"</option>";	       		    
+				       		}else{
+				       			con += "<option  value="+carSeries.id+">"+carSeries.name+"</option>";
+				       		}				       	
+				       	 });	       	
+				       	$("#seid1").append(con);
+				       	fun3_v2(document.getElementById("seid1").value);	
+				       }
+				 });	
+				
+			   	}
+			}
 			function fun3(selectedSeid){
 				var selectedcarid ='${pd.carid}'; 
 				if(selectedSeid!=0){
 				//第三个
 				$.ajax({ 
 					url:"${pageContext.request.contextPath}/getCarModel.do",
+					data:{seid:selectedSeid},
+				    type:"POST",
+			        success: function(dataCarModel){
+			        	var con = "<option value='0'>**型号**</option>"; 
+			        	$("#carid1").empty();
+			        	 $.each($.parseJSON(dataCarModel),function(index,carModel){
+			        		 if(selectedcarid==carModel.id){
+			 	       		 	con += "<option selected='selected' value="+carModel.id+">"+carModel.name+"</option>";
+			 	       		}else{
+			 	       		    con += "<option  value="+carModel.id+">"+carModel.name+"</option>"; 
+			 	       		}       			 
+			        	 });        	
+			        	$("#carid1").append(con);
+			        }
+				}); 	
+				}
+			}
+			function fun3_v2(selectedSeid){
+				var selectedcarid ='${pd.carid_v2}'; 
+				if(selectedSeid!=0){
+				//第三个
+				$.ajax({ 
+					url:"${pageContext.request.contextPath}/getCarModel_v2.do",
 					data:{seid:selectedSeid},
 				    type:"POST",
 			        success: function(dataCarModel){
@@ -182,17 +262,22 @@
 		<div class="form-group">
 			<label class="col-sm-2 control-label">品牌车型<i class="red">*</i></label>
 	  		<div class="col-sm-2">
+	  		<input id="pg_brid_v2" name="pg_brid_v2" type="hidden" value="${pd.brid_v2 }" />
 			<input id="pg_brid" name="pg_brid" type="hidden" value="${pd.brid }" />
-			<select id="brid1" name="brid1" onchange="fun(this.options[this.options.selectedIndex].value)" class="form-control">	 
+			
+			<select id="brid1" name="brid1" ${pd.brid_v2 > 0?"onchange='fun_v2(this.options[this.options.selectedIndex].value)'":"onchange='fun(this.options[this.options.selectedIndex].value)'" }  class="form-control">	 
+			
 			<option value="0">**品牌**</option>
 			</select>	
 		    </div>
+		    <input id="pg_seid_v2" name="pg_seid_v2" type="hidden" value="${pd.seid_v2 }" />
 			<input id="pg_seid" name="pg_seid" type="hidden" value="${pd.seid }" />
 			<div class="col-sm-3">
-	      		<select id="seid1" name="seid1" onchange="fun3(this.options[this.options.selectedIndex].value)" class="form-control">		 
+	      		<select id="seid1" name="seid1" ${pd.seid_v2 > 0?"onchange='fun3_v2(this.options[this.options.selectedIndex].value)'":"onchange='fun3(this.options[this.options.selectedIndex].value)'" }  class="form-control">		 
 				<option value="0">**车系**</option>
 				</select>
 			</div>
+			<input id="pg_carid_v2" name="pg_carid_v2" type="hidden" value="${pd.carid_v2 }" />
 			<input id="pg_carid" name="pg_carid" type="hidden" value="${pd.carid }" />
 			<div class="col-sm-3">
 	      	<select id="carid1" name="carid1" class="form-control">		

@@ -22,6 +22,24 @@ from
 where 
 	id=#{id}
 </select>   
+<!-- 查询汽车三级详细品牌 -->    
+<select id="selectCarModellById_v2" parameterType="CarModell" resultType="CarModell">
+select 
+	*
+from 
+	car_model_v2
+where 
+	series_id=#{id}
+</select>  
+<!-- 查询汽车详细品牌 -->    
+<select id="selectCarNameById_v2" parameterType="CarModell" resultType="CarModell">
+select 
+	*
+from 
+	car_model_v2
+where 
+	id=#{id}
+</select>   
    
 
 </mapper>

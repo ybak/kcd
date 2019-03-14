@@ -19,6 +19,7 @@ color: #ffffff;
 </style>
 
 <script type="text/javascript">
+
 $(document).ready(function(){
   var type=document.getElementById("colortype").value;
   if(type!=''&&type!=4){

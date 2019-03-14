@@ -11,4 +11,5 @@ select * from car_brand where id=#{id}
 <select id="findbrandbyname" resultType="brand" parameterType="brand">
 select * from car_brand where name=#{name}
 </select>
+
 </mapper>

@@ -10,14 +10,7 @@
 	long date = new Date().getTime();
 	String dateString = formatter.format(date);
 %>
-<script>
-	lay('#version').html('-v' + laydate.v);
-	//执行一个laydate实例
-	laydate.render({
-		elem : '#dz_date' //指定元素
 
-	});
-</script>
 <c:if  test="${fn:contains(sessionScope.pd.purview_map,'sslr_51')==true}">
 <li class="text-primary"><em>实收录入-出纳</em>
 	<div class="big-conte" style="display: block;">
@@ -48,7 +41,7 @@
 					<div class="col-sm-3">
 						<div
 							class="input-group date ng-isolate-scope ng-not-empty ng-valid">
-							<input id="dz_date" name="dz_date" class="form-control" type="text"> <span
+							<input data-provide="datepicker" id="dz_date" name="dz_date" class="form-control datepicker" type="text"> <span
 								class="input-group-addon"><i class="fa fa-calendar"></i></span>
 						</div>
 					</div>
@@ -91,6 +84,12 @@
 <a onclick="erp()" class="btn btn-primary" >提交</a>
 </div>
 </form>
+<script>
+$('.datepicker').datepicker({
+	format: 'yyyy-mm-dd',
+	language: 'zh-CN'
+});
+</script>
 <script type="text/javascript">
 function erp(){
 	var val=$('input:radio[name="sk_type"]:checked').val();

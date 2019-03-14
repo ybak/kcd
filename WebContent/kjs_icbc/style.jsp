@@ -60,13 +60,14 @@
 <script src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/js/moment.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/js/daterangepicker.js" type="text/javascript"></script>
 <link href="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/css/daterangepicker-bs3.css" rel="stylesheet" type="text/css">
-<script src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/js/bootstrap-datepicker.js" type="text/javascript"></script>
+<%-- <script src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/js/bootstrap-datepicker.js" type="text/javascript"></script>
 <link href="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/css/datepicker3.css" rel="stylesheet" type="text/css">
 <script src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/js/bootstrap-datepicker_002.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/js/bootstrap-datetimepicker.js" type="text/javascript"></script>
 <link href="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css">
 <script src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/js/bootstrap-datetimepicker_002.js" type="text/javascript"></script>
-<script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/js/ueditor_002.js"></script>
+ --%>
+ <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/js/ueditor_002.js"></script>
 <script type="text/javascript" charset="utf-8" src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/js/ueditor.js"> </script>
 <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
 <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
@@ -96,26 +97,7 @@
   
 <!-- 时间date -->
 <script src="${pageContext.request.contextPath}/kjs_icbc/kjs_icbc_style/js/fullcalendar.js"></script>
-
 <script src="${pageContext.request.contextPath}/kjs_icbc/kjs_icbc_style/laydate/laydate.js"></script> 
+<script type="text/javascript" src="${pageContext.request.contextPath}/kjs_icbc/kjs_icbc_style/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/kjs_icbc/kjs_icbc_style/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" charset="UTF-8"></script>
 </head>
-<!--
-	BODY TAG OPTIONS:
-	=================
-	Apply one or more of the following classes to get the
-	desired effect
-	|---------------------------------------------------------|
-	| SKINS		     | skin-blue								 |
-	|				 | skin-black								|
-	|				 | skin-purple							 |
-	|				 | skin-yellow							 |
-	|				 | skin-red								|
-	|				 | skin-green								|
-	|---------------------------------------------------------|
-	|LAYOUT OPTIONS  | fixed									 |
-	|				 | layout-boxed							|
-	|				 | layout-top-nav							|
-	|				 | sidebar-collapse						|
-	|				 | sidebar-mini							|
-	|---------------------------------------------------------|
-	-->

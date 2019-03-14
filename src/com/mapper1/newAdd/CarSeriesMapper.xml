@@ -12,5 +12,14 @@ from
 where 
 	brand_id=#{id}
 </select>   
-   
+   <!-- 查询汽车二级详细品牌 -->    
+<select id="selectCarSeriesById_v2" parameterType="CarSeries" resultType="CarSeries">
+select 
+	*
+from 
+	car_series_v2
+where 
+	brand_id=#{id}
+</select>
+
 </mapper>

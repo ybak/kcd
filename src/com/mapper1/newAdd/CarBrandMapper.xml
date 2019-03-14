@@ -9,8 +9,16 @@ select
 	*
 from 
 	car_brand
+ORDER BY first
 </select>   
-   
+   <!-- 查询汽车详细品牌 -->    
+<select id="selectAllCarBrand_v2" parameterType="CarBrand" resultType="CarBrand">
+select 
+	*
+from 
+	car_brand_v2
+ORDER BY first
+</select> 
    
    
 </mapper>
