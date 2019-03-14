@@ -73,7 +73,7 @@ laydate.render({
 		<div class="col-sm-3">
 			<input id="kdzje" name="kdzje" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
 		</div>
-		<label class="col-sm-2 control-label">需垫资金额(元)<i class="red">*</i></label>
+		<label class="col-sm-2 control-label">需垫资金额(元)</label>
 		<div class="col-sm-3">
 			<input id="xdzje" name="xdzje" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="text">
 		</div>
@@ -83,7 +83,7 @@ laydate.render({
 <!-- 		<div ng-if="rootData.orgType=='ALAN'" > -->
 		<label class="col-sm-2 control-label">融资服务费</label>
 		<div class="col-sm-3">
-			<input id="rzfwf" name="rzfwf" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
+			<input id="rzfwf" name="rzfwf" class="form-control" type="text">
 		</div>
 <!-- 		</div> -->
 		<label class="col-sm-2 control-label">需垫资日期<i class="red">*</i></label>
@@ -97,7 +97,7 @@ laydate.render({
 	<div class="form-group">
 	<label class="col-sm-2 control-label">其它意见</label>
 		<div class="col-sm-8">
-			<textarea id="qtyj" name="qtyj" rows="3" class="form-control ng-pristine ng-untouched ng-valid ng-empty" type="text"></textarea>
+			<textarea id="qtyj" name="qtyj" rows="3" class="form-control" type="text"></textarea>
 		</div>
 	</div>
 	

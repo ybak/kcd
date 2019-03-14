@@ -50,12 +50,10 @@ String dateString = formatter.format(date);
 	            &nbsp;&nbsp;&nbsp;&nbsp;
 	        <input type="radio" value="不通过"  class="ng-pristine ng-untouched ng-valid ng-not-empty" name="clfh">不通过
 		</div>
-		<!-- ngIf: rootData.taskDefKey=='postget'||taskAct.activityId=='postget' -->
-		<!-- ngIf: rootData.taskDefKey=='loanOrder_postget_asun'||rootData.taskDefKey=='loanOrder_postget_bank'||taskAct.activityId=='loanOrder_postget_asun'||taskAct.activityId=='loanOrder_postget_bank' -->
-		<span  class="ng-scope">
+        <span  class="ng-scope">
 	    	<label class="col-sm-2 control-label">车牌号码<i class="red">*</i></label>
 			<div class="col-sm-3">
-				 <input id="cphm" name="cphm" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
+				 <input id="cphm" name="cphm" value="${pd.c_cardno }" class="form-control" type="text">
 			</div>
 		</span><!-- end ngIf: rootData.taskDefKey=='loanOrder_postget_asun'||rootData.taskDefKey=='loanOrder_postget_bank'||taskAct.activityId=='loanOrder_postget_asun'||taskAct.activityId=='loanOrder_postget_bank' -->
 	</div>

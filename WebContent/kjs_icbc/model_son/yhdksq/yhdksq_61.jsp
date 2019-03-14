@@ -41,18 +41,22 @@
 			</div>   
 			<label class="col-sm-2 control-label">卡号<i class="red">*</i></label>
 			<div class="col-sm-3">
-				<input id="yhdksh_61_kh" name="yhdksh_61_kh" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="text" >
+				<input value="${pd.kk_kh}" id="yhdksh_61_kh" name="yhdksh_61_kh" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="text" >
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-2 control-label">支行<i class="red">*</i></label>
 			<div class="col-sm-3">
-				<input id="yhdksh_61_zh" name="yhdksh_61_zh" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="text"  >
+			    <c:if test="${pd.bank_id eq '1'}"><input value="工行绍兴分行" id="yhdksh_61_zh" name="yhdksh_61_zh" class="form-control" type="text"  ></c:if>
+			    <c:if test="${pd.bank_id eq '2'}"><input value="工行武林支行" id="yhdksh_61_zh" name="yhdksh_61_zh" class="form-control" type="text"  ></c:if>
+			    <c:if test="${pd.bank_id eq '3'}"><input value="工行义乌支行" id="yhdksh_61_zh" name="yhdksh_61_zh" class="form-control" type="text"  ></c:if>
+				<c:if test="${empty pd.bank_id}"><input value="工行义乌支行" id="yhdksh_61_zh" name="yhdksh_61_zh" class="form-control" type="text"  ></c:if>
 			</div>
 			<label class="col-sm-2 control-label">分期数<i class="red">*</i></label>
 			<div class="col-sm-3">
 				<div class="input-group date ng-isolate-scope ng-not-empty ng-valid ng-valid-required" >
-					<input name="yhdksh_61_fq" id="yhdksh_61_fq" value="${pd.aj_date}" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text"  ><span class="input-group-addon">期</span>
+					<input name="yhdksh_61_fq" id="yhdksh_61_fq" value="${pd.aj_date}" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text"  >
+					<span class="input-group-addon">期</span>
 				</div>
 			</div>
 		</div>
@@ -60,13 +64,15 @@
 			<label class="col-sm-2 control-label">首期还款日期</label>
 			<div class="col-sm-3">
 				<div class="input-group date ng-isolate-scope ng-not-empty ng-valid" >
-  <input id="date_61_2" name="yhdksh_61_sqhkr" class="form-control" type="text"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+  <input id="date_61_2" name="yhdksh_61_sqhkr" class="form-control" type="text">
+  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 </div>
 			</div>
 			<label class="col-sm-2 control-label">金额<i class="red">*</i></label>
 			<div class="col-sm-3">
 				<div class="input-group date ng-isolate-scope ng-not-empty ng-valid ng-valid-required" >
-					<input onkeyup="show_two(this.value)" name="yhdksh_61_je" id="yhdksh_61_je" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" type="text" ><span class="input-group-addon">元</span>
+					<input value="${pd.dk_total_price }" onkeyup="show_two(this.value)" name="yhdksh_61_je" id="yhdksh_61_je" class="form-control" type="text" >
+					<span class="input-group-addon">元</span>
 				</div>
 			</div>
 		</div>
@@ -131,6 +137,29 @@ laydate.render({
 });
 </script>
 <script type="text/javascript">
+$(document).ready(function(){
+	var je='${pd.dk_total_price }';
+	var fqs ='${pd.aj_date }';
+	//计算月还  
+	var yhdksh_61_yh = 0; // 月还
+	var get_yh = je/fqs; 
+	var yh_two = get_yh.toFixed(2);
+	var yh_four = get_yh.toFixed(4);
+	var yh_four_getThree = yh_four.indexOf('.');
+	var getStrThree = yh_four.substr(yh_four_getThree+3,1);
+	if(getStrThree>0 && getStrThree<5){
+		//document.getElementById("yhdksh_61_yh").value=Number(yh_two)+Number(0.01)+"--月还(je/fqs)--"+get_yh;
+		yhdksh_61_yh = Number(yh_two)+Number(0.01);
+	}else{
+		//document.getElementById("yhdksh_61_yh").value=Number(yh_two)+"-没有加0.01-月还(je/fqs)--"+get_yh;
+		yhdksh_61_yh = Number(yh_two);
+	}
+	document.getElementById("yhdksh_61_yh").value= yhdksh_61_yh;
+	//计算首月还款  yhdksh_61_syhk = 月还+100
+    var max_yh = $("#yhdksh_61_yh").val(); // 月还
+    var yhdksh_61_syhk = Number(max_yh)+Number(100);  // 首月还款
+	document.getElementById("yhdksh_61_syhk").value=yhdksh_61_syhk;
+});
 function show_two(je){
 	/* var s = 22.127456 + "";
     var str = s.substring(0,s.indexOf(".") + 3);

@@ -31,12 +31,12 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">客户姓名</label>
 		<div class="col-sm-3">
-			<input  class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
+			<input  class="form-control" value="${pd.c_name }" type="text">
 		</div>
 		<span class="ng-hide">
 		<label class="col-sm-2 control-label">编号</label><!--AX年份000001  -->
 		<div class="col-sm-3">
-			<input  class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text" >
+			<input  class="form-control" value="${pd.gems_code }" type="text" >
 		</div>
 		</span>
 	</div>

@@ -432,11 +432,10 @@ public class erp_icbcController {
 	@Transactional
 	@RequestMapping(value = "erp/assess_gems_add.do", produces = "text/html;charset=UTF-8")
 	public ModelAndView assess_gems_add(Integer fsid, String name,
-			String bank_id, String mobile, String username, String password,
-			Integer cp, Integer upac_id, String idcard, String dn, String qn,
-			String type, String userid, String agpid, String mid_add,
-			String bc_title, String email,
-			@RequestParam("file") MultipartFile file, int ssbm,
+			String mobile, String username, String password, Integer cp,
+			Integer upac_id, String idcard, String dn, String qn, String type,
+			String userid, String agpid, String mid_add, String bc_title,
+			String email, @RequestParam("file") MultipartFile file, int ssbm,
 			HttpServletRequest request) throws IOException {
 		PageData pagedate = new PageData();
 		System.out.println("file:" + file);
@@ -523,49 +522,6 @@ public class erp_icbcController {
 		pd.put("loginip", 0);
 		// pd.put("ssm_id","");
 		erp_userrootService.save(pd);
-		// if (bank_id != null && !bank_id.equals("")) {
-		// YunXinController yx=new YunXinController();
-		// int i=YXService.selectBankCount(bank_id);
-		// if(i!=0){
-		// //…Í«Î’À∫≈
-		// Result
-		// result1=tokenDispose(HttpYX.getToken(MD5.sign(UUID.randomUUID().toString().replace("-",
-		// "").toLowerCase(),"utf-8")),"0");
-		// if(result1.isSuccess()){
-		// Map map1=((Map) result1.getData());
-		// map1.put("delmark", 0);
-		// map1.put("uid", Id);
-		// map1.put("bankId", bankId);
-		// map1.put("employcode","0");//…Ë÷√¿‡–Õ
-		// map1.put("dt_add",super.getTime());
-		// map1.put("dt_edit",super.getTime());
-		// map1.put("mid_add", super.getUserId(request));
-		// map1.put("mid_edit", super.getUserId(request));
-		// int i1=yx.add_YX_account(map1);//±£¥Ê
-		// if(i1==1){
-		// Result
-		// result2=tokenDispose(HttpYX.getToken(MD5.sign(UUID.randomUUID().toString().replace("-",
-		// "").toLowerCase(),"utf-8")),"0");
-		//
-		// if(result2.isSuccess()){
-		// Map map2=((Map) result2.getData());
-		// map2.put("parentid",map1.get("id").toString());
-		// map2.put("delmark", 0);
-		// map2.put("employcode","0");
-		// map2.put("bankId", bankId);
-		// map2.put("dt_add",);
-		// map2.put("dt_edit",);
-		// map2.put("mid_add",);
-		// map2.put("mid_edit",);
-		// int i2=yx.add_YX_account(map2);//±£¥Ê
-		// if(i2==1){
-		// //ÃÌº”∫√”—
-		// String addBuddy=HttpYX.addBuddy(map1.get("accid").toString(),
-		// map2.get("accid").toString());
-		// }
-		// }
-		// }
-		// }
 		request.setAttribute("dn", dn);
 		request.setAttribute("qn", qn);
 		request.setAttribute("type", type);
@@ -1114,6 +1070,8 @@ public class erp_icbcController {
 			totalpage = pdList.size() / ps + 1;
 		}
 		System.out.println("À—À˜£∫" + assess_fs_msg);
+		List<PageData> banklist = icbc_banklistService.geticbc_banklist();
+		request.setAttribute("banklist", banklist);
 		request.setAttribute("qx_type", qx_type);
 		request.setAttribute("assess_fs_id", assess_fs_id);
 		request.setAttribute("assess_fs_msg", assess_fs_msg);

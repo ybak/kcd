@@ -42,11 +42,8 @@
 	<input id="dz_type" name="dz_type" value="${pd.dz_type}" type="hidden"    />
 				
 				<div class="form-group">
-					<label class="col-sm-2 control-label">
-						<!-- ngIf: task.payfriendId == 0 -->
-						<!-- ngIf: task.payfriendId != 0 --> 
+					<label class="col-sm-2 control-label"> 
 						<span class="ng-scope">垫资日期</span>
-					<!-- end ngIf: task.payfriendId != 0 -->
 					</label>
 					<div class="col-sm-3">
 						<div
@@ -56,10 +53,7 @@
 						</div>
 					</div>
 					<label class="col-sm-2 control-label">
-						<!-- ngIf: task.payfriendId == 0 -->
-						<!-- ngIf: task.payfriendId != 0 --> 
 						<span class="ng-scope">垫资金额(元)</span>
-					<!-- end ngIf: task.payfriendId != 0 -->
 					</label>
 					<div class="col-sm-3">
 						<input id="dz_je" name="dz_je"

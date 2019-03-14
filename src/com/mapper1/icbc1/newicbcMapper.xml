@@ -297,7 +297,10 @@ ORDER BY ki.dt_edit DESC
   <if test="po_dsj_result!=null and po_dsj_result!=''">po_dsj_result=#{po_dsj_result}, </if>
   <if test="gjr_dsj_result1!=null and gjr_dsj_result1!=''">gjr_dsj_result1=#{gjr_dsj_result1}, </if>
   <if test="gjr_dsj_result2!=null and gjr_dsj_result2!=''">gjr_dsj_result2=#{gjr_dsj_result2}, </if>
-  
+  <if test="imgstep8_1ss!=null and imgstep8_1ss!=''">imgstep8_1ss=#{imgstep8_1ss}, </if>
+  <if test="dygd_wcdate!=null and dygd_wcdate!=''">dygd_wcdate=#{dygd_wcdate}, </if>
+  <if test="dygd_djzsh!=null and dygd_djzsh!=''">dygd_djzsh=#{dygd_djzsh}, </if>
+  <if test="dygd_dyblry!=null and dygd_dyblry!=''">dygd_dyblry=#{dygd_dyblry}, </if>
   </trim>
   where id=#{id}
  </update>
@@ -377,7 +380,10 @@ gjr_zx_result2,
 po_dsj_report_id,
 gjr_dsj_report_id1,
 gjr_dsj_report_id2,
-imgstep8_1ss
+imgstep8_1ss,
+dygd_wcdate,
+dygd_djzsh,
+dygd_dyblry
  )values(
 #{id},
 #{mid_add},
@@ -452,8 +458,10 @@ imgstep8_1ss
 #{po_dsj_report_id},
 #{gjr_dsj_report_id1},
 #{gjr_dsj_report_id2},
-#{imgstep8_1ss}
-
+#{imgstep8_1ss},
+#{dygd_wcdate},
+#{dygd_djzsh},
+#{dygd_dyblry}
  )
  </insert>
 

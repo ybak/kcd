@@ -23,11 +23,11 @@
     <div class="form-group">
 		<label class="col-sm-2 control-label">关联客户</label>
 		<div class="col-sm-3">
-		    <input name="name" id="name" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
+		    <input name="name" id="name" class="form-control" value="${pd.c_name }" type="text">
         </div>
          <label class="col-sm-2 control-label">业务编号</label>
 		<div class="col-sm-3">
-			<input name="code" id="code" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" type="text">
+			<input name="code" id="code" class="form-control" value="${pd.gems_code }" type="text">
 		</div>
 	</div>
 	

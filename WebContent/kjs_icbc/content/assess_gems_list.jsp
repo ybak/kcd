@@ -126,6 +126,7 @@ laydate.render({
 			<th class="hidden-xs text-center">所属机构</th>
 			<th class="hidden-xs text-center">级别</th>
 			<th class="text-center" style="width:100px">状态</th>
+			<th class="text-center" style="width:150px">视频面签绑定</th>
 			<th class="hidden-xs text-center" style="width:200px">创建时间</th>
 			<th class="hidden-xs text-center" style="width:200px">更新时间</th>
 			<th style="width:200px;" class="text-center">操作</th>
@@ -175,9 +176,17 @@ laydate.render({
 			</a>
 			</td>
 			<td class="text-center">
-				<select id="showtag_${pd.id }" ${fn:contains(sessionScope.pd.purview_map,'ryglupdate')==true?'':"disabled='disabled'"}  onchange="ajaxedit('assess_admin','${pd.id }',this.value)" class="form-control">
+				<select id="showtag_${pd.id }" ${fn:contains(sessionScope.pd.purview_map,'ryglupdate')==true?'':"disabled='disabled'"}  onchange="('assess_admin','${pd.id }',this.value)" class="form-control">
 					<option value="1" ${pd.showtag eq '1'?"selected='selected'":'' }>开通</option>
 					<option value="0" ${pd.showtag eq '0'?"selected='selected'":'' }>屏蔽</option>
+				</select>
+			</td>
+			<td class="text-center">
+				<select  id="bank_id_${pd.id }" onchange="bindbank('bank_id_${pd.id }','${pd.id }')"  ${fn:contains(sessionScope.pd.purview_map,'ryglupdate')==true?'':"disabled='disabled'"}  class="form-control">
+						<option value="0">请选择</option>
+						<c:forEach items="${requestScope.banklist }" var="b">
+						<option value="${b.id }" ${pd.t_bank_id eq b.id?"selected='selected'":'' } >${b.name }</option>
+						</c:forEach>
 				</select>
 			</td>
 			<td class="hidden-xs text-center"><fmt:formatDate value="${pd.dt_add}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
@@ -202,6 +211,28 @@ laydate.render({
 			</tbody>
 </table>
 				<script type="text/javascript">
+				
+				//绑定银行视频面签功能
+				function bindbank(get,id){
+					var bankId=$("#"+get).val();
+					//alert("id:"+id+"----bankId:"+bankId);
+					 $.ajax({
+				        url:"${pageContext.request.contextPath }/yx/addRealTimeVideoBinding.do",
+				        type:"post",
+				        data:{
+				        	Id:id,
+				        	bankId:bankId
+				        },
+				        success:function(data){
+				         alert(data.message);
+				        },
+				        error:function(e){
+				         alert("错误！！");
+				        }
+				    });
+					
+				}
+				
 				function ajaxdel(id){
 					if(window.confirm('你确定要删除吗？')){
 				          //alert("确定");

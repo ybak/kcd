@@ -52,7 +52,7 @@
 					<label class="col-sm-2 control-label">开户行</label>
 					<div class="col-sm-3">
 						<input id="kh_bank" name="kh_bank"
-							class="form-control ng-pristine ng-untouched ng-valid ng-not-empty"
+							class="form-control"
 							type="text">
 					</div>
 				</div>
