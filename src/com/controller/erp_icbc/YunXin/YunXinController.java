@@ -676,11 +676,12 @@ public class YunXinController extends BaseController{
                 result.put("code", 414);
                 return result;
             }else{
+            	JSONObject map=null;
             	try {
             		StringBuilder redundant=new StringBuilder(body.replaceAll("(\\})|(\\{)|(\\[)|(\\])", ""));//抄送的完整信息
             		//字符串处理
             		body=body.replaceAll("\"\\{","{").replaceAll("\\}\"","}").replaceAll("\"\\[\\{", "[{").replaceAll("\\}\\]\"", "}]");
-            		JSONObject map = JSONObject.parseObject(body);
+            		 map = JSONObject.parseObject(body);
             		log.info("信息抄送处理->"+map.toJSONString());
             		map.put("viedotype", "1");//设置视频的类型
             		String eventType = map.get("eventType").toString();
@@ -738,11 +739,11 @@ public class YunXinController extends BaseController{
             				}
             	
 				} catch (Exception e) {
-					String map="";
+					String map1="";
 					if(map!=null){
-						map=JSON.toJSONString(map);
+						map1=JSON.toJSONString(map);
 					}
-					yx.insert_M(body+",map:"+map+"----error:"+getErrorInfoFromException(e));//如果错误直接保存
+					yx.insert_M(body+",map:"+map1+"----error:"+getErrorInfoFromException(e));//如果错误直接保存
 				}
             }
             // TODO: 比较md5、checkSum是否一致，以及后续业务处理
@@ -773,7 +774,7 @@ public class YunXinController extends BaseController{
     	log.info("下载->"+url);
     	super.urlToWeb(url, response);
     }*/
-    private static HashMap map=new HashMap<>();
+    private static HashMap map__1=new HashMap<>();
 	@RequestMapping(value="dsdb.do")
 	@ResponseBody
     public Object downloadServiceDatabase(String id){
@@ -782,12 +783,12 @@ public class YunXinController extends BaseController{
     	}
     	Map map1=yx.selectUrlAndVidById(id);
     	String url=map1.get("url").toString();
-    	log.info("id是否存在->"+map.get("id"));
-    	if(map.get(id)==null){
+    	log.info("id是否存在->"+map__1.get("id"));
+    	if(map__1.get(id)==null){
     		//删除云端的视频
         	String[] s=url.split("/");
         	try {
-        		map.put(id,creditutil.time());
+        		map__1.put(id,creditutil.time());
         		String last="upload/"+s[s.length-1];
         		log.info("原视频文件名->"+last);
         		String download_path=RootStatic.root_Directory+last;
@@ -809,10 +810,10 @@ public class YunXinController extends BaseController{
     			log.info("下载视频到本地服务器异常"+JSON.toJSONString(e.getStackTrace()));
     			return renderError("下载失败，失败原因："+e.getMessage());
     		}finally {
-				map.remove(id);
+    			map__1.remove(id);
 			}
     	}else{
-    		return renderError(map.get(id).toString()+"正在下载中，请等待...");
+    		return renderError(map__1.get(id).toString()+",正在下载中，请等待...");
     	}
     }
 	public static void main(String[] args) throws Exception{
