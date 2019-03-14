@@ -2,6 +2,8 @@ package com.controller.erp_icbc.base;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -46,7 +48,16 @@ public abstract class BaseController {
          */
         binder.registerCustomEditor(String.class, new StringEscapeEditor());
     }
-
+    public static String getErrorInfoFromException(Exception e) {  
+        try {  
+            StringWriter sw = new StringWriter();  
+            PrintWriter pw = new PrintWriter(sw);  
+            e.printStackTrace(pw);  
+            return "\r\n" + sw.toString() + "\r\n";  
+        } catch (Exception e2) {  
+            return "bad getErrorInfoFromException";  
+        }  
+    }  
     /**
      * 获取当前登录用户id
      * @return {Long}

@@ -19,6 +19,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSON;
+import com.controller.erp_icbc.base.RootStatic;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Rectangle;
@@ -41,9 +42,7 @@ public abstract class DocumentHandlerParent{
 	protected File file = null;
 	
 	//根目录 这里的是全局的 包括图片和.pdf都在这个目录的下级
-	public static String root_Directory="DIMG/assess/";
-	public static String download_prefix="http://a.kcway.net/assess/";
-	//public static String root_Directory="C:/Users/Administrator/Desktop/word/haha1/";
+
 	
 	//拼接中间目录
 	private String savepdfpath="upload/"+new SimpleDateFormat("yyyy/MM/dd/").format(new Date());
@@ -83,7 +82,7 @@ public abstract class DocumentHandlerParent{
 		this.map=map;
         //获取pdf模板目录
 		this.pdftemplatepath=readPath(request,templateDirectory);
-		this.stair_file=root_Directory+savepdfpath;//组合路径
+		this.stair_file=RootStatic.root_Directory+savepdfpath;//组合路径
 		this.deleteSecondLevel();
 	}
 	//前置执行 删除二级目录 

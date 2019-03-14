@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
-import com.google.gson.JsonObject;
+import com.controller.erp_icbc.base.RootStatic;
 import com.service1.htpdf.IcbcApplicationService;
 //类 方法注释快捷键 ALT + SHIFT + J
 /*ctrl+shift+b：打开、关闭断点
@@ -95,7 +95,7 @@ public class IcbcApplicationController extends BaseController{
 	@RequestMapping(value="/pdonload.do")
 	public HttpServletResponse pdonload(String f,HttpServletResponse response){
 		//下载地址
-		DocumentHandler2.downloadZip(new File(DocumentHandlerParent.root_Directory+f),response);
+		DocumentHandler2.downloadZip(new File(RootStatic.root_Directory+f),response);
 		return response;
 	}
 	//实时进度

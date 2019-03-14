@@ -33,6 +33,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.controller.erp_icbc.YunXin.seats.PoolCache1;
 import com.controller.erp_icbc.YunXin.seats.ScanPool1;
 import com.controller.erp_icbc.base.BaseController;
+import com.controller.erp_icbc.base.RootStatic;
 import com.controller.erp_icbc.result.Result;
 import com.controller.erp_icbc.utils.EmptyUtil;
 import com.controller.erp_icbc.utils.PageInfo;
@@ -740,10 +741,9 @@ public class YunXinController extends BaseController{
             						}
             					}
             				}
-            		
+            	
 				} catch (Exception e) {
-					log.info("抄送处理异常->"+JSON.toJSONString(e.getStackTrace()));
-					yx.insert_M(body+"----error:"+JSON.toJSONString(e.getStackTrace()));//如果错误直接保存
+					yx.insert_M(body+"----error:"+getErrorInfoFromException(e));//如果错误直接保存
 				}
             }
             // TODO: 比较md5、checkSum是否一致，以及后续业务处理
@@ -768,12 +768,6 @@ public class YunXinController extends BaseController{
         } else
             return null;
     }
-	//private static String viedo_download_server_root="C:\\Users\\Administrator\\Desktop\\word\\haha1\\upload";
-    //private static String play_first="C:\\Users\\Administrator\\Desktop\\word\\haha1\\upload";
-
-    
-    private static String viedo_download_server_root="DIMG/assess/upload/";
-    private static String play_first="http://a.kcway.net/assess/upload/";
     private static HashMap map=new HashMap<>();
 	@RequestMapping(value="dsdb.do")
 	@ResponseBody
@@ -787,10 +781,10 @@ public class YunXinController extends BaseController{
         	String[] s=url.split("/");
         	try {
         		map.put(id,creditutil.time());
-        		String last=s[s.length-1];
+        		String last="upload/"+s[s.length-1];
         		log.info("原视频文件名->"+last);
-        		String download_path= viedo_download_server_root+last;
-        		String play_path=play_first+last;
+        		String download_path=RootStatic.root_Directory+last;
+        		String play_path=RootStatic.download_prefix+last;
         		log.info("下载地址->"+download_path);
         		log.info("播放地址->"+play_path);
         		File file=new File(download_path);
