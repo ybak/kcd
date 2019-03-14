@@ -772,8 +772,8 @@ public class YunXinController extends BaseController{
     //private static String play_first="C:\\Users\\Administrator\\Desktop\\word\\haha1\\upload";
 
     
-   private static String viedo_download_server_root="DIMG/assess/upload/";
-    private static String play_first="http://a.kcway.net/assess/";
+    private static String viedo_download_server_root="DIMG/assess/upload/";
+    private static String play_first="http://a.kcway.net/assess/upload/";
     private static HashMap map=new HashMap<>();
 	@RequestMapping(value="dsdb.do")
 	@ResponseBody
@@ -793,13 +793,14 @@ public class YunXinController extends BaseController{
         		String play_path=play_first+last;
         		log.info("下载地址->"+download_path);
         		log.info("播放地址->"+play_path);
-    			downloadFile(url,download_path);
+        		File file=new File(download_path);
+    			downloadFile(url,file);
     			//更新数据库播放地址
     			int updateCount=yx.updateServerPath(play_path,id);
     			log.info("更新播放地址->id:"+id+",count"+updateCount);
-    			return renderSuccess(play_path);
+    			return renderSuccess(play_path+"---"+file.getAbsolutePath());
     		} catch (Exception e) {
-    			log.info("下载视频到本地服务器异常"+e.getStackTrace());
+    			log.info("下载视频到本地服务器异常"+JSON.toJSONString(e.getStackTrace()));
     			return renderError("下载失败，失败原因："+e.getMessage());
     		}finally {
 				map.remove(id);
@@ -898,9 +899,9 @@ public class YunXinController extends BaseController{
 //			}
 //		}
 		//视频下载
-		Long l=System.currentTimeMillis();
+	/*	Long l=System.currentTimeMillis();
 		downloadFile("http://jdvod6ep5thqk.vod.126.net/jdvod6ep5thqk/0-50870502883509-0-mix.mp4","C:\\Users\\Administrator\\Desktop\\word\\haha1\\upload\\0-6324213347287310-0-mix.mp4");
 		Long l1=System.currentTimeMillis();
-		System.out.println(l1-l);
+		System.out.println(l1-l);*/
 	}
 }

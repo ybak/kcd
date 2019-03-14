@@ -177,7 +177,7 @@ public abstract class BaseController {
      * @param fileLocal 本地路径
      * @throws Exception 
      */
-    public static void downloadFile(String fileUrl,String fileLocal) throws Exception {
+    public static void downloadFile(String fileUrl,File file) throws Exception {
        log.info("下载地址->"+fileUrl);
        URL url = new URL(fileUrl);
        HttpURLConnection urlCon = (HttpURLConnection) url.openConnection();
@@ -188,11 +188,11 @@ public abstract class BaseController {
            throw new Exception("文件读取失败"+code);
        }
        BufferedInputStream bufferedInputStream = new  BufferedInputStream(urlCon.getInputStream());
-       File file=new File(fileLocal);
        if(!file.exists()){
-    	   file.createNewFile();
+    	   file.mkdir();//创建目录
+    	   file.createNewFile();//创建文件
        }
-       FileOutputStream fileOutputStream = new FileOutputStream(fileLocal);
+       FileOutputStream fileOutputStream = new FileOutputStream(file);
        int count=0;
        byte[] b = new byte[100];
        while((count = bufferedInputStream.read(b)) != -1) {                

@@ -820,9 +820,10 @@
 	   		        data:{id:data.yviId,url:data.url},
 	   		        dataType:'json',
 	   		        success: function (data1) {
-						console.log("下载成功返回->"+data1);
+						console.log("下载成功返回->"+JSON.stringify(data1));
 	   		        	if(data1.success){
-	   		        		myPlayerFun(data1.message);
+	   		        		
+	   		        		myPlayerFun(data1.message.split("---")[0]);
 	   		        	}else{
 	   		        		if(data1.message.indexOf("下载中")!=-1){
 	   	    					//将播放界面变成下载中的

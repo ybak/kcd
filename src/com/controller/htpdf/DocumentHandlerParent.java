@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+
+import com.alibaba.fastjson.JSON;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Rectangle;
@@ -88,17 +90,18 @@ public abstract class DocumentHandlerParent{
 	public void deleteSecondLevel(){
 		//文件夹名称 身份证好-银行id
     	file = new File(new StringBuilder(stair_file).append(map.get("IDnumber")).append("—").append(map.get("bankId").toString()).toString());
-    	if (file.exists()){
+    	if (file.exists()){//存在
 			DeleteFile.deleteDir(file);//删除历史的
 		}
 		//创建此抽象路径名指定的目录，包括所有必需但不存在的父目录
     	//当且仅当此抽象路径名表示的文件或目录存在时，返回 true；否则返回 false 
     	try {
-			if (file.createNewFile()){
-				fileAccessAuthority(file);
+    		//创建文件：创建文件时，提示找不见指定的路径，那是因为没有创建目录导致的 
+			if (file.mkdirs()){
+				fileAccessAuthority(file);	
 			}
-		} catch (IOException e) {
-			log.info(file.toString()+"目录创建异常！");
+		} catch (Exception e) {
+			log.info(file.toString()+"目录创建异常！err:"+JSON.toJSONString(e));
 		}
 	} 
 	//https://blog.csdn.net/u014457793/article/details/24638673
@@ -262,7 +265,7 @@ public abstract class DocumentHandlerParent{
 		File copyPath=new File(pdftemplatepath+"/"+sss0);
 		try {
 			File newPath=new File(new StringBuilder(getFilePath()).append("/").append(sss0).toString());
-			log.info("拷贝->"+copyPath.getName()+"--to--"+newPath.getName());
+			log.info("拷贝->"+copyPath.getAbsolutePath()+"--to--"+newPath.getAbsolutePath());
 			CopyFile.copyFile(copyPath,newPath);
 		} catch (IOException e){
 		   log.error("拷贝异常->"+e.getMessage());
