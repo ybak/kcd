@@ -68,21 +68,29 @@ public class RepaymentServiceImpl implements RepaymentService{
 		int result=0;
 		Map<String, Object> map = repaymentMapper.selectID(icbc_id);
 		Map<String, Object> addmap = new HashMap<String, Object>();
-		int myyh=0;
+		double myyh=0;
 		if(null != map){
-			//本息合计=本金合计*（1+利率
+			//得到放款金额
 			BigDecimal mm = new BigDecimal(fk_money);
-			double lv2 = (double)map.get("dk_lv")/100 + 1;
-			//利率
-			BigDecimal bb2 = new BigDecimal(String.valueOf(lv2));
-			BigDecimal ee2 = mm.multiply(bb2);//乘法
-				
 			//贷款期限
-			BigDecimal cc2=new BigDecimal( map.get("aj_date").toString());
-			//每月应还=本息合计/贷款期数
-			BigDecimal dd2 = ee2.divide(cc2, 2, RoundingMode.HALF_UP);
-			System.out.println("================:"+dd2);
-			myyh = dd2.intValue();
+			BigDecimal cc2=new BigDecimal( map.get("aj_date").toString());			
+			//每月应还 =贷款总额/贷款期限
+			BigDecimal dd2 = mm.divide(cc2, 3,BigDecimal.ROUND_DOWN);//三位小数
+			String aa = dd2.toString();//转成string
+			System.out.println(aa);
+			
+			System.out.println(aa.length());//获取长度
+			System.out.println(aa.substring(aa.indexOf(".")+3, aa.length()));
+			String bb = aa.substring(aa.indexOf(".")+3, aa.length());//截取第三位小数
+			int cc = Integer.parseInt(bb);//转成int
+			if(cc > 0){//判断是否大于0  是就保留两位小数
+				BigDecimal vv = dd2.setScale(2, BigDecimal.ROUND_DOWN);
+				BigDecimal zero = new BigDecimal("0.01");
+				myyh = vv.add(zero).doubleValue();
+			}
+			
+			System.out.println("================:"+myyh);
+			
 		}
 		
 		//得到当前时间

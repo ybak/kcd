@@ -28,9 +28,9 @@ public class TrailernotAcceptedServiceImpl implements TrailernotAcceptedService 
 	 */
 
 	@Override
-	public List<PageData> selectTrailernotAccepted(String param, int pagenow, int pagesize) {
+	public List<PageData> selectTrailernotAccepted(String param, int pagenow, int pagesize,int fsid,int fs_id) {
 		// TODO Auto-generated method stub
-		return trailernotAcceptedMapper.selectTrailernotAccepted(param, pagenow, pagesize);
+		return trailernotAcceptedMapper.selectTrailernotAccepted(param, pagenow, pagesize,fsid,fs_id);
 	}
 	/**
 	 * 查询总条数
@@ -48,9 +48,9 @@ public class TrailernotAcceptedServiceImpl implements TrailernotAcceptedService 
 	 */
 
 	@Override
-	public List<PageData> selectTrailernotAccepted1(String param, int pagenow, int pagesize) {
+	public List<PageData> selectTrailernotAccepted1(String param, int pagenow, int pagesize,int fsid,int fs_id) {
 		// TODO Auto-generated method stub
-		return trailernotAcceptedMapper.selectTrailernotAccepted1(param, pagenow, pagesize);
+		return trailernotAcceptedMapper.selectTrailernotAccepted1(param, pagenow, pagesize,fsid,fs_id);
 	}
 	/**
 	 * 查询总条数
@@ -68,9 +68,9 @@ public class TrailernotAcceptedServiceImpl implements TrailernotAcceptedService 
 	 */
 
 	@Override
-	public List<PageData> selectTrailernotAccepted2(String param, int pagenow, int pagesize) {
+	public List<PageData> selectTrailernotAccepted2(String param, int pagenow, int pagesize,int fsid,int fs_id) {
 		// TODO Auto-generated method stub
-		return trailernotAcceptedMapper.selectTrailernotAccepted2(param, pagenow, pagesize);
+		return trailernotAcceptedMapper.selectTrailernotAccepted2(param, pagenow, pagesize,fsid,fs_id);
 	}
 	/**
 	 * 查询总条数
@@ -196,6 +196,11 @@ public class TrailernotAcceptedServiceImpl implements TrailernotAcceptedService 
 	public int updateTcStatus1(Integer icbc_id) {
 		// TODO Auto-generated method stub
 		return trailernotAcceptedMapper.updateTcStatus1(icbc_id);
+	}
+	@Override
+	public Map<String, Object> selectjll(int id) {
+		// TODO Auto-generated method stub
+		return trailernotAcceptedMapper.selectjll(id);
 	}
 	
 	

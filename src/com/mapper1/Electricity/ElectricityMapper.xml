@@ -5,15 +5,15 @@
 <mapper namespace="com.mapper1.Electricity.ElectricityMapper">
   <!-- 查询数据 -->
 	<select id="select" resultType="pd" parameterType="string">
-					select DISTINCT oc.*,yb.name y_name,
+			select DISTINCT oc.*,yb.name y_name,
 			fs.name fs_name,iekir.fk_money 
 			from 
 			(select * from overdue_customers where oc_status = 0
 			and DAY(SYSDATE()) - day(add_date) > 3) oc
 			left join icbc_erp_kj_icbc_result iekir on oc.icbc_id=iekir.icbc_id
 			left join kj_icbc bc on bc.id=oc.icbc_id
-			LEFT join assess_fs fs on bc.gems_fs_id=fs.id
-			left join yl_banklist yb on bc.bank_id = yb.id								
+			left join yl_banklist yb on bc.bank_id = yb.id
+			LEFT join assess_fs fs on bc.gems_fs_id in(select id from assess_fs af where up_id=#{fsid} or id =#{fs_id})							
 		<if test="param != null and param != ''">	
 			and oc.c_name like '%${param}%' 
 			OR oc.c_cardno like '%${param}%'
@@ -23,15 +23,15 @@
 	</select>
 	
 	<select id="count" resultType="Integer">
-		select count(*) from (select DISTINCT oc.*,yb.name y_name,
+			select count(*) from (select DISTINCT oc.*,yb.name y_name,
 			fs.name fs_name,iekir.fk_money 
 			from 
 			(select * from overdue_customers where oc_status = 0
 			and DAY(SYSDATE()) - day(add_date) > 3) oc
 			left join icbc_erp_kj_icbc_result iekir on oc.icbc_id=iekir.icbc_id
 			left join kj_icbc bc on bc.id=oc.icbc_id
-			LEFT join assess_fs fs on bc.gems_fs_id=fs.id
 			left join yl_banklist yb on bc.bank_id = yb.id
+			LEFT join assess_fs fs on bc.gems_fs_id in(select id from assess_fs af where up_id=#{fsid} or id =#{fsid})
 			GROUP BY oc.icbc_id	) v
 	</select>
 
@@ -152,5 +152,12 @@
 			icbc_id=#{icbc_id}
 	</update>
 	
-	
+	<select id="selectjll" resultType="map" parameterType="int">
+		SELECT
+			`value`
+		FROM
+			icbc_electricity
+		WHERE
+		 id=#{id}
+	</select>
 </mapper>

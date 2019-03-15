@@ -15,7 +15,7 @@ public interface lawsuitMapper {
 	 * @param pd
 	 * @return
 	 */
-	List<PageData> selectlawsuit(@Param(value="param") String param,@Param("pagenow")int pagenow,@Param("pagesize")int pagesize);
+	List<PageData> selectlawsuit(@Param(value="param") String param,@Param("pagenow")int pagenow,@Param("pagesize")int pagesize,@Param("fsid")int fsid,@Param("fs_id")int fs_id);
 	/**
 	 * 查询总条数
 	 */
@@ -26,7 +26,7 @@ public interface lawsuitMapper {
 	 * @param pd
 	 * @return
 	 */
-	List<PageData> selectlawsuit1(@Param(value="param") String param,@Param("pagenow")int pagenow,@Param("pagesize")int pagesize);
+	List<PageData> selectlawsuit1(@Param(value="param") String param,@Param("pagenow")int pagenow,@Param("pagesize")int pagesize,@Param("fsid")int fsid,@Param("fs_id")int fs_id);
 	/**
 	 * 查询总条数
 	 */
@@ -84,6 +84,9 @@ public interface lawsuitMapper {
 	//更改表中状态
 	int updateTcStatus(Integer icbc_id);
 
-	
+	/**
+	 * 查询记录栏信息
+	 */
+	Map<String, Object> selectjll(int id);
 	
 }

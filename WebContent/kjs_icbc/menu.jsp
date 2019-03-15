@@ -549,24 +549,19 @@
 					    <span>诉讼管理</span>
 					    </a>
 					    <ul class="treeview-menu">
-					    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'ssgl_ycl')==true}">
-							<li ${requestScope.type=='ssgl1'?"class='active'":''}>
-								<a href="${pageContext.request.contextPath}/lawsuitController/select1.do?type=ssgl1&dn=lawsuit1&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
+							<li ${requestScope.type=='ssglnot'?"class='active'":''}>
+								<a href="${pageContext.request.contextPath}/lawsuitController/select1.do?type=ssgl&dn=lawsuit1&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 							    <span>已处理</span>
 							    </a>
 							</li>
-						</c:if>
-						<c:if  test="${fn:contains(sessionScope.pd.purview_map,'ssgl_dcl')==true}">
-							<li ${requestScope.type=='ssgl2'?"class='active'":''}>
-								<a href="${pageContext.request.contextPath}/lawsuitController/select.do?type=ssgl2&dn=lawsuit&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
+							<li ${requestScope.type=='ssglalready'?"class='active'":''}>
+								<a href="${pageContext.request.contextPath}/lawsuitController/select.do?type=ssgl&dn=lawsuit&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
 							    <span>待处理</span>
 							    </a>
 							</li>
-						</c:if>
 					    </ul>
 					</li>
 					</c:if>
-					<!--保险管理  -->
 					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'bxgl')==true}">
 			        <li>
 					<a href="#"> <i class="fa fa-h-square"></i> 

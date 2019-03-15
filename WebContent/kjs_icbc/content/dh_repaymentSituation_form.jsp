@@ -57,7 +57,7 @@
 		<div class="row">
 	    	<label class="col-sm-1" >贷款金额:<i class="red">*</i></label>
 	  		<div class="col-sm-2">
-	  			${lborrow.dk_price}
+	  			${lborrow.dk_total_price}
 		    </div>
 		    <label class="col-sm-1">贷款期数:<i class="red">*</i></label>
 			<div class="col-sm-2">

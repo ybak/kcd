@@ -11,7 +11,7 @@
 		var s=$("#page_limit_select").val();
 		var status=$("#status").val();
 		var querytype=$("#querytype").val();		
-		window.location.href ="${pageContext.request.contextPath}/settleController/select.do?type=cqcl_yjq&dn=settle&qn=list&pagesize="+s+"&pagenow=1";
+		window.location.href ="${pageContext.request.contextPath}/settleController/select.do?type=cqcl_wjq&dn=settle&qn=list&pagesize="+s+"&pagenow=1";
     }
     function reset(){
     	$("#myform")[0].reset()
@@ -33,7 +33,7 @@
 				<div class="row">
 					<div class="col-sm-10">
 						<div class="btn-group">		
-							<form name="myform" class="form-horizontal" action="${pageContext.request.contextPath}/settleController/select.do?type=cqcl_yjq&dn=settle&qn=list" enctype="multipart/form-data" method="post">
+							<form name="myform" class="form-horizontal" action="${pageContext.request.contextPath}/settleController/select.do?type=cqcl_wjq&dn=settle&qn=list" enctype="multipart/form-data" method="post">
 								<input autocomplete="off" type="text" placeholder="请输入客户姓名或身份证号" name="param" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" style="width:500px;">
 								<button class="btn btn-info search-btn" type="submit" style="background-color:#00acd6;">查询</button>  
 								
@@ -66,12 +66,12 @@
 						    int totalpage1 = Integer.parseInt(request.getAttribute("totalpage").toString());
 						    if(pagenow1>1&&pagenow1<=totalpage1){
 							%>
-							<a href="${pageContext.request.contextPath }/settleController/select.do?type=cqcl_yjq&dn=settle&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" class="btn btn-default">«</a>						
+							<a href="${pageContext.request.contextPath }/settleController/select.do?type=cqcl_wjq&dn=settle&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" class="btn btn-default">«</a>						
 							<%				    	
 					         }						
 							 if(pagenow1>=1&&pagenow1<totalpage1){
 							%>
-							<a href="${pageContext.request.contextPath }/settleController/select.do?type=cqcl_yjq&dn=settle&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" class="btn btn-default">»</a>
+							<a href="${pageContext.request.contextPath }/settleController/select.do?type=cqcl_wjq&dn=settle&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" class="btn btn-default">»</a>
 	                        <%
 	                        }
 	                        %>
@@ -144,65 +144,16 @@
 							${newpdList.cars_tel }
 						</td>
 						<td class="text-center">
+							<c:if test="${newpdList.status eq 2 }">
 							拖车完成
-						</td>
-						<td class="text-center">
-							
-							<a href="${pageContext.request.contextPath }/settleController/selectdetail.do?type=cqcl_yjq&dn=settle&qn=form&icbc_id=${newpdList.icbc_id}">
-								<i class="fa fa-hand-paper-o"></i>
-							</a>
-						</td>
-						
-					</tr>
-					
-					</c:forEach>
-					</c:if>
-					<c:if test="${not empty settMap }">
-					<c:forEach var="settMap" items="${settMap}">
-					
-						<tr>
-						<td class="text-center hidden-xs">
-						<input name="delid"  type="checkbox">
-						</td>
-						<td class="text-center hidden-xs">
-							${settMap.id_code }
-						</td>
-						<td class="text-center">
-							<span class="s-font-blue">
-								${settMap.c_name }
-							</span>
-						</td>
-						<td class="text-center">
-							<span class="s-font-blue">
-								${settMap.c_cardno }
-							</span>
-						</td>
-						<td class="text-center">
-							${settMap.loans_bank }
-						</td>
-						<td class="text-center">
-							<c:if test="${settMap.cars_type == '1'}">
-								新车
 							</c:if>
-							<c:if test="${settMap.cars_type == '0'}">
-								二手车
-							</c:if>
-						</td>
-						<td class="text-center">
-							${settMap.gems_name }
-						</td>
-						<td class="text-center">
-							${settMap.gems_fs_name }
-						</td>
-						<td class="text-center">
-							${settMap.cars_tel }
-						</td>
-						<td class="text-center">
+							<c:if test="${newpdList.status eq 1 }">
 							诉讼完成
+							</c:if>
 						</td>
 						<td class="text-center">
 							
-							<a href="${pageContext.request.contextPath }/settleController/selectdetail.do?type=cqcl_yjq&dn=settle&qn=form&icbc_id=${settMap.icbc_id}">
+							<a href="${pageContext.request.contextPath }/settleController/selectdetail.do?type=cqcl_wjq&dn=settle&qn=form&icbc_id=${newpdList.icbc_id}">
 								<i class="fa fa-hand-paper-o"></i>
 							</a>
 						</td>
@@ -211,6 +162,7 @@
 					
 					</c:forEach>
 					</c:if>
+					
 				</tbody>
 			</table>
 		</div>
@@ -219,7 +171,7 @@
 			<c:if test="${requestScope.totalpage ge '1' }">
 				<ul class="pagination no-margin">
 				       <c:if test="${requestScope.pagenow ne '1' }">
-				        <li><a href="${pageContext.request.contextPath }/settleController/select.do?type=cqcl_yjq&dn=settle&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" aria-label="Next"><span aria-hidden="true">«</span></a></li>
+				        <li><a href="${pageContext.request.contextPath }/settleController/select.do?type=cqcl_wjq&dn=settle&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" aria-label="Next"><span aria-hidden="true">«</span></a></li>
 				       </c:if>
 					   <%
 				       int pagenow=Integer.parseInt(request.getAttribute("pagenow").toString());
@@ -241,7 +193,7 @@
 				       if(j==pagenow){
 				       %>
 					   <li id="l<%=j %>" class="active">
-					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/settleController/select.do?type=cqcl_yjq&dn=settle&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
+					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/settleController/select.do?type=cqcl_wjq&dn=settle&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
 					   <%=j %>
 					   </a>
 					   </li>
@@ -249,7 +201,7 @@
 				       }else{
 					   %>
 	                   <li id="l<%=j %>" >
-					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/settleController/select.do?type=cqcl_yjq&dn=settle&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
+					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/settleController/select.do?type=cqcl_wjq&dn=settle&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
 					   <%=j %>					   
 					   </a>
 					   </li>					   
@@ -262,7 +214,7 @@
 		               %>
 					   <c:if test="${requestScope.pagenow lt requestScope.totalpage}">
 			               <c:if test="${requestScope.totalpage gt 5}">
-						  <li><a href="${pageContext.request.contextPath }/settleController/select.do?type=cqcl_yjq&dn=settle&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" aria-label="Next"><span aria-hidden="true">»</span></a></li>  
+						  <li><a href="${pageContext.request.contextPath }/settleController/select.do?type=cqcl_wjq&dn=settle&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" aria-label="Next"><span aria-hidden="true">»</span></a></li>  
 						   </c:if>
 					   </c:if>
 					     				

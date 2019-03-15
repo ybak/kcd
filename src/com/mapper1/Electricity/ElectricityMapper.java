@@ -16,7 +16,7 @@ public interface ElectricityMapper {
 	 * @param pagenow
 	 * @return
 	 */
-	List<PageData> select(@Param("param") String param,@Param("pagenow") int pagenow,@Param("pagesize") int pagesize);
+	List<PageData> select(@Param("param") String param,@Param("pagenow") int pagenow,@Param("pagesize") int pagesize,@Param("fsid") int fsid,@Param("fs_id") int fs_id);
 
 	/**
 	 * 查询总条数
@@ -73,5 +73,10 @@ public interface ElectricityMapper {
 	 * 修改逾期表中状态为诉讼
 	 */
 	int updateSSstate(String icbc_id);
+	
+	/**
+	 * 查询记录栏信息
+	 */
+	Map<String, Object> selectjll(int id);
 	
 }

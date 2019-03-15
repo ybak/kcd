@@ -15,7 +15,7 @@ public interface TrailernotAcceptedService {
 	 * @param pd
 	 * @return
 	 */
-	List<PageData> selectTrailernotAccepted(@Param(value="param") String param,@Param("pagenow")int pagenow,@Param("pagesize")int pagesize);
+	List<PageData> selectTrailernotAccepted(@Param(value="param") String param,@Param("pagenow")int pagenow,@Param("pagesize")int pagesize,int fsid,int fs_id);
 	/**
 	 * 查询总条数
 	 */
@@ -26,7 +26,7 @@ public interface TrailernotAcceptedService {
 	 * @param pd
 	 * @return
 	 */
-	List<PageData> selectTrailernotAccepted1(@Param(value="param") String param,@Param("pagenow")int pagenow,@Param("pagesize")int pagesize);
+	List<PageData> selectTrailernotAccepted1( String param,int pagenow,int pagesize,int fsid,int fs_id);
 	/**
 	 * 查询总条数
 	 */
@@ -37,7 +37,7 @@ public interface TrailernotAcceptedService {
 	 * @param pd
 	 * @return
 	 */
-	List<PageData> selectTrailernotAccepted2(@Param(value="param") String param,@Param("pagenow")int pagenow,@Param("pagesize")int pagesize);
+	List<PageData> selectTrailernotAccepted2( String param,int pagenow,int pagesize,int fsid,int fs_id);
 	/**
 	 * 查询总条数
 	 */
@@ -118,5 +118,12 @@ public interface TrailernotAcceptedService {
 	//更改表中状态
 	int updateTcStatus(Integer icbc_id);
 	int updateTcStatus1(Integer icbc_id);
+	
+
+	/**
+	 * 查询记录栏信息
+	 */
+	Map<String, Object> selectjll(int id);
+	
 	
 }

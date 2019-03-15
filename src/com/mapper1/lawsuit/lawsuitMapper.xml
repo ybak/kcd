@@ -6,44 +6,56 @@
 	
 	<!-- 查询列表页所有数据 -->
 	<select id="selectlawsuit" parameterType="pd" resultType="pd">
-		SELECT
-			* 
+			SELECT
+			la.*
 		FROM
-			icbc_lawsuit 
-		where status=0 
+			(select * from icbc_lawsuit where `status`=0) la
+		left join kj_icbc bc on bc.id=la.icbc_id 
+	left join assess_fs fs on bc.gems_fs_id in(select id from assess_fs af where up_id=#{fsid} or id =#{fs_id})	
 		<!-- 模糊查询 -->
 		<if test="param != null and param != ''">
-			and (c_name like '%${param}%'
-			or c_cardno like '%${param}%')
+			where (la.c_name like '%${param}%'
+			or la.c_cardno like '%${param}%')
 		</if>
-		group by icbc_id 
+		group by la.icbc_id 
 		limit #{pagenow},#{pagesize} 
 	</select>
 	
 		<!-- 查询列表页所有数据 -->
 	<select id="selectlawsuit1" parameterType="pd" resultType="pd">
-		SELECT
-			* 
+			SELECT
+			la.*
 		FROM
-			icbc_lawsuit
-		where status=1 
+			(select * from icbc_lawsuit where `status`=1) la
+		left join kj_icbc bc on bc.id=la.icbc_id 
+	left join assess_fs fs on bc.gems_fs_id in(select id from assess_fs af where up_id=#{fsid} or id =#{fs_id})	
 		<!-- 模糊查询 -->
 		<if test="param != null and param != ''">
-			and (c_name like '%${param}%'
-			or c_cardno like '%${param}%')
+			where (la.c_name like '%${param}%'
+			or la.c_cardno like '%${param}%')
 		</if>
-		group by icbc_id
+		group by la.icbc_id 
 		limit #{pagenow},#{pagesize} 
 	</select>
 	
 	
 	<!-- 总条数 -->
 	<select id="count" resultType="Integer">
-		select count(*) from (select * from icbc_lawsuit GROUP BY icbc_id) a
+		select count(*) from (SELECT
+			la.*
+		FROM
+			(select * from icbc_lawsuit where `status`=0) la
+		left join kj_icbc bc on bc.id=la.icbc_id 
+	left join assess_fs fs on bc.gems_fs_id in(select id from assess_fs af where up_id=#{fsid} or id =#{fs_id}) GROUP BY la.icbc_id) a
 	</select>
 	<!-- 总条数 -->
 	<select id="count1" resultType="Integer">
-		select count(*) from (select * from icbc_lawsuit GROUP BY icbc_id) a
+		select count(*) from (SELECT
+			la.*
+		FROM
+			(select * from icbc_lawsuit where `status`=1) la
+		left join kj_icbc bc on bc.id=la.icbc_id 
+	left join assess_fs fs on bc.gems_fs_id in(select id from assess_fs af where up_id=#{fsid} or id =#{fs_id}) GROUP BY la.icbc_id) a
 	</select>
 
 	<!-- 查询客户个人信息 -->
@@ -218,7 +230,14 @@
 	  	where icbc_id=#{icbc_id}
 	</update>
 
-
+<select id="selectjll" resultType="map" parameterType="int">
+		SELECT
+			`value`
+		FROM
+			icbc_electricity
+		WHERE
+		 id=#{id}
+	</select>
 
 
 </mapper>

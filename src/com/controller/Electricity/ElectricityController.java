@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.model1.icbc.erp.PageData;
 import com.service1.Electricity.ElectricityService;
@@ -39,7 +41,8 @@ public class ElectricityController {
 		//获取当前操作人信息
 		PageData pdsession= (PageData)request.getSession().getAttribute("pd");
 		System.out.println("--------+:"+pdsession);
-		
+		int fsid = Integer.parseInt(pdsession.get("fs_id").toString());
+		int fs_id = Integer.parseInt(pdsession.get("fs_id").toString());
 				int ps = 0;
 				int pn = 0;
 				if (pagesize != null && !pagesize.equals("")) {
@@ -51,9 +54,8 @@ public class ElectricityController {
 					pn = pagenow;
 				} else {
 					pn = 1;
-				}
-		
-				List<PageData> selList = electricityService.select(param,(pn-1)*ps,ps);		
+				}			
+				List<PageData> selList = electricityService.select(param,(pn-1)*ps,ps,fsid,fs_id);		
 				for(PageData pd : selList){			
 				//判断根据身份证号查询时数据不为空
 				if(pd.get("c_cardno") != null && !pd.get("c_cardno").equals("")){
@@ -182,4 +184,15 @@ public class ElectricityController {
 			request.setAttribute("type", type);
 			return "kjs_icbc/index";
 		}
+		
+		//查询记录栏数据
+		@RequestMapping("/selectjll")
+		@ResponseBody
+		public Map selectjll(int id,HttpServletRequest request){
+			System.out.println("-----------id:"+id);
+			Map<String, Object> value = electricityService.selectjll(id);
+		
+			return value;
+		}
+		
 }
