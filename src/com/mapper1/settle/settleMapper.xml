@@ -6,50 +6,28 @@
 	
 	<!-- 查询列表页所有数据 -->
 	<select id="selectsettle" parameterType="pd" resultType="pd">
-		SELECT
-			*
-		FROM
-			icbc_trailer 
-		WHERE
-			`status` = 2 
+		select tr.* from 
+			(select * from icbc_trailer where `status`=2 UNION select * from icbc_lawsuit where `status`=1 ) tr
+			left join kj_icbc bc on bc.id=tr.icbc_id
+			left join assess_fs fs on bc.gems_fs_id in(select id from assess_fs af where up_id=#{fsid} or id =#{fs_id})
 		<!-- 模糊查询 -->
 		<if test="param != null and param != ''">
-			and (c_name like '%${param}%'
-			or c_cardno like '%${param}%')
-		</if>
-		group by icbc_id 
+			and (tr.c_name like '%${param}%'
+			or tr.c_cardno like '%${param}%')
+		</if>	
 		limit #{pagenow},#{pagesize} 
 	</select>
 	
-		<!-- 查询列表页所有数据 -->
-	<select id="selectsettle2"  resultType="map">
-		SELECT
-			*
-		FROM
-			icbc_lawsuit 
-		WHERE
-			`status` = 1 
-		group by icbc_id 
-	</select>
 		
 	<!-- 总条数 -->
 	<select id="count" resultType="Integer">
-		select count(*) FROM
-			icbc_trailer 
-		WHERE
-			`status` = 2 
-
+		select count(*) from (select tr.* from 
+			(select * from icbc_trailer where `status`=2 UNION select * from icbc_lawsuit where `status`=1 ) tr
+			left join kj_icbc bc on bc.id=tr.icbc_id
+			left join assess_fs fs on bc.gems_fs_id in(select id from assess_fs af where up_id=#{fsid} or id =#{fs_id})
+			) v
 	</select>
 	
-		<!-- 总条数 -->
-	<select id="count1" resultType="Integer">
-		select count(*) 
-		FROM		
-			icbc_lawsuit 
-		WHERE
-			`status` =1
-			
-	</select>
 
 	<!-- 查询客户个人信息 -->
 	<select id="selectgrxx" resultType="java.util.Map" parameterType="string">

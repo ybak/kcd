@@ -30,10 +30,17 @@ public class OverdueController {
 			int pagenow,
 			String param,
 			HttpServletRequest request){
+		
+		//获取当前操作人信息
+		PageData pdsession= (PageData)request.getSession().getAttribute("pd");
+		System.out.println("--------+:"+pdsession);
+		int fsid = Integer.parseInt(pdsession.get("fs_id").toString());
+		int fs_id = Integer.parseInt(pdsession.get("fs_id").toString());
+		
 		List<PageData> newpdList=new ArrayList<>();
 		PageData pd=new PageData();
 		pd.put("dn", dn);
-		List<PageData> pdList=overdueService.selectoverdue(param, pd);
+		List<PageData> pdList=overdueService.selectoverdue(param, pd,fsid,fs_id);
 		newpdList = limitutil.fy(pdList, pagesize, pagenow);
 		int q=pdList.size()%pagesize;
 		int totalpage=0;//总页数

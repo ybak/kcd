@@ -4,11 +4,12 @@
 
 <mapper namespace="com.mapper1.Repayment.OverdueMapper1">
 	 <select id="selectoverdue" resultType="java.util.Map" parameterType="string">
-		select * from overdue_customers 
-		where
-		oc_status=0
+		select ov.*
+		from overdue_customers ov
+		left join kj_icbc bc on bc.id=ov.icbc_id and ov.oc_status=0
+		left join assess_fs fs on bc.gems_fs_id in(select id from assess_fs af where up_id=#{fsid} or id =#{fs_id})
 		<if test="param != null and param != ''">
-	 	 and c_name like '%${param}%' or c_cardno like '%${param}%'
+	 	 where ov.c_name like '%${param}%' or ov.c_cardno like '%${param}%'
 		</if>
 	</select> 
 </mapper>

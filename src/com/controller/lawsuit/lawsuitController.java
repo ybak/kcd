@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.controller.Excel.UploadExcelController;
@@ -62,10 +63,14 @@ public class lawsuitController {
 			String param,
 			HttpServletRequest request
 			)throws UnsupportedEncodingException{
+	
+		//获取当前操作人信息
+				PageData pdsession= (PageData)request.getSession().getAttribute("pd");
+				System.out.println("--------+:"+pdsession);
+				int fsid = Integer.parseInt(pdsession.get("fs_id").toString());
+				int fs_id = Integer.parseInt(pdsession.get("fs_id").toString());
 		
-		//获取登陆信息
-		PageData pdLoginSession = (PageData)request.getSession().getAttribute("pd");
-//		System.out.println(pdLoginSession.get("name"));
+		
 		int ps = 0;
 		int pn = 0;
 		if (pagesize != null && !pagesize.equals("")) {
@@ -78,7 +83,7 @@ public class lawsuitController {
 		} else {
 			pn = 1;
 		}
-		List<PageData> newpdList=lawsuitService.selectlawsuit(param,(pn-1)*ps,ps);
+		List<PageData> newpdList=lawsuitService.selectlawsuit(param,(pn-1)*ps,ps,fsid,fs_id);
 		int totalsize=lawsuitService.count();
 //		System.out.println("***************count:"+totalsize);
 		int q=totalsize%ps;
@@ -127,9 +132,13 @@ public class lawsuitController {
 			HttpServletRequest request
 			)throws UnsupportedEncodingException{
 		
-		//获取登陆信息
-		PageData pdLoginSession = (PageData)request.getSession().getAttribute("pd");
-//		System.out.println(pdLoginSession.get("name"));
+		//获取当前操作人信息
+				PageData pdsession= (PageData)request.getSession().getAttribute("pd");
+				System.out.println("--------+:"+pdsession);
+				int fsid = Integer.parseInt(pdsession.get("fs_id").toString());
+				int fs_id = Integer.parseInt(pdsession.get("fs_id").toString());
+		
+		
 		int ps = 0;
 		int pn = 0;
 		if (pagesize != null && !pagesize.equals("")) {
@@ -142,7 +151,7 @@ public class lawsuitController {
 		} else {
 			pn = 1;
 		}
-		List<PageData> newpdList=lawsuitService.selectlawsuit1(param,(pn-1)*ps,ps);
+		List<PageData> newpdList=lawsuitService.selectlawsuit1(param,(pn-1)*ps,ps,fsid,fs_id);
 		int totalsize=lawsuitService.count1();
 //		System.out.println("***************count:"+totalsize);
 		int q=totalsize%ps;
@@ -181,8 +190,7 @@ public class lawsuitController {
 			Integer icbc_id,
 			HttpServletRequest request
 			)throws ParseException{
-		//获取登陆信息
-		PageData pdLoginSession = (PageData)request.getSession().getAttribute("pd");
+		
 		Map<String, Object> grxxMap= lawsuitService.selectgrxx(icbc_id);
 		Map<String, Object> clxxMap= lawsuitService.selectclxx(icbc_id);
 		Map<String, Object> dkfaMap= lawsuitService.selectdkfa(icbc_id);
@@ -375,5 +383,16 @@ public class lawsuitController {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	//查询记录栏数据
+			@RequestMapping("/selectjll")
+			@ResponseBody
+			public Map selectjll(int id,HttpServletRequest request){
+				System.out.println("-----------id:"+id);
+				Map<String, Object> value = lawsuitService.selectjll(id);	
+				System.out.println("-------value:"+value);
+				return value;
+			}
+			
 	
 }

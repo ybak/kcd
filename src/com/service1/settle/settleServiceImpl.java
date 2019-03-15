@@ -26,9 +26,9 @@ public class settleServiceImpl implements settleService {
 	 */
 
 	@Override
-	public List<PageData> selectsettle(String param, int pagenow, int pagesize) {
+	public List<PageData> selectsettle(String param, int pagenow, int pagesize,int fsid,int fs_id) {
 		// TODO Auto-generated method stub
-		return settleMapper.selectsettle(param, pagenow, pagesize);
+		return settleMapper.selectsettle(param, pagenow, pagesize,fsid,fs_id);
 	}
 	/**
 	 * 查询总条数
@@ -84,17 +84,6 @@ public class settleServiceImpl implements settleService {
 		// TODO Auto-generated method stub
 		return settleMapper.addTc1(detailMap);
 	}
-	@Override
-	public int count1() {
-		// TODO Auto-generated method stub
-		return settleMapper.count1();
-	}
-	@Override
-	public List<Map> selectsettle2() {
-		// TODO Auto-generated method stub
-		return settleMapper.selectsettle2();
-	}
-
 
 //	//修改状态
 //	@Override

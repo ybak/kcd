@@ -17,9 +17,9 @@ public class OverdueServiceImpl implements OverdueService{
 	private OverdueMapper1 overdueMapper1;
 	
 	@Override
-	public List<PageData> selectoverdue(String param, PageData pd) {
+	public List<PageData> selectoverdue(String param, PageData pd,int fsid,int fs_id) {
 		// TODO Auto-generated method stub
-		return overdueMapper1.selectoverdue(param, pd);
+		return overdueMapper1.selectoverdue(param, pd,fsid,fs_id);
 	}
 	
 	

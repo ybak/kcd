@@ -18,9 +18,9 @@ public class ElectricityServiceImpl implements ElectricityService{
 	private ElectricityMapper electricityMapper;
 
 	@Override
-	public List<PageData> select(String param, int pagenow, int pagesize) {
+	public List<PageData> select(String param, int pagenow, int pagesize,int fsid,int fs_id) {
 		// TODO Auto-generated method stub
-		return electricityMapper.select(param, pagenow, pagesize);
+		return electricityMapper.select(param, pagenow, pagesize,fsid,fs_id);
 	}
 
 	@Override
@@ -92,5 +92,11 @@ public class ElectricityServiceImpl implements ElectricityService{
 	public int updateSSstate(String icbc_id) {
 		// TODO Auto-generated method stub
 		return electricityMapper.updateSSstate(icbc_id);
+	}
+
+	@Override
+	public Map<String, Object> selectjll(int id) {
+		// TODO Auto-generated method stub
+		return electricityMapper.selectjll(id);
 	}
 }

@@ -13,5 +13,5 @@ public interface OverdueMapper1 {
 	 * @param pd
 	 * @return
 	 */
-	List<PageData> selectoverdue(@Param("param")String param,@Param("pd")PageData pd);
+	List<PageData> selectoverdue(@Param("param")String param,@Param("pd")PageData pd,@Param("fsid") int fsid,@Param("fs_id") int fs_id);
 }

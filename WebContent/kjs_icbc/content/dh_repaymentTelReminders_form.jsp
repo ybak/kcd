@@ -275,24 +275,7 @@ function login(){
 	  <div style="">
 	  	<div style="display: flex;">
 	      <h4 class="modal-title" style="margin-bottom: 10px;">记录栏:</h4>					
-		  <div class="foot-page" style="margin: -8px 10px;">			
-				<ul class="pagination no-margin">				       
-				    <li>
-				    
-				    <a href="#" aria-label="Next"><span aria-hidden="true">上一页</span></a>
-				    
-				  
-				    </li>
-				    				  
-					<li>
-					
-					<a href="#" aria-label="Next"><span aria-hidden="true">下一页</span></a>
-					
-					
-					</li>  				
-				</ul>
-	   
-			</div>  
+		  
 		  </div>		
 	      	<!-- <textarea style="border:1px solid #ccc; height:200px;margin-top:10px;" class="form-control"></textarea> -->
 	      	<div id="main_list" class="admin-content box">
@@ -309,7 +292,7 @@ function login(){
 						<th class="text-center hidden-xs">日期时间</th>
 						<th class="text-center">记录类型</th>
 						<th class="text-center">操作人员</th>
-						<!-- <th class="text-center">查看</th> -->
+						 <th class="text-center">查看</th> 
 					</tr>
 					<c:forEach items="${newpdList }" var="newpd" varStatus="status">
 					<tr>
@@ -341,11 +324,11 @@ function login(){
 						<td class="text-center">
 							${newpd.operator }
 						</td>
-						<!-- <td class="text-center">
+						 <td class="text-center">
 							<p>
-								<i class="fa fa-search-plus" onclick="toggleModel()"></i>
+								<i class="fa fa-search-plus" onclick="toggleModel('${newpd.id}')"></i>
 							</p>
-						</td> -->
+						</td>
 
 					</tr>
 					</c:forEach>
@@ -356,8 +339,23 @@ function login(){
 	  </div>
 	  
 	  <script>
-	function toggleModel(){
-		$('#myModal').modal({ show: true });
+	function toggleModel(a){
+
+		 $.ajax({
+			type: "POST",
+	        url: "${pageContext.request.contextPath }/electricityController/selectjll.do",
+	        data: {id:a},	       
+	        success:function(data){ 
+	        	$('#myModal').modal({ show: true });
+	        	$('#motaikuang').html(data.value);
+	        },
+	        error: function (data) {
+	            alert("编辑失败...请稍后重试！");
+	        }
+	        
+		}) 
+		
+		
 	}
 	</script>
 	<!-- 模态框 -->
@@ -368,7 +366,7 @@ function login(){
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	                <h4 class="modal-title">电催记录栏</h4>
 	            </div>
-	            <div class="modal-body" style="border:1px solid #ccc;background-color:#F7F7F7;border-radius: 10px;margin:30px;">
+	            <div id="motaikuang" class="modal-body" style="border:1px solid #ccc;background-color:#F7F7F7;border-radius: 10px;margin:30px;">
 	             	<!-- 模态框插入内容 start -->
 	  	
 					

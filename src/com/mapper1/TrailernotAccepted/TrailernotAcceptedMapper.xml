@@ -7,61 +7,85 @@
 	<!-- 查询列表页所有数据 -->
 	<select id="selectTrailernotAccepted" parameterType="pd" resultType="pd">
 		SELECT
-			* 
+			er.*,
+			bc.id,
+			fs.id fs_id	
 		FROM
-			icbc_trailer 
-		where status=0 
+			(select * from icbc_trailer where `status`=0) er 
+		left join kj_icbc bc on bc.id=er.icbc_id
+	left join assess_fs fs on bc.gems_fs_id in(select id from assess_fs af where up_id=#{fsid} or id =#{fs_id})	
 		<!-- 模糊查询 -->
 		<if test="param != null and param != ''">
-			and (c_name like '%${param}%'
-			or c_cardno like '%${param}%')
+			where (er.c_name like '%${param}%'
+			or er.c_cardno like '%${param}%')
 		</if>
-		group by icbc_id 
+		group by er.icbc_id 
 		limit #{pagenow},#{pagesize} 
 	</select>
 	
 		<!-- 查询列表页所有数据 -->
 	<select id="selectTrailernotAccepted1" parameterType="pd" resultType="pd">
 		SELECT
-			* 
+			er.*,
+			bc.id,
+			fs.id fs_id	
 		FROM
-			icbc_trailer 
-		where status=1 
+			(select * from icbc_trailer where `status`=1) er 
+		left join kj_icbc bc on bc.id=er.icbc_id
+	left join assess_fs fs on bc.gems_fs_id in(select id from assess_fs af where up_id=#{fsid} or id =#{fs_id})	
 		<!-- 模糊查询 -->
 		<if test="param != null and param != ''">
-			and (c_name like '%${param}%'
-			or c_cardno like '%${param}%')
+			where (er.c_name like '%${param}%'
+			or er.c_cardno like '%${param}%')
 		</if>
-		group by icbc_id 
+		group by er.icbc_id 
 		limit #{pagenow},#{pagesize} 
 	</select>
 	<!-- 查询列表页所有数据 -->
 	<select id="selectTrailernotAccepted2" parameterType="pd" resultType="pd">
 		SELECT
-			* 
+			er.*,
+			bc.id,
+			fs.id fs_id	
 		FROM
-			icbc_trailer 
-		where status=2
+			(select * from icbc_trailer where `status`=2) er 
+		left join kj_icbc bc on bc.id=er.icbc_id 
+	left join assess_fs fs on bc.gems_fs_id in(select id from assess_fs af where up_id=#{fsid} or id =#{fs_id})	
 		<!-- 模糊查询 -->
 		<if test="param != null and param != ''">
-			and (c_name like '%${param}%'
-			or c_cardno like '%${param}%')
+			where (er.c_name like '%${param}%'
+			or er.c_cardno like '%${param}%')
 		</if>
-		group by icbc_id 
+		group by er.icbc_id 
 		limit #{pagenow},#{pagesize} 
 	</select>
 	
 	<!-- 总条数 -->
 	<select id="count" resultType="Integer">
-		select count(*) from (select * from icbc_trailer GROUP BY icbc_id) a 
+				select count(*) from (SELECT
+			er.*
+		FROM
+			(select * from icbc_trailer where `status`=0) er 
+		left join kj_icbc bc on bc.id=er.icbc_id 
+	left join assess_fs fs on bc.gems_fs_id in(select id from assess_fs af where up_id=#{fsid} or id =#{fs_id})	 GROUP BY er.icbc_id) a
 	</select>
 	<!-- 总条数 -->
 	<select id="count1" resultType="Integer">
-		select count(*) from (select * from icbc_trailer GROUP BY icbc_id) a
+				select count(*) from (SELECT
+			er.*
+		FROM
+			(select * from icbc_trailer where `status`=1) er 
+		left join kj_icbc bc on bc.id=er.icbc_id 
+	left join assess_fs fs on bc.gems_fs_id in(select id from assess_fs af where up_id=#{fsid} or id =#{fs_id})	 GROUP BY er.icbc_id) a
 	</select>
 	<!-- 总条数 -->
 	<select id="count2" resultType="Integer">
-		select count(*) from (select * from icbc_trailer GROUP BY icbc_id) a
+		select count(*) from (SELECT
+			er.*
+		FROM
+			(select * from icbc_trailer where `status`=2) er 
+		left join kj_icbc bc on bc.id=er.icbc_id 
+	left join assess_fs fs on bc.gems_fs_id in(select id from assess_fs af where up_id=#{fsid} or id =#{fs_id})	 GROUP BY er.icbc_id) a 
 	</select>
 	<!-- 查询客户个人信息 -->
 	<select id="selectgrxx" resultType="java.util.Map" parameterType="string">
@@ -316,6 +340,16 @@
 		update icbc_trailer set status=2
 	  	where icbc_id=#{icbc_id}
 	</update>
+
+
+<select id="selectjll" resultType="map" parameterType="int">
+		SELECT
+			`value`
+		FROM
+			icbc_electricity
+		WHERE
+		 id=#{id}
+	</select>
 
 
 </mapper>

@@ -26,9 +26,9 @@ public class lawsuitServiceImpl implements lawsuitService {
 	 */
 
 	@Override
-	public List<PageData> selectlawsuit(String param, int pagenow, int pagesize) {
+	public List<PageData> selectlawsuit(String param, int pagenow, int pagesize,int fsid,int fs_id) {
 		// TODO Auto-generated method stub
-		return lawsuitMapper.selectlawsuit(param, pagenow, pagesize);
+		return lawsuitMapper.selectlawsuit(param, pagenow, pagesize,fsid,fs_id);
 	}
 	/**
 	 * 查询总条数
@@ -46,9 +46,9 @@ public class lawsuitServiceImpl implements lawsuitService {
 	 */
 
 	@Override
-	public List<PageData> selectlawsuit1(String param, int pagenow, int pagesize) {
+	public List<PageData> selectlawsuit1(String param, int pagenow, int pagesize,int fsid,int fs_id) {
 		// TODO Auto-generated method stub
-		return lawsuitMapper.selectlawsuit1(param, pagenow, pagesize);
+		return lawsuitMapper.selectlawsuit1(param, pagenow, pagesize,fsid,fs_id);
 	}
 	/**
 	 * 查询总条数
@@ -139,6 +139,11 @@ public class lawsuitServiceImpl implements lawsuitService {
 	public int updateTcStatus(Integer icbc_id) {
 		// TODO Auto-generated method stub
 		return lawsuitMapper.updateTcStatus(icbc_id);
+	}
+	@Override
+	public Map<String, Object> selectjll(int id) {
+		// TODO Auto-generated method stub
+		return lawsuitMapper.selectjll(id);
 	}
 
 

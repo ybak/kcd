@@ -63,9 +63,11 @@ public class settleController {
 			HttpServletRequest request
 			)throws UnsupportedEncodingException{
 		
-		//获取登陆信息
-		PageData pdLoginSession = (PageData)request.getSession().getAttribute("pd");
-//		System.out.println(pdLoginSession.get("name"));
+		//获取当前操作人信息
+				PageData pdsession= (PageData)request.getSession().getAttribute("pd");
+				System.out.println("--------+:"+pdsession);
+				int fsid = Integer.parseInt(pdsession.get("fs_id").toString());
+				int fs_id = Integer.parseInt(pdsession.get("fs_id").toString());
 		int ps = 0;
 		int pn = 0;
 		if (pagesize != null && !pagesize.equals("")) {
@@ -78,10 +80,8 @@ public class settleController {
 		} else {
 			pn = 1;
 		}
-		List<PageData> newpdList=settleService.selectsettle(param,(pn-1)*ps,ps);
-		int totalsize1=settleService.count();
-		int i = settleService.count1();
-		int totalsize = totalsize1+i;
+		List<PageData> newpdList=settleService.selectsettle(param,(pn-1)*ps,ps,fsid,fs_id);
+		int totalsize=settleService.count();
 //		System.out.println("***************count:"+totalsize);
 		int q=totalsize%ps;
 		int totalpage=0;//总页数
@@ -90,7 +90,6 @@ public class settleController {
 		}else{
 			totalpage=totalsize/ps+1;
 		} 
-		List<Map> settMap = settleService.selectsettle2();
 		
 		request.setAttribute("dn", dn);
 		request.setAttribute("qn", qn);
@@ -100,7 +99,6 @@ public class settleController {
 		request.setAttribute("pagenow",pn);
 		request.setAttribute("totalsize",totalsize);
 		request.setAttribute("newpdList", newpdList);
-		request.setAttribute("settMap", settMap);
 		log.info("结果"+newpdList);
 		
 		return "kjs_icbc/index";
