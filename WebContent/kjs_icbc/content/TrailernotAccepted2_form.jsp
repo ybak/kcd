@@ -33,7 +33,7 @@
             
             data: $('#form1').serialize(),
             success:function(data){
-            		alert("发送成功");                  
+            	               
                     location.reload(true);
             }
     	})
@@ -231,11 +231,11 @@
 			</div>
 		</div>
 		
-		<div style="padding-top:20px;">
+		<!-- <div style="padding-top:20px;">
 	      <h4 class="modal-title">进库情况:</h4>
 	    </div>
 	    <div class="box" style="margin-top:10px;">
-			<!-- 数据载入中结束 -->
+			数据载入中结束
 			<table class="table table-bordered table-hover">
 		    	<tr>
 					<th class="text-center">序号</th>
@@ -250,14 +250,9 @@
 					<td class="text-center">上海市垃圾场</td>
 					<td class="text-center"><i class="fa fa-search-plus"></i></td>						
 			    </tr>
-			    <tr>
-					<td class="text-center">2</td>
-					<td class="text-center">2020-03-10</td>
-					<td class="text-center">上海市垃圾场</td>
-					<td class="text-center"><i class="fa fa-search-plus"></i></td>						
-			    </tr>
+			    
 	       </table>
-	  </div>
+	  </div> -->
 	  <form id="form1" onsubmit="return false" action="##" method="post">
 	  <div style="margin-top:10px;">
 	      <h4 class="modal-title">车况备注:</h4>	      

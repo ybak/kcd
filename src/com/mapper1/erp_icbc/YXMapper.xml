@@ -201,17 +201,17 @@
 	<update id="update_infocopy_download" parameterType="infocopy">
 		update icbc_erp_video_info set filename=#{fi.filename},url=#{fi.url},vid=#{fi.vid} where channelId=#{fi.channelid}
 	</update>
-	<!-- 视频关联-->
+	<!-- 历史视频关联-->
 	<update id="update_infocopy_viedo_vid"  parameterType="map">
-		update icbc_erp_video_info set vid=#{id} where channelId=#{channel}
+		update icbc_erp_video_info set result_id=#{id} where channelId=#{channel}
 	</update>
 	<!-- 实时免签更新地址 和g关联result表的id -->
 	<update id="update_infocopy_viedo">
-		update icbc_erp_video_info set address=#{address},vid=#{id} where channelId=#{channel}
+		update icbc_erp_video_info set address=#{address},result_id=#{id} where channelId=#{channel}
 	</update>
 	<!-- 实时免签添加通道信息 -->
 	<insert id="insert_infocopy_viedo"> <!-- 视频面签为1 -->
-		insert into icbc_erp_video_info(ext,vid,viedotype,address,channelId) values(#{icbcid},#{id},'1',#{address},#{channel})
+		insert into icbc_erp_video_info(ext,result_id,viedotype,address,channelId) values(#{icbcid},#{id},'1',#{address},#{channel})
 	</insert>
 	
 	<!-- map类型的输入参数 -->
@@ -235,7 +235,7 @@
 	<update id="update_infocopy_durationM" parameterType="java.util.HashMap">
 		update icbc_erp_video_info set createtime=#{createtime},duration=#{duration},faccid=#{faccid},ext=#{ext.id},address=#{ext.address},duration_time=#{duration_time} where channelId=#{channelId}
 	</update>
-	<!-- 更新时长通话记录抄送 -->
+	<!-- 更新下载通话记录抄送 -->
 	<update id="update_infocopy_downloadM" parameterType="java.util.HashMap">
 		update icbc_erp_video_info set url=#{url},download_info=#{download_info},vid=#{vid} where id=#{id11}
 	</update>
@@ -293,7 +293,7 @@ kik.gjr1_gzdw,kik.gjr2_gzdw,kik.gjr1_dwdz,kik.gjr2_dwdz,kik.gjr1_yzdrgx,kik.gjr2
 kik.qtlxr_c_name,kik.qtlxr_c_tel,kik.qtlxr_jdrgx,kik.qtlxr_xzdz,
 ki.id,ki.c_name,ki.c_tel,ki.c_cardno,ki.gems_fs_id,ki.gems_id,ki.loan_tpid, ki.loan_level,ki.c_name_mt,ki.c_tel_mt,ki.c_cardno_mt,ki.kk_kpj,ki.c_sex,ki.c_name_gj1,ki.c_name_gj2,ki.c_tel_gj1,ki.c_tel_gj2,ki.c_cardno_gj1,ki.c_cardno_gj2,ki.imgstep2_1ss,ki.id icbcid,
 ac.price_result,ac.source_id,ac.property_id,ac.car_status,ac.gear_box_id,ac.car_km_icbc,ac.cardt2,ac.cardt1,ac.color_id,ac.mem_states,ac.mem_citys,ac.vincode,ac.ppxh,ac.motorcode,ac.icbc_pricecs,ac.price_new,ac.c_carno,
-yb.id ybId,yb.`name` ybName,yvi.address address,yvi.url,yvi.server_path serverPath,yvi.id yviId,
+yb.id ybId,yb.`name` ybName,yvi.address address,yvi.url,yvi.server_path serverPath,yvi.id yviId,yvi.channelId,
 cb.name cbName,cm.name cmName,cs.name csName,ag.name agName,af.name afName		
 	from icbc_erp_video_info yvi   
 	join kj_icbc ki on yvi.ext=ki.id and yvi.id=#{0}
@@ -321,15 +321,15 @@ select name from comm_zones where id=#{0}
 <!-- 查看历史   大状态表 公司表  银行表 视频表 左链接 小状态-->
 <select id="select_operating" resultType="java.util.HashMap" parameterType="pageinfo" >
 	 select b.* from (select 
-yvi.address,yvi.url,yvi.id yid,yvi.vid vid,iekir.result_1_code code,yvi.viedotype,
+yvi.address,yvi.url,yvi.id yid,yvi.result_id resultId,iekir.result_1_code code,yvi.viedotype,
 fs.name,
-ieki.icbc_id icbcid,ieki.id iekiid,ieki.c_name cname,ieki.dt_edit editime,
+ieki.icbc_id icbcid,ieki.id iekiid,ieki.c_name cname,ieki.dt_edit editime,yvi.createtime,
 yb.id ybId,yb.`name` ybName
 from icbc_erp_video_info yvi 
 join icbc_erp_kj_icbc ieki on yvi.ext=ieki.icbc_id  and ieki.type_id=6
 join assess_fs fs on ieki.gems_fs_id=fs.id  
 <include refid="condition-viedo"></include>
-left JOIN icbc_erp_kj_icbc_result iekir ON iekir.id=yvi.vid 
+left JOIN icbc_erp_kj_icbc_result iekir ON iekir.id=yvi.result_id 
 join kj_icbc ki on ki.id=ieki.icbc_id
 JOIN icbc_banklist yb on yb.id=ki.bank_id) b  
 <include refid="condition-viedo1"></include>

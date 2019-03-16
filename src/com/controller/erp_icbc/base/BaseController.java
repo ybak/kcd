@@ -2,8 +2,11 @@ package com.controller.erp_icbc.base;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -183,6 +186,38 @@ public abstract class BaseController {
 		headers.setContentDispositionFormData("attachment", fileName);
 		return new ResponseEntity<Resource>(resource, headers, status);
 	}
+	
+	
+
+public HttpServletResponse download(String path, HttpServletResponse response) {
+        try {
+            // path是指欲下载的文件的路径。
+            File file = new File(path);
+            // 取得文件名。
+            String filename = file.getName();
+            // 取得文件的后缀名。
+            String ext = filename.substring(filename.lastIndexOf(".") + 1).toUpperCase();
+ 
+            // 以流的形式下载文件。
+            InputStream fis = new BufferedInputStream(new FileInputStream(path));
+            byte[] buffer = new byte[fis.available()];
+            fis.read(buffer);
+            fis.close();
+            // 清空response
+            response.reset();
+            // 设置response的Header
+            response.addHeader("Content-Disposition", "attachment;filename=" + new String(filename.getBytes()));
+            response.addHeader("Content-Length", "" + file.length());
+            OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
+            response.setContentType("application/octet-stream");
+            toClient.write(buffer);
+            toClient.flush();
+            toClient.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return response;
+    }
 	/**
      * TODO 下载文件到本地
      * @author nadim  
@@ -191,8 +226,9 @@ public abstract class BaseController {
      * @param fileLocal 本地路径
      * @throws Exception 
      */
-    public static void downloadFile(String fileUrl,File file) throws Exception {
-       log.info("下载地址->"+fileUrl);
+    public static void downloadFile(String fileUrl,String file) throws Exception {
+       log.info("下载url地址->"+fileUrl);
+   
        URL url = new URL(fileUrl);
        HttpURLConnection urlCon = (HttpURLConnection) url.openConnection();
 //       urlCon.setConnectTimeout(6000);
@@ -202,9 +238,7 @@ public abstract class BaseController {
            throw new Exception("文件读取失败"+code);
        }
        BufferedInputStream bufferedInputStream = new  BufferedInputStream(urlCon.getInputStream());
-       if(!file.exists()){
-     	   file.createNewFile();//创建文件
-       }
+
        FileOutputStream fileOutputStream = new FileOutputStream(file);
        int count=0;
        byte[] b = new byte[100];
@@ -214,7 +248,7 @@ public abstract class BaseController {
        bufferedInputStream.close();
        fileOutputStream.close();
   }
-    public static void urlToWeb(String farUrl, HttpServletResponse response) throws Exception{
+    public static void urlToWeb(String farUrl, HttpServletResponse response,String fileName) throws Exception{
     	 URL url = new URL(farUrl);
          HttpURLConnection urlCon = (HttpURLConnection) url.openConnection();
          int code = urlCon.getResponseCode();
@@ -225,10 +259,9 @@ public abstract class BaseController {
          BufferedOutputStream bos=null;
          try{
            bis = new  BufferedInputStream(urlCon.getInputStream());
-           String[] ss=farUrl.split("/");
            response.setContentType("application/x-msdownload;");
            /* 设置文件头：最后一个参数是设置下载文件名(假如我们叫a.ini)   */
-	       response.setHeader("Content-disposition", "attachment; filename=" +ss[ss.length-1]);
+	       response.setHeader("Content-disposition", "attachment; filename=" +fileName);
 	       bos = new BufferedOutputStream(response.getOutputStream());
 	       byte[] buff = new byte[2048];
 	       int bytesRead;

@@ -729,7 +729,8 @@ fn.hangup = function () {
     }else{
     	console.log("通话时长小于等于0->"+this.netcallDuration)
     }
-    
+    //挂断删除忙碌的
+    window.free();
     this.resetWhenHangup();//释放资源
 };
 // 其它端已处理
@@ -804,7 +805,7 @@ fn.doOpenChatBox = function () {
  * @param {object} obj 主叫信息
  * @param {string} scene 是否是群视频，默认值p2p
  */
-fn.onBeCalling = function (obj, scene) {
+fn.onBeCalling = function (obj, scene) {	
 	//暂停视频播放
     if(!!myPlayer){
     	myPlayer.pause();
@@ -815,6 +816,14 @@ fn.onBeCalling = function (obj, scene) {
     var netcall = this.netcall;
     // 如果是同一通呼叫，直接丢掉
     if (obj.channelId === this.channelId) return
+    
+	//关闭刷新定时器
+	if(refreshTime){
+		console.log("关闭刷新定时器")
+		clearTimeout(refreshTime)
+	}
+	deleteActive()
+	
     // p2p场景，先通知对方自己收到音视频通知
      if (scene === 'p2p') {
          netcall.control({
@@ -851,8 +860,8 @@ fn.onBeCalling = function (obj, scene) {
     }.bind(this), 62 * 1000)
     //p2p场景
     this.beCalledInfo = obj;
-    //this.beCalledInfo.custom='{"id":"706",\"latitude\":26.056487,\"longitude\":119.336294,"address":"上海市"}';
-    //obj.custom='{"id":"706",\"latitude\":26.056487,\"longitude\":119.336294,"address":"上海市"}';
+   /* this.beCalledInfo.custom='{"id":"706",\"latitude\":26.056487,\"longitude\":119.336294,"address":"上海市"}';
+    obj.custom='{"id":"706",\"latitude\":26.056487,\"longitude\":119.336294,"address":"上海市"}';*/
     this.netcallActive = true;
     this.netcallAccount = obj.account;//即帐号
     this.doOpenChatBox();

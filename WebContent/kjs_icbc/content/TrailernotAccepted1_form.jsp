@@ -19,9 +19,7 @@
 }
 </style>
 	<div class="content-wrapper" style="min-height: 943px;padding-right:30px; padding-left: 30px;">
-		<script type="text/javascript">
-    
-    
+		<script type="text/javascript"> 
     function tk(){
     	alert("正在处理")
     }
@@ -38,7 +36,7 @@
 	    	processData: false,  // 告诉jQuery不要去处理发送的数据
 	        contentType: false,	 // 告诉jQuery不要去设置Content-Type请求头
             success:function(data){
-            		alert("发送成功");                  
+            		                
                     location.reload(true);
             },
             error:function(data){
@@ -237,11 +235,7 @@
 			</div>
 		</div>
 		
-		
-	    
-	  	
-	   
-	  <form id="form1" onsubmit="return false" method="post" encType="multipart/form-data">
+		<form id="form1" onsubmit="return false" method="post" encType="multipart/form-data">
 	  <div style="margin-top:20px;">
 	  	<label>入库时间:</label>
 	  	<lable style="margin-left:310px;margin-top:40px;">入库地址:</lable>
@@ -268,7 +262,7 @@
 	  <div style="">
 	  	<div style="display: flex;">
 	      <h4 class="modal-title" style="margin-bottom: 10px;">记录栏:</h4>					
-		  
+		   
 		  </div>		
 	      	<!-- <textarea style="border:1px solid #ccc; height:200px;margin-top:10px;" class="form-control"></textarea> -->
 	      	<div id="main_list" class="admin-content box">
@@ -285,7 +279,7 @@
 						<th class="text-center hidden-xs">日期时间</th>
 						<th class="text-center">记录类型</th>
 						<th class="text-center">操作人员</th>
-						<th class="text-center">查看</th>
+						 <th class="text-center">查看</th> 
 					</tr>
 					<c:forEach items="${inputMap }" var="inputMap" varStatus="status">
 					<tr>
@@ -296,7 +290,7 @@
 							${status.index+1}
 						</td>
 						<td class="text-center hidden-xs">
-							${inputMap.present_date }
+							${fn:substring(inputMap.present_date,0,19) }
 						</td>
 						<td class="text-center">
 							<span class="s-font-blue">
@@ -317,11 +311,11 @@
 						<td class="text-center">
 							${pd.name }
 						</td>
-						<td class="text-center">
+						 <td class="text-center">
 							<p>
-								<i class="fa fa-search-plus" onclick="toggleModel()"></i>
+						<i class="fa fa-search-plus" onclick="toggleModel('${inputMap.id}')"></i>
 							</p>
-						</td>
+						</td> 
 
 					</tr>
 					</c:forEach>
@@ -330,39 +324,12 @@
 			</table>
 		</div>	
 	  </div>
-	  <script type="text/javascript">
-
-		lay('#version').html('-v'+ laydate.v);
-		//执行一个laydate实例
-		laydate.render({
-		  elem: '#date_61_1'
-		});
-		laydate.render({
-		  elem: '#date_61_2'
-		});
-		
-		function upload_cover(obj) {
-	        ajax_upload(obj.id, function(data) { //function(data)是上传图片的成功后的回调方法
-	            var isrc = data.relatPath.replace(/\/\//g, '/'); //获取的图片的绝对路径
-	           console.log("图片的绝对路径->"+isrc)
-	        });
-	    }  
-
-	   
-		
-		</script>
 	  
-	 
 	  <script>
-	function text(){
-		$('#entry').val();
-	}
-	
 	function toggleModel(a){
-
 		 $.ajax({
 			type: "POST",
-	        url: "${pageContext.request.contextPath }/trailernotAcceptedController/selectrecord1.do",
+	        url: "${pageContext.request.contextPath }/trailernotAcceptedController/selectjll.do",
 	        data: {id:a},	       
 	        success:function(data){ 
 	        	$('#myModal').modal({ show: true });

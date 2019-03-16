@@ -13,13 +13,33 @@ public class ScanPool1 extends SP{
 	//单次通话的最大的占用时间 
 	private int validtime=900000;//15分钟=900000
 	//在线的有效时间 客户端轮训时间一定要比这个小,保证这个在线处于激活状态
-	private int onlinetime=300000;//5分钟=300000
+	private int onlinetime=40000;
 	//客户
 	private  String clientAccid;
 	private  String clientToken;
 	//审核
 	private String auditAccid;
 	private String auditToken;
+	//之前的时间
+	private String previousTime;
+	//之后的时间
+	private String laterTime;
+	public String getLaterTime() {
+		return laterTime;
+	}
+
+	public void setLaterTime(String laterTime) {
+		this.laterTime = laterTime;
+	}
+
+	public String getPreviousTime() {
+		return previousTime;
+	}
+
+	public void setPreviousTime(String previousTime) {
+		this.previousTime = previousTime;
+	}
+
 	//这里预留扩展，针对不同银行的视频面前时长可能不同的情况
 	public ScanPool1(int onlinetime,int validtime){
 		this.onlinetime=onlinetime;
@@ -95,12 +115,11 @@ public class ScanPool1 extends SP{
 	public void setOnlinetime(int onlinetime) {
 		this.onlinetime = onlinetime;
 	}
-
 	@Override
 	public String toString() {
-		return "ScanPool1 [mark=" + super.mark + ", createTime=" + createTime + ", delmark=" + delmark + ", bankId=" + bankId + ", validtime="
-				+ validtime + ", onlinetime=" + onlinetime + ", clientAccid=" + clientAccid + ", clientToken="
-				+ clientToken + ", auditAccid=" + auditAccid + ", auditToken=" + auditToken + "]";
+		return "ScanPool1 [mark=" + super.mark + ",Id=" + Id + ", createTime=" + createTime + ", delmark=" + delmark + ", bankId=" + bankId
+				+ ", validtime=" + validtime + ", onlinetime=" + onlinetime + ", clientAccid=" + clientAccid
+				+ ", clientToken=" + clientToken + ", auditAccid=" + auditAccid + ", auditToken=" + auditToken
+				+ ", previousTime=" + previousTime + ", laterTime=" + laterTime + "]";
 	}
-	
 }

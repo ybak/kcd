@@ -153,8 +153,26 @@
 								</div>
 								<div style="height: 1px; background: #CCCCCC;"></div>
 								<div class="mq_l_bottom">
+								<style>
+									.toggle_div{
+										 position: relative;
+										 top: 35%;
+										 font-size: 20px;
+									}
+									.operation_active{
+									text-decoration: underline; color: #68B4DC;
+									cursor:pointer
+									}
+								</style>
 									<div style="height: 85%;">
-										<div id="loadEffect" class="loadEffect hid">
+										<div id="none_viedo" class="toggle_div">
+											<span>暂时没有视频</span>
+										</div>
+										<div id="operation_div" class="toggle_div" >
+											<span id="online_play_div" class="operation_active" >在线播放</span>
+											<span id="download_to_local" class="operation_active" style="padding-left: 50px;">下载至本地</span>
+										</div>
+										<div id="loadEffect" class="loadEffect hide">
 									        <span></span>
 									        <span></span>
 									        <span></span>
@@ -166,6 +184,7 @@
 									         <p style="color: #929292; position: absolute;top: 40px;left: 25px; font-size: 16px;">下载中</p>
 										</div>
 										 <video id="my-video" style="margin: auto" id="my-video" class="hide video-js vjs-big-play-centered " x-webkit-airplay="allow" webkit-playsinline controls preload="auto" width="100%" height="100%" ></video>
+										<div id="download_to_local1" class="hide operation_active" style="position: relative;top:15px;">下载到本地</div>
 									 </div>
 									<input type="hidden" id="icbcid">
 									<input type="hidden" id="channelid" />
@@ -728,7 +747,7 @@
 	}
 		
 	window.onload=function(){
-		refreshTime();
+		refershFun();
 	}
 	//('{"id":"420","latitude":26.056487,"longitude":119.336294,"address":"福建省福州市台江区曙光路126号宇洋中央金座"}','A','420');
 	/* 
@@ -758,6 +777,7 @@
 		  			var id=$("#icbcid").val();
 		  			var channelid=$("#channelid").val();
 		  			var auditsvalue=$(this).val();
+		  			console.log("参数->icbcId:"+id+",chanelid:"+channelid+",状态:"+auditsvalue)
 		  			if(!!auditsvalue && !!id && channelid){
 		  			   $.post("../yx/sutitstatus.do",
 		  					 {icbcid:id,auditstatus:auditsvalue,channel:channelid},
@@ -780,16 +800,41 @@
 		  		$(".mq_viedo_bottom").html('<p class="through" style="background-color: #d9534f;"> 不通过</p>');
 		  	}
 	}
-	function myPlayerFun(param1){
+	
+	function divToggle(param){
+		//选择
+		$("#operation_div").toggleClass("hide",!(param==1))
+		//没有视频奥
+		$("#none_viedo").toggleClass("hide",!(param==2))
+		//加载
+		$("#loadEffect").toggleClass("hide",!(param==3))
+		//播放
+		$("#my-video").toggleClass("hide",!(param==4))
+		$("#download_to_local1").toggleClass("hide",!(param==4))
+	}
+	
+	function myPlayerFun(param1,playYorN){
 		if(!myPlayer){
   			//重新初始化播放器
   			myPlayer = neplayer('my-video');
   		}		        
     	myPlayer.resize( 400, 320);
 		myPlayer.setDataSource({src:param1,type:"video/mp4"});
-		myPlayer.play();
-		$("#my-video").toggleClass("hide",false)
-		$("#loadEffect").toggleClass("hide",true)
+		if(playYorN){
+			myPlayer.play();
+		}
+		divToggle(4);
+	}
+	function download_fun(url){
+		//下载
+		$("#download_to_local,#download_to_local1").off("click").on("click",function(){
+			console.log("下载视频地址->"+url)
+			/* window.open(data.downUrl); */
+			var iframe  = document.createElement("iframe");
+			document.body.appendChild(iframe); 		
+			iframe.src =url;
+			iframe.style.display = "none";
+		})
 	}
 	function viewdate(dom,data){
 		$("#namediv"+dom).text(data.c_name);//姓名
@@ -809,45 +854,65 @@
     		$("#visa"+dom).attr("src","../kjs_icbc/kjs_icbc_style/images/error.png");
     	}
     	if(dom=="B"){//查看历史
-			$("#loadEffect").toggleClass("hide",false)
     		$("#icbcid").val(data.id);//隐藏域 存放审核id 在历史审核的提交的时候用
 	  		$("#channelid").val(data.channelId);
-	  		if(!data.serverPath){
-	  			console.log("没有下载到服务器，开始下载")
-	  			//播放视频区域 变成下载中..... 
-	  			$.ajax({
-	   		        url:'../yx/dsdb.do',
-	   		        type:'POST',
-	   		        data:{id:data.yviId},
-	   		        dataType:'json',
-	   		        success: function (data1) {
-						console.log("下载成功返回->"+JSON.stringify(data1));
-	   		        	if(data1.success){
-	   		        		
-	   		        		myPlayerFun(data1.message.split("---")[0]);
-	   		        	}else{
-	   		        		if(data1.message.indexOf("下载中")!=-1){
-	   	    					//将播放界面变成下载中的
-	   	    					
-	   	    				}else{
-	   	    					/*setTimeout(function(){
-		   		        			layer.msg(data1.message);
-		   		        		},300) */
-		   		        		layer.msg(data1.message);
-	   		        		}
-	   		        	}
-	   		        },
-	   		        error: function (XMLHttpRequest, textStatus, errorThrown) {
-	   		        	var prefix="下载视频到服务器异常";
-	   		            console.log(prefix+":(状态码)"+XMLHttpRequest.status);
-	   		            console.log(prefix+"请求客户信息异常:(状态)"+XMLHttpRequest.readyState);
-	   		            console.log(prefix+"请求客户信息异常:(错误信息) "+textStatus);
-	   		        }
-	   	    	 })
-	        }else{
-	        	console.log("已下载到服务器准备播放")
-	        	myPlayerFun(data.serverPath);
-	        }
+	  		if(!data.url){
+	  			console.log("显示还没有视频")
+        		divToggle(2)
+        	}else{
+        		console.log("显示播放还是下载")
+        		divToggle(1)
+        		//播放
+        		//Jquery中按钮事件重复绑定导致事件多次触发解决办法 https://blog.csdn.net/qq_41559229/article/details/82801116
+        		$("#online_play_div").off("click").on("click",function(){
+        	  		if(!data.serverPath){
+        	  			divToggle(3)
+        	  			console.log("没有下载到服务器，开始下载")
+        	  			//播放视频区域 变成下载中..... 
+        	  			$.ajax({
+        	   		        url:'../yx/dsdb.do',
+        	   		        type:'POST',
+        	   		        data:{id:data.yviId},
+        	   		        dataType:'json',
+        	   		        success: function (data1) {
+        						console.log("下载成功返回->"+JSON.stringify(data1));
+        	   		        	if(data1.success){
+        	   		        		//如果还是当前播放的 dataGlobal必须是挂在window（全局）下的
+        	   		        		if(data1.data.id==window.dataGlobal.yviId){
+        	   		        			console.log("我在等着这个用户的视频播放")
+        	   		        			window.dataGlobal.serverPath=data1.data.play_path;
+        	   		        			download_fun(data1.data.downUrl)
+        	   		        			//这个不应该直接播放，因为下载->播放成功的这段时间，可能来了一个beCall
+            	   		        		myPlayerFun(data1.data.play_path);
+        	   		        		}else{
+        	   		        			console.log("我走了，不等这个用户的视频下载完了")
+        	   		        		}
+        	   		        	}else{
+        	   		        		if(data1.message.indexOf("下载中")!=-1){
+        	   	    					//将播放界面变成下载中的
+        	   	    					
+        	   	    				}else{
+        	   	    					/*setTimeout(function(){
+        		   		        			layer.msg(data1.message);
+        		   		        		},300) */
+        		   		        		layer.msg(data1.message);
+        	   		        		}
+        	   		        	}
+        	   		        },
+        	   		        error: function (XMLHttpRequest, textStatus, errorThrown) {
+        	   		        	var prefix="下载视频到服务器异常";
+        	   		            console.log(prefix+":(状态码)"+XMLHttpRequest.status);
+        	   		            console.log(prefix+"请求客户信息异常:(状态)"+XMLHttpRequest.readyState);
+        	   		            console.log(prefix+"请求客户信息异常:(错误信息) "+textStatus);
+        	   		        }
+        	   	    	 })
+        	        }else{
+        	        	console.log("已下载到服务器准备播放->"+data.serverPath)
+        	        	myPlayerFun(data.serverPath,true);
+        	        }
+				})
+				download_fun(data.downUrl)
+        	}
 	  	}
 		if(data.aj_date && data.dk_total_price){//期限和总额存在
 			let dklv=accDiv(data.dk_lv,"100")//8.55除以100
@@ -2011,12 +2076,11 @@
 	}
  	//释放登陆的accid
 	function destroysession(){
-		var tim=readCookie("mark");
-		var bankid=readCookie('bankId');
+		var data_refresh=readCookie('data_refresh');
 		$.ajax({
             url:'../yx/outlogin.do',
             type:'POST',
-            data:{mark:tim,bankId:bankid},
+            data:JSON.parse(data_refresh),
             dataType:'json',
             success: function () {
             	console.log('退出');
@@ -2182,12 +2246,6 @@
 		}
 		window.dynamicSearchList=dynamicSearchList;
 	})()
-/* 
---------------------- 
-作者：LiWang_it 
-来源：CSDN 
-原文：https://blog.csdn.net/lwang_IT/article/details/86592905 
-版权声明：本文为博主原创文章，转载请附上博文链接！ */
  	new dynamicSearchList({
 		searchBox:"organization",
 		itemMarkBox:"organizationval",
@@ -2226,8 +2284,14 @@
     		 myPlayer.pause();//暂停播放
     	 }
 	})
+
+	
+	
 	//视频id 列数  视频面签状态
  	function mq_viedoplay(value,index,code){
+		 //按钮变个色吧
+		 $("a[id^='details_button']").children().css("color","#5bc0de");
+		 $("#details_button"+value).children().css("color","#F18525");
 	    //是否第一次打开	
 	     if(b==index){//如果是再次点击
 	    	 $(".mq_viedoplay").toggleClass("hide");//连续点击 显示或者隐藏
@@ -2245,7 +2309,9 @@
 		        data:{id:value,domvalue:"B"},
 		        dataType:'json',
 		        success: function (data) {
-		        	viewdate("B",data);
+		        	//这里必须将结果数据做成全局的，否则下面的下载会有问题
+		        	window.dataGlobal=data;
+		        	viewdate("B",data)
 		        },
 		        error: function (XMLHttpRequest, textStatus, errorThrown) {
 		        	var prefix="请求历史视频异常";
@@ -2276,16 +2342,7 @@
     }
     //操作栏的格式化
     function actionFormatter(value, row, index) {
-    	if(!!value){//存在播放url
-    		var result="";
-            result += "<a href='javascript:;' class='btn btn-xs green' onclick=\"mq_viedoplay('"+row.yid+"','"+index+"','"+row.code+"')\" title='查看'><span style='color:#5bc0de;font-size:16px' class='glyphicon glyphicon-off'></span></a>";
-           	return result;
-    	}else{//不存在播放url
-    		return "<p style='color:#ccc;font-size:16px' class='glyphicon glyphicon-off' title='暂且没有视频'></p>";
-    	}
-    }
-    function downloadClient(url){
-    	download(url)
+    		return "<a href='javascript:;' id='details_button"+row.yid+"' class='btn btn-xs green' onclick=\"mq_viedoplay('"+row.yid+"','"+index+"','"+row.code+"')\" title='查看'><span style='color:#5bc0de;font-size:16px' class='glyphicon glyphicon-off'></span></a>";
     }
      function downloadFormatter(value, row, index) {	
     	if(!!value){//存在播放url
@@ -2354,8 +2411,8 @@
                 formatter: ContractstatusFormatter
             },
             {
-                title:'最后更新时间',
-                field:'editime',
+                title:'通话开始时间',
+                field:'createtime',
                 align:'center',
                 width:200,
                 formatter: timeFormatter
@@ -2391,14 +2448,7 @@
                 width: 200,
                 align: 'center',
                 formatter: actionFormatter
-		    } ,
-            {
-                field:'url',
-                title: '下载到本地',
-                width: 200,
-                align: 'center',
-                formatter: downloadFormatter
-            } 
+		    }
 
         ],
         locale:'zh-CN',//中文支持,
@@ -2432,7 +2482,17 @@
 	}
 	//日期格式转化
 	function timeFormatter(value, row, index){
-		return getSmpFormatDateByLong(value,true);
+		if(value){
+			return value;
+			if(value.indexOf("-")!=-1){/* 兼容如果是日期格式  Unix时间戳 */
+				return value;
+			}
+			//ie NaN问题
+			return getSmpFormatDateByLong(value,true)+"";
+		}else{
+			return 	'暂无';	
+		}
+	
 	}
     //tableHeight函数
     function tableHeight(){

@@ -24,26 +24,66 @@ function readCookie(name) {
         return null;
     }
 }
-function refreshTime(){
-	var tim=readCookie('mark');
-	var bankid=readCookie('bankId');
-	if(tim!=null){
-		 setInterval(function(){
-	         $.ajax({
-	                url:'../yx/refreshtime.do',
-	                type:'POST',
-	                data:{mark:tim,bankId:bankid},
-	                dataType:'json',
-	                success: function () {
-	                	console.log('刷新');
-	                },
-	                error: function(d){
-	                   console.log(d.status)
-	                }
-	            }); 
-	        },180000);//3分钟更新一下在线状态 3*60*1000=180000
-	}
-};
+//刷新定时器
+var refreshTime=null;
+function refershFun(){
+	console.log("开启刷新定时器")
+	refreshTime=setInterval(function(){
+		var data_refresh=readCookie('data_refresh');
+	    $.ajax({
+	           url:'../yx/refreshtime.do',
+	           type:'POST',
+	           data:JSON.parse(data_refresh),
+	           dataType:'json',
+	           success: function (data) {
+	           	console.log('刷新->'+JSON.stringify(data));
+	           },
+	           error: function(err){
+	          	 console.log('刷新异常->'+JSON.stringify(err));
+	           }
+	       }); 
+	   },10000);//3分钟更新一下在线状态 3*60*1000=180000
+}
+
+//释放忙碌的 添加活跃的
+function free(){
+	var data_refresh=readCookie('data_refresh');
+	 $.ajax({
+         url:'../yx/free1.do',
+         type:'POST',
+         data:JSON.parse(data_refresh),
+         dataType:'json',
+         success: function (data) {
+         	console.log('挂断释放->'+JSON.stringify(data));
+         },
+         error: function(err){
+        	 console.log('挂断释放异常->'+JSON.stringify(err));
+         }
+     }); 
+}
+//删除活跃的 收到BeCall的时候
+function deleteActive(){
+	var data_refresh=readCookie('data_refresh');
+	 $.ajax({
+        url:'../yx/deleteActive.do',
+        type:'POST',
+        data:JSON.parse(data_refresh),
+        dataType:'json',
+        success: function (data) {
+        	console.log('收到BeCall->'+JSON.stringify(data));
+        },
+        error: function(err){
+       	 console.log('收到BeCall->'+JSON.stringify(err));
+        }
+    }); 	
+}
+
+//设置忙碌状态是在移动端好还是Web端好呢，如果在Web端，移动端获取到当前登录的mark，并发起到Web端接收，中间会有延时，这时如果其他移动端也获取到mark，移动端就要处理Web的占线
+
+//删除忙碌还是放在web端好，因为多个移动端获取到mark,挂断的时候会删除已经忙碌的mark
+
+//当web端收到beCall的时候再次删除一次活跃的，这次删除的作用（移动端获取到当前登录的mark，并发起到Web端接收，中间会有延时，这事可能web端的刷新方法又执行了一次刷新函数，导致mark为活跃）
+
 
 //删除cookies 
 function delCookie(name) {

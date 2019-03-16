@@ -11,6 +11,8 @@ import java.util.Random;
 import java.util.UUID;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -275,6 +277,27 @@ public class YunXinController extends BaseController{
 		if(select_mq_info.size()>0){
 			 map.putAll((Map)select_mq_info.get(0));//添加到集合中
 		 }
+		//处理下载的地址 先从本地下载再考虑从云信下载
+		//本地
+		Object serverPath= map.get("serverPath");
+		if(serverPath!=null && StringUtils.isNotBlank(serverPath.toString())){
+			log.info("本地下载路径已经存在");
+			//http://a.kcway.net/assess/upload/0-50873460261080-0-mix.mp4
+			String serverPath1=serverPath.toString();
+			int i=serverPath1.indexOf("upload");
+			if(i!=-1){
+				map.put("downUrl",RootStatic.url+RootStatic.root_Directory+serverPath1.substring(i));
+				//C:/Users/Administrator/Desktop/word/haha1/upload/0-50873460261080-0-mix.mp4
+			}
+		}else{
+			log.info("只存在云信的下载路径");
+			//云信
+			Object url=map.get("url");
+			if(url!=null && StringUtils.isNotBlank(url.toString())){
+				map.put("downUrl",RootStatic.url+url.toString());
+				//http://localhost/kcd/yx/downloadClient.do?url=http://jdvod6ep5thqk.vod.126.net/jdvod6ep5thqk/0-50873460261080-0-mix.mp4
+			}
+		}
 		log.info("查看历史视频或者实时面签返回处理过用户信息->{}"+JSON.toJSONString(map));
 		return map;
 	}
@@ -548,7 +571,7 @@ public class YunXinController extends BaseController{
 		}
 	}*/
 	/**
-	 *占位 
+	 *移动端占位 
 	 *http://localhost/kcd/yx/occupy.do
 	 */
 	@RequestMapping(value="occupy.do")
@@ -583,21 +606,36 @@ public class YunXinController extends BaseController{
 		}
 	}
 	/**
-	 *释放
+	 *移动端释放
 	 */
 	@RequestMapping(value="free.do")
 	@ResponseBody
 	public Object freeToken(String mark){
-		ScanPool1 scanPool1=PoolCache1.deleteBusy(mark);
-		if(scanPool1!=null){
-			return renderSuccess(scanPool1);
-		}
-		 return renderError("释放失败!不存在此mark！");
+		return null;
 	}
+	
+	//web端挂断释放
+	@RequestMapping(value="free1.do")
+	@ResponseBody
+	public Object freeToken1(ScanPool1 data){
+		log.info("web端挂断释放->param:"+data.toString());
+		ScanPool1 scanPool1=PoolCache1.deleteBusy(data.getMark());
+		
+		if(scanPool1!=null){
+			log.info("web端释放成功");
+			return renderSuccess(scanPool1);
+		}else{
+			log.info("web端释放失败");
+			return renderError("释放失败");
+		}
+		 
+	}
+	//web端刷新在线，如果不存在则添加
 	@RequestMapping(value="refreshtime.do")
 	@ResponseBody
-	public void  refreshTime(String bankId,String mark){
-		PoolCache1.refresh(bankId,mark);
+	public Object refreshTime(ScanPool1 data){
+		log.info("web端刷新在线->param:"+data.toString());
+		return PoolCache1.add(data);
 	}
 	/**
 		登陆 成功并返回云信ID
@@ -605,7 +643,7 @@ public class YunXinController extends BaseController{
 	 */
 	@RequestMapping(value="login.do")
 	@ResponseBody
-	public ScanPool1 toLogin(HttpServletRequest request) throws Exception{
+	public Object toLogin(HttpServletRequest request) throws Exception{
 		String id=null;
 		try {
 			id=getUserId(request);
@@ -620,23 +658,39 @@ public class YunXinController extends BaseController{
 			if(list.size()>0){
 				ScanPool1 scanpool=(ScanPool1)list.get(0);
 				if(scanpool.getDelmark()==0){
-					ScanPool1 offer =PoolCache1.add(scanpool);
-					return offer;
+					ScanPool1 offer=null;
+					ScanPool1 poolCache1= PoolCache1.isMarkToBusy(scanpool.getMark());
+					if(poolCache1!=null){
+						return renderError("此账号正在视频中");
+					}else{
+						offer =PoolCache1.add(scanpool);
+					}
+					return renderSuccess(offer);
 				}else{
 					log.info("此账号被禁用");
-					return null;
+					return renderError("此账号被禁用");
 				}
 			}else{
 				log.info("此账号没有绑定视频token");
+				return renderError("此账号没有绑定视频token");
 			}
 		}
-		return null;
+		return renderError("此账号没有绑定视频token");                                                                                                                       
 	}
+	
+	//删除活跃中的
+	@RequestMapping(value="deleteActive.do")
+	@ResponseBody
+	public  Object deleteActive(ScanPool1 data){
+		log.info("Web端收到Becall->回话用户信息:"+data.toString());
+		return renderSuccess(PoolCache1.deleteActive(data));
+	}	
+	
 	/*退出操作*/
 	@RequestMapping(value="outlogin.do")
 	@ResponseBody
-	public  void outLogin(String bankId,String mark){
-		PoolCache1.outLogin(bankId,mark);
+	public  Object outLogin(ScanPool1 data){
+		return renderSuccess(PoolCache1.outLogin(data));
 	}	
 	/**
 	 *获取随机一个上传accid
@@ -699,6 +753,7 @@ public class YunXinController extends BaseController{
             					if(members2.toString().indexOf("caller")==-1){//如果是通话的发起者的话，caller字段为true，否则无caller字段；duration表示对应accid用户的单方时长
             						String uid=yx.selectUidByAccid(members2.getString("accid"));
             						log.info("根据accid查询uid->accid:"+members2.getString("accid")+",uid:"+uid);
+            						map.put("createtime", DataUtil.millisecondTodate(Long.parseLong(map.getString("createtime").toString())));
             						map.put("faccid",uid);//改成接受
             						if(id_!=null){//存在根据channeid更新 
                     					 int count=yx.update_infocopy_durationM(map);
@@ -768,12 +823,21 @@ public class YunXinController extends BaseController{
         } else
             return null;
     }
-    /*@RequestMapping(value="downloadClient.do")
+    @RequestMapping(value="downloadClient.do")
 	@ResponseBody
     public void downloadClient(String url,HttpServletResponse response) throws Exception{
-    	log.info("下载->"+url);
-    	super.urlToWeb(url, response);
-    }*/
+    	log.info("客户端下载视频文件->"+url);
+        String[] ss=url.split("/");
+        String fileName= ss[ss.length-1];
+        if(url.indexOf("www")!=-1 || url.indexOf("http")!=-1){//通过url下载
+        	log.info("通过url下载");
+        	super.urlToWeb(url, response, fileName);
+        }else{
+        	log.info("本地下载");
+        	super.	download(url,response);
+        }
+    	
+    }
     private static HashMap map__1=new HashMap<>();
 	@RequestMapping(value="dsdb.do")
 	@ResponseBody
@@ -783,20 +847,27 @@ public class YunXinController extends BaseController{
     	}
     	Map map1=yx.selectUrlAndVidById(id);
     	String url=map1.get("url").toString();
-    	log.info("id是否存在->"+map__1.get("id"));
+    	log.info("id:"+id+"是否存在->"+map__1.get("id"));
     	if(map__1.get(id)==null){
     		//删除云端的视频
         	String[] s=url.split("/");
         	try {
         		map__1.put(id,creditutil.time());
-        		String last="upload/"+s[s.length-1];
+        		String last=s[s.length-1];
         		log.info("原视频文件名->"+last);
-        		String download_path=RootStatic.root_Directory+last;
-        		String play_path=RootStatic.download_prefix+last;
-        		log.info("下载地址->"+download_path);
-        		log.info("播放地址->"+play_path);
+        		String scen="upload/mp4/"+DataUtil.splicingPath;
+        		String download_path=RootStatic.root_Directory+scen;
+        		String play_path=RootStatic.download_prefix+scen+last;
+        		log.info("视频播放地址->"+play_path);
+        		
         		File file=new File(download_path);
-    			downloadFile(url,file);
+    
+    	     
+    	       if(!file.exists()){
+    	     	   file.mkdirs();//创建目录
+    	       }  
+    	       log.info("本地路径->"+file.getAbsolutePath());
+    			downloadFile(url,download_path+last);
     			//更新数据库播放地址
     			int updateCount=yx.updateServerPath(play_path,id);
     			if(updateCount>0){//更新成功
@@ -805,9 +876,15 @@ public class YunXinController extends BaseController{
     				 log.info("刪除视频源文件返回->"+result);
     			}
     			log.info("更新播放地址->id:"+id+",count"+updateCount);
-    			return renderSuccess(play_path+"---"+file.getAbsolutePath());
+    			Map map=new HashMap<>();
+    			map.put("play_path", play_path);
+    			map.put("AbsolutePath", file.getAbsolutePath());
+    			map.put("downUrl", RootStatic.url+RootStatic.root_Directory+scen+last);
+    			map.put("id", id);
+    			return renderSuccess(map);
     		} catch (Exception e) {
-    			log.info("下载视频到本地服务器异常"+JSON.toJSONString(e.getStackTrace()));
+    			log.info("下载视频到本地服务器异常");
+    			e.printStackTrace();
     			return renderError("下载失败，失败原因："+e.getMessage());
     		}finally {
     			map__1.remove(id);
@@ -817,6 +894,17 @@ public class YunXinController extends BaseController{
     	}
     }
 	public static void main(String[] args) throws Exception{
+		//创建目录测试
+		/*String scen="upload/mp4/"+DataUtil.splicingPath;
+		String download_path=RootStatic.root_Directory+scen;
+		File file =new File(download_path);
+		if(file.exists()){
+			System.out.println("目录存在");
+		}else{
+			System.out.println("创建");
+			file.mkdirs();
+		}*/
+		
 		//信息时长抄送测试
 /*		InfoCopy infocopy=new InfoCopy();
 		infocopy.setChannelId("62654898432013131");
@@ -910,5 +998,12 @@ public class YunXinController extends BaseController{
 		downloadFile("http://jdvod6ep5thqk.vod.126.net/jdvod6ep5thqk/0-50870502883509-0-mix.mp4","C:\\Users\\Administrator\\Desktop\\word\\haha1\\upload\\0-6324213347287310-0-mix.mp4");
 		Long l1=System.currentTimeMillis();
 		System.out.println(l1-l);*/
+		
+		//截取字符测试
+		/*String s="http://a.kcway.net/assess/upload/0-50873460261080-0-mix.mp4";
+		int i=s.indexOf("upload");
+		if(i!=-1){
+			System.out.println(s.substring(i));
+		}*/
 	}
 }

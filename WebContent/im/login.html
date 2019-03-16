@@ -8,33 +8,29 @@
 	<script src="js/util.js"></script>
 	<script src="js/md5.js"></script>
 	<script type="text/javascript">
-/* 		 setCookie('uid', '13703452740');
+ 		/*   setCookie('uid', '13703452740');
 	     var password = MD5('13703452740');
-	     setCookie('sdktoken', password);
-	     setCookie('bankId',"999");
-	     window.location.href = './main.html'; */
+	     setCookie('sdktoken', password); */
+	    // window.location.href = './main.html'; 
      
 		window.onload=function(){
 			function login(){
-				delCookie("uid");
+			 	delCookie("uid");
 				delCookie("sdktoken");
-				delCookie("mark");
-				delCookie("bankId");
 				$.ajax({
 			        type: "post",
 			        url: "../yx/login.do",
 			        dataType: "json",
 			        success: function(res){
-			        	console.log(res.auditAccid+" "+res.auditToken);
-			        	if(res!=null && res!=""){
-					           setCookie('uid',res.auditAccid);    
+			        	console.log("登陆接口返回->"+JSON.stringify(res));
+			        	if(res.success){
+					            setCookie('uid',res.data.auditAccid);    
 					           //括号里的内容换成后端程序员哥哥给你返回的id和token
-					           setCookie('sdktoken',res.auditToken);
-					           setCookie('mark',res.mark);
-					           setCookie('bankId',res.bankId);
+					           setCookie('sdktoken',res.data.auditToken); 
+					           setCookie('data_refresh',JSON.stringify(res.data));
 					           window.location.href = './main.html';
 						  }else{
-							  alert('此账号没有开通视频面签权限！')
+							 	alert(res.message);
 						  }
 			        }
 			      });

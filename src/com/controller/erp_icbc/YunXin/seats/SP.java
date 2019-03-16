@@ -17,4 +17,8 @@ public class SP {
 	public void setMark(String mark) {
 		this.mark = mark;
 	}
+	@Override
+	public String toString() {
+		return "SP [mark=" + mark + "]";
+	}
 }
