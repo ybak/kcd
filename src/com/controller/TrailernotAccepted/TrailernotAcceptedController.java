@@ -1,28 +1,50 @@
 package com.controller.TrailernotAccepted;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.alibaba.fastjson.JSON;
 import com.controller.Excel.UploadExcelController;
@@ -30,6 +52,7 @@ import com.model1.icbc.erp.PageData;
 import com.service1.TrailernotAccepted.TrailernotAcceptedService;
 import com.service1.sxx.VehicleMortgageService;
 import com.util.limitutil;
+import com.util.upload;
 import com.util.Excel.CommonUtil;
 
 @Controller
@@ -38,6 +61,16 @@ public class TrailernotAcceptedController {
 	private static Logger log = LogManager.getLogger(TrailernotAcceptedController.class.getName());
 	@Autowired
 	private TrailernotAcceptedService trailernotAcceptedService;
+	 private static final long serialVersionUID = 1L;
+	 //上传文件存储目录
+	 private static final String UPLOAD_DIRECTORY = "upload";
+	// 上传配置
+    private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
+    private static final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
+    private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
+	private static final ServletRequest ServletActionContext = null;
+	
+	private ServletContext application;
 
 	/**
 	 * 查询列表页所有数据并模糊查询
@@ -64,13 +97,9 @@ public class TrailernotAcceptedController {
 			HttpServletRequest request
 			)throws UnsupportedEncodingException{
 		
-		//获取当前操作人信息
-		PageData pdsession= (PageData)request.getSession().getAttribute("pd");
-		System.out.println("--------+:"+pdsession);
-		int fsid = Integer.parseInt(pdsession.get("fs_id").toString());
-		int fs_id = Integer.parseInt(pdsession.get("fs_id").toString());
-
-			
+		//获取登陆信息
+		PageData pdLoginSession = (PageData)request.getSession().getAttribute("pd");
+//		System.out.println(pdLoginSession.get("name"));
 		int ps = 0;
 		int pn = 0;
 		if (pagesize != null && !pagesize.equals("")) {
@@ -83,7 +112,7 @@ public class TrailernotAcceptedController {
 		} else {
 			pn = 1;
 		}
-		List<PageData> newpdList=trailernotAcceptedService.selectTrailernotAccepted(param,(pn-1)*ps,ps,fsid,fs_id);
+		List<PageData> newpdList=trailernotAcceptedService.selectTrailernotAccepted(param,(pn-1)*ps,ps);
 		int totalsize=trailernotAcceptedService.count();
 //		System.out.println("***************count:"+totalsize);
 		int q=totalsize%ps;
@@ -131,14 +160,10 @@ public class TrailernotAcceptedController {
 			String param,
 			HttpServletRequest request
 			)throws UnsupportedEncodingException{
-	
-		//获取当前操作人信息
-		PageData pdsession= (PageData)request.getSession().getAttribute("pd");
-		System.out.println("--------+:"+pdsession);
-		int fsid = Integer.parseInt(pdsession.get("fs_id").toString());
-		int fs_id = Integer.parseInt(pdsession.get("fs_id").toString());
-
-	
+		
+		//获取登陆信息
+		PageData pdLoginSession = (PageData)request.getSession().getAttribute("pd");
+//		System.out.println(pdLoginSession.get("name"));
 		int ps = 0;
 		int pn = 0;
 		if (pagesize != null && !pagesize.equals("")) {
@@ -151,7 +176,7 @@ public class TrailernotAcceptedController {
 		} else {
 			pn = 1;
 		}
-		List<PageData> newpdList=trailernotAcceptedService.selectTrailernotAccepted1(param,(pn-1)*ps,ps,fsid,fs_id);
+		List<PageData> newpdList=trailernotAcceptedService.selectTrailernotAccepted1(param,(pn-1)*ps,ps);
 		int totalsize=trailernotAcceptedService.count1();
 //		System.out.println("***************count:"+totalsize);
 		int q=totalsize%ps;
@@ -200,14 +225,9 @@ public class TrailernotAcceptedController {
 			HttpServletRequest request
 			)throws UnsupportedEncodingException{
 		
-		//获取当前操作人信息
-		PageData pdsession= (PageData)request.getSession().getAttribute("pd");
-		System.out.println("--------+:"+pdsession);
-		int fsid = Integer.parseInt(pdsession.get("fs_id").toString());
-		int fs_id = Integer.parseInt(pdsession.get("fs_id").toString());
-
-		
-		
+		//获取登陆信息
+		PageData pdLoginSession = (PageData)request.getSession().getAttribute("pd");
+//		System.out.println(pdLoginSession.get("name"));
 		int ps = 0;
 		int pn = 0;
 		if (pagesize != null && !pagesize.equals("")) {
@@ -220,7 +240,7 @@ public class TrailernotAcceptedController {
 		} else {
 			pn = 1;
 		}
-		List<PageData> newpdList=trailernotAcceptedService.selectTrailernotAccepted2(param,(pn-1)*ps,ps,fsid,fs_id);
+		List<PageData> newpdList=trailernotAcceptedService.selectTrailernotAccepted2(param,(pn-1)*ps,ps);
 		int totalsize=trailernotAcceptedService.count2();
 //		System.out.println("***************count:"+totalsize);
 		int q=totalsize%ps;
@@ -427,6 +447,7 @@ public class TrailernotAcceptedController {
 			String type,
 			String dn,
 			String value,
+			
 			HttpServletRequest request,
 			Integer icbc_id,	
 			HttpServletResponse response) throws IOException,ParseException{
@@ -438,6 +459,7 @@ public class TrailernotAcceptedController {
 		//添加录入数据到表中
 		Map<String, Object> map=new HashMap<>();
 		map.put("value", value);
+		
 		//获取客户姓名和身份证号
 		Map<String,Object> naMap = trailernotAcceptedService.selectgrxx(icbc_id);
 		map.put("operator", pdLoginSession.get("name"));
@@ -454,29 +476,64 @@ public class TrailernotAcceptedController {
 		return "kjs_icbc/index";
 	}
 	/**
-	 * 添加数据到表中
+	 * 添加数据到表中   上传文件
 	 * @param map
-	 * @return
+	 * @throws Exception 
 	 */
-	@RequestMapping("/add1")
+	@RequestMapping("/add1.do")
+	@ResponseBody
 	@Transactional
 	public String add1(
-			String c_cardno,
 			String qn,
 			String cn,
 			String type,
 			String dn,
 			String value,
+			String c_cardno,
 			HttpServletRequest request,
 			Integer icbc_id,	
-			HttpServletResponse response) throws IOException,ParseException{
+//			HttpServletResponse response,
+			
+			@RequestParam(value = "add_video", required = false) MultipartFile file
+			) throws Exception{
+		
+		System.out.println(file);
 
 		//获取登陆信息
 		PageData pdLoginSession = (PageData)request.getSession().getAttribute("pd");		
 		
 		//添加录入数据到表中
 		Map<String, Object> map=new HashMap<>();
-		map.put("value", value);
+		map.put("value", request.getParameter("value"));
+		map.put("add_time",request.getParameter("add_time"));
+		map.put("add_address",request.getParameter("add_address"));
+		
+		String headImg=null;//保存文件名
+		if(file != null && !file.isEmpty()){
+			headImg = file.getOriginalFilename();
+			System.out.println("文件名"+headImg);
+			//构建上传目录及文件对象，不存在则自动创建
+			Date date=new Date();
+			String filePath="/KCDIMG/assess/upload/"+new SimpleDateFormat("yyyy/MM/dd/").format(date);
+			String path=request.getSession().getServletContext().getRealPath(filePath);
+		    File fileDir = new File(path);  
+		    if (!fileDir.exists()) { //如果不存在 则创建   
+		        fileDir.mkdirs();  
+		    }  
+			
+			File imgFile=new File(path,headImg);
+			System.out.println("===================="+imgFile);
+			map.put("add_video", headImg);
+			//保存文件
+			try {
+				file.transferTo(imgFile);
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			
+		}
+
 		//获取客户姓名和身份证号
 		Map<String,Object> naMap = trailernotAcceptedService.selectgrxx1(icbc_id);
 		map.put("operator", pdLoginSession.get("name"));
@@ -487,11 +544,15 @@ public class TrailernotAcceptedController {
 		trailernotAcceptedService.updateTcStatus1(icbc_id);
 
 		
-		request.setAttribute("dn",dn);
-		request.setAttribute("cn", cn);
-		request.setAttribute("qn", qn);
-		request.setAttribute("type", type);
-		return "kjs_icbc/index";
+		request.setAttribute("dn",request.getParameter("dn"));
+		request.setAttribute("cn", request.getParameter("cn"));
+		request.setAttribute("qn", request.getParameter("qn"));
+		request.setAttribute("type", request.getParameter("type"));
+		return "success";
+	}
+	private ServletRequest getServletContext() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	/**
 	 * 添加数据到表中
@@ -532,21 +593,56 @@ public class TrailernotAcceptedController {
 		request.setAttribute("type", type);
 		return "kjs_icbc/index";
 	}
+	
+	/**
+	 * 通过id查询表中数据
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/selectrecord")
+	@ResponseBody
+	public Map selectrecord(
+			Integer id,
+			HttpServletRequest request){
+		
+		Map<String, Object> recordMap=trailernotAcceptedService.selectrecord(id);
+		
+		return recordMap;
+	}
+	/**
+	 * 通过id查询表中数据
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/selectrecord1")
+	@ResponseBody
+	public Map selectrecord1(
+			Integer id,
+			HttpServletRequest request){
+		
+		Map<String, Object> recordMap=trailernotAcceptedService.selectrecord1(id);
+		
+		return recordMap;
+	}
+	/**
+	 * 通过id查询表中数据
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("/selectrecord2")
+	@ResponseBody
+	public Map selectrecord2(
+			Integer id,
+			HttpServletRequest request){
+		
+		Map<String, Object> recordMap=trailernotAcceptedService.selectrecord2(id);
+		
+		return recordMap;
+	}
 
 	private void requestParams(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	//查询记录栏数据
-	@RequestMapping("/selectjll")
-	@ResponseBody
-	public Map selectjll(int id,HttpServletRequest request){
-		System.out.println("-----------id:"+id);
-		Map<String, Object> value = trailernotAcceptedService.selectjll(id);	
-		System.out.println("-------value:"+value);
-		return value;
-	}
-	
 	
 }
