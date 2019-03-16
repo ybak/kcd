@@ -88,6 +88,9 @@ public class TrailernotAcceptedController {
 			pn = 1;
 		}
 		List<PageData> newpdList=trailernotAcceptedService.selectTrailernotAccepted(param,(pn-1)*ps,ps,fsid,fs_id);
+		
+		
+		
 		int totalsize=trailernotAcceptedService.count();
 //		System.out.println("***************count:"+totalsize);
 		int q=totalsize%ps;

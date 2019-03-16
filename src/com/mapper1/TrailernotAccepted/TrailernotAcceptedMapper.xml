@@ -23,6 +23,8 @@
 		limit #{pagenow},#{pagesize} 
 	</select>
 	
+	
+	
 		<!-- 查询列表页所有数据 -->
 	<select id="selectTrailernotAccepted1" parameterType="pd" resultType="pd">
 		SELECT

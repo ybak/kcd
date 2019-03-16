@@ -19,9 +19,7 @@
 }
 </style>
 	<div class="content-wrapper" style="min-height: 943px;padding-right:30px; padding-left: 30px;">
-		<script type="text/javascript">
-    
-    
+		<script type="text/javascript"> 
     function tk(){
     	alert("正在处理")
     }
