@@ -26,15 +26,23 @@
     	alert("正在处理")
     }
     
-    function login(){    	
+    function login(){
+
+    	var form=document.getElementById("form1");
+    	var formData=new FormData(form); 
+
     	$.ajax({
     		type: "POST",
-            url: "${pageContext.request.contextPath }/trailernotAcceptedController/add1.do?icbc_id=${grxxMap.id}",
-            
-            data: $('#form1').serialize(),
+            url: "${pageContext.request.contextPath}/trailernotAcceptedController/add1.do?icbc_id=${grxxMap.id}",
+            data : formData,
+	    	processData: false,  // 告诉jQuery不要去处理发送的数据
+	        contentType: false,	 // 告诉jQuery不要去设置Content-Type请求头
             success:function(data){
-            		alert("发送成功");                  
+            		                
                     location.reload(true);
+            },
+            error:function(data){
+            	alert("失败");
             }
     	})
     }
@@ -229,44 +237,23 @@
 			</div>
 		</div>
 		
-		<div style="padding-top:20px;">
-	      <h4 class="modal-title">还款计划表:</h4>
-	    </div>
-	    <div class="box" style="margin-top:10px;">
-			<!-- 数据载入中结束 -->
-			<table class="table table-bordered table-hover">
-		    	<tr>
-					<th class="text-center">还款期数</th>
-					<th class="text-center">应还日期</th>
-					<th class="text-center">应还金额</th>
-					<th class="text-center">实还金额</th>
-					<th class="text-center">是否逾期</th>
-					<th class="text-center">逾期金额</th>
-					<th class="text-center">核销日期</th>
-				</tr>
-			   <c:forEach var="map" items="${scheduleMap }" varStatus="status">
-				<tr>
-					<td class="text-center">${status.index+1 }</td>
-					<td class="text-center">${fn:substring(map.should_date,0,19)}</td>
-					<td class="text-center">${map.should_money}</td>
-					<td class="text-center">${map.practical_money}</td>
-					<td class="text-center">
-					<c:if test="${map.overdue == 1}">
-						是
-					</c:if>
-					<c:if test="${map.overdue == 0}">
-						否
-					</c:if>
-					</td>
-					<td class="text-center">${map.overdue_money}</td>
-					<td class="text-center">暂无</td>
-			    </tr>
-			   </c:forEach>
-	       </table>
+		<form id="form1" onsubmit="return false" method="post" encType="multipart/form-data">
+	  <div style="margin-top:20px;">
+	  	<label>入库时间:</label>
+	  	<lable style="margin-left:310px;margin-top:40px;">入库地址:</lable>
+	  	<lable style="margin-left:415px;">入库影像:</lable>	
 	  </div>
-	  <form id="form1" onsubmit="return false" action="##" method="post">
-	  <div style="margin-top:10px;">
-	      <h4 class="modal-title">拖车录入栏:</h4>	      
+	  <div  style="margin-top:10px;width:300px;">
+		<div class="input-group date ng-isolate-scope ng-not-empty ng-valid ng-valid-required">
+  			<input id="date_61_1"  name="add_time" class="form-control" type="text"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<input type="text" style="margin-top:-35px;margin-left:380px;width:390px;" id="value" name="add_address" class="form-control">
+		<input name="add_video" id="file" style="margin-top:-35px;margin-left:870px;width:390px;height:35px;"  class="file-upload-input" type="file">
+	  </div>
+		      
+	
+	  <div style="margin-top:20px;">
+	      <h4 class="modal-title">车况备注:</h4>	      
 	      <textarea style="border:1px solid #ccc;margin-top:10px;height:150px" id="value" name="value" class="form-control"></textarea>		
 	  </div>
 	  <div style="height:50px;margin:20px 0 0 0;">
@@ -365,7 +352,7 @@
 	        <div class="modal-content">
 	            <div class="modal-header">
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-	                <h4 class="modal-title">电催记录栏</h4>
+	                <h4 class="modal-title">记录栏</h4>
 	            </div>
 	            <div id="motaikuang" class="modal-body" style="border:1px solid #ccc;background-color:#F7F7F7;border-radius: 10px;margin:30px;">
 	             	<!-- 模态框插入内容 start -->

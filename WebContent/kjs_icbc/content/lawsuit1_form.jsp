@@ -32,7 +32,7 @@
             
             data: $('#form1').serialize(),
             success:function(data){
-            		alert("发送成功");                  
+            		                 
                     location.reload(true);
             }
     	})

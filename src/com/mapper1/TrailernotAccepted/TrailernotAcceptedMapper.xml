@@ -323,9 +323,9 @@
 		SYSDATE(),#{value},1)
 	</insert>
 	<insert id="addTc2" parameterType="java.util.Map">
-		insert into icbc_electricity(icbc_id,oc_name,id_card,operator,present_date,value,type_id) 
+		insert into icbc_electricity(icbc_id,oc_name,id_card,operator,present_date,value,type_id,add_time,add_address,add_video) 
 		values(#{icbc_id},#{oc_name},#{id_card},#{operator},
-		SYSDATE(),#{value},1)
+		SYSDATE(),#{value},1,#{add_time},#{add_address},#{add_video})
 	</insert>
 	<insert id="addTc3" parameterType="java.util.Map">
 		insert into icbc_electricity(icbc_id,oc_name,id_card,operator,present_date,value,type_id) 

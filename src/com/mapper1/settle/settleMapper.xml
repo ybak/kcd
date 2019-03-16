@@ -15,6 +15,7 @@
 			and (tr.c_name like '%${param}%'
 			or tr.c_cardno like '%${param}%')
 		</if>	
+		group by tr.icbc_id 
 		limit #{pagenow},#{pagesize} 
 	</select>
 	
@@ -25,7 +26,7 @@
 			(select * from icbc_trailer where `status`=2 UNION select * from icbc_lawsuit where `status`=1 ) tr
 			left join kj_icbc bc on bc.id=tr.icbc_id
 			left join assess_fs fs on bc.gems_fs_id in(select id from assess_fs af where up_id=#{fsid} or id =#{fs_id})
-			) v
+			 GROUP BY tr.icbc_id) v
 	</select>
 	
 

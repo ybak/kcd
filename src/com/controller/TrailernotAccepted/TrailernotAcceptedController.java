@@ -1,10 +1,12 @@
 package com.controller.TrailernotAccepted;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -22,7 +24,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.controller.Excel.UploadExcelController;
@@ -469,14 +473,44 @@ public class TrailernotAcceptedController {
 			String value,
 			HttpServletRequest request,
 			Integer icbc_id,	
+			@RequestParam(value = "add_video", required = false) MultipartFile file,
 			HttpServletResponse response) throws IOException,ParseException{
 
+		System.out.println(file);
 		//获取登陆信息
 		PageData pdLoginSession = (PageData)request.getSession().getAttribute("pd");		
 		
 		//添加录入数据到表中
 		Map<String, Object> map=new HashMap<>();
-		map.put("value", value);
+		map.put("value", request.getParameter("value"));
+		map.put("add_time",request.getParameter("add_time"));
+		map.put("add_address",request.getParameter("add_address"));
+		
+		String headImg=null;//保存文件名
+		if(file != null && !file.isEmpty()){
+			headImg = file.getOriginalFilename();
+			System.out.println("文件名"+headImg);
+			//构建上传目录及文件对象，不存在则自动创建
+			Date date=new Date();
+			String filePath="/KCDIMG/assess/upload/"+new SimpleDateFormat("yyyy/MM/dd/").format(date);
+			String path=request.getSession().getServletContext().getRealPath(filePath);
+		    File fileDir = new File(path);  
+		    if (!fileDir.exists()) { //如果不存在 则创建   
+		        fileDir.mkdirs();  
+		    }  
+			
+			File imgFile=new File(path,headImg);
+			System.out.println("===================="+imgFile);
+			map.put("add_video", headImg);
+			//保存文件
+			try {
+				file.transferTo(imgFile);
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			
+		}
 		//获取客户姓名和身份证号
 		Map<String,Object> naMap = trailernotAcceptedService.selectgrxx1(icbc_id);
 		map.put("operator", pdLoginSession.get("name"));
