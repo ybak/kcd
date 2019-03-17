@@ -49,6 +49,24 @@ fctype
 #{fctype}
 )
 </insert>
-
+<update id="upmoneyfs" parameterType="moneyfs">
+update moneyfs set
+mid=#{mid},
+fsid=#{fsid},
+gemsid=#{gemsid},
+amount=#{amount},
+type=#{type},
+dt_add=#{dt_add},
+dt_edit=#{dt_edit},
+status=#{status},
+remark=#{remark},
+otherid=#{otherid},
+orderid=#{orderid},
+bintype=#{bintype},
+mid_add=#{mid_add},
+mid_edit=#{mid_edit},
+fctype=#{fctype}
+where id=#{id}
+</update>
 
 </mapper>

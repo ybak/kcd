@@ -80,7 +80,7 @@
     <!-- 5. 使用声明式事务
          transaction-manager：引用上面定义的事务管理器
      -->
-    <tx:annotation-driven transaction-manager="txManager" />
+    <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true" />
     
 <!-- 2. 数据源 : DriverManagerDataSource --> 
     <bean id="dataSource1" 
@@ -133,7 +133,7 @@
         <!-- 5. 使用声明式事务
          transaction-manager：引用上面定义的事务管理器
      -->
-    <tx:annotation-driven transaction-manager="txManager1" />
+    <tx:annotation-driven transaction-manager="txManager1" proxy-target-class="true" />
     <!-- 事务隔离 级别
     <tx:advice id="txAdvice" transaction-manager="txManager1">
         <tx:attributes>

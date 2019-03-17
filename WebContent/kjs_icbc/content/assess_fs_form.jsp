@@ -400,7 +400,7 @@
 				</div>
 		</div>		
 		</div>
-		
+
 		<!--担保信息  -->
 		<div class="form-group">
 		<label for="inputHouse" class="col-sm-2 control-label">担保信息</label>
@@ -712,7 +712,7 @@
 							<input id="namepy" name="namepy" value="${requestScope.pd.namepy }" class="form-control" placeholder="" type="text">
 						</div>
 					</div>
-					<div class="col-sm-4">
+					<%-- <div class="col-sm-4">
 						<div class="input-group">
 							<span class="input-group-addon">充值币种</span>
 							<select id="money_tag" name="money_tag" class="form-control" >
@@ -744,6 +744,7 @@
 							<input id="money_bz" name="money_bz" value="${requestScope.pd.money_bz}" class="form-control" placeholder="" type="text">
 						</div>
 					</div>
+					 --%>
 					<div class="col-sm-4">
 						<div class="input-group">
 							<span class="input-group-addon">启用账户列表</span>
@@ -755,6 +756,172 @@
 				</div>
 				</div>
 	</div>
+			<div class="form-group">
+			<label class="col-sm-2 control-label" style="color: red">金融商户店全局功能管理</label>
+			<div class="col-sm-10">
+				<div class="row inline-from">					
+				    <div class="col-sm-2">
+						<div class="input-group">
+							<span class="input-group-addon">币种</span>
+							<select class="form-control" id="bintype" name="bintype">
+								<option value="0" selected="">现金</option>
+								<option value="1">体验币</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="input-group">
+							<span class="input-group-addon">金额</span>
+							<input id="addmoney" name="addmoney" type="number" step="0.01" class="form-control" placeholder="">
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="input-group">
+							<span class="input-group-addon">类型</span>
+							<select name="fctype" id="fctype" class="form-control">
+							<option selected="selected" value="0">正常充值</option>
+							<option value="1">现金打折</option>
+							<option value="2">充值折扣</option>
+							<option value="3">退款</option>
+							<option value="4">违规扣款</option>							
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="input-group">
+							<span class="input-group-addon">备注</span>
+							<input name="czremark" id="czremark" type="text" class="form-control">
+						</div>
+					</div>					<div class="col-sm-3">
+						<div class="input-group">
+							<span class="input-group-addon">开通进件功能</span>
+							<select name="mg_tag" id="mg_tag" class="form-control">
+								<option value="1">是</option>
+								<option value="0" selected="">否</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="input-group">
+							<span class="input-group-addon">工行征信专项进件</span>
+							<select name="mgicbc_tag" id="mgicbc_tag" class="form-control">
+								<option value="1">是</option>
+								<option value="0" selected="">否</option>
+							</select>
+						</div>
+					</div>
+					<!-- <div class="col-sm-3">
+						<div class="input-group">
+							<span class="input-group-addon">授权书分类</span>
+							<select name="books_id" id="books_id" class="form-control">
+								<option selected="selected" value="0">典当行</option><option value="1">快车道</option>							</select>
+						</div>
+					</div>	 -->				<div class="col-sm-3">
+						<div class="input-group">
+							<span class="input-group-addon">推荐业务员</span>
+							<select name="ssm_id" id="ssm_id" class="form-control">
+								<option value="0">请选择</option>
+							<option value="1">张颖</option>
+							<option value="2">林晴</option>
+							<option value="3">薛花</option>
+							<option value="4">唐伟</option>
+							<option value="5">洪启荣</option>
+							<option value="6">游振鑫</option>
+							<option value="7">洪凯东</option>
+							<option value="8">余剑钊</option>
+							<option value="9">林福良</option>
+							<option value="10">薛强</option>
+							<option value="12">游振威</option>
+							<option value="13">万晓峰</option>
+							<option value="17">杨章伟</option>
+							<option value="18">马燕辉</option>
+							<option value="19">王信威</option>							
+							</select>
+						</div>
+					</div>				</div>
+			</div>
+		</div>
+		<!-- 权限  -->
+			<div class="form-group">
+			<label class="col-sm-2 control-label">编辑权限</label>
+			<div class="col-sm-10">
+			<input id="purview_map" name="purview_map" value="" type="hidden" />
+			<script type="text/javascript">
+			$(document).ready(function(){
+				var purview_map='${pd.purview_map }';
+				var purview_map_kjs='${pd.purview_map_kjs }';
+				var purview_maps=purview_map.split(',');
+				for(var i in purview_maps){
+					if(purview_maps[i]){
+				     $("#"+purview_maps[i]).attr("checked","checked");
+					}
+				}
+				var purview_map_kjss=purview_map_kjs.split(',');
+				for(var i in purview_map_kjss){
+					if(purview_map_kjss[i]){
+				     $("#"+purview_map_kjss[i]).attr("checked","checked");
+					}
+				}
+			});
+			
+			</script>
+				<p>勾选表示开通权限，当全部不勾选时表示此账号拥有所有权限</p>
+				<table class="table table-bordered table-hover">
+					<tbody>
+						<tr>
+							<th><label class="checkbox-inline">
+									<input id="ckall" type="checkbox" class="check_all" onclick="checkall(this,1)">
+									全选
+								</label></th>
+					</tr>
+						<tr>
+							<td><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_ks" id="order_ks" value="0" onclick="checkfl(this)">快速评估										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_zy" id="order_zy" value="0" onclick="checkfl(this)">专业评估										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_query_da" id="order_query_da" value="0" onclick="checkfl(this)">车辆状况查询										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_query_by" id="order_query_by" value="0" onclick="checkfl(this)">车辆保养查询										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_query_zx" id="order_query_zx" value="0" onclick="checkfl(this)">征信-人行										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_query_bdzx" id="order_query_bdzx" value="0" onclick="checkfl(this)">征信-大数据										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_query_thjl" id="order_query_thjl" value="0" onclick="checkfl(this)">通讯数据查询										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_query_bx" id="order_query_bx" value="0" onclick="checkfl(this)">保险数据查询										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_query_wdhmd" id="order_query_wdhmd" value="0" onclick="checkfl(this)">网贷黑名单										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_query_yhksm" id="order_query_yhksm" value="0" onclick="checkfl(this)">银行卡实名										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_query_yhkls" id="order_query_yhkls" value="0" onclick="checkfl(this)">银行卡流水										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="kj_zxjb" id="kj_zxjb" value="0" onclick="checkfl(this)">征信简版										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_kj_qcyz" id="order_kj_qcyz" value="0" onclick="checkfl(this)">汽车验证										</label></td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
+		</div>
+			<div class="form-group">
+			<label class="col-sm-2 control-label">编辑快金所权限</label>
+			<div class="col-sm-10">
+			<input id="purview_map_kjs" name="purview_map_kjs" value="" type="hidden" />
+				<p>勾选表示开通权限，当全部不勾选时表示此账号啥权限都没有， 如果没【<strong>开通进件功能</strong>】，下面的勾了也没用！
+				</p>
+				<table class="table table-bordered table-hover">
+					<tbody>
+						<tr>
+							<th><label class="checkbox-inline">
+									<input id="ckall" type="checkbox" class="check_all" onclick="checkallkjs(this,1)">
+									全选
+								</label></th>
+					</tr>
+						<tr>
+							<td><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_kjs_icbc" id="order_kjs_icbc" value="0" onclick="checkfl(this)">工行贷										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_kjs_mgcert" id="order_kjs_mgcert" value="0" onclick="checkfl(this)">优信租赁										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_kjs_mgcar" id="order_kjs_mgcar" value="0" onclick="checkfl(this)">快车贷										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_kjs_cxfq" id="order_kjs_cxfq" value="0" onclick="checkfl(this)">车险分期										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_kjs_pazl" id="order_kjs_pazl" value="0" onclick="checkfl(this)">平安租赁										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_kjs_zjzl" id="order_kjs_zjzl" value="0" onclick="checkfl(this)">安吉租赁										</label></td>
+					</tr>
+				</tbody>
+				</table>
+			</div>
+		</div>
+			
 			</div>
 			</div>
 		</div>
@@ -1298,7 +1465,8 @@ function checkall(obj,type){
 	        		input[i].checked = obj.checked;
 	            	input[i].value= obj.checked?1:0;
 	        }
-	    }	
+	    }
+	    
 	}else{
         input = document.getElementsByTagName("input");
 	    for (var i = 0; i < input.length; i++) {
@@ -1322,7 +1490,7 @@ function checkallkjs(obj,type){
 			        continue;
 		        }
 	        		input[i].checked = obj.checked;
-	            	input[i].value= obj.checked?1:0;
+	            	input[i].value= obj.checked?1:0;	           
 	        }
 	    }	
 	}else{
@@ -1512,5 +1680,28 @@ function dofind(){//vin车型
 	    }
 	     
 				</script>
+<script>
+function checkUser(){
+	var purview_map="";
+	var purview_map_kjs="";
+	input = document.getElementsByTagName("input");
+    for (var i = 0; i < input.length; i++) {
+    		if(input[i].name.indexOf("kjs_")>=0&&input[i].checked==true){
+    			purview_map_kjs=purview_map_kjs+input[i].name+",";
+	        }
+        if ((input[i].type == "checkbox")
+        		&&input[i].name.indexOf("kjs_")<=0
+        		&&(input[i].name.length>0)
+        		&&(input[i].name.indexOf("/")<0)
+        		&&input[i].checked==true) {
+        	purview_map=purview_map+input[i].name+",";	
+        }
+    }
+    document.getElementById("purview_map").value=purview_map;
+    document.getElementById("purview_map_kjs").value=purview_map_kjs;
+    
+	return true;
+}
 
+</script>
 				

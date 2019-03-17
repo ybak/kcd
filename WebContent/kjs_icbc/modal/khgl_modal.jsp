@@ -235,7 +235,8 @@ function mkRslt(arr){
 								<option value="0" ${pd.zdr_hyzk eq '0'?"selected='selected'":''}>未婚</option>
 								<option value="1" ${pd.zdr_hyzk eq '1'?"selected='selected'":''} >已婚</option>
 								<option value="2" ${pd.zdr_hyzk eq '2'?"selected='selected'":''}>离异</option>
-								<option value="3"  ${pd.zdr_hyzk eq '3'?"selected='selected'":''}>丧偶</option>							</select>
+								<option value="3"  ${pd.zdr_hyzk eq '3'?"selected='selected'":''}>丧偶</option>							
+						</select>
 			</div>
 			</div>
           <div class="form-group">

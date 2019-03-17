@@ -26,6 +26,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.controller.ManagementCenter.Management.Management;
 import com.controller.erp_icbc.modal.zhqx_modal;
 import com.model1.icbc.erp.PageData;
+import com.model1.money.moneyfs;
+import com.model1.money.moneyfs_1;
 import com.service1.fsService;
 import com.service1.car.icbc_carsService;
 import com.service1.erp_icbc.YXService;
@@ -34,6 +36,9 @@ import com.service1.erp_icbc.fs_detailsService;
 import com.service1.icbc_banklist.icbc_banklistService;
 import com.service1.kjs_icbc.newicbcService;
 import com.service1.kjs_icbc.newicbc_kkService;
+import com.service1.money.moneyfsService;
+import com.service1.money.moneyfs_1Service;
+import com.util.creditutil;
 import com.util.jsonutil;
 import com.util.limitutil;
 import com.util.md5util;
@@ -60,6 +65,10 @@ public class erp_icbcController {
 	private YXService YXService;
 	@Autowired
 	private icbc_banklistService icbc_banklistService;
+	@Autowired
+	private moneyfsService moneyfsService;
+	@Autowired
+	private moneyfs_1Service moneyfs_1Service;
 
 	/**
 	 * 获取精确到秒的时间戳
@@ -543,6 +552,9 @@ public class erp_icbcController {
 		// paramemap.put(paraName, request.getParameter(paraName));
 		// }
 		System.out.println("获取参数map：" + paramemap);
+		System.err.println("purview_map_kjs:"
+				+ paramemap.get("purview_map_kjs"));
+		System.err.println("purview_map:" + paramemap.get("purview_map"));
 		PageData pData = (PageData) request.getSession().getAttribute("pd");
 		PageData fs_details = new PageData();
 		PageData pagedate = new PageData();
@@ -613,7 +625,7 @@ public class erp_icbcController {
 		pagedate.put("dt_edit", new Date());
 		String dbr_names = paramemap.get("dbr_name[]");
 		System.out.println("数组字符串：" + dbr_names);
-		// pagedate.put("purview_map","");
+
 		if (paramemap.get("icbc_erp_tag") != null
 				&& !paramemap.get("icbc_erp_tag").equals("")
 				&& paramemap.get("icbc_erp_tag").equals("1")) {
@@ -629,7 +641,9 @@ public class erp_icbcController {
 		pagedate.put("mg_tag", 1);
 		pagedate.put("deltag", 0);
 		pagedate.put("super_queryarchives_tag", 0);
-		pagedate.put("purview_map_kjs", "order_kjs_icbc,");
+		// APP权限控制
+		pagedate.put("purview_map", paramemap.get("purview_map"));
+		pagedate.put("purview_map_kjs", paramemap.get("purview_map_kjs"));
 		pagedate.put("mgicbc_tag", 0);
 		erp_userrootService.save(pagedate);
 
@@ -757,7 +771,94 @@ public class erp_icbcController {
 		fs_details.put("jcbzjth_date", paramemap.get("jcbzjth_date"));
 		fs_details.put("fs_id", pagedate.get("id"));
 		fs_detailsService.save(fs_details);
+		// 充值扣款
+		if (paramemap.get("addmoney") != null
+				&& !paramemap.get("addmoney").equals("")) {
+			moneyfs moneyfs = new moneyfs();
+			moneyfs_1 moneyfs_1 = new moneyfs_1();
+			moneyfs_1 moneyfs_2 = new moneyfs_1();
 
+			Float amount = Float.valueOf(paramemap.get("addmoney"));
+			moneyfs.setAmount(amount);
+			moneyfs.setBintype(Integer.parseInt(paramemap.get("bintype")));
+			moneyfs.setDt_add(creditutil.time());
+			moneyfs.setDt_edit(creditutil.time());
+			moneyfs.setFctype(Integer.parseInt(paramemap.get("fctype")));
+			moneyfs.setFsid(Integer.parseInt(paramemap.get("id")));
+			moneyfs.setGemsid(0);
+			moneyfs.setMid(Integer.parseInt(pData.get("id").toString()));
+			moneyfs.setMid_add(Integer.parseInt(pData.get("id").toString()));
+			moneyfs.setMid_edit(Integer.parseInt(pData.get("id").toString()));
+			moneyfs.setOrderid(0);
+			moneyfs.setOtherid(0);
+			if (paramemap.get("czremark") != null
+					&& !paramemap.get("czremark").equals("")) {
+				moneyfs.setRemark(paramemap.get("czremark"));
+				moneyfs_1.setRemark(paramemap.get("czremark"));
+
+			} else {
+				switch (paramemap.get("fctype")) {
+				case "3":
+					moneyfs.setRemark("后台-退款");
+					moneyfs_1.setRemark("后台-退款");
+					break;
+				case "4":
+					moneyfs.setRemark("后台-违规扣款");
+					moneyfs_1.setRemark("后台-违规扣款");
+					break;
+				default:
+					moneyfs.setRemark("后台充值");
+					moneyfs_1.setRemark("后台充值");
+					break;
+				}
+			}
+			moneyfs.setStatus(1);
+			moneyfs.setType(1);
+
+			moneyfs_1.setMid(Integer.parseInt(pData.get("id").toString()));
+			moneyfs_1.setFsid(Integer.parseInt(paramemap.get("id")));
+			moneyfs_1.setGemsid(0);
+			moneyfs_1.setAmount(amount);
+			moneyfs_1.setDt_add(creditutil.time());
+			moneyfs_1.setDt_edit(creditutil.time());
+			moneyfs_1.setStatus(1);
+			moneyfs_1.setBintype(Integer.parseInt(paramemap.get("bintype")));
+			moneyfs_1.setFctype(Integer.parseInt(paramemap.get("fctype")));
+			moneyfsService.addmoneyfs(moneyfs);
+			moneyfs_1.setMoneyid(moneyfs.getId());
+			moneyfs_1Service.addmoneyfs_1(moneyfs_1);
+			if (paramemap.get("fctype").equals("3")
+					|| paramemap.get("fctype").equals("4")) {
+				moneyfs_2.setMid(Integer.parseInt(pData.get("id").toString()));
+				moneyfs_2.setFsid(Integer.parseInt(paramemap.get("id")));
+				moneyfs_2.setGemsid(0);
+				moneyfs_2.setAmount(amount);
+				moneyfs_2.setDt_add(creditutil.time());
+				moneyfs_2.setDt_edit(creditutil.time());
+				moneyfs_2.setMoneyid(moneyfs.getId());
+				moneyfs_2.setStatus(1);
+				moneyfs_2.setBc_type(0);
+				moneyfs_2.setOrderid(0);
+				moneyfs_2.setType(0);
+				if (paramemap.get("czremark") != null
+						&& !paramemap.get("czremark").equals("")) {
+					moneyfs_2.setRemark(paramemap.get("czremark"));
+				} else {
+					switch (paramemap.get("fctype")) {
+					case "3":
+						moneyfs_2.setRemark("后台-退款");
+						break;
+					case "4":
+						moneyfs_2.setRemark("后台-违规扣款");
+						break;
+					}
+				}
+				moneyfs_2
+						.setBintype(Integer.parseInt(paramemap.get("bintype")));
+				moneyfs_1Service.addmoneyfs_2(moneyfs_2);
+			}
+
+		}
 		request.setAttribute("mid_add", paramemap.get("userid"));
 		request.setAttribute("dn", paramemap.get("dn"));
 		request.setAttribute("qn", paramemap.get("qn"));
@@ -768,6 +869,7 @@ public class erp_icbcController {
 	}
 
 	// 修改公司
+	@Transactional
 	@RequestMapping(value = "erp/assess_fs_update.do", produces = "text/html;charset=UTF-8")
 	public ModelAndView assess_fs_update(
 			// assess_fs assess_fs,
@@ -784,8 +886,12 @@ public class erp_icbcController {
 		PageData pData = (PageData) request.getSession().getAttribute("pd");
 		PageData fs_details = new PageData();
 		PageData pagedate = new PageData();
-
+		System.err.println("purview_map_kjs:"
+				+ paramemap.get("purview_map_kjs"));
+		System.err.println("purview_map:" + paramemap.get("purview_map"));
 		pagedate.put("dn", "assess_fs");
+		pagedate.put("purview_map_kjs", paramemap.get("purview_map_kjs"));
+		pagedate.put("purview_map", paramemap.get("purview_map"));
 		String fileName = "";
 		String filrurl = "";
 		Date date = new Date();
@@ -989,6 +1095,95 @@ public class erp_icbcController {
 			fs_details.put("fs_id", paramemap.get("id"));
 			fs_detailsService.save(fs_details);
 		}
+		// 充值扣款
+		if (paramemap.get("addmoney") != null
+				&& !paramemap.get("addmoney").equals("")) {
+			moneyfs moneyfs = new moneyfs();
+			moneyfs_1 moneyfs_1 = new moneyfs_1();
+			moneyfs_1 moneyfs_2 = new moneyfs_1();
+
+			Float amount = Float.valueOf(paramemap.get("addmoney"));
+			moneyfs.setAmount(amount);
+			moneyfs.setBintype(Integer.parseInt(paramemap.get("bintype")));
+			moneyfs.setDt_add(creditutil.time());
+			moneyfs.setDt_edit(creditutil.time());
+			moneyfs.setFctype(Integer.parseInt(paramemap.get("fctype")));
+			moneyfs.setFsid(Integer.parseInt(paramemap.get("id")));
+			moneyfs.setGemsid(0);
+			moneyfs.setMid(Integer.parseInt(pData.get("id").toString()));
+			moneyfs.setMid_add(Integer.parseInt(pData.get("id").toString()));
+			moneyfs.setMid_edit(Integer.parseInt(pData.get("id").toString()));
+			moneyfs.setOrderid(0);
+			moneyfs.setOtherid(0);
+			if (paramemap.get("czremark") != null
+					&& !paramemap.get("czremark").equals("")) {
+				moneyfs.setRemark(paramemap.get("czremark"));
+				moneyfs_1.setRemark(paramemap.get("czremark"));
+
+			} else {
+				switch (paramemap.get("fctype")) {
+				case "3":
+					moneyfs.setRemark("后台-退款");
+					moneyfs_1.setRemark("后台-退款");
+					break;
+				case "4":
+					moneyfs.setRemark("后台-违规扣款");
+					moneyfs_1.setRemark("后台-违规扣款");
+					break;
+				default:
+					moneyfs.setRemark("后台充值");
+					moneyfs_1.setRemark("后台充值");
+					break;
+				}
+			}
+			moneyfs.setStatus(1);
+			moneyfs.setType(1);
+
+			moneyfs_1.setMid(Integer.parseInt(pData.get("id").toString()));
+			moneyfs_1.setFsid(Integer.parseInt(paramemap.get("id")));
+			moneyfs_1.setGemsid(0);
+			moneyfs_1.setAmount(amount);
+			moneyfs_1.setDt_add(creditutil.time());
+			moneyfs_1.setDt_edit(creditutil.time());
+			moneyfs_1.setStatus(1);
+			moneyfs_1.setBintype(Integer.parseInt(paramemap.get("bintype")));
+			moneyfs_1.setFctype(Integer.parseInt(paramemap.get("fctype")));
+			moneyfsService.addmoneyfs(moneyfs);
+			moneyfs_1.setMoneyid(moneyfs.getId());
+			moneyfs_1Service.addmoneyfs_1(moneyfs_1);
+			if (paramemap.get("fctype").equals("3")
+					|| paramemap.get("fctype").equals("4")) {
+				moneyfs_2.setMid(Integer.parseInt(pData.get("id").toString()));
+				moneyfs_2.setFsid(Integer.parseInt(paramemap.get("id")));
+				moneyfs_2.setGemsid(0);
+				moneyfs_2.setAmount(amount);
+				moneyfs_2.setDt_add(creditutil.time());
+				moneyfs_2.setDt_edit(creditutil.time());
+				moneyfs_2.setMoneyid(moneyfs.getId());
+				moneyfs_2.setStatus(1);
+				moneyfs_2.setBc_type(0);
+				moneyfs_2.setOrderid(0);
+				moneyfs_2.setType(0);
+				if (paramemap.get("czremark") != null
+						&& !paramemap.get("czremark").equals("")) {
+					moneyfs_2.setRemark(paramemap.get("czremark"));
+				} else {
+					switch (paramemap.get("fctype")) {
+					case "3":
+						moneyfs_2.setRemark("后台-退款");
+						break;
+					case "4":
+						moneyfs_2.setRemark("后台-违规扣款");
+						break;
+					}
+				}
+				moneyfs_2
+						.setBintype(Integer.parseInt(paramemap.get("bintype")));
+				moneyfs_1Service.addmoneyfs_2(moneyfs_2);
+			}
+
+		}
+
 		request.setAttribute("mid_add", paramemap.get("userid"));
 		request.setAttribute("dn", paramemap.get("dn"));
 		request.setAttribute("qn", paramemap.get("qn"));
