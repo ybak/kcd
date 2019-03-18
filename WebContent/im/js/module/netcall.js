@@ -239,7 +239,7 @@ fn.beforeunload = function (e) {
     	console.log("直接了当的离开界面")
     	window.destroysession();
     }else{//在通话中被挂断的情况   挂断并直接清空
-        this.hangup(true);
+        this.hangup("unload");
     }
 }
 
@@ -720,8 +720,8 @@ fn.hangup = function (param) {
 //  this.setDeviceVideoIn(false);// 关闭摄像头，停止向对端发送本地视频
 //  this.setDeviceAudioOut(false);// (己方本地操作，对端不受影响)关闭对方声音
     
-	 //如果在通话中并且是页面卸载事件 直接清空
-	   if(param){
+	   //如果在通话中并且是页面卸载事件 直接清空
+	   if(param=='unload'){
 		   console.log("通话中界面卸载事件")
 	       window.destroysession();
 	   }else{

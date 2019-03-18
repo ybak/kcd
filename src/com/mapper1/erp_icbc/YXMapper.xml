@@ -217,11 +217,38 @@
 	<!-- map类型的输入参数 -->
 	<!-- 添加时长通话记录抄送 -->
 	<insert id="insert_infocopy_durationM" parameterType="java.util.HashMap"  keyProperty="id" useGeneratedKeys="true">
-		insert into icbc_erp_video_info(channelId,createtime,duration,faccid,ext,address,viedotype,duration_time) VALUES(#{channelId},#{createtime},#{duration},#{faccid},#{ext.id},#{ext.address},#{viedotype},#{duration_time})
+		insert into icbc_erp_video_info(
+		channelId,
+		createtime,
+		duration,
+		faccid,
+		ext,
+		address,
+		viedotype,
+		duration_time) VALUES(
+		#{channelId},
+		#{createtime},
+		#{duration},
+		#{faccid},
+		#{ext.id},
+		#{ext.address},
+		#{viedotype},
+		#{duration_time})
 	</insert>
 	<!-- 添加下载抄送 -->
 	<insert id="insert_infocopy_downloadM" parameterType="java.util.HashMap" >
-		insert into icbc_erp_video_info(url,channelid,viedotype,download_info,vid) values(#{url},#{channelid},#{viedotype},#{download_info},#{vid})
+		insert into icbc_erp_video_info(
+		url,
+		channelid,
+		viedotype,
+		download_info,
+		vid) values(
+		#{url},
+		#{channelid},
+		#{viedotype},
+		#{download_info},
+		#{vid}
+		)
 	</insert>
 	<!-- 查询通道id是否存在 -->
 	<select id="select_infocopyM" parameterType="java.lang.String" resultType="java.lang.String">

@@ -717,6 +717,12 @@ public class YunXinController extends BaseController{
 	/**
 	 * @param infocopy  信息抄送 自定义消息
 	 */
+	/*时长:
+		routeBody = {"ext":"{\"id\":\"761\",\"latitude\":31.182165,\"longitude\":121.488821,\"address\":\"上海市浦东新区咖喱客(世博源店)世博源\"}","routeResult":true,"createtime":"1552897298949","routePriority":1,"eventType":"5","type":"VEDIO","routeHttpCode":200,"duration":"22","members":"[{\"duration\":11,\"accid\":\"123456\"},{\"duration\":11,\"caller\":true,\"accid\":\"75dd5d18ee7c102b4aa3ff5c12a5936a\"}]","appkey":"90392cd4130b36be523299cc9bbabee8","channelId":"50885338660987","live":"0","status":"SUCCESS
+	下载:
+		routeBody = {"routeResult":true,"routePriority":1,"fileinfo":"[{\"vid\":\"2384372030\",\"caller\":true,\"filename\":\"2469468234-50885338660987.mp4\",\"pieceindex\":\"0\",\"size\":\"411213\",\"type\":\"mp4\",\"user\":\"75dd5d18ee7c102b4aa3ff5c12a5936a\",\"mix\":false,\"url\":\"http://jdvod6ep5thqk.vod.126.net/jdvod6ep5thqk/2469468234-50885338660987-0.mp4\",\"channelid\":\"50885338660987\",\"timestamp\":\"1552897312\",\"md5\":\"5340e67f6e589d66fd6b7a49e46b2c1f\"}]","appkey":"90392cd4130b36be523299cc9bbabee8","eventType":"6","routeHttpCode":200
+		
+	 */	
 	@RequestMapping(value="infocopy.do")
 	@ResponseBody
 	public JSONObject infoCopy(HttpServletRequest request)
@@ -737,7 +743,7 @@ public class YunXinController extends BaseController{
             		//字符串处理
             		body=body.replaceAll("\"\\{","{").replaceAll("\\}\"","}").replaceAll("\"\\[\\{", "[{").replaceAll("\\}\\]\"", "}]");
             		 map = JSONObject.parseObject(body);
-            		log.info("信息抄送处理->"+map.toJSONString());
+            		log.info("信息抄送处理JSON->"+map.toJSONString());
             		map.put("viedotype", "1");//设置视频的类型
             		String eventType = map.get("eventType").toString();
             		String id_=null;
