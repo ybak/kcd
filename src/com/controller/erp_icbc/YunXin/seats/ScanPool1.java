@@ -13,7 +13,7 @@ public class ScanPool1 extends SP{
 	//单次通话的最大的占用时间 
 	private int validtime=900000;//15分钟=900000
 	//在线的有效时间 客户端轮训时间一定要比这个小,保证这个在线处于激活状态
-	private int onlinetime=40000;
+	private int onlinetime=30000;
 	//客户
 	private  String clientAccid;
 	private  String clientToken;

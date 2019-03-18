@@ -15,6 +15,13 @@ function setCookie(name, value) {
     document.cookie = name + "=" + escape(value) + ";path=/;expires=" + exp.toGMTString();
 }
 
+
+
+function deleteCookie(){
+	delCookie("uid");
+	delCookie("sdktoken");
+	delCookie("data_refresh");
+}
 //读取cookies 
 function readCookie(name) {
     var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
@@ -24,13 +31,15 @@ function readCookie(name) {
         return null;
     }
 }
+
 //刷新定时器
 var refreshTime=null;
 function refershFun(){
 	console.log("开启刷新定时器")
-	refreshTime=setInterval(function(){
-		var data_refresh=readCookie('data_refresh');
-	    $.ajax({
+	var data_refresh=readCookie('data_refresh');
+	if(!!data_refresh){
+		refreshTime=setInterval(function(){
+		 $.ajax({
 	           url:'../yx/refreshtime.do',
 	           type:'POST',
 	           data:JSON.parse(data_refresh),
@@ -42,12 +51,16 @@ function refershFun(){
 	          	 console.log('刷新异常->'+JSON.stringify(err));
 	           }
 	       }); 
-	   },10000);//3分钟更新一下在线状态 3*60*1000=180000
+	   },15000);
+	}else{
+		 console.log('刷新(被踢出)');
+	}	
 }
 
 //释放忙碌的 添加活跃的
 function free(){
 	var data_refresh=readCookie('data_refresh');
+	if(!!data_refresh){
 	 $.ajax({
          url:'../yx/free1.do',
          type:'POST',
@@ -60,6 +73,9 @@ function free(){
         	 console.log('挂断释放异常->'+JSON.stringify(err));
          }
      }); 
+	}else{
+		 console.log('挂断(被踢出)');
+	}	
 }
 //删除活跃的 收到BeCall的时候
 function deleteActive(){

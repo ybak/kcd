@@ -64,7 +64,6 @@ fn.resetWhenHangup = function () {
     this.netcallAccount = "";
     //初始化通话时长
     this.netcallDuration=0;
-    
     /** 关闭UI */
     this.$becallview.toggleClass("show-netcall-box", false);
     this.$becallview.toggleClass("hide-netcall-box", false);

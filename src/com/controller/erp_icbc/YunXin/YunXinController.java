@@ -581,8 +581,8 @@ public class YunXinController extends BaseController{
 		String bankId=yx.selectBankId(String.valueOf(id));
 		ScanPool1 scanPool1=null;;
 		if(id==null || StringUtils.isBlank(bankId)){
-			log.info("随机获取一个吧");
 			scanPool1=PoolCache1.defaultSeat();
+			log.info("随机获取一个吧->"+scanPool1);
 			//return renderError("icbcId不存在或者bankId不存在！");
 		}else{
 			log.info("占位bankId->"+bankId);
@@ -690,6 +690,7 @@ public class YunXinController extends BaseController{
 	@RequestMapping(value="outlogin.do")
 	@ResponseBody
 	public  Object outLogin(ScanPool1 data){
+		log.info("web退出操作->param:"+data.toString());
 		return renderSuccess(PoolCache1.outLogin(data));
 	}	
 	/**

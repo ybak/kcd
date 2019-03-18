@@ -234,8 +234,13 @@ viedoAudit =function(value,channelId,custom){
 
 /** 页面卸载事件 */
 fn.beforeunload = function (e) {
-    if (!this.netcall || !this.netcall.calling) return;
-    this.hangup();
+	//如果单纯的界面卸载事件 直接清空
+    if (!this.netcall || !this.netcall.calling){
+    	console.log("直接了当的离开界面")
+    	window.destroysession();
+    }else{//在通话中被挂断的情况   挂断并直接清空
+        this.hangup(true);
+    }
 }
 
 /** 初始化p2p音视频响应事件 */
@@ -709,17 +714,20 @@ fn.reject = function () {
     }.bind(this));
 };
 // 挂断通话过程
-fn.hangup = function () {
+fn.hangup = function (param) {
     this.netcall.hangup();
 //  this.setDeviceAudioIn(false);//关闭麦克风，停止将本地音频发送到对端
 //  this.setDeviceVideoIn(false);// 关闭摄像头，停止向对端发送本地视频
 //  this.setDeviceAudioOut(false);// (己方本地操作，对端不受影响)关闭对方声音
-    try {
-   	 this.hideAllNetcallUI();
-   }
-   catch(err){
-       // alert(err) // 可执行
-   }
+    
+	 //如果在通话中并且是页面卸载事件 直接清空
+	   if(param){
+		   console.log("通话中界面卸载事件")
+	       window.destroysession();
+	   }else{
+		   console.log("简单的挂断操作")
+	  	   this.hideAllNetcallUI();
+	   }
 //    this.stopRemoteStream();//(己方本地操作，对端不受影响)关闭对方画面
 //    this.stopLocalStream();//(己方本地操作，对端不受影响)关闭自己画面
     /**状态重置 */
@@ -729,8 +737,6 @@ fn.hangup = function () {
     }else{
     	console.log("通话时长小于等于0->"+this.netcallDuration)
     }
-    //挂断删除忙碌的
-    window.free();
     this.resetWhenHangup();//释放资源
 };
 // 其它端已处理
@@ -1102,9 +1108,6 @@ fn.log = function () {
     message = [].join.call(arguments, " ");
     console.log("%c" + message, "color: green;font-size:16px;");
 };
-
-
-
 
 //开启麦克风，将本地音频发送到对端
 fn.setDeviceAudioIn = function (state) {

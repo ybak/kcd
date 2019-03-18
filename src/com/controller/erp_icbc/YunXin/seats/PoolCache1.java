@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import com.alibaba.fastjson.JSON;
 import com.controller.erp_icbc.YunXin.DataUtil;
 /** 生产消费模式 先进先出
  * @author:LiWang
@@ -17,7 +18,7 @@ public class PoolCache1 {
 	 //忙碌
 	 private static  Map<String,ScanPool1> busy=new HashMap<String, ScanPool1>();
 	//刷新间隔时间 单位秒
-	private static int cleanIntervalSecond =40000;//间隔刷新时间 默认90秒=90000
+	private static int cleanIntervalSecond =20000;//间隔刷新时间 默认90秒=90000
 	public PoolCache1(){};
 	static void initContainer(){
 		new Thread(new Runnable(){
@@ -35,6 +36,7 @@ public class PoolCache1 {
 		}).start();
 	} 
 	public static ScanPool1 isMarkToBusy(String mark){
+		log.info("忙碌的"+JSON.toJSONString(busy));
 		return busy.get(mark);
 	}
 	public static ScanPool1 add(ScanPool1 scanPool){

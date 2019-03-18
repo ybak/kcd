@@ -745,7 +745,6 @@
 		var d=parseInt(str.substring(12,14));
 		return y+'-'+m+'-'+d;
 	}
-		
 	window.onload=function(){
 		refershFun();
 	}
@@ -877,10 +876,9 @@
         	   		        success: function (data1) {
         						console.log("下载成功返回->"+JSON.stringify(data1));
         	   		        	if(data1.success){
-        	   		        		//如果还是当前播放的 dataGlobal必须是挂在window（全局）下的
-        	   		        		if(data1.data.id==window.dataGlobal.yviId){
+        	   		        		//如果还是当前播放的 yviId必须是挂在window（全局）下的
+        	   		        		if(data1.data.id==window.yviId){
         	   		        			console.log("我在等着这个用户的视频播放")
-        	   		        			window.dataGlobal.serverPath=data1.data.play_path;
         	   		        			download_fun(data1.data.downUrl)
         	   		        			//这个不应该直接播放，因为下载->播放成功的这段时间，可能来了一个beCall
             	   		        		myPlayerFun(data1.data.play_path);
@@ -2070,25 +2068,31 @@
 		$(".mq_tabl tr td:last-child:odd").css("background-color","#d5d8df");
 	}
  	//关闭浏览器之前的js动作 兼容多浏览器
-	window.onbeforeunload = function(e) {
+/* 	window.onbeforeunload = function(e) {
 	var evt = e ? e : (window.event ? window.event : null); //此方法专门兼容firefox的解决方案
 		evt.returnValue = destroysession();//这是可以使js函数
-	}
+	} */
  	//释放登陆的accid
 	function destroysession(){
 		var data_refresh=readCookie('data_refresh');
-		$.ajax({
-            url:'../yx/outlogin.do',
-            type:'POST',
-            data:JSON.parse(data_refresh),
-            dataType:'json',
-            success: function () {
-            	console.log('退出');
-            },
-            error: function(d){
-               console.log(d.status)
-            }
-        });
+		if(!!data_refresh){
+			$.ajax({
+	            url:'../yx/outlogin.do',
+	            type:'POST',
+	            data:JSON.parse(data_refresh),
+	            dataType:'json',
+	            success: function () {
+	            	console.log('退出');
+	            	window.deleteCookie();
+	            },
+	            error: function(d){
+	               console.log(d.status)
+	            }
+	        });
+		}else{
+			console.log('页面卸载退出(被踢出)');
+		}
+	
 	} 
 	
 	/* ---------开始 -------*/
@@ -2283,6 +2287,7 @@
 		 if(!!myPlayer){
     		 myPlayer.pause();//暂停播放
     	 }
+		 $("a[id^='details_button']").children().css("color","#5bc0de");
 	})
 
 	
@@ -2310,7 +2315,7 @@
 		        dataType:'json',
 		        success: function (data) {
 		        	//这里必须将结果数据做成全局的，否则下面的下载会有问题
-		        	window.dataGlobal=data;
+		        	window.yviId=data.id;
 		        	viewdate("B",data)
 		        },
 		        error: function (XMLHttpRequest, textStatus, errorThrown) {

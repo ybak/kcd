@@ -30,8 +30,7 @@ var SDKBridge = function(ctr) {
     privateConf: CONFIG.privateConf,
     onconnect: onConnect,// 连接建立后的回调
     onwillreconnect: onWillReconnect,//即将重连的回调
-    ondisconnect: onDisconnect,//断开连接后的回调
-    ondisconnect: onDisconnect.bind(this),//
+    ondisconnect: onDisconnect.bind(this),
     onsyncdone: onSyncDone,//消息同步
     syncSessionUnread:false,//是否同步会话未读数(开启数据库时有效，保证多端未读数相一致)
     syncRelations:false,// 是否同步黑名单和静音列表, 默认true
@@ -72,6 +71,7 @@ var SDKBridge = function(ctr) {
             WindowsPhone: '手机版'
           };
           var str = error.from;
+          window.deleteCookie();
           alert(
             '你的帐号于' +
               dateFormat(+new Date(), 'HH:mm') +
@@ -79,9 +79,6 @@ var SDKBridge = function(ctr) {
               (map[str] || '其他端') +
               '踢出下线，请确定帐号信息安全!'
           );
-          delCookie('uid');
-          delCookie('sdktoken');
-          delCookie('nickName');
           window.location.href = './login.html';
           break;
         default:

@@ -8,15 +8,14 @@
 	<script src="js/util.js"></script>
 	<script src="js/md5.js"></script>
 	<script type="text/javascript">
- 		/*   setCookie('uid', '13703452740');
+ 		/*  setCookie('uid', '13703452740');
 	     var password = MD5('13703452740');
-	     setCookie('sdktoken', password); */
+	     setCookie('sdktoken', password);  */
 	    // window.location.href = './main.html'; 
      
 		window.onload=function(){
 			function login(){
-			 	delCookie("uid");
-				delCookie("sdktoken");
+				window.deleteCookie();
 				$.ajax({
 			        type: "post",
 			        url: "../yx/login.do",
@@ -24,9 +23,9 @@
 			        success: function(res){
 			        	console.log("登陆接口返回->"+JSON.stringify(res));
 			        	if(res.success){
-					            setCookie('uid',res.data.auditAccid);    
+					             setCookie('uid',res.data.auditAccid);    
 					           //括号里的内容换成后端程序员哥哥给你返回的id和token
-					           setCookie('sdktoken',res.data.auditToken); 
+					           setCookie('sdktoken',res.data.auditToken);  
 					           setCookie('data_refresh',JSON.stringify(res.data));
 					           window.location.href = './main.html';
 						  }else{

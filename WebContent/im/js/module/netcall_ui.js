@@ -184,8 +184,7 @@ fn.hideAllNetcallUI = function () {
 	free();
 	//开始刷新
 	refershFun();
-	
-	
+
     this.clearRingPlay(); //关闭声音
     this.clearDurationTimer(); //通话时间定时器
     this.clearBeCallTimer(); //关闭被叫定时器
