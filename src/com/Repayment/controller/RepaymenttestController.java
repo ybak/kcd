@@ -1,25 +1,23 @@
 package com.Repayment.controller;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+
 import com.model1.icbc.erp.PageData;
 import com.service1.Repayment.RepaymentService;
 import com.util.limitutil;
-import com.util.pagedate;
 
 @Controller
 @RequestMapping("/repaymentController")
@@ -61,7 +59,6 @@ public class RepaymenttestController {
 		}else{
 			totalpage=pdList.size()/pagesize+1;
 		} 
-		
 		
 		for(int i = 0;i<pdList.size();i++){			
 			Map map = pdList.get(i);

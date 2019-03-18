@@ -140,6 +140,9 @@
 	</typeAliases>
 
 	<mappers>
+	    <!-- loan 贷后 start -->
+	    
+	    <!-- loan 贷后 end -->
 	    <!-- 大数据单独信息 -->
 	    <mapper resource="com/mapper1/erp_icbc/icbc_dsjMapper.xml" />
 		<!-- 工行银行列表 -->

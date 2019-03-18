@@ -3437,6 +3437,9 @@ public class erp_fifteenUpController {
 				json.put("61_yh",yhdksh_61_yh); 
 				json.put("61_syhk",yhdksh_61_syhk); 
 				json.put("61_fq",yhdksh_61_fq); 
+				//新增放款日期 金额字段
+				pResult.put("fk_date",yhdksh_61_date);
+				pResult.put("fk_money",yhdksh_61_je);
 				pResult.put("result_1_value",json.toString());
 				pResult.put("result_1_msg",result_1_msg);
 				pResult.put("result_1_code",result_1_code1);

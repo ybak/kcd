@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.loan.ClientPaymentMapper">
+
+<!-- 用户放款成功，生成还款计划 -->
+<insert id="addPaySchedule" parameterType="pd" resultType="pd">
+insert into loan_repayment_schedule(
+dt_add,
+dt_edit,
+should_date,
+should_money,
+icbc_id,
+c_cardno,
+c_name
+) values(
+sysdate(),
+sysdate(),
+#{should_date},
+#{should_money},
+#{icbc_id},
+#{c_cardno},
+#{c_name}
+)
+</insert>   
+    
+</mapper>

@@ -10,11 +10,11 @@ select DISTINCT bc.id,bc.c_name,kk.dk_price,kk.dk_total_price,kk.gems_code,aa.ic
 		kj_icbc bc,
 		assess_cars aa,
 		icbc_erp_kj_icbc_result kj 
-		where kk.icbc_id=bc.id and bc.id=aa.icbc_id and kj.status=62 and kj.result_1_code=1 and bc.id=kj.icbc_id
+		where kk.icbc_id=bc.id and bc.id=aa.icbc_id and kj.status=61 and kj.result_1_code=1 and bc.id=kj.icbc_id
 		<if test="param != null and param != ''">
 			 and bc.c_name like '%${param}%' or bc.c_cardno like '%${param}%'
 		</if>
-		GROUP BY kk.dt_edit desc
+		ORDER BY kk.dt_edit desc
 	</select>
 	
 	

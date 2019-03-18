@@ -477,8 +477,8 @@
 				    </a>
 				    <ul class="treeview-menu">
 				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'khhklr')==true}">
-					<li ${requestScope.dn=='dh_repaymentEntry'?"class='active'":''}>
-					    <a href="${pageContext.request.contextPath }/uploadExcelController/select.do?type=khhklr&dn=dh_repaymentEntry&qn=list&pagesize=10&pagenow=1">
+					<li ${requestScope.dn=='loan_repaymentEntry'?"class='active'":''}>
+					    <a href="${pageContext.request.contextPath }/loan/selectImpRecordList.do?type=khhklr&dn=loan_repaymentEntry&qn=list&pagesize=10&pagenow=1">
 						<i class="fa fa-arrow-circle-o-right"></i>客户还款录入
 					    </a>
 					</li>
