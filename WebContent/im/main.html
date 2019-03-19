@@ -2315,7 +2315,7 @@
 		        dataType:'json',
 		        success: function (data) {
 		        	//这里必须将结果数据做成全局的，否则下面的下载会有问题
-		        	window.yviId=data.id;
+		        	window.yviId=data.yviId;
 		        	viewdate("B",data)
 		        },
 		        error: function (XMLHttpRequest, textStatus, errorThrown) {

@@ -722,7 +722,7 @@ fn.hangup = function (param) {
     
 	   //如果在通话中并且是页面卸载事件 直接清空
 	   if(param=='unload'){
-		   console.log("通话中界面卸载事件")
+		   console.log("通话中直接关闭界面的情况")
 	       window.destroysession();
 	   }else{
 		   console.log("简单的挂断操作")

@@ -728,90 +728,87 @@ public class YunXinController extends BaseController{
 	public JSONObject infoCopy(HttpServletRequest request)
             throws Exception {
         JSONObject result = new JSONObject();
+        String body=null;
+        JSONObject map=null;
         try {
             // 获取请求体
-            String body = readBody(request);
+        	body = readBody(request);
             log.info("信息抄送原->"+body);
-            body=body.replaceAll("\\\\", "");
+            body=body.replaceAll("\\\\", "");// 去掉\\
             if (EmptyUtil.isEmpty(body)) {//如果为null 或者空字符
                 result.put("code", 414);
                 return result;
             }else{
-            	JSONObject map=null;
-            	try {
-            		StringBuilder redundant=new StringBuilder(body.replaceAll("(\\})|(\\{)|(\\[)|(\\])", ""));//抄送的完整信息
-            		//字符串处理
-            		body=body.replaceAll("\"\\{","{").replaceAll("\\}\"","}").replaceAll("\"\\[\\{", "[{").replaceAll("\\}\\]\"", "}]");
-            		 map = JSONObject.parseObject(body);
-            		log.info("信息抄送处理JSON->"+map.toJSONString());
-            		map.put("viedotype", "1");//设置视频的类型
-            		String eventType = map.get("eventType").toString();
-            		String id_=null;
-            			//{"channelId":"6265490045067594274","createtime":"1458798080073","duration":"22","eventType":"5","live":"1","members":"[{\"accid\":\"789\",\"duration\":11},{\"accid\":\"123456\",\"caller\":true,\"duration\":11}]","status":"SUCCESS","type":"VEDIO"}
-            			if(eventType.equals("5")){//表示AUDIO/VEDIO/DataTunnel消息，即汇报实时音视频通话时长、白板事件时长的消息
-            				log.info("时长信息start");
-            				//JSONArray members  =JSONArray.parseArray(map.getString("members").toString().replaceAll("(^\"*)|(\"*$)","")); //获得字符串 去掉收尾的"号 再转换为jsonarray
-            				id_ = yx.select_infocopy(map.get("channelId").toString());//获取通道id
-            				JSONArray members=map.getJSONArray("members");
-            				map.put("duration_time",redundant.toString());//完整的通话时长抄送
-            				 for(int i=0;i<members.size();i++){//确定出发起者和接收者
-            					JSONObject members2=members.getJSONObject(i);
-            					//如果是通话的发起者的话，caller字段为true,否则无caller字段;         
-            					if(members2.toString().indexOf("caller")==-1){//如果是通话的发起者的话，caller字段为true，否则无caller字段；duration表示对应accid用户的单方时长
-            						String uid=yx.selectUidByAccid(members2.getString("accid"));
-            						log.info("根据accid查询uid->accid:"+members2.getString("accid")+",uid:"+uid);
-            						map.put("createtime", DataUtil.millisecondTodate(Long.parseLong(map.getString("createtime").toString())));
-            						map.put("faccid",uid);//改成接受
-            						if(id_!=null){//存在根据channeid更新 
-                    					 int count=yx.update_infocopy_durationM(map);
-                    					 log.info("更新通话时长消息->"+count);
-                    				 }else{//不存在则添加
-                    					 int count=yx.insert_infocopy_durationM(map);
-                    					 log.info("添加通话时长消息->"+count);
-                    				 }
-            					}
-            					//不过不是接收者 则丢掉这条 
-            				 }	
-            			//{"eventType":"6","fileinfo":"[{\"caller\":true,\"channelid\":\"6290737000999815988\",\"filename\":\"xxxxxx.type\",\"md5\":\"a9b248e29669d588dd0b10259dedea1a\",\"mix\":true,\"size\":\"2167\",\"type\":\"gz\",\"vid\":\"1062591\",\"url\":\"http://xxxxxxxxxxxxxxxxxxxx.mp4\",\"user\":\"zhangsan\"}]"}
-            			}else if(eventType.equals("6")){//表示音视频/白板文件存储信息，即汇报音视频/白板文件的大小、下载地址等消息
-            					log.info("下载信息start");
-            					JSONArray fileinfo = map.getJSONArray("fileinfo");
-            					 String url="";
-            					map.put("download_info", redundant.toString());
-            					for(int j=0;j<fileinfo.size();j++){
-            						JSONObject fileinfo2 = fileinfo.getJSONObject(j);
-            						boolean b=fileinfo2.getBooleanValue("mix");//mix：是否为混合录制文件，true：混合录制文件；false：单人录制文件
-            						url=fileinfo2.getString("url");
-            						if(b && url.indexOf("mp4")!=-1){//mix：是否为混合录制文件，true：混合录制文件；false：单人录制文件 并且为mp4格式
-            							id_ = yx.select_infocopy(fileinfo2.getString("channelid"));//判断是否存在通道id
-            							map.put("fi", fileinfo2);//这里解决同一次抄送，可能会抄给你不同channel ID 的信息的
-            							map.put("url", fileinfo2.get("url"));
-            							map.put("vid", fileinfo2.get("vid"));
-            							 if(id_!=null){//存在 修改
-            								 map.put("id11", id_);
-            								 int i=yx.update_infocopy_downloadM(map);
-            								 log.info("更新下载地址信息->"+i);
-            							 }else{//不存在则添加
-            								map.put("channelid", fileinfo2.get("channelid"));
-            								 int i=yx.insert_infocopy_downloadM(map);
-            								 log.info("添加下载地址信息->"+i);
-            							 }
-            						}
-            					}
-            				}
-            	
-				} catch (Exception e) {
-					String map1="";
-					if(map!=null){
-						map1=JSON.toJSONString(map);
-					}
-					yx.insert_M(body+",map:"+map1+"----error:"+getErrorInfoFromException(e));//如果错误直接保存
-				}
+	    		StringBuilder redundant=new StringBuilder(body.replaceAll("(\\})|(\\{)|(\\[)|(\\])", ""));//抄送的完整信息
+	    		//字符串处理
+	    		body=body.replaceAll("\"\\{","{").replaceAll("\\}\"","}").replaceAll("\"\\[\\{", "[{").replaceAll("\\}\\]\"", "}]");
+	    		 map = JSONObject.parseObject(body);
+	    		log.info("信息抄送处理JSON->"+map.toJSONString());
+	    		map.put("viedotype", "1");//设置视频的类型
+	    		String eventType = map.get("eventType").toString();
+	    		String id_=null;
+	    			//{"channelId":"6265490045067594274","createtime":"1458798080073","duration":"22","eventType":"5","live":"1","members":"[{\"accid\":\"789\",\"duration\":11},{\"accid\":\"123456\",\"caller\":true,\"duration\":11}]","status":"SUCCESS","type":"VEDIO"}
+	    			if(eventType.equals("5")){//表示AUDIO/VEDIO/DataTunnel消息，即汇报实时音视频通话时长、白板事件时长的消息
+	    				log.info("时长信息start");
+	    				//JSONArray members  =JSONArray.parseArray(map.getString("members").toString().replaceAll("(^\"*)|(\"*$)","")); //获得字符串 去掉收尾的"号 再转换为jsonarray
+	    				id_ = yx.select_infocopy(map.get("channelId").toString());//获取通道id
+	    				JSONArray members=map.getJSONArray("members");
+	    				map.put("duration_time",redundant.toString());//完整的通话时长抄送
+	    				 for(int i=0;i<members.size();i++){//确定出发起者和接收者
+	    					JSONObject members2=members.getJSONObject(i);
+	    					//如果是通话的发起者的话，caller字段为true,否则无caller字段;         
+	    					if(members2.toString().indexOf("caller")==-1){//如果是通话的发起者的话，caller字段为true，否则无caller字段；duration表示对应accid用户的单方时长
+	    						String uid=yx.selectUidByAccid(members2.getString("accid"));
+	    						log.info("根据accid查询uid->accid:"+members2.getString("accid")+",uid:"+uid);
+	    						map.put("createtime", DataUtil.millisecondTodate(Long.parseLong(map.getString("createtime").toString())));
+	    						map.put("faccid",uid);//改成接受
+	    						if(id_!=null){//存在根据channeid更新 
+	            					 int count=yx.update_infocopy_durationM(map);
+	            					 log.info("更新通话时长消息->"+count);
+	            				 }else{//不存在则添加
+	            					 int count=yx.insert_infocopy_durationM(map);
+	            					 log.info("添加通话时长消息->"+count);
+	            				 }
+	    					}
+	    					//不过不是接收者 则丢掉这条 
+	    				 }	
+	    			//{"eventType":"6","fileinfo":"[{\"caller\":true,\"channelid\":\"6290737000999815988\",\"filename\":\"xxxxxx.type\",\"md5\":\"a9b248e29669d588dd0b10259dedea1a\",\"mix\":true,\"size\":\"2167\",\"type\":\"gz\",\"vid\":\"1062591\",\"url\":\"http://xxxxxxxxxxxxxxxxxxxx.mp4\",\"user\":\"zhangsan\"}]"}
+	    			}else if(eventType.equals("6")){//表示音视频/白板文件存储信息，即汇报音视频/白板文件的大小、下载地址等消息
+	    					log.info("下载信息start");
+	    					JSONArray fileinfo = map.getJSONArray("fileinfo");
+	    					 String url="";
+	    					map.put("download_info", redundant.toString());
+	    					for(int j=0;j<fileinfo.size();j++){
+	    						JSONObject fileinfo2 = fileinfo.getJSONObject(j);
+	    						boolean b=fileinfo2.getBooleanValue("mix");//mix：是否为混合录制文件，true：混合录制文件；false：单人录制文件
+	    						url=fileinfo2.getString("url");
+	    						if(b && url.indexOf("mp4")!=-1){//mix：是否为混合录制文件，true：混合录制文件；false：单人录制文件 并且为mp4格式
+	    							id_ = yx.select_infocopy(fileinfo2.getString("channelid"));//判断是否存在通道id
+	    							map.put("fi", fileinfo2);//这里解决同一次抄送，可能会抄给你不同channel ID 的信息的
+	    							map.put("url", fileinfo2.get("url"));
+	    							map.put("vid", fileinfo2.get("vid"));
+	    							 if(id_!=null){//存在 修改
+	    								 map.put("id11", id_);
+	    								 int i=yx.update_infocopy_downloadM(map);
+	    								 log.info("更新下载地址信息->"+i);
+	    							 }else{//不存在则添加
+	    								map.put("channelid", fileinfo2.get("channelid"));
+	    								 int i=yx.insert_infocopy_downloadM(map);
+	    								 log.info("添加下载地址信息->"+i);
+	    							 }
+	    						}
+	    					}
+	    				}	
             }
             // TODO: 比较md5、checkSum是否一致，以及后续业务处理
             result.put("code", 200);
             return result;
         } catch (Exception ex) {
+			String map1="";
+			if(map!=null){
+				map1=JSON.toJSONString(map);
+			}
+        	yx.insert_M(body+",map:"+map1+"----error:"+getErrorInfoFromException(ex));//如果错误直接保存
             result.put("code",414);
             return result;
         }
