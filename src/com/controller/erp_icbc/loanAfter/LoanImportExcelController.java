@@ -1,19 +1,23 @@
 package com.controller.erp_icbc.loanAfter;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -36,6 +40,7 @@ import com.controller.Excel.UploadExcelController;
 import com.model1.icbc.erp.PageData;
 import com.service1.Excel.recordService;
 import com.service1.loan.AboutExcelService;
+import com.util.limitutil;
 import com.util.Excel.CommonUtil;
 import com.util.newAdd.TimeStyle;
 /**
@@ -66,7 +71,6 @@ public class LoanImportExcelController {
 	@ResponseBody
 	public Map readExcel(String id_card, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
-		
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile("file");
 		String relatDir1 = new SimpleDateFormat("yyyy/MM/dd/").format(new Date());
@@ -133,24 +137,28 @@ public class LoanImportExcelController {
 					rowMap.put("dt_edit",TimeStyle.sdfYMDHMS);
 					AboutExcelService.excel_to_sql(rowMap); //把excel表格路面的数据录入数据库表loan_import_excels
 					//1.把逾期客户添加到逾期表
-					int overdue_amount = rowMap.getInt("overdue_amount");//获取excel表格中的逾期金额
+					double overdue_amount = Double.parseDouble(rowMap.getString("overdue_amount")) ;//获取excel表格中的逾期金额
 					PageData icbcInfo = new PageData();
 					icbcInfo.put("c_cardno", rowMap.getString("id_card"));
 					PageData getIcbcInfo = new PageData();
 					getIcbcInfo = AboutExcelService.icbcInfo(icbcInfo); //根据excel表格里面身份证号获取用户信息
-					if(overdue_amount>0){ //excel表格里面的数据  证明客户逾期
+					//excel表格里面的数据  证明客户逾期
+					if(overdue_amount>0){ 
 						PageData addOverdueClient = new PageData();
 						addOverdueClient.put("mid_add",pdsession.getInt("id"));
 						addOverdueClient.put("mid_edit",pdsession.getInt("id") );
-						addOverdueClient.put("type_id",LoanModel.LoanTypeModel().get("逾期")); //???
-						addOverdueClient.put("type_status",LoanModel.LoanTypeModel().get("初级逾期") );//???
-						addOverdueClient.put("icbc_id",getIcbcInfo.get("icbc_id"));
-						addOverdueClient.put("gems_id",getIcbcInfo.get("gems_id") );
-						addOverdueClient.put("gems_fs_id",getIcbcInfo.get("gems_fs_id"));
-						addOverdueClient.put("c_name",getIcbcInfo.get("c_name") != null?getIcbcInfo.getString("c_name"):null );
-						addOverdueClient.put("c_cardno",getIcbcInfo.get("c_cardno") != null?getIcbcInfo.getString("c_cardno"):null );
-						addOverdueClient.put("c_carno",getIcbcInfo.get("c_carno") != null?getIcbcInfo.getString("c_carno"):null );
-						addOverdueClient.put("c_carvin",getIcbcInfo.getString("c_carvin") != null?getIcbcInfo.getString("c_carvin"):null);
+//						addOverdueClient.put("type_id",LoanModel.LoanTypeModel().get("逾期")); //???
+//						addOverdueClient.put("type_status",LoanModel.LoanTypeModel().get("初级逾期") );//???
+						addOverdueClient.put("type_id","1"); //???  // 1逾期，2电催，3拖车，4诉讼，5拍卖，6结清
+						addOverdueClient.put("type_status","11");//???
+						addOverdueClient.put("icbc_id",(getIcbcInfo==null?null:getIcbcInfo.get("icbc_id")));
+						addOverdueClient.put("gems_id",(getIcbcInfo==null?null:getIcbcInfo.get("gems_id")));
+						addOverdueClient.put("gems_fs_id",(getIcbcInfo==null?null:getIcbcInfo.get("gems_fs_id")));
+						addOverdueClient.put("imp_name",rowMap.getString("name")); //导入excel表格时的客户名字
+						addOverdueClient.put("c_name",(getIcbcInfo==null?null:getIcbcInfo.get("c_name")));
+						addOverdueClient.put("c_cardno",(getIcbcInfo==null?null:getIcbcInfo.get("c_cardno")));
+						addOverdueClient.put("c_carno",(getIcbcInfo==null?null:getIcbcInfo.get("c_carno")));
+						addOverdueClient.put("c_carvin",(getIcbcInfo==null?null:getIcbcInfo.get("c_carvin")));
 						addOverdueClient.put("overdue_amount",overdue_amount); //逾期金额
 						addOverdueClient.put("overdue_days",rowMap.getString("overdue_days")); //逾期天数
 						AboutExcelService.addOverdueClient(addOverdueClient);
@@ -161,11 +169,11 @@ public class LoanImportExcelController {
 					upPay.put("practical_date",rowMap.getString("practical_date"));
 					upPay.put("practical_money",rowMap.getString("practical_money"));
 					upPay.put("overdue_status",overdue_amount>0 ? 1:2);//1为逾期  2为正常
-					upPay.put("overdue_money", rowMap.getString("overdue_amount"));
-					upPay.put("overdue_days", rowMap.getString("overdue_days"));
+					upPay.put("overdue_money",rowMap.getString("overdue_amount"));
+					upPay.put("overdue_days",rowMap.getString("overdue_days"));
 					upPay.put("c_bank_card",rowMap.getString("repayment_card"));
-					upPay.put("c_cardno", rowMap.getString("id_card"));
-					upPay.put("icbc_id", getIcbcInfo.get("icbc_id"));
+					upPay.put("c_cardno",rowMap.getString("id_card"));
+					upPay.put("icbc_id",(getIcbcInfo==null?null:getIcbcInfo.get("icbc_id")));
 					AboutExcelService.updatePaySchedule(upPay);
 				}
 			}
@@ -178,14 +186,18 @@ public class LoanImportExcelController {
 //			recordService.addOverdue(listOverdue.get(i));
 //		}
 //		System.out.println("逾期客户" + listOverdue);
-
+		
 		PageData map = new PageData();
 		map.put("uuid", CommonUtil.getUUID());// 序列号
 		map.put("oriName", oriName);// 文件名称
-		map.put("dt_add", TimeStyle.sdfYMDHMS);// 导入时间
+		map.put("dt_add", new Date());// 导入时间
 		map.put("financial_products", "");
 		map.put("filepath", "upload/" + relatDir1 + oriName);
-		map.put("mid_add", pdsession.getString("id"));// 获取操作人员
+		map.put("mid_add", pdsession.get("id"));// 获取操作人员
+		map.put("mid_name", pdsession.get("name").toString());// 获取操作人员
+		map.put("gems_fs_id",pdsession.get("icbc_erp_fsid"));// 公司ID
+		map.put("gems_id", pdsession.get("gemsid"));// 公司人员ID
+		map.put("fsname", pdsession.getString("fsname"));// 公司名字
 		AboutExcelService.addExcelRecord(map); //添加excel导入文件记录
 //		repaymenttest.selectImport(); //修改客户还款计划里面的还款记录
 		Map result = new HashMap();
@@ -285,5 +297,96 @@ public class LoanImportExcelController {
 			break;
 		}
 		return cellValue;
+	}
+	
+	/**
+	 * 
+	 */
+	@RequestMapping(value = "/downloadOneFile.do")
+	public void downloadFile(String fileUrl, String fileName,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		String pString = fileUrl.substring(fileUrl.lastIndexOf("."));
+		response.setContentType("text/html;charset=UTF-8");
+		BufferedInputStream in = null;
+		BufferedOutputStream out = null;
+		URL url = new URL(fileUrl);
+		HttpURLConnection urlCon = (HttpURLConnection) url.openConnection();
+		urlCon.setConnectTimeout(6000);
+		urlCon.setReadTimeout(6000);
+		int code = urlCon.getResponseCode();
+		if (code != HttpURLConnection.HTTP_OK) {
+			throw new Exception("文件读取失败");
+		}
+		try {
+			response.setContentType("multipart/form-data");
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("Content-Disposition", "attachment; filename="+java.net.URLEncoder.encode(fileName,"UTF-8"));
+			response.setHeader("Content-Length",String.valueOf(urlCon.getContentLength()));
+			in = new BufferedInputStream(urlCon.getInputStream());
+			out = new BufferedOutputStream(response.getOutputStream());
+			byte[] data = new byte[1024];
+			int len = 0;
+			while (-1 != (len = in.read(data, 0, data.length))) {
+				out.write(data, 0, len);
+			}
+			System.out.println("下载成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.reset();
+			try {
+				OutputStreamWriter writer = new OutputStreamWriter(
+						response.getOutputStream(), "UTF-8");
+				String data = "<script language='javascript'>alert(\"\\u64cd\\u4f5c\\u5f02\\u5e38\\uff01\");</script>";
+				writer.write(data);
+				writer.close();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		} finally {
+			if (in != null) {
+				in.close();
+			}
+			if (out != null) {
+				out.flush();
+				out.close();
+			}
+		}
+	}
+	
+	
+	/**
+	 * 通过文件名称模糊查询 查询全部数据并分页
+	 */
+	@RequestMapping("/selectImpRecordList.do")
+	public String select(String qn, String cn, String type, String dn,
+			int pagesize, int pagenow, HttpServletRequest request)throws UnsupportedEncodingException {
+		//构造查询条件
+		PageData pd = new PageData();
+		pd.put("param", request.getParameter("param"));
+		//查询数据
+		List<PageData> newpdList = new ArrayList<>();
+		List<PageData> l1 = AboutExcelService.selectRecordList(pd);
+		newpdList = limitutil.fy(l1, pagesize, pagenow); //分页
+		System.out.println("*************" + newpdList);
+		int q = l1.size() % pagesize;
+		int totalpage = 0;// 总页数
+		if (q == 0) {
+			totalpage = l1.size() / pagesize;
+		} else {
+			totalpage = l1.size() / pagesize + 1;
+		}
+		request.setAttribute("dn", dn);
+		request.setAttribute("cn", cn);
+		request.setAttribute("qn", qn);
+		request.setAttribute("type", type);
+		request.setAttribute("totalpage", totalpage);
+		request.setAttribute("pagenow", pagenow);
+		request.setAttribute("pagesize", pagesize);
+		request.setAttribute("totalsize", l1.size());
+		request.setAttribute("newpdList", newpdList);
+		request.setAttribute("param",request.getParameter("param")); //查询条件
+		log.info("结果" + l1);
+		return "kjs_icbc/index";
 	}
 }

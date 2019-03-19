@@ -66,9 +66,9 @@
 								<input type="text" placeholder="请输入文件名称" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" name="param" style="width:500px;">
 								<button class="btn btn-info search-btn" type="submit"  style="background-color:#00acd6;">查询</button> 
 							</form>	
-								<a href="javascript:;" class="file">导入还款
-								   <input id="picture_upload" name="file" type="file" onchange="upload_cover(this)">
-								</a>
+							<a href="javascript:;" class="file">导入还款
+							   <input id="picture_upload" name="file" type="file" onchange="upload_cover(this)">
+							</a>
 						</div>
 					</div>		
 					<div class="col-sm-2 admin-page-top hidden-xs">
@@ -135,13 +135,13 @@
 						<td class="text-center hidden-xs"><input name="delid" value="" type="checkbox"></td>
 						<td class="text-center hidden-xs">${status.index + 1}</td>
 						<td class="text-center">${l1.oriName }</td>
-						<td class="text-center" >${l1.dt_add }</td>
+						<td class="text-center" >${fn:substring(l1.dt_add,0,19)}</td>
 						<td class="text-center">
 							<p>
 								${l1.financial_products }
 							</p>
 						</td>
-						<td class="text-center">${l1.mid_add }</td>
+						<td class="text-center">${l1.mid_name }</td>
 						<td class="text-center">
 							<p>
 							    <c:if test="${!empty l1.filepath}">
@@ -157,7 +157,9 @@
 							</p>
 						</td>
 						<td class="text-center">
-							<a href="${pageContext.request.contextPath }/uploadExcelController/download.do?oriName=${l1.oriName}&dt_add=${l1.dt_add}"><image src="../../image/down.png" style="width:15px;height:15px;"></image></a>
+							<a href="http://a.kcway.net/assess/${l1.filepath}"><image src="${pageContext.request.contextPath}/image/down.png" style="width:15px;height:15px;"></image></a>
+							<%-- <a href="${pageContext.request.contextPath}/loan/downloadOneFile.do?fileUrl=http://a.kcway.net/assess/${l1.filepath}&fileName=${l1.oriName}"><image src="${pageContext.request.contextPath}/image/down.png" style="width:15px;height:15px;"></image></a> --%>
+						
 						</td>			
 		    		</tr> 
 		    		</c:forEach>

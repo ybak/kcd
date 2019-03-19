@@ -8,4 +8,6 @@ import com.util.pagedate;
 public interface ClientPaymentMapper{
 	//用户放款成功，生成还款计划
 	Integer addPaySchedule(PageData pd);
+	//查询还款情况列表
+	List<PageData> selectPayList(PageData pd);
 }

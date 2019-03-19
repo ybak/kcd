@@ -35,9 +35,9 @@ public class AboutExcelServiceImpl implements AboutExcelService{
 	}
 
 	@Override
-	public Integer addOverdueClient(PageData pd) {
+	public Integer addOverdueClient(PageData pd){
 		// TODO Auto-generated method stub
-		return aboutExcelMapper.addExcelRecord(pd);
+		return aboutExcelMapper.addOverdueClient(pd);
 	}
 
 	@Override

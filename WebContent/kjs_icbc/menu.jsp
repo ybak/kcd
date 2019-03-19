@@ -484,12 +484,10 @@
 					</li>
 					</c:if>
 					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'khhkqk')==true}">
-					<li ${requestScope.dn=='dh_repaymentSituation'?"class='active'":''}>
-					
-                        <a href="${pageContext.request.contextPath }/repaymentController/select.do?type=khhkqk&dn=dh_repaymentSituation&qn=list&pagesize=10&pagenow=1">
+					<li ${requestScope.dn=='loan_repaymentSituation'?"class='active'":''}>
+                        <a href="${pageContext.request.contextPath }/loan/selectPayList.do?type=khhkqk&dn=loan_repaymentSituation&qn=list&pagesize=10&pagenow=1">
 						<i class="fa fa-arrow-circle-o-right"></i>客户还款情况
 					    </a>
-
 					</li>
 					</c:if>
 				    </ul>

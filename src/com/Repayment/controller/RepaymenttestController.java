@@ -41,7 +41,6 @@ public class RepaymenttestController {
 			int pagenow,	
 			HttpServletRequest request) throws UnsupportedEncodingException{
 		requestParams(request);
-		
 		List<PageData> newpdList=new ArrayList<>();
 		PageData pd=new PageData();
 		pd.put("dn", dn);
@@ -67,10 +66,8 @@ public class RepaymenttestController {
 			if(null != map){
 				//总额
 				BigDecimal aa = new BigDecimal(map.get("dk_total_price").toString());
-
 				//贷款期限
 				BigDecimal cc=new BigDecimal( map.get("aj_date").toString());
-				
 				//每月应还=总额/贷款期数
 				BigDecimal dd2 = aa.divide(cc, 3,BigDecimal.ROUND_DOWN);
 				String a1 = dd2.toString();//转成string

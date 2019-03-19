@@ -4,7 +4,7 @@
 <mapper namespace="com.mapper1.loan.AboutExcelMapper">
 
 <!-- 修改还款计划记录 -->
-<update id="updatePaySchedule" parameterType="pd" resultType="pd">
+<update id="updatePaySchedule" parameterType="pd">
 update loan_repayment_schedule set
 dt_edit=#{dt_edit}, 
 practical_date=#{practical_date},
@@ -52,10 +52,11 @@ select * from loan_import_record
 <if test="param != null and param != ''">
 	where oriName like '%${param}%'
 </if>
+order by dt_add desc 
 </select>
 
 <!-- 把逾期客户添加到表中 -->
-<insert id="addOverdueClient" parameterType="pd">
+<insert id="addOverdueClient" parameterType="pd" keyProperty="id" >
 insert into loan_overdue_list(
 id,
 mid_add,
@@ -67,6 +68,7 @@ type_status,
 icbc_id,
 gems_id,
 gems_fs_id,
+imp_name,
 c_name,
 c_cardno,
 c_carno,
@@ -84,6 +86,7 @@ sysdate(),
 #{icbc_id},
 #{gems_id},
 #{gems_fs_id},
+#{imp_name},
 #{c_name},
 #{c_cardno},
 #{c_carno},
@@ -93,15 +96,15 @@ sysdate(),
 </insert>
 
 <!-- 把导入记录添加到数据库 -->
-<insert id="addExcelRecord" parameterType="pd" keyProperty="id">
+<insert id="addExcelRecord" parameterType="pd" keyProperty="id" >
 insert into loan_import_record 
-(id,uuid,oriName,dt_add,financial_products,mid_add,filepath)
+(id,uuid,oriName,dt_add,financial_products,mid_add,filepath,mid_name,gems_fs_id,gems_id,fsname)
 values 
-(#{id},#{uuid},#{oriName},#{dt_add},#{financial_products},#{mid_add},#{filepath})     
+(#{id},#{uuid},#{oriName},#{dt_add},#{financial_products},#{mid_add},#{filepath},#{mid_name},#{gems_fs_id},#{gems_id},#{fsname})     
 </insert>
 
 <!-- 把excel表格数据录入到数据库 --> 
-<insert id="excel_to_sql" parameterType="pd" useGeneratedKeys="true" keyProperty="id" >
+<insert id="excel_to_sql" parameterType="pd"  keyProperty="id" >
 insert into loan_import_excels(
 id,
 mid_add,
@@ -147,7 +150,6 @@ advance_payment
 #{hk_status},
 #{zc_time},
 #{icbc_id},
-
 #{apply_compensatory},
 #{compensatory_date},
 #{repayment_periods},

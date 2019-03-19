@@ -37,6 +37,7 @@ public class ClientPaymentServiceImpl implements ClientPaymentService{
 		addPS.put("icbc_id",pd.getString("icbc_id")); 
 		addPS.put("c_cardno",getInfo.getString("c_cardno")!=""?getInfo.getString("c_cardno"):"");
 		addPS.put("c_name",getInfo.getString("c_name")!=""?getInfo.getString("c_name"):"");
+		addPS.put("should_money",yh); //应还金额
 		String should_data="2019-3-18";
 		for(int i=0;i<counts;i++){
 			if(month > 12){
@@ -48,9 +49,13 @@ public class ClientPaymentServiceImpl implements ClientPaymentService{
 			clientPaymentMapper.addPaySchedule(addPS);
 			month++;
 		}	
-		addPS.put("should_date",should_data); //应还日期
-		addPS.put("should_money",yh); //应还金额
-		return clientPaymentMapper.addPaySchedule(addPS);
+		return 0;
+	}
+
+	@Override
+	public List<PageData> selectPayList(PageData pd) {
+		// TODO Auto-generated method stub
+		return clientPaymentMapper.selectPayList(pd);
 	}
 
 }

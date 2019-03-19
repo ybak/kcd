@@ -8,6 +8,7 @@ import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 public class LoanModel{
 	public static Map<Object,String> LoanTypeModel(){
 		 Map<Object,String> loanTypeModel=new HashMap<>();
+		 //逾期模块
 		 loanTypeModel.put("1", "逾期");
 		 loanTypeModel.put("11", "初级逾期");
 		 loanTypeModel.put("12", "中级逾期");
