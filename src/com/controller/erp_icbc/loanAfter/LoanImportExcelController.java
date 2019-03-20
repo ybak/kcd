@@ -58,7 +58,7 @@ public class LoanImportExcelController {
 	private final String xlsx = "xlsx";
 	//excel表格 客户姓名 身份证号 还款卡号 卡余额 逾期金额 连续违约次数 最大违约次数 导入日期 在保余额 +还款日期 +逾期时间
 	private static String[] ss = 
-		{ "name", "id_card", "repayment_card","balance_card", "overdue_amount", "continuity", "maximum","add_time", "balance_on","practical_date","overdue_days"};
+		{ "name", "id_card", "repayment_card","balance_card", "overdue_amount", "continuity", "maximum","add_time", "balance_on", "practical_date", "overdue_days"};
 
 	@Autowired
 	private AboutExcelService AboutExcelService;
@@ -114,8 +114,11 @@ public class LoanImportExcelController {
 					// 获得当前行的开始列
 					int firstCellNum = row.getFirstCellNum();
 					// 获得当前行的列数
-					int lastCellNum = row.getPhysicalNumberOfCells();
-					String[] cells = new String[row.getPhysicalNumberOfCells()];
+//					int lastCellNum = row.getPhysicalNumberOfCells(); //获取不是空的列
+					int lastCellNum = row.getLastCellNum(); //获取全部的列   非空的和空的列
+					System.err.println("-------获得当前行的列数-" + lastCellNum); 
+//					String[] cells = new String[row.getPhysicalNumberOfCells()]; //获取不是空的列
+					String[] cells = new String[row.getLastCellNum()]; //获取全部的列   非空的和空的列
 					// 循环当前行
 					for (int cellNum = firstCellNum; cellNum < lastCellNum; cellNum++) {
 						Cell cell = row.getCell(cellNum);
@@ -164,10 +167,16 @@ public class LoanImportExcelController {
 						AboutExcelService.addOverdueClient(addOverdueClient);
 					}
 					//2.修改还款计划表里面还款数据
+					System.err.println(rowMap.getString("practical_date")+"---practical_date");
+					System.err.println(rowMap.getString("balance_card")+"---practical_money");
+					System.err.println(rowMap.getString("overdue_amount")+"---overdue_amount");
+					System.err.println(rowMap.getString("overdue_days")+"---overdue_days");
+					System.err.println(rowMap.getString("repayment_card")+"---repayment_card");
+					System.err.println(rowMap.getString("id_card")+"---id_card");
 					PageData upPay = new PageData();
 					upPay.put("dt_edit", TimeStyle.sdfYMDHMS);
 					upPay.put("practical_date",rowMap.getString("practical_date"));
-					upPay.put("practical_money",rowMap.getString("practical_money"));
+					upPay.put("practical_money",rowMap.getString("balance_card"));
 					upPay.put("overdue_status",overdue_amount>0 ? 1:2);//1为逾期  2为正常
 					upPay.put("overdue_money",rowMap.getString("overdue_amount"));
 					upPay.put("overdue_days",rowMap.getString("overdue_days"));

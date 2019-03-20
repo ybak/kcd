@@ -40,7 +40,7 @@ and
 c_cardno =#{c_cardno}
 </if>
 <if test="id != null and id != ''">
-id =#{id}
+icbc.id =#{id}
 </if>
 </select>    
     

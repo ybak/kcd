@@ -42,6 +42,7 @@ import com.service1.erp_icbc.erp_wdrwService;
 import com.service1.kjs_icbc.icbc_mqService;
 import com.service1.kjs_icbc.icbc_mq_resultService;
 import com.service1.kjs_icbc.newicbcService;
+import com.service1.loan.ClientPaymentService;
 import com.service1.send.admin_msgService;
 import com.util.creditutil;
 
@@ -49,6 +50,8 @@ import com.util.creditutil;
 public class erp_fifteenUpController {
 	private static final String appKey ="7e21faf06524b22f0ee1414c"; 
 	private static final String masterSecret = "c87361ae4d7d91067b3ea01a";
+	  @Autowired	
+	  private ClientPaymentService clientPaymentService;
 	  @Autowired
 	  private icbc_carsService icbc_carsService;
 	  @Autowired
@@ -3446,8 +3449,9 @@ public class erp_fifteenUpController {
 				pResult.put("dt_sub",creditutil.time());
 				pResult.put("type_id",type_id);   // 银行申请贷款  对应 11
 				pResult.put("icbc_id",icbc_id);
-				int icbc_count = repaymentservice.selectrepay(icbc_id);
-				repaymentservice.addrepay(icbc_id, yhdksh_61_je, icbc_count);
+//				int icbc_count = repaymentservice.selectrepay(icbc_id);
+//				repaymentservice.addrepay(icbc_id, yhdksh_61_je, icbc_count);
+				
 				/*
 				 * 操作明细记录 end/////
 				 */
@@ -3520,9 +3524,20 @@ public class erp_fifteenUpController {
 			admin_msg.setStatus(0);
 			admin_msgService.addadmin_msg(admin_msg);
 			}	
+			//放款成功生成还款计划 start
+			if(result_1_code1 == 1){ //表明放款成功
+				PageData toS = new PageData();
+				toS.put("icbc_id",icbc_id);
+				toS.put("yhdksh_61_je", yhdksh_61_je);
+				toS.put("yhdksh_61_syhk",yhdksh_61_syhk);
+				toS.put("yhdksh_61_fq",yhdksh_61_fq);
+				toS.put("yhdksh_61_sqhkr", yhdksh_61_sqhkr);
+				toS.put("yhdksh_61_yh",yhdksh_61_yh);
+				clientPaymentService.addPaySchedule(toS);
+				System.err.println("生成还款计划成功");
+			}
+			//放款成功生成还款计划 end
 	  }
-	  
-	  
 	  
 	  /*
 	   * erp十五模块-银行申请贷款-银行审批结果(60)  审核 

@@ -11,8 +11,8 @@ import com.model1.icbc.erp.PageData;
 @Transactional(value = "kcway2", rollbackFor = Exception.class) 
 public class erp_fiveModelServiceImpl implements erp_fiveModelService{
 
-	 @Resource
-	 private  erp_fiveModelMapper erp_fiveModelMapper;
+	@Resource
+	private  erp_fiveModelMapper erp_fiveModelMapper;
 	
 	@Transactional
 	public void save(PageData pd) {

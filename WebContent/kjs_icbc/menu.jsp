@@ -496,7 +496,7 @@
 			        <!--客户逾期名单  -->
 			        <c:if  test="${fn:contains(sessionScope.pd.purview_map,'khyqmd')==true}">
 			        <li ${requestScope.type=='khyqmd'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath }/overdueController/select.do?type=khyqmd&dn=overdue&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-user"></i> 
+					<a href="${pageContext.request.contextPath }/loan/selectOverdue.do?type=khyqmd&dn=loan_overdue&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-user"></i> 
 				    <span>客户逾期名单</span>
 				    </a>
 					</li>
