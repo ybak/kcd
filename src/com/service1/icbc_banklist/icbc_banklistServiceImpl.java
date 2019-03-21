@@ -23,4 +23,26 @@ public class icbc_banklistServiceImpl implements icbc_banklistService {
 		return icbc_banklistMapper.geticbc_banklist();
 	}
 
+	@Override
+	public void saveicbc_banklist(PageData pd) {
+		icbc_banklistMapper.saveicbc_banklist(pd);
+	}
+
+	@Override
+	public void upicbc_banklist(PageData pd) {
+		icbc_banklistMapper.upicbc_banklist(pd);
+	}
+
+	@Override
+	public List<PageData> geticbc_banklistbyID(PageData pd) {
+		// TODO Auto-generated method stub
+		return icbc_banklistMapper.geticbc_banklistbyID(pd);
+	}
+
+	@Override
+	public PageData geticbc_bank(int id) {
+		// TODO Auto-generated method stub
+		return icbc_banklistMapper.geticbc_bank(id);
+	}
+
 }

@@ -204,7 +204,8 @@
 							<input id="company_num" name="company_num" value="${requestScope.pd.company_num}" class="form-control" placeholder="" type="text">
 						</div>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-12">
+					<div class="col-sm-4" style="margin-left: -15px">
 						<div class="input-group">
 							<span class="input-group-addon">公司办公所在地址 </span>
 							<select onchange="citys('company_city',this.options[this.options.selectedIndex].value)" name="company_province" id="company_province"  class="form-control">
@@ -221,6 +222,7 @@
 							<select name="company_section" id="company_section"  class="form-control">
                             <option value="0">所在区</option>
 							</select>
+					</div>
 					</div>
 					<div class="col-sm-12">
 						<div class="input-group">
@@ -944,37 +946,58 @@
 						<div class="input-group">
 							<span class="input-group-addon">展业银行</span>
 							<select id="zy_bank" name="zy_bank" class="selectpicker show-tick form-control" multiple data-live-search="true">
-							<option value="0">请选择</option>
-							<option value="1">杭州城站支行</option>
-							<option value="2">哈尔滨顾乡支行</option>
-							<option value="3">台州路桥支行</option>
-							<option value="4">南京江宁支行</option>
-							<option value="5">杭州武林支行</option>
 							</select>
+							<span class="input-group-addon" style="font-size: 16px;">
+							<a data-toggle="modal" data-target="#modal-default">新增</a>
+							</span>
 						</div>
 					</div>
 					<script type="text/javascript">
-					$(document).ready(function(){
+                          function banklist(){
+                        	  var zy_bank='${requestScope.pd.zy_bank}';
+                        	  /* zy_bank=zy_bank.replace("\u0005",","); */
+                        	  $.ajax({
+                                  type: "POST",      //data 传送数据类型。post 传递
+                                  dataType: 'json',  // 返回数据的数据类型json
+                                  url: "${pageContext.request.contextPath }/erp/geticbc_banklist.do",  // 控制器方法
+                                  data:{
+                                	  zy_bank:zy_bank,
+                                	  icbc_erp_fsid:'${sessionScope.pd.icbc_erp_fsid}'
+                                  },
+                                  error: function () {
+                                      alert("系统错误...请稍后重试！");
+                                  },
+                                  success: function (data) {
+                                	  $("#zy_bank").empty();
+                                	  var con="<option value='0'>请选择</option>";
+                                	  $.each(data,function(index, n){
+                                		  con=con+"<option selected='selected' value='"+data[index].id+"'>"+data[index].name+"</option>";
+                                	  });
+                                	  $("#zy_bank").append(con);
+                                	  if('${requestScope.pd.zy_bank}'!=null&&'${requestScope.pd.zy_bank}'!=''){
+              							var obj='${requestScope.pd.zy_bank}';
+              					    	var arr=obj.split('\u0005');
+              					    	/* for(var i=0;i<arr.length;i++){
+              					    		alert(arr[i]);
+              					    	} */
+              					    	$('#zy_bank').selectpicker({
+              								'noneSelectedText': '请选择',
+              						        'selectedText': 'cat'
+              						    });
+              					    	$('#zy_bank').selectpicker('val',arr);
+              						}else{
+              							$('#zy_bank').selectpicker({
+              								'noneSelectedText': '请选择',
+              						        'selectedText': 'cat'
+              						    });
+              						}
+                                	  $("#zy_bank").selectpicker('refresh');
+                                  }
+                              });
 
-						 if('${requestScope.pd.zy_bank}'!=null&&'${requestScope.pd.zy_bank}'!=''){
-							
-							var obj='${requestScope.pd.zy_bank}';
-					    	var arr=obj.split('\u0005');
-					    	/* for(var i=0;i<arr.length;i++){
-					    		alert(arr[i]);
-					    	} */
-					    	
-					    	$('#zy_bank').selectpicker({
-								'noneSelectedText': '请选择',
-						        'selectedText': 'cat'
-						    });
-					    	$('#zy_bank').selectpicker('val',arr);
-						}else{
-							$('#zy_bank').selectpicker({
-								'noneSelectedText': '请选择',
-						        'selectedText': 'cat'
-						    });
-						}
+                          }
+					$(document).ready(function(){
+						  banklist();
 					});
 					</script>
 					<div class="col-sm-4">
@@ -1703,5 +1726,55 @@ function checkUser(){
 	return true;
 }
 
+
+function addbank(){
+	var bankform = $('#bankform').serializeArray();
+	  $.ajax({
+        type: "POST",      //data 传送数据类型。post 传递
+        dataType: 'text',  // 返回数据的数据类型json
+        url: "${pageContext.request.contextPath }/erp/icbc_bank.do",  // 控制器方法
+        data:bankform,
+        error: function () {
+            alert("系统错误...请稍后重试！");
+        },
+        success: function (data) {
+      	    alert(data);
+      	    $("#modal-default").modal('hide');
+      	    banklist();
+        }
+    });
+
+}
+
 </script>
-				
+<!--弹窗框体开始-->
+<div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true" style="font-size: 16px;">×</span></button>
+                <h4 class="modal-title">新增银行</h4>
+              </div>
+              <div class="modal-body">
+                <div class="box-body">
+                <form id="bankform" action="" class="form-horizontal" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+				<label class="col-sm-2 control-label">银行名称</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" id="name" name="name" placeholder="请输入银行名称" style="font-size: 16px;">
+				</div>
+			    </div>
+			    </form>
+			    </div> 
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>
+                <a type="button" href="javascript:addbank();" class="btn btn-primary">提交保存</a>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+</div>		
+<!-- 弹窗框体结束-->

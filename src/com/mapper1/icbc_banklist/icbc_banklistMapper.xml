@@ -8,6 +8,56 @@
 <select id="geticbc_banklist"  parameterType="pd" resultType="pd">
 	select * from icbc_banklist	
 </select>
+<!-- 查询icbc_banklist表所有信息 -->
+<select id="geticbc_banklistbyID"  parameterType="pd" resultType="pd">
+select * from icbc_banklist	where 1=1
+<if test="fsid!=null and fsid!=''">
+and fsid=#{fsid}
+</if>
+<if test="status_id!=null and status_id.size()>0">
+and id in 
+<foreach collection="status_id" item="dramaId" open="(" close=")" separator=",">
+#{dramaId}
+</foreach>
+</if>
+</select>
+<!-- 查询icbc_banklist表所有信息 -->
+<select id="geticbc_bank"  parameterType="int" resultType="pd">
+	select * from icbc_banklist	where id=#{id}
+</select>
+
+<insert id="saveicbc_banklist" parameterType="pd" useGeneratedKeys="true"  keyProperty="id">
+insert into icbc_banklist(
+name,
+dt_add,
+dt_edit,
+fsid,
+mid_add,
+mid_edit,
+showtag
+)values(
+#{name},
+#{dt_add},
+#{dt_edit},
+#{fsid},
+#{mid_add},
+#{mid_edit},
+#{showtag}
+)
+</insert>
+
+<update id="upicbc_banklist" parameterType="pd">
+update icbc_banklist
+<trim prefix="set" suffixOverrides=","> 
+<if test="name!=null and name!=''">name=#{name},</if>
+<if test="fsid!=null and fsid!=''">fsid=#{fsid},</if>
+<if test="dt_edit!=null and dt_edit!=''">name=#{name},</if>
+<if test="mid_edit!=null and mid_edit!=''">mid_edit=#{mid_edit},</if>
+showtag=#{showtag},
+</trim>
+where id=#{id}
+</update>
+
 
 
 </mapper>

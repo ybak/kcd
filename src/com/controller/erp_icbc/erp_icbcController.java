@@ -241,7 +241,6 @@ public class erp_icbcController {
 		pd1.put("fsid", pData.get("icbc_erp_fsid"));
 		pd1.put("up_id", pData.get("icbc_erp_fsid"));
 		List<PageData> pageDatas1 = erp_userrootService.findtolist(pd1);
-
 		PageData pd2 = new PageData();
 		pd2.put("dn", "icbc_erp_admin_agp");
 		pd2.put("showtag", 1);
