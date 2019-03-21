@@ -14,14 +14,13 @@
 		var s=$("#page_limit_select").val();
 		var status=$("#status").val();
 		var querytype=$("#querytype").val();		
-		window.location.href ="${pageContext.request.contextPath}/repaymentController/select.do?type=wlghd&dn=dh_repaymentSituation&qn=list&pagesize="+s+"&pagenow=1";
+		window.location.href ="${pageContext.request.contextPath }/loan/selectPayList.do?type=khhkqk&dn=loan_repaymentSituation&qn=list&pagesize="+s+"&pagenow=1";
     }
     </script>
-
 		<section class="content-header">
 			<h1>
 			客户还款情况<small>
-			共1个
+			共${requestScope.totalsize}个
 			</small>
 			</h1>
 		</section>
@@ -31,8 +30,8 @@
 				<div class="row">
 					<div class="col-sm-10">
 						<div class="btn-group">		
-							<form class="form-horizontal" action="${pageContext.request.contextPath }/repaymentController/select.do?type=wdrw&dn=dh_repaymentSituation&qn=list&cn=w1&pagesize=9&pagenow=1" method="post">
-								<input autocomplete="off" type="text" placeholder="请输入客户姓名或身份证号" name="param" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" style="width:500px;">
+							<form class="form-horizontal" action="${pageContext.request.contextPath }/loan/selectPayList.do?type=khhkqk&dn=loan_repaymentSituation&qn=list&pagesize=10&pagenow=1" method="post">
+								<input autocomplete="off" type="text" placeholder="请输入客户姓名或身份证号" name="param" id="param" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" style="width:500px;">
 								<button class="btn btn-info search-btn" type="submit" style="background-color:#00acd6;">查询</button>   																		
 							</form>				
 						</div>
@@ -61,12 +60,12 @@
 						    int totalpage1=Integer.parseInt(request.getAttribute("totalpage").toString());
 						    if(pagenow1>1&&pagenow1<=totalpage1){
 							%>
-							<a href="${pageContext.request.contextPath }/repaymentController/select.do?type=wlghd&dn=dh_repaymentSituation&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" class="btn btn-default">«</a>						
+							<a href="${pageContext.request.contextPath }/loan/selectPayList.do?type=khhkqk&dn=loan_repaymentSituation&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}&param=${requestScope.param}" class="btn btn-default">«</a>						
 							<%				    	
 					         }						
 							 if(pagenow1>=1&&pagenow1<totalpage1){
 							%>
-							<a href="${pageContext.request.contextPath }/repaymentController/select.do?type=wlghd&dn=dh_repaymentSituation&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" class="btn btn-default">»</a>
+							<a href="${pageContext.request.contextPath }/loan/selectPayList.do?type=khhkqk&dn=loan_repaymentSituation&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}&param=${requestScope.param}" class="btn btn-default">»</a>
 	                        <%
 	                        }
 	                        %>
@@ -93,7 +92,7 @@
 						<th class="text-center">贷款金额</th>
 						<th class="text-center" >贷款期数</th>
 						<th class="text-center" >还款日期</th>
-						<th class="text-center" >车辆价格</th>
+						<th class="text-center" >车辆评估价格</th>
 						<th class="text-center" >每月应还</th>
 						<th class="text-center" >操作</th>
 					</tr>
@@ -145,18 +144,18 @@
 						</td>
 						<td class="text-center">
 							<p>
-								${pd.icbc_pricecs}
+								${pd.price_result}
 							</p>
 						</td>
 						<td class="text-center">
 							<p>
-								${pd.myyh}
+								${pd.yh}
 							</p>
 						</td>
 					
 						<td class="text-center">
 							<!-- 还款情况详情 -->
-							<a href="${pageContext.request.contextPath }/repaymentController/selectBorrow.do?type=wdrw&dn=dh_repaymentSituation&qn=form&cn=w1&icbc_id=${pd.id}">
+							<a href="${pageContext.request.contextPath}/loan/selectPayform.do?type=khhkqk&dn=loan_repaymentSituation&qn=form&icbc_id=${pd.icbc_id}">
 								<i class="fa fa-hand-paper-o"></i>
 							</a>
 						</td>
@@ -165,13 +164,12 @@
 					</c:forEach>
 				</tbody>
 			</table>
-			
 		</div>
 		<div class="foot-page">
 			<c:if test="${requestScope.totalpage ge '1' }">
 				<ul class="pagination no-margin">
 				       <c:if test="${requestScope.pagenow ne '1' }">
-				        <li><a href="${pageContext.request.contextPath }/repaymentController/select.do?type=wlghd&dn=dh_repaymentSituation&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" aria-label="Next"><span aria-hidden="true">«</span></a></li>
+				        <li><a href="${pageContext.request.contextPath }/loan/selectPayList.do?type=khhkqk&dn=loan_repaymentSituation&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}&param=${requestScope.param}" aria-label="Next"><span aria-hidden="true">«</span></a></li>
 				       </c:if>
 					   <%
 				       int pagenow=Integer.parseInt(request.getAttribute("pagenow").toString());
@@ -193,7 +191,7 @@
 				       if(j==pagenow){
 				       %>
 					   <li id="l<%=j %>" class="active">
-					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/repaymentController/select.do?type=wlghd&dn=dh_repaymentSituation&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
+					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/loan/selectPayList.do?type=khhkqk&dn=loan_repaymentSituation&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>&param=${requestScope.param}">
 					   <%=j %>
 					   </a>
 					   </li>
@@ -201,7 +199,7 @@
 				       }else{
 					   %>
 	                   <li id="l<%=j %>" >
-					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/repaymentController/select.do?type=wlghd&dn=dh_repaymentSituation&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
+					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/loan/selectPayList.do?type=khhkqk&dn=loan_repaymentSituation&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>&param=${requestScope.param}">
 					   <%=j %>					   
 					   </a>
 					   </li>					   
@@ -214,7 +212,7 @@
 		               %>
 					   <c:if test="${requestScope.pagenow lt requestScope.totalpage}">
 			               <c:if test="${requestScope.totalpage gt 5}">
-						  <li><a href="${pageContext.request.contextPath }/repaymentController/select.do?type=wlghd&dn=dh_repaymentSituation&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" aria-label="Next"><span aria-hidden="true">»</span></a></li>  
+						  <li><a href="${pageContext.request.contextPath }/loan/selectPayList.do?type=khhkqk&dn=loan_repaymentSituation&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}&param=${requestScope.param}" aria-label="Next"><span aria-hidden="true">»</span></a></li>  
 						   </c:if>
 					   </c:if>
 					     				

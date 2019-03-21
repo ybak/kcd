@@ -14,7 +14,7 @@
 		var s=$("#page_limit_select").val();
 		var status=$("#status").val();
 		var querytype=$("#querytype").val();		
-		window.location.href ="${pageContext.request.contextPath}/overdueController/select.do?type=khyqmd&dn=overdue&qn=list&pagesize="+s+"&pagenow=1";
+		window.location.href ="${pageContext.request.contextPath}/overdueController/select.do?type=khyqmd&dn=loan_overdue&qn=list&pagesize="+s+"&pagenow=1";
     }
     
     function reset(){

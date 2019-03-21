@@ -1,25 +1,23 @@
 package com.Repayment.controller;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+
 import com.model1.icbc.erp.PageData;
 import com.service1.Repayment.RepaymentService;
 import com.util.limitutil;
-import com.util.pagedate;
 
 @Controller
 @RequestMapping("/repaymentController")
@@ -43,7 +41,6 @@ public class RepaymenttestController {
 			int pagenow,	
 			HttpServletRequest request) throws UnsupportedEncodingException{
 		requestParams(request);
-		
 		List<PageData> newpdList=new ArrayList<>();
 		PageData pd=new PageData();
 		pd.put("dn", dn);
@@ -62,7 +59,6 @@ public class RepaymenttestController {
 			totalpage=pdList.size()/pagesize+1;
 		} 
 		
-		
 		for(int i = 0;i<pdList.size();i++){			
 			Map map = pdList.get(i);
 			log.info("map->"+map);
@@ -70,10 +66,8 @@ public class RepaymenttestController {
 			if(null != map){
 				//总额
 				BigDecimal aa = new BigDecimal(map.get("dk_total_price").toString());
-
 				//贷款期限
 				BigDecimal cc=new BigDecimal( map.get("aj_date").toString());
-				
 				//每月应还=总额/贷款期数
 				BigDecimal dd2 = aa.divide(cc, 3,BigDecimal.ROUND_DOWN);
 				String a1 = dd2.toString();//转成string

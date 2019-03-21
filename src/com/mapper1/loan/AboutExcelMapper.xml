@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.loan.AboutExcelMapper">
+
+<!-- 修改还款计划记录 -->
+<update id="updatePaySchedule" parameterType="pd">
+update loan_repayment_schedule set
+dt_edit=#{dt_edit}, 
+practical_date=#{practical_date},
+practical_money=#{practical_money},
+overdue_status= #{overdue_status},
+overdue_money=#{overdue_money},
+overdue_days= #{overdue_days},
+c_bank_card=#{c_bank_card}
+where 
+c_cardno = #{c_cardno} 
+and YEAR(should_date) =YEAR(#{practical_date})
+and MONTH(should_date) =MONTH(#{practical_date})
+and icbc_id=#{icbc_id}
+</update>
+    
+<!-- 查询主订单表信息-->
+<select id="icbcInfo" parameterType="pd" resultType="pd">
+SELECT
+	icbc.id as icbc_id,
+	icbc.gems_id as gems_id,
+	icbc.gems_fs_id as gems_fs_id,
+	icbc.c_name as c_name,
+	icbc.c_cardno as c_cardno,
+	cars.c_carno as c_carno,
+	cars.vincode as c_carvin
+FROM
+	kj_icbc icbc
+LEFT JOIN assess_cars cars ON icbc.id=cars.icbc_id
+WHERE 1=1
+and
+<!-- 模糊查询 -->
+<if test="c_cardno != null and c_cardno != ''">
+c_cardno =#{c_cardno}
+</if>
+<if test="id != null and id != ''">
+icbc.id =#{id}
+</if>
+</select>    
+    
+    
+<!-- 查询数据库表导入记录数据 -->
+<select id="selectRecordList" parameterType="pd" resultType="pd">
+select * from loan_import_record
+where 1=1 and gems_fs_id=#{gems_fs_id}
+<!-- 模糊查询 -->
+<if test="param != null and param != ''">
+	oriName like '%${param}%'
+</if>
+order by dt_add desc 
+</select>
+
+<!-- 把逾期客户添加到表中 -->
+<insert id="addOverdueClient" parameterType="pd" keyProperty="id" >
+insert into loan_overdue_list(
+id,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+type_id,
+type_status,
+icbc_id,
+gems_id,
+gems_fs_id,
+imp_name,
+c_name,
+c_cardno,
+c_carno,
+c_carvin,
+overdue_amount,
+overdue_days
+) values(
+#{id},
+#{mid_add},
+#{mid_edit},
+sysdate(),
+sysdate(),
+#{type_id},
+#{type_status},
+#{icbc_id},
+#{gems_id},
+#{gems_fs_id},
+#{imp_name},
+#{c_name},
+#{c_cardno},
+#{c_carno},
+#{c_carvin},
+#{overdue_amount},
+#{overdue_days})
+</insert>
+
+<!-- 把导入记录添加到数据库 -->
+<insert id="addExcelRecord" parameterType="pd" keyProperty="id" >
+insert into loan_import_record 
+(id,uuid,oriName,dt_add,financial_products,mid_add,filepath,mid_name,gems_fs_id,gems_id,fsname)
+values 
+(#{id},#{uuid},#{oriName},#{dt_add},#{financial_products},#{mid_add},#{filepath},#{mid_name},#{gems_fs_id},#{gems_id},#{fsname})     
+</insert>
+
+<!-- 把excel表格数据录入到数据库 --> 
+<insert id="excel_to_sql" parameterType="pd"  keyProperty="id" >
+insert into loan_import_excels(
+id,
+mid_add,
+dt_add,
+dt_edit,
+name,
+id_card,
+repayment_card,
+balance_card,
+overdue_amount,
+overdue_days,
+practical_date,
+continuity,
+maximum,
+add_time,
+balance_on,
+hk_time,
+hk_status,
+zc_time,
+icbc_id,
+apply_compensatory,
+compensatory_date,
+repayment_periods,
+compensatory_state,
+advance_payment
+)value(
+#{id},
+#{mid_add},
+#{dt_add},
+#{dt_edit},
+#{name},
+#{id_card},
+#{repayment_card},
+#{balance_card},
+#{overdue_amount},
+#{overdue_days},
+#{practical_date},
+#{continuity},
+#{maximum},
+#{add_time},
+#{balance_on},
+#{hk_time},
+#{hk_status},
+#{zc_time},
+#{icbc_id},
+#{apply_compensatory},
+#{compensatory_date},
+#{repayment_periods},
+#{compensatory_state},
+#{advance_payment}
+)	    	
+</insert>
+
+
+
+</mapper>

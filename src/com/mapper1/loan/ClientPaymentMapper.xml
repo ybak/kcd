@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper1.loan.ClientPaymentMapper">
+<!--客户还款情况-form 查询主贷人详情信息 模态框 -->
+<select id="selectZdr" parameterType="String" resultType="pd">
+	select distinct
+	bc.c_name,
+	bc.c_sex,
+	kk.c_tel,
+	bc.c_cardno,
+	kk.zdr_xzdz,
+	kk.zdr_xl,
+	kk.zdr_gzdw,
+	kk.zdr_dwdh,
+	kk.zdr_dwdz,
+	kk.zdr_grsr 
+	from kj_icbc bc,kjs_icbc_kk kk where bc.id=kk.icbc_id and bc.id=#{icbc_id}
+</select>
+<!--客户还款情况-form 贷后信息 -->
+<select id="selectLoanAfter" parameterType="String" resultType="pd">
+select
+	bc.*,
+	bc.id,
+	bc.c_name_gj1,
+	bc.c_tel_gj1,
+	bc.c_cardno_gj1,	
+	bc.c_name_gj2,
+	bc.c_tel_gj2,
+	bc.c_cardno_gj2,
+	bc.c_cardno,
+	kk.*,
+	kk.jjlxr_c_name,
+	kk.jjlxr_c_tel,
+	kk.jjlxr_jdrgx,
+	kk.gjr1_yzdrgx,
+  	kk.gjr2_yzdrgx 
+from 
+	kj_icbc bc,
+	kjs_icbc_kk kk 
+where 
+	bc.id=kk.icbc_id and bc.id=#{icbc_id}
+</select>   
+<!--客户还款情况-form 查询还款计划 -->
+<select id="selectPaySchedule" parameterType="String" resultType="pd">
+select * from loan_repayment_schedule where icbc_id=#{icbc_id}
+</select>
+    
+<!--客户还款情况-form 查询单条数据 -->    
+<select id="selectPayform" parameterType="pd" resultType="pd">
+select distinct bc.id
+	,bc.c_name
+	,kk.dk_price
+	,kk.gems_code
+	,kk.aj_date
+	,kk.icbc_id
+	,kk.dt_edit
+	,bc.c_cardno
+	,bc.loan_tpid
+	,kk.dk_lv
+	,kk.dk_total_price
+	,kk.gjr1_yzdrgx
+	,kk.gjr2_yzdrgx
+	,kk.c_tel
+	,aa.icbc_pricecs 
+	,aa.price_result 
+	,yb.name y_name
+from 
+	kjs_icbc_kk kk,
+	kj_icbc bc,
+	assess_cars aa,
+	yl_banklist yb
+where 
+kk.icbc_id=bc.id and bc.id=aa.icbc_id and bc.bank_id=yb.id 
+and aa.bc_status=3 
+and bc.id = #{icbc_id} LIMIT 1
+</select>
+    
+<!--客户还款情况-list 查询全部数据 -->
+<select id="selectPayList" parameterType="pd" resultType="pd">
+SELECT
+	*,
+	bc.id,
+	bc.c_name,
+	kk.dk_price,
+	kk.dk_total_price,
+	kk.gems_code,
+	aa.icbc_pricecs,
+	kk.aj_date,
+	kk.dt_edit,
+	bc.c_cardno,
+	bc.loan_tpid,
+	kk.dk_lv 
+FROM
+	(SELECT * FROM icbc_erp_kj_icbc_result WHERE STATUS = 61 ORDER BY dt_edit DESC) AS a 
+LEFT JOIN kj_icbc bc ON bc.id=a.icbc_id
+LEFT JOIN kjs_icbc_kk kk ON kk.icbc_id=a.icbc_id
+LEFT JOIN assess_cars aa ON aa.icbc_id=a.icbc_id
+where 1=1 
+and bc.gems_fs_id=#{gems_fs_id}
+<if test="param != null and param != ''">
+	 and bc.c_name like '%${param}%' or bc.c_cardno like '%${param}%'
+</if>
+GROUP BY a.qryid
+ORDER BY a.dt_edit DESC
+</select>    
+    
+    
+<!-- 用户放款成功，生成还款计划 -->
+<insert id="addPaySchedule"  parameterType="pd" keyProperty="id" useGeneratedKeys="true">
+insert into loan_repayment_schedule(
+dt_add,
+dt_edit,
+overdue_which,
+should_date,
+should_money,
+icbc_id,
+c_cardno,
+c_name
+) values(
+sysdate(),
+sysdate(),
+#{overdue_which},
+#{should_date},
+#{should_money},
+#{icbc_id},
+#{c_cardno},
+#{c_name}
+)
+</insert>   
+    
+</mapper>

@@ -477,19 +477,17 @@
 				    </a>
 				    <ul class="treeview-menu">
 				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'khhklr')==true}">
-					<li ${requestScope.dn=='dh_repaymentEntry'?"class='active'":''}>
-					    <a href="${pageContext.request.contextPath }/uploadExcelController/select.do?type=khhklr&dn=dh_repaymentEntry&qn=list&pagesize=10&pagenow=1">
+					<li ${requestScope.dn=='loan_repaymentEntry'?"class='active'":''}>
+					    <a href="${pageContext.request.contextPath }/loan/selectImpRecordList.do?type=khhklr&dn=loan_repaymentEntry&qn=list&pagesize=10&pagenow=1">
 						<i class="fa fa-arrow-circle-o-right"></i>客户还款录入
 					    </a>
 					</li>
 					</c:if>
 					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'khhkqk')==true}">
-					<li ${requestScope.dn=='dh_repaymentSituation'?"class='active'":''}>
-					
-                        <a href="${pageContext.request.contextPath }/repaymentController/select.do?type=khhkqk&dn=dh_repaymentSituation&qn=list&pagesize=10&pagenow=1">
+					<li ${requestScope.dn=='loan_repaymentSituation'?"class='active'":''}>
+                        <a href="${pageContext.request.contextPath }/loan/selectPayList.do?type=khhkqk&dn=loan_repaymentSituation&qn=list&pagesize=10&pagenow=1">
 						<i class="fa fa-arrow-circle-o-right"></i>客户还款情况
 					    </a>
-
 					</li>
 					</c:if>
 				    </ul>
@@ -498,7 +496,7 @@
 			        <!--客户逾期名单  -->
 			        <c:if  test="${fn:contains(sessionScope.pd.purview_map,'khyqmd')==true}">
 			        <li ${requestScope.type=='khyqmd'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath }/overdueController/select.do?type=khyqmd&dn=overdue&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-user"></i> 
+					<a href="${pageContext.request.contextPath }/loan/selectOverdue.do?type=khyqmd&dn=loan_overdue&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-user"></i> 
 				    <span>客户逾期名单</span>
 				    </a>
 					</li>

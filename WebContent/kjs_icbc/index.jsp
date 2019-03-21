@@ -57,8 +57,14 @@ function sname(){
 </c:choose>
 </c:if>
 <c:if test="${!empty requestScope.qn }">
-<jsp:include  page="content/${requestScope.dn }_${requestScope.qn }.jsp" ></jsp:include>
-
+	<c:choose>
+		 <c:when test="${fn:substring(requestScope.dn,0,4) eq 'loan'}">
+		 	<jsp:include  page="loan/${requestScope.dn }_${requestScope.qn }.jsp" ></jsp:include>
+		 </c:when>
+		 <c:otherwise>
+		 	<jsp:include  page="content/${requestScope.dn }_${requestScope.qn }.jsp" ></jsp:include>
+		 </c:otherwise>
+	</c:choose>
 </c:if>
 
 
