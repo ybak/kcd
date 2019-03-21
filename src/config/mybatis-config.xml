@@ -141,7 +141,9 @@
 
 	<mappers>
 	    <!-- loan 贷后 start -->
-	    
+	    <mapper resource="com/mapper1/loan/AboutExcelMapper.xml" />
+	    <mapper resource="com/mapper1/loan/ClientPaymentMapper.xml" />
+	    <mapper resource="com/mapper1/loan/LoanOverdueMapper.xml" />
 	    <!-- loan 贷后 end -->
 	    <!-- 大数据单独信息 -->
 	    <mapper resource="com/mapper1/erp_icbc/icbc_dsjMapper.xml" />
