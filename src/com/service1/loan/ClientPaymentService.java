@@ -5,7 +5,7 @@ public interface ClientPaymentService {
 	//查询客户还款情况form 查询主贷人
 	PageData selectZdr(String icbc_id);
 	//查询客户还款情况form 查询贷后信息
-	List<PageData> selectLoanAfter(String icbc_id);
+	PageData selectLoanAfter(String icbc_id);
 	//查询客户还款情况form 查询客户还款计划
 	List<PageData> selectPaySchedule(String icbc_id);
 	//查询客户还款情况form 业务状态信息

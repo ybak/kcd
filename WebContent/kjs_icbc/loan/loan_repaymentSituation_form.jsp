@@ -144,7 +144,6 @@
 				<th class="text-center">电话号码</th>
 				<th class="text-center">操作</th>
 			</tr>
-			
 		  	<tr>
 				<td class="text-center">主贷人</td>
 				<td class="text-center">${lborrow.c_name}</td>
@@ -155,30 +154,28 @@
 				<td class="text-center">${lborrow.c_tel }</td>
 				<td class="text-center" onclick="toggleModel()"><i class="fa fa-search-plus"></i></td>
 		    </tr>
-		   <c:forEach var="mapafter" items="${mapafter}">
 		   <c:if test="${not empty mapafter.jjlxr_c_name}">
 		     <tr>
 				<td class="text-center">紧急联系人</td>
-				<td class="text-center">${mapafter.jjlxr_c_name }</td>
-				<td class="text-center">410154956485213623</td>
-				<td class="text-center">${mapafter.jjlxr_jdrgx }</td>
-				<td class="text-center"><i class="fa fa-search-plus"></i></td>
-				<td class="text-center"><i class="fa fa-search-plus"></i></td>
-				<td class="text-center">${mapafter.jjlxr_c_name  }</td>	
-				<td class="text-center" onclick="jjlxrModel()"><i class="fa fa-search-plus"></i></td>	
+				<td class="text-center">${mapafter.jjlxr_c_name}</td>
+				<td class="text-center"></td>
+				<td class="text-center">${mapafter.jjlxr_jdrgx}</td>
+				<td class="text-center"></i>--</td>
+				<td class="text-center"></i>--</td>
+				<td class="text-center">${mapafter.jjlxr_c_tel}</td>	
+				<td class="text-center" onclick="jjlxrModel()">--</td>	
 		    </tr>
 		    </c:if>
-		    
 		    <c:if test="${not empty mapafter.c_name_gj1}">
 		     <tr>
 				<td class="text-center">共借人1</td>
 				<td class="text-center">${mapafter.c_name_gj1 }</td>
 				<td class="text-center">${mapafter.c_cardno_gj1 }</td>
 				<td class="text-center">${mapafter.gjr1_yzdrgx }</td>
-				<td class="text-center"><i class="fa fa-search-plus"></i></td>
-				<td class="text-center"><i class="fa fa-search-plus"></i></td>
+				<td class="text-center">--</td>
+				<td class="text-center">--</td>
 				<td class="text-center">${mapafter.c_tel_gj1 }</td>
-				<td class="text-center" onclick="gjrOneModel()"><i class="fa fa-search-plus"></i></td>
+				<td class="text-center" onclick="gjrOneModel()">--</td>
 		    </tr>
 		    </c:if> 
 		    <c:if test="${not empty mapafter.c_name_gj2 }">
@@ -187,13 +184,12 @@
 				<td class="text-center">${mapafter.c_name_gj2 }</td>
 				<td class="text-center">${mapafter.c_cardno_gj2 }</td>
 				<td class="text-center">${mapafter.gjr2_yzdrgx }</td>
-				<td class="text-center"><i class="fa fa-search-plus"></i></td>
-				<td class="text-center"><i class="fa fa-search-plus"></i></td>
+				<td class="text-center">--</td>
+				<td class="text-center">--</td>
 				<td class="text-center">${mapafter.c_tel_gj2 }</td>
-				<td class="text-center" onclick="gjrTwoModel()"><i class="fa fa-search-plus"></i></td>
+				<td class="text-center" onclick="gjrTwoModel()">--</td>
 		    </tr> 
 		    </c:if> 
-		      </c:forEach>
        </table>
      </div>
       <div style="height:50px;margin:10px 0;">
@@ -204,7 +200,7 @@
 	function toggleModel(){
 		$('#myModal').modal({ show: true });
 	}
-	function jjlxrModel(){
+	/* function jjlxrModel(){
 		$('#jjlxrModal').modal({ show: true });
 	}
 	function gjrOneModel(){
@@ -212,7 +208,7 @@
 	}
 	function gjrTwoModel(){
 		$('#twoModal').modal({ show: true });
-	}
+	} */
 	</script>
 	<!-- 模态框 主贷人 start-->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="addModal_nstrLabel" aria-hidden="true">
@@ -230,35 +226,31 @@
 				  		<div class="col-sm-2">
 				  		${mapzdr.c_name }
 					    </div>
-					    <label class="col-sm-2 ">性别:<i class="red">*</i></label>
+					    <label class="col-sm-2">性别:<i class="red">*</i></label>
 						<div class="col-sm-2">
 						<c:if test="${mapzdr.c_sex == 1}">男</c:if>
 				  		<c:if test="${mapzdr.c_sex == 0}">女</c:if>
-				      		
 						</div>
-						<label class="col-sm-2" >年龄:<i class="red">*</i></label>
-				  		<div class="col-sm-2">
-							21
-					    </div>
-					</div>
-					<div class="row" >
-				    	<label class="col-sm-2 " style="" >手机号:<i class="red">*</i></label>
+						<label class="col-sm-2" style="" >手机号:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
 				  			${mapzdr.c_tel }
 					    </div>
-					    <label class="col-sm-2 ">身份证号:<i class="red">*</i></label>
-						<div class="col-sm-2">
+					</div>
+					<div class="row" >
+				    	
+					    <label class="col-sm-2">身份证号:<i class="red">*</i></label>
+						<div class="col-sm-3">
 				      		${mapzdr.c_cardno}
 						</div>
-						<label class="col-sm-2" >身份证地址:<i class="red">*</i></label>
-				  		<div class="col-sm-2" style="    white-space: nowrap;overflow:auto;">
-							上海市浦东新区上岗新村国展路博大汽车公园123456
+						<label class="col-sm-1" >居住地:<i class="red">*</i></label>
+				  		<div class="col-sm-6">
+				  			${mapzdr.zdr_xzdz }
 					    </div>
 					</div>
 					<div class="row" >
-				    	<label class="col-sm-2">居住地:<i class="red">*</i></label>
+				    	<label class="col-sm-2">身份证地址:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
-				  			${mapzdr.zdr_xzdz }
+				  		
 					    </div>
 					    <label class="col-sm-2">学历:<i class="red">*</i></label>
 						<div class="col-sm-2">
@@ -307,7 +299,7 @@
 	</div>	
 	
 	<!-- 模态框 紧急联系人 start-->
-	<div class="modal fade" id="twoModal" tabindex="-1" role="dialog" aria-labelledby="addModal_nstrLabel" aria-hidden="true">
+	<div class="modal fade" id="jjlxrModal" tabindex="-1" role="dialog" aria-labelledby="addModal_nstrLabel" aria-hidden="true">
 	    <div class="modal-dialog modal-lg">
 	        <div class="modal-content">
 	            <div class="modal-header">
@@ -320,37 +312,33 @@
 					<div class="row" >
 				    	<label class="col-sm-2">姓名:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
-				  		${mapzdr.c_name }
+				  		${mapafter.jjlxr_c_name}
 					    </div>
-					    <label class="col-sm-2 ">性别:<i class="red">*</i></label>
+					    <label class="col-sm-2">性别:<i class="red">*</i></label>
 						<div class="col-sm-2">
 						<c:if test="${mapzdr.c_sex == 1}">男</c:if>
 				  		<c:if test="${mapzdr.c_sex == 0}">女</c:if>
-				      		
 						</div>
-						<label class="col-sm-2" >年龄:<i class="red">*</i></label>
+						<label class="col-sm-2" style="" >手机号:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
-							21
+				  			${mapafter.jjlxr_c_tel}
 					    </div>
-					</div>
+					</div>	
 					<div class="row" >
-				    	<label class="col-sm-2 " style="" >手机号:<i class="red">*</i></label>
-				  		<div class="col-sm-2">
-				  			${mapzdr.c_tel }
-					    </div>
-					    <label class="col-sm-2 ">身份证号:<i class="red">*</i></label>
-						<div class="col-sm-2">
+				    	
+					    <label class="col-sm-2">身份证号:<i class="red">*</i></label>
+						<div class="col-sm-3">
 				      		${mapzdr.c_cardno}
 						</div>
-						<label class="col-sm-2" >身份证地址:<i class="red">*</i></label>
-				  		<div class="col-sm-2" style="    white-space: nowrap;overflow:auto;">
-							上海市浦东新区上岗新村国展路博大汽车公园123456
+						<label class="col-sm-1" >居住地:<i class="red">*</i></label>
+				  		<div class="col-sm-6">
+				  			${mapafter.jjlxr_xzdz }
 					    </div>
 					</div>
 					<div class="row" >
-				    	<label class="col-sm-2">居住地:<i class="red">*</i></label>
+				    	<label class="col-sm-2">身份证地址:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
-				  			${mapzdr.zdr_xzdz }
+				  		
 					    </div>
 					    <label class="col-sm-2">学历:<i class="red">*</i></label>
 						<div class="col-sm-2">
@@ -416,35 +404,31 @@
 				  		<div class="col-sm-2">
 				  		${mapzdr.c_name }
 					    </div>
-					    <label class="col-sm-2 ">性别:<i class="red">*</i></label>
+					    <label class="col-sm-2">性别:<i class="red">*</i></label>
 						<div class="col-sm-2">
 						<c:if test="${mapzdr.c_sex == 1}">男</c:if>
 				  		<c:if test="${mapzdr.c_sex == 0}">女</c:if>
-				      		
 						</div>
-						<label class="col-sm-2" >年龄:<i class="red">*</i></label>
-				  		<div class="col-sm-2">
-							21
-					    </div>
-					</div>
-					<div class="row" >
-				    	<label class="col-sm-2 " style="" >手机号:<i class="red">*</i></label>
+						<label class="col-sm-2" style="" >手机号:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
 				  			${mapzdr.c_tel }
 					    </div>
-					    <label class="col-sm-2 ">身份证号:<i class="red">*</i></label>
-						<div class="col-sm-2">
+					</div>
+					<div class="row" >
+				    	
+					    <label class="col-sm-2">身份证号:<i class="red">*</i></label>
+						<div class="col-sm-3">
 				      		${mapzdr.c_cardno}
 						</div>
-						<label class="col-sm-2" >身份证地址:<i class="red">*</i></label>
-				  		<div class="col-sm-2" style="    white-space: nowrap;overflow:auto;">
-							上海市浦东新区上岗新村国展路博大汽车公园123456
+						<label class="col-sm-1" >居住地:<i class="red">*</i></label>
+				  		<div class="col-sm-6">
+				  			${mapzdr.zdr_xzdz }
 					    </div>
 					</div>
 					<div class="row" >
-				    	<label class="col-sm-2">居住地:<i class="red">*</i></label>
+				    	<label class="col-sm-2">身份证地址:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
-				  			${mapzdr.zdr_xzdz }
+				  		
 					    </div>
 					    <label class="col-sm-2">学历:<i class="red">*</i></label>
 						<div class="col-sm-2">
@@ -508,35 +492,31 @@
 				  		<div class="col-sm-2">
 				  		${mapzdr.c_name }
 					    </div>
-					    <label class="col-sm-2 ">性别:<i class="red">*</i></label>
+					    <label class="col-sm-2">性别:<i class="red">*</i></label>
 						<div class="col-sm-2">
 						<c:if test="${mapzdr.c_sex == 1}">男</c:if>
 				  		<c:if test="${mapzdr.c_sex == 0}">女</c:if>
-				      		
 						</div>
-						<label class="col-sm-2" >年龄:<i class="red">*</i></label>
-				  		<div class="col-sm-2">
-							21
-					    </div>
-					</div>
-					<div class="row" >
-				    	<label class="col-sm-2 " style="" >手机号:<i class="red">*</i></label>
+						<label class="col-sm-2" style="" >手机号:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
 				  			${mapzdr.c_tel }
 					    </div>
-					    <label class="col-sm-2 ">身份证号:<i class="red">*</i></label>
-						<div class="col-sm-2">
+					</div>
+					<div class="row" >
+				    	
+					    <label class="col-sm-2">身份证号:<i class="red">*</i></label>
+						<div class="col-sm-3">
 				      		${mapzdr.c_cardno}
 						</div>
-						<label class="col-sm-2" >身份证地址:<i class="red">*</i></label>
-				  		<div class="col-sm-2" style="    white-space: nowrap;overflow:auto;">
-							上海市浦东新区上岗新村国展路博大汽车公园123456
+						<label class="col-sm-1" >居住地:<i class="red">*</i></label>
+				  		<div class="col-sm-6">
+				  			${mapzdr.zdr_xzdz }
 					    </div>
 					</div>
 					<div class="row" >
-				    	<label class="col-sm-2">居住地:<i class="red">*</i></label>
+				    	<label class="col-sm-2">身份证地址:<i class="red">*</i></label>
 				  		<div class="col-sm-2">
-				  			${mapzdr.zdr_xzdz }
+				  		
 					    </div>
 					    <label class="col-sm-2">学历:<i class="red">*</i></label>
 						<div class="col-sm-2">

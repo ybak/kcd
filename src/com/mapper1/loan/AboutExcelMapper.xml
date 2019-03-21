@@ -48,9 +48,10 @@ icbc.id =#{id}
 <!-- 查询数据库表导入记录数据 -->
 <select id="selectRecordList" parameterType="pd" resultType="pd">
 select * from loan_import_record
+where 1=1 and gems_fs_id=#{gems_fs_id}
 <!-- 模糊查询 -->
 <if test="param != null and param != ''">
-	where oriName like '%${param}%'
+	oriName like '%${param}%'
 </if>
 order by dt_add desc 
 </select>

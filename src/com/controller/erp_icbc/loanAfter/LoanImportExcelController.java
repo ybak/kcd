@@ -370,9 +370,12 @@ public class LoanImportExcelController {
 	@RequestMapping("/selectImpRecordList.do")
 	public String select(String qn, String cn, String type, String dn,
 			int pagesize, int pagenow, HttpServletRequest request)throws UnsupportedEncodingException {
+		
 		//构造查询条件
 		PageData pd = new PageData();
 		pd.put("param", request.getParameter("param"));
+		PageData pdsession= (PageData)request.getSession().getAttribute("pd");
+		pd.put("gems_fs_id",pdsession.get("icbc_erp_fsid"));
 		//查询数据
 		List<PageData> newpdList = new ArrayList<>();
 		List<PageData> l1 = AboutExcelService.selectRecordList(pd);

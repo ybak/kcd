@@ -2,6 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mapper1.loan.LoanOverdueMapper">
+<!-- 查询一条逾期名单 -->
+<select id="selectOverdueOne" resultType="pd" parameterType="pd">
+select 
+	lol.*,
+	bc.gems_code
+from 
+	loan_overdue_list lol
+LEFT JOIN kj_icbc bc ON bc.id=lol.icbc_id
+where 1=1 and lol.id=#{id}
+</select>     
+    
+<!-- 修改客户逾期状态 -->
+<update id="updateOverdueStatus" parameterType="int">
+update loan_overdue_list set
+	type_id=#{type_id},
+	dt_edit=sysdate()
+where 
+	id=#{id}
+</update>    
     
 <!-- 查询逾期名单 -->
 <select id="selectOverdueList" resultType="pd" parameterType="pd">
@@ -11,14 +30,42 @@ select
 from 
 	loan_overdue_list lol
 LEFT JOIN kj_icbc bc ON bc.id=lol.icbc_id
-where 1=1
+where 1=1 and lol.type_id=1 and lol.gems_fs_id=#{gems_fs_id}
 <if test="param != null and param != ''">
-lol.c_name like '%${param}%' or lol.c_cardno like '%${param}%'
+and lol.c_name like '%${param}%' or lol.c_cardno like '%${param}%'
 </if>
-ORDER BY dt_edit DESC
+ORDER BY lol.dt_edit DESC
 </select> 
 
-
-
+<!-- 把操作数据记录到数据库 --> 
+<insert id="addOperationResult" parameterType="pd"  keyProperty="id">
+insert into loan_overdue_list_result(
+id,
+qryid,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+type_id,
+type_status,
+remark,
+result_msg,
+result_value,
+icbc_id
+)value(
+#{id},
+#{qryid},
+#{mid_add},
+#{mid_edit},
+sysdate(),
+sysdate(),
+#{type_id},
+#{type_status},
+#{remark},
+#{result_msg},
+#{result_value},
+#{icbc_id}
+)	    	
+</insert>
 
 </mapper>

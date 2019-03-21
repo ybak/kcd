@@ -36,69 +36,69 @@ public class ClientPaymentEntryController {
 	
 	
 	//查询主贷人信息表
-		@RequestMapping("/selectPayform.do")
-		public String selectBorrow(String qn
-									,String type
-									,String dn
-									,HttpServletRequest request
-									,String c_cardno
-									,String icbc_id
-									){
-			Map<String, Object> lborrow = clientPaymentService.selectPayform(icbc_id);
-			log.info("map2->"+lborrow);
-			double yy=0;
-			if(null != lborrow){
-				//总额
-				BigDecimal mm = new BigDecimal(lborrow.get("dk_total_price").toString());
-				System.out.println("-----mm:"+mm);
-				//贷款期限
-				BigDecimal cc2=new BigDecimal( lborrow.get("aj_date").toString());
-				System.out.println("------cc2:"+cc2);
-				//每月应还=本息合计/贷款期数
-				BigDecimal dd2 = mm.divide(cc2, 3,BigDecimal.ROUND_DOWN);//保留三位小数
-				System.out.println("------dd2:"+dd2);
-				String aa = dd2.toString();//转成string
-				System.out.println(aa);
-				System.out.println(aa.length());//获取长度
-				System.out.println(aa.substring(aa.indexOf(".")+3, aa.length()));
-				String bb = aa.substring(aa.indexOf(".")+3, aa.length());//截取第三位小数
-				int cc = Integer.parseInt(bb);//转成int
-				if(cc > 0){//判断是否大于0  是就保留两位小数
-					BigDecimal vv = dd2.setScale(2, BigDecimal.ROUND_DOWN);	
-					BigDecimal zero = new BigDecimal("0.01");
-					yy = vv.add(zero).doubleValue();
-				}else{
-					BigDecimal vv = dd2.setScale(2, BigDecimal.ROUND_DOWN);
-					yy=vv.doubleValue();
-				}
-				lborrow.put("myyh", yy);
-				System.out.println("-----yy:"+yy);
-				BigDecimal icbc_pricecs2 = new BigDecimal(lborrow.get("icbc_pricecs").toString());
-				String s=icbc_pricecs2.toString();
-				//去掉多余的 0
-				if(s.indexOf(".")!=-1){
-					 s = s.replaceAll("0+?$", "").replaceAll("[.]$", ""); 
+	@RequestMapping("/selectPayform.do")
+	public String selectBorrow(String qn
+								,String type
+								,String dn
+								,HttpServletRequest request
+								,String c_cardno
+								,String icbc_id
+								){
+		Map<String, Object> lborrow = clientPaymentService.selectPayform(icbc_id);
+		log.info("map2->"+lborrow);
+		double yy=0;
+		if(null != lborrow){
+			//总额
+			BigDecimal mm = new BigDecimal(lborrow.get("dk_total_price").toString());
+			System.out.println("-----mm:"+mm);
+			//贷款期限
+			BigDecimal cc2=new BigDecimal( lborrow.get("aj_date").toString());
+			System.out.println("------cc2:"+cc2);
+			//每月应还=本息合计/贷款期数
+			BigDecimal dd2 = mm.divide(cc2, 3,BigDecimal.ROUND_DOWN);//保留三位小数
+			System.out.println("------dd2:"+dd2);
+			String aa = dd2.toString();//转成string
+			System.out.println(aa);
+			System.out.println(aa.length());//获取长度
+			System.out.println(aa.substring(aa.indexOf(".")+3, aa.length()));
+			String bb = aa.substring(aa.indexOf(".")+3, aa.length());//截取第三位小数
+			int cc = Integer.parseInt(bb);//转成int
+			if(cc > 0){//判断是否大于0  是就保留两位小数
+				BigDecimal vv = dd2.setScale(2, BigDecimal.ROUND_DOWN);	
+				BigDecimal zero = new BigDecimal("0.01");
+				yy = vv.add(zero).doubleValue();
+			}else{
+				BigDecimal vv = dd2.setScale(2, BigDecimal.ROUND_DOWN);
+				yy=vv.doubleValue();
 			}
-				lborrow.put("icbc_pricecs",s);
-			}
-			//查询还款计划
-			List<PageData> mapschedule = clientPaymentService.selectPaySchedule(icbc_id);
-			log.info("map3->"+mapschedule);
-			//查询贷后信息
-			List<PageData> mapafter = clientPaymentService.selectLoanAfter(icbc_id);
-			log.info("map4->"+mapafter);
-			//查询主贷人信息
-			Map<String, Object> mapzdr = clientPaymentService.selectZdr(icbc_id);
-			log.info("map5->"+mapzdr);
-			request.setAttribute("dn", dn);
-			request.setAttribute("qn", qn);
-			request.setAttribute("type", type);
-			request.setAttribute("lborrow", lborrow);
-			request.setAttribute("mapschedule", mapschedule);
-			request.setAttribute("mapafter", mapafter);
-			request.setAttribute("mapzdr", mapzdr);
-			return "kjs_icbc/index";
+			lborrow.put("myyh", yy);
+			System.out.println("-----yy:"+yy);
+			BigDecimal icbc_pricecs2 = new BigDecimal(lborrow.get("icbc_pricecs").toString());
+			String s=icbc_pricecs2.toString();
+			//去掉多余的 0
+			if(s.indexOf(".")!=-1){
+				 s = s.replaceAll("0+?$", "").replaceAll("[.]$", ""); 
 		}
+			lborrow.put("icbc_pricecs",s);
+		}
+		//查询还款计划
+		List<PageData> mapschedule = clientPaymentService.selectPaySchedule(icbc_id);
+		log.info("map3->"+mapschedule);
+		//查询贷后信息
+		PageData mapafter = clientPaymentService.selectLoanAfter(icbc_id);
+		log.info("map4->"+mapafter);
+		//查询主贷人信息
+		Map<String, Object> mapzdr = clientPaymentService.selectZdr(icbc_id);
+		log.info("map5->"+mapzdr);
+		request.setAttribute("dn", dn);
+		request.setAttribute("qn", qn);
+		request.setAttribute("type", type);
+		request.setAttribute("lborrow", lborrow);
+		request.setAttribute("mapschedule", mapschedule);
+		request.setAttribute("mapafter", mapafter);
+		request.setAttribute("mapzdr", mapzdr);
+		return "kjs_icbc/index";
+	}
 	
 	/**
 	 * 查询并分页
@@ -117,6 +117,8 @@ public class ClientPaymentEntryController {
 		List<PageData> newpdList=new ArrayList<>();
 		PageData pd=new PageData();
 		pd.put("param",param);
+		PageData pdsession= (PageData)request.getSession().getAttribute("pd");
+		pd.put("gems_fs_id",pdsession.get("icbc_erp_fsid"));
 		List<PageData> pdList=clientPaymentService.selectPayList(pd);
 		newpdList = limitutil.fy(pdList, pagesize, pagenow);
 		int q=pdList.size()%pagesize;

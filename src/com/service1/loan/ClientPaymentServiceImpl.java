@@ -73,7 +73,7 @@ public class ClientPaymentServiceImpl implements ClientPaymentService{
 		return clientPaymentMapper.selectPaySchedule(icbc_id);
 	}
 	@Override
-	public List<PageData> selectLoanAfter(String icbc_id) {
+	public PageData selectLoanAfter(String icbc_id) {
 		// TODO Auto-generated method stub
 		return clientPaymentMapper.selectLoanAfter(icbc_id);
 	}

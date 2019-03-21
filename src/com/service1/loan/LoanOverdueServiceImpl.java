@@ -22,5 +22,23 @@ public class LoanOverdueServiceImpl implements LoanOverdueService{
 		// TODO Auto-generated method stub
 		return loanOverdueMapper.selectOverdueList(pd);
 	}
+
+	@Override
+	public Integer updateOverdueStatus(PageData pd) {
+		// TODO Auto-generated method stub
+		return loanOverdueMapper.updateOverdueStatus(pd);
+	}
+
+	@Override
+	public Integer addOperationResult(PageData pd) {
+		// TODO Auto-generated method stub
+		return loanOverdueMapper.addOperationResult(pd);
+	}
+
+	@Override
+	public PageData selectOverdueOne(PageData pd) {
+		// TODO Auto-generated method stub
+		return loanOverdueMapper.selectOverdueOne(pd);
+	}
 	
 }

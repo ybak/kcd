@@ -20,7 +20,7 @@
 		<section class="content-header">
 			<h1>
 			客户还款情况<small>
-			共1个
+			共${requestScope.totalsize}个
 			</small>
 			</h1>
 		</section>
