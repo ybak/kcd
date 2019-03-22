@@ -21,6 +21,8 @@
 	<!-- 点播 -->
 	<link href="./dist/neplayer.min.css" rel="stylesheet">
 	<script src="./dist/neplayer.min.js"></script>
+	<!-- http://momentjs.cn/ -->
+	<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script> -->
 	<style>
 		.my-container{
 			 min-width: 285px;
@@ -37,7 +39,21 @@
 		}		
 		.list-group-item{
 		    background-color: #E8E8E8!important;
-		}		
+		}	
+		
+		/* bootstraptable */
+		 .float-left {
+		  float: left !important;
+		}
+		 .float-right {
+		  float: right !important;
+		}
+		 .float-none {
+		  float: none !important;
+		}
+		
+		
+			
 	</style>
 </head>
 <body>
@@ -56,14 +72,14 @@
 		            <input id="idNumbervalue"  autocomplete="off"   type="text" class="form-control" >
 		        </div>
 		    </div> 
-		    <div class="my-container my-container-nextline">
+		   <!--  <div class="my-container my-container-nextline">
 		        <label class="myLabel-content">银行：</label>
 		        <div class="myText-content1 myText-content-down">
 		            <input id="bank" autocomplete="off"  type="text" class="form-control" />
 		            <input id="bankval" type="hidden">
 		            <ul id="contentSelectByBank" class="myText-content-select"></ul>
 		        </div>
-		    </div>
+		    </div> -->
 		     <div class="my-container">
 		        <label class="myLabel-content">机构：</label>
 		        <div class="myText-content1 myText-content-down" id="workBox">
@@ -97,7 +113,7 @@
 					</select>	
 		        </div>
 		    </div>
-		    <div class="my-container my-container-nextline">
+		    <div class="my-container">
 		        <label class="myLabel-content">签约状态：</label>
 		         <div class="myText-content">
 					<select id="contractvalue" class="form-control">
@@ -107,11 +123,19 @@
 					</select>	
 		        </div>
 		    </div>
+		     <!-- 第三行 -->
+		     <div class="my-container my-container-nextline">
+		        <label class="myLabel-content">开始时间：</label>
+		        <div class="myText-content">
+		          <input id="timeInterval"  autocomplete="off"   type="text" class="form-control" >
+		        </div>
+		    </div> 
 		 </div>
 		<!-- 第三行 -->
 		<div class="my-container my-container-nextline">
 		        <button id="search_btn" type="button" class="btn btn-primary">搜索</button>
 		        <button id="reset" type="button" class="btn btn-info">重置</button>
+		        <button id="refresh" type="button" class="btn btn-info">刷新</button>
 		</div>
 		<!-- 头部搜索结束-->
 		 <div class="mq_viedoplay hide" >
@@ -537,7 +561,13 @@
 	<script src="js/main.js?v=2"></script>
 	<script src="../3rd/vue.min.js"></script>
 	<script type="text/javascript" src="../kjs_icbc/kjs_icbc_style/layer/layer.js"></script>
+	<script src="../kjs_icbc/kjs_icbc_style/laydate/laydate.js"></script>
 	<script>
+	  //日期范围
+	  laydate.render({
+	    elem: '#timeInterval',
+	    range: true
+	  });
 	var switchoverFun=function(param1,that,key){
 		$("[id^="+key+"]").addClass("hide");
 		$("#"+key+param1).removeClass("hide");
@@ -2098,13 +2128,11 @@
 	/* ---------开始 -------*/
 	//根据窗口调整表格高度
     $(window).resize(function() {
-        $('#mytab').bootstrapTable('resetView', {
+        $('#mytab').bootstrapTable('resetView'/* , {
             height: tableHeight()
-        })
+        } */)
     })
-    
-    
-    
+   
     
 	 /*------ 机构开始 */
      var jsonObj;//用来存储全局数据集
@@ -2257,28 +2285,35 @@
 		requestUrl:"../yx/cl.do",
 		workBox:"workBox"
 	})
-  	 
   	//银行
-  	new dynamicSearchList({
+/*   	new dynamicSearchList({
   			searchBox:"bank",
   			itemMarkBox:"bankval",
   			listBox:"contentSelectByBank",
   			requestUrl:"../yx/getBank.do",
   			workBox:"workBox"
-  	})
+  	}) */
 
 	/*------ 机构结束*/
-		//查询按钮事件
+	//查询按钮事件
     $('#search_btn').click(function(){
         $('#mytab').bootstrapTable('refresh');
     })
     //重置按钮
     $("#reset").click(function(){
-    	$(".my-container input").val("");
+    	resetFun()
+    })
+    function resetFun(){
+ 	 	$(".my-container input").val("");
     	$('#viedotypevalue').find('option[id="selected"]').prop("selected",true);
     	$('#contractvalue').find('option[id="selected"]').prop("selected",true);
     	$('#viedostartsvalue').find('option[id="selected"]').prop("selected",true);
-    })
+  	}
+    //刷新事件
+     $("#refresh").click(function(){
+    	 resetFun();
+    	 $('#mytab').bootstrapTable('refresh');
+     })
 	/* 查看详情 */
 	var b=-1;
 	//点击关闭历史播放界面
@@ -2289,9 +2324,12 @@
     	 }
 		 $("a[id^='details_button']").children().css("color","#5bc0de");
 	})
-
-	
-	
+	//回车
+	$(document).keyup(function(event){
+	  if(event.keyCode ==13){
+		 $('#mytab').bootstrapTable('refresh');
+	  }
+	});
 	//视频id 列数  视频面签状态
  	function mq_viedoplay(value,index,code){
 		 //按钮变个色吧
@@ -2331,18 +2369,21 @@
 	}
     //请求服务数据时所传参数
     function queryParams(params){
-        return{
+    	console.log(JSON.stringify(params))
+       return{
             //页面的大小
             pagesize: params.limit,
             //请求第几页
-            pageIndex:params.pageNumber,
+            offset:params.offset,
             name:$('#namevalue').val(),//姓名
             idNumber:$('#idNumbervalue').val(),//身份证号
             organization:$('#organizationval').val(),//机构
             viedotype:$('#viedotypevalue').val(),//视频类型
             contract:$('#contractvalue').val(),//签约状态
-            bank:$("#bankval").val(),//银行
-            viedostartsvalue:$("#viedostartsvalue").val()
+            bank:null,//银行$("#bankval").val()
+            viedostartsvalue:$("#viedostartsvalue").val(),
+            //时间区间
+            timeInterval:$("#timeInterval").val()
         }
     }
     //操作栏的格式化
@@ -2361,7 +2402,7 @@
 	//生成用户数据
     $('#mytab').bootstrapTable({
         url:"../yx/selectOperatingFalse.do",//要请求数据的文件路径  
-        method: 'post', //请求方式（*）
+        method: 'get', //请求方式（*）
         toolbar: '#toolbar', //工具按钮用哪个容器
         contentType : "application/x-www-form-urlencoded",//js初始化加上这句 ，如果不加：在java后台（使用springMvc）使用@RequestParam（）或者request.getparameter(),都是拿不到数据的
         striped: true, //是否显示行间隔色
@@ -2371,76 +2412,75 @@
         sortOrder: "asc", //排序方式
         queryParams: queryParams,//请求服务器时所传的参数
         sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
-        pageNumber:1, //初始化加载第一页，默认第一页
-        pageSize: 4, //每页的记录行数（*）
-        pageList: [10, 25, 50, 100], //可供选择的每页的行数（*）
+        pageSize:10, //每页的记录行数（*）
+       /*  pageList:[5,20], //可供选择的每页的行数（*） //数据量足够，pageList就都能显示出来了 */
         showColumns: false, //是否显示所有的列
-        showRefresh: false, //是否显示刷新按钮
+        //showRefresh:true, //是否显示刷新按钮
+        //search: true,//是否启用搜索框 
         //minimumCountColumns: 2, //最少允许的列数
         //clickToSelect: true, //是否启用点击选中行
-        height: 500, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+        //height: 500, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
         uniqueId: "kkid", //每一行的唯一标识，一般为主键列
         columns:[
             {
                 title:'姓名',
                 field:'cname',
-                width:145,
+               /*  width:145, */
                 align:'center'
             },
             {
                 title:'按揭银行',
                 field:'ybName',
                 align:'center',
-                width:145
+              /*   width:145 */
                 //sortable:true //是否启用排序 
             },
             {
                 title:'所属机构',
                 field:'name',
                 align:'center',
-                width:145
-                //sortable:true //是否启用排序 
+                /* width:145 */
             },
              {
                 title:'视频类型',
                 field:'viedotype',
                 align:'center',
-                width:200,
+               /*  width:200, */
                 formatter: viedotypeFormatter
             },
             {
                 title:'签约状态',
                 field:'code',
                 align:'center',
-                width:200,
+               /*  width:200, */
                 formatter: ContractstatusFormatter
             },
             {
                 title:'通话开始时间',
                 field:'createtime',
                 align:'center',
-                width:200,
+                /* width:200, */
                 formatter: timeFormatter
             },
             {
                 title:'抄送信息',
                 field:'yid',
                 align:'center',
-                width:200,
+               /*  width:200, */
                 visible:false
             },
             {
                 title:'抄送信息',
                 field:'code',
                 align:'center',
-                width:200,
+               /*  width:200, */
                 visible:false
             },
             {
                 title:'GPS',
                 field:'address',
                 align:'center',
-                width:200,
+                /* width:200, */
                 formatter: function(value, row, index){
                 	if(!!value){
                 		return value.replace("(null)","");
@@ -2450,7 +2490,7 @@
 		    {
                 field:'url',
                 title: '查看详情',
-                width: 200,
+               /*  width: 200, */
                 align: 'center',
                 formatter: actionFormatter
 		    }
@@ -2500,10 +2540,10 @@
 	
 	}
     //tableHeight函数
-    function tableHeight(){
+ /*    function tableHeight(){
         //可以根据自己页面情况进行调整
         return $(window).height() -150;
-    }
+    } */
     /* --------- 结束-------*/
 </script>	
 </body>

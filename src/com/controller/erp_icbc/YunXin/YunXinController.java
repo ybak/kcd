@@ -181,7 +181,7 @@ public class YunXinController extends BaseController{
 		@RequestMapping(value="selectOperatingFalse.do")
 		@ResponseBody
 		public PageInfo selectOperatingFalse(Integer pagesize,
-				Integer pageIndex,
+				Integer offset,
 				String name,
 				String idNumber,
 				String organization, //机构的主键
@@ -189,13 +189,14 @@ public class YunXinController extends BaseController{
 				String viedotype,//视频类型 1视频面签 2视频录制
 				String contract,//签约状态 1成功 3回退
 				String bank,//银行id
+				String timeInterval,
 				HttpServletRequest request) throws UnsupportedEncodingException{ //签约状态
 			request.setCharacterEncoding("utf-8");
-			String  s = new String(request.getParameter("name").getBytes("ISO-8859-1"),"utf-8");
+			//String  s = new String(request.getParameter("name").getBytes("ISO-8859-1"),"utf-8");
 			Map map=new HashMap();
 			//查询条件
 			if(!EmptyUtil.isEmpty(name)){//姓名
-				map.put("name", "%"+s+"%");
+				map.put("name", "%"+name+"%");
 			}
 			if(!EmptyUtil.isEmpty(idNumber) ){//身份证
 				map.put("idNumber", "%"+idNumber+"%");
@@ -215,8 +216,14 @@ public class YunXinController extends BaseController{
 			if(!EmptyUtil.isEmpty(bank) ){
 				map.put("bank",bank);
 			}
-			
-			PageInfo pageinfo=new PageInfo(pageIndex,pagesize);
+			if(!EmptyUtil.isEmpty(timeInterval) ){
+				String[] ss=timeInterval.split(" - ");
+				map.put("startTime",ss[0].trim());
+				map.put("endTime",ss[1].trim());
+			}
+			PageInfo pageinfo=new PageInfo();
+			pageinfo.setFrom(offset);
+			pageinfo.setSize(pagesize);
 			if(map.size()>0){
 				pageinfo.setCondition(map);
 			}	
@@ -599,7 +606,7 @@ public class YunXinController extends BaseController{
 		log.info("添加调用记录->addCount:+"+i+",主键:"+Id);
 		
 		if(scanPool1!=null){
-			scanPool1.setId(Id);
+			scanPool1.setId(Id);//记录id
 			return renderSuccess(scanPool1);
 		}else{
 			return renderError("暂且没有闲置的视频通话坐席,请稍后再试！");
@@ -611,6 +618,7 @@ public class YunXinController extends BaseController{
 	@RequestMapping(value="free.do")
 	@ResponseBody
 	public Object freeToken(String mark){
+		log.info("移动端挂断通知->"+mark);
 		return null;
 	}
 	

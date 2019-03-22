@@ -20,7 +20,6 @@ public class PageInfo {
 	    private String sort = "seq";// 排序字段
 	    @JsonIgnore
 	    private String order = "asc";// asc，desc mybatis Order 关键字
-	    public PageInfo() {}
 	    //构造方法
 	    public PageInfo(int nowpage, int pagesize) {
 	        //计算当前页  
@@ -40,7 +39,7 @@ public class PageInfo {
 	        this.from = (this.nowpage - 1) * this.pagesize;
 	        this.size = this.pagesize;
 	    }
-
+	    public PageInfo(){};
 	    // 构造方法
 	    public PageInfo(int nowpage, int pagesize, String sort, String order) {
 	        this(nowpage, pagesize) ;

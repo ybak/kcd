@@ -3,7 +3,7 @@ package com.controller.erp_icbc.base;
 public class RootStatic {
 	//云信
 	//下载的前缀
-	public static String url="http://apitest.kcway.net/yx/downloadClient.do?url=";
+	public static String url="../yx/downloadClient.do?url=";
 	//pdf
 	public static String root_Directory="/KCDIMG/assess/";
 	//播放前缀

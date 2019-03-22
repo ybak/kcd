@@ -401,7 +401,13 @@ JOIN icbc_banklist yb on yb.id=ki.bank_id) b
 			</if>
 	</if>
 </sql>
+<!-- 大于：&gt;
 
+小于：&lt;
+
+大于等于：&gt;=
+
+小于等于：&lt;= -->
 <!-- 查询的sql -->
 <sql id="condition-viedo">
 	 <if test="condition != null" >
@@ -417,6 +423,13 @@ JOIN icbc_banklist yb on yb.id=ki.bank_id) b
 		   <if test="condition.viedotype !=null and condition.viedotype !='' ">
 		   	 and yvi.viedotype=#{condition.viedotype}
 		   </if>
+		    <if test="condition.endTime !=null and condition.endTime !=''">
+		   	 and yvi.createtime&lt;#{condition.endTime}
+		   </if>
+		   <if test="condition.startTime !=null and condition.startTime !=''">
+		   	 and yvi.createtime&gt;#{condition.startTime}
+		   </if>
+		
   	</if>
 </sql>
 
