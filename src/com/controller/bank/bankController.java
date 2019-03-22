@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.controller.erp_icbc.Tools;
 import com.model1.icbc.erp.PageData;
+import com.service1.erp_icbc.fs_detailsService;
 import com.service1.icbc_banklist.icbc_banklistService;
 import com.util.creditutil;
 
@@ -27,6 +28,8 @@ public class bankController {
 
 	@Autowired
 	private icbc_banklistService icbc_banklistService;
+	@Autowired
+	private fs_detailsService fs_detailsService;
 
 	/**
 	 * 添加银行
@@ -58,33 +61,39 @@ public class bankController {
 	 */
 	@RequestMapping(value = "erp/geticbc_banklist.do", produces = "text/html;charset=UTF-8")
 	@ResponseBody
-	public List<PageData> geticbc_banklist(String zy_bank,
-			String icbc_erp_fsid, HttpServletRequest request) {
-		// Map<String, String> paramemap = Tools.getpostmap(request);
+	public List<PageData> geticbc_banklist(HttpServletRequest request) {
+		Map<String, String> paramemap = Tools.getpostmap(request);
+		// PageData pData = (PageData) request.getSession().getAttribute("pd");
+
 		// 银行查询
 		List<PageData> banklist = new ArrayList<PageData>();
 		PageData bank_pd = new PageData();
-
-		if (icbc_erp_fsid.equals("1708")) {
+		PageData fs_pd = new PageData();
+		fs_pd.put("dn", "byfsid");
+		fs_pd.put("fs_id", paramemap.get("icbc_erp_fsid"));
+		if (Integer.parseInt(paramemap.get("icbc_erp_fsid").toString()) == 1708) {
 			banklist = icbc_banklistService.geticbc_banklist();
 		} else {
-			if (zy_bank != null && !zy_bank.equals("")) {
-				String[] zy_banks = zy_bank.split("\u0005");
+			PageData pData = fs_detailsService.findbyid(fs_pd);
+			if (pData.get("fs_zy_bank") != null
+					&& !pData.get("fs_zy_bank").equals("")) {
+				String[] zy_banks = ((String) pData.get("fs_zy_bank"))
+						.split("\u0005");
 				List idlist = new ArrayList<Integer>();
 				for (int i = 0; i < zy_banks.length; i++) {
 					if (zy_banks[i] != null && !zy_banks[i].equals("")) {
 						idlist.add(zy_banks[i]);
 					}
 				}
-				// System.out.println(idlist + "**********");
+				System.out.println(idlist + "s数组**********");
 				bank_pd.put("status_id", idlist);
-				bank_pd.put("fsid", icbc_erp_fsid);
-				banklist = icbc_banklistService.geticbc_banklistbyID(bank_pd);
+				bank_pd.put("fsid", pData.get("fs_id"));
 			} else {
-				banklist = icbc_banklistService.geticbc_banklist();
+				bank_pd.put("fsid", "0");
 			}
-			// banklist = icbc_banklistService.geticbc_banklist();
+			banklist = icbc_banklistService.geticbc_banklistbyID(bank_pd);
 		}
+		System.out.println("银行列表：" + banklist);
 		return banklist;
 	}
 

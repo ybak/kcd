@@ -758,6 +758,7 @@
 				</div>
 				</div>
 	</div>
+<c:if test="${sessionScope.pd.icbc_erp_fsid eq '1708' }">
 			<div class="form-group">
 			<label class="col-sm-2 control-label" style="color: red">金融商户店全局功能管理</label>
 			<div class="col-sm-10">
@@ -896,6 +897,7 @@
 				</table>
 			</div>
 		</div>
+
 			<div class="form-group">
 			<label class="col-sm-2 control-label">编辑快金所权限</label>
 			<div class="col-sm-10">
@@ -912,7 +914,8 @@
 					</tr>
 						<tr>
 							<td><label class="btn btn-info" style="">
-									<input type="checkbox" name="order_kjs_icbc" id="order_kjs_icbc" value="0" onclick="checkfl(this)">工行贷										</label><label class="btn btn-info" style="">
+									<input type="checkbox" name="order_kjs_icbc" id="order_kjs_icbc" value="0" onclick="checkfl(this)">工行贷										</label>
+									<label class="btn btn-info" style="">
 									<input type="checkbox" name="order_kjs_mgcert" id="order_kjs_mgcert" value="0" onclick="checkfl(this)">优信租赁										</label><label class="btn btn-info" style="">
 									<input type="checkbox" name="order_kjs_mgcar" id="order_kjs_mgcar" value="0" onclick="checkfl(this)">快车贷										</label><label class="btn btn-info" style="">
 									<input type="checkbox" name="order_kjs_cxfq" id="order_kjs_cxfq" value="0" onclick="checkfl(this)">车险分期										</label><label class="btn btn-info" style="">
@@ -923,7 +926,7 @@
 				</table>
 			</div>
 		</div>
-			
+</c:if>
 			</div>
 			</div>
 		</div>
@@ -946,6 +949,10 @@
 						<div class="input-group">
 							<span class="input-group-addon">展业银行</span>
 							<select id="zy_bank" name="zy_bank" class="selectpicker show-tick form-control" multiple data-live-search="true">
+							<option value="0">请选择</option>
+							<c:forEach var="b" items="${requestScope.banklist }">
+							 <option value="${b.id }">${b.name }</option>
+							</c:forEach>
 							</select>
 							<span class="input-group-addon" style="font-size: 16px;">
 							<a data-toggle="modal" data-target="#modal-default">新增</a>
@@ -953,15 +960,35 @@
 						</div>
 					</div>
 					<script type="text/javascript">
+					$(document).ready(function(){
+						//alert('${requestScope.pd.zy_bank}');
+						  if('${requestScope.pd.zy_bank}'!=null&&'${requestScope.pd.zy_bank}'!=''){
+    							var obj='${requestScope.pd.zy_bank}';
+    					    	var arr=obj.split('\u0005');
+    					    	/* for(var i=0;i<arr.length;i++){
+    					    		alert(arr[i]);
+    					    	} */
+    					    	$('#zy_bank').selectpicker({
+    								'noneSelectedText': '请选择',
+    						        'selectedText': 'cat'
+    						    });
+    					    	$('#zy_bank').selectpicker('val',arr);
+    						}else{
+    							$('#zy_bank').selectpicker({
+    								'noneSelectedText': '请选择',
+    						        'selectedText': 'cat'
+    						    });
+    						}
+					});
                           function banklist(){
                         	  var zy_bank='${requestScope.pd.zy_bank}';
+                        	  //alert(zy_bank+"********"+'${sessionScope.pd.icbc_erp_fsid}');
                         	  /* zy_bank=zy_bank.replace("\u0005",","); */
                         	  $.ajax({
                                   type: "POST",      //data 传送数据类型。post 传递
                                   dataType: 'json',  // 返回数据的数据类型json
                                   url: "${pageContext.request.contextPath }/erp/geticbc_banklist.do",  // 控制器方法
                                   data:{
-                                	  zy_bank:zy_bank,
                                 	  icbc_erp_fsid:'${sessionScope.pd.icbc_erp_fsid}'
                                   },
                                   error: function () {
@@ -996,9 +1023,7 @@
                               });
 
                           }
-					$(document).ready(function(){
-						  banklist();
-					});
+
 					</script>
 					<div class="col-sm-4">
 						<div class="input-group">
@@ -1740,7 +1765,7 @@ function addbank(){
         success: function (data) {
       	    alert(data);
       	    $("#modal-default").modal('hide');
-      	    banklist();
+      	    window.location.reload();
         }
     });
 

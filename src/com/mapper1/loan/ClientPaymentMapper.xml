@@ -72,7 +72,6 @@ from
 	yl_banklist yb
 where 
 kk.icbc_id=bc.id and bc.id=aa.icbc_id and bc.bank_id=yb.id 
-and aa.bc_status=3 
 and bc.id = #{icbc_id} LIMIT 1
 </select>
     

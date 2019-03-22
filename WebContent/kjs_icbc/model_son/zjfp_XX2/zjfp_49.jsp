@@ -10,20 +10,7 @@ long date = new Date().getTime();
 String dateString = formatter.format(date);
 
 %>
-<script>
-	lay('#version').html('-v' + laydate.v);
-	//执行一个laydate实例
-	laydate.render({
-		elem : '#dz_date' //指定元素
-	});
-</script>
-<script>
-lay('#version').html('-v' + laydate.v);
-//执行一个laydate实例
-laydate.render({
-	elem : '#hf_date' //指定元素	
-});
-</script>
+
 <c:if  test="${fn:contains(sessionScope.pd.purview_map,'zjfp_49')==true}">
 <li class="text-primary">
 <em>公司资金分配</em>
@@ -101,6 +88,20 @@ laydate.render({
 <a onclick="erp()" class="btn btn-primary" >提交</a>
 </div>
 </form>
+<script>
+	lay('#version').html('-v' + laydate.v);
+	//执行一个laydate实例
+	laydate.render({
+		elem : '#dz_date' //指定元素
+	});
+</script>
+<script>
+lay('#version').html('-v' + laydate.v);
+//执行一个laydate实例
+laydate.render({
+	elem : '#hf_date' //指定元素	
+});
+</script>
 <script type="text/javascript">
 function erp(){
 	var dz_type=document.getElementById("dz_type").value;
