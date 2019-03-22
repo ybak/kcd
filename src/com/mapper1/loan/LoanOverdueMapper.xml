@@ -2,6 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mapper1.loan.LoanOverdueMapper">
+<!-- 电催模块操作 start******************************** -->  
+<!-- 查询一条电催名单form页面信息  客户信息+车辆信息+贷款方案信息 -->
+<select id="selectPhoneClientCarLoanInfo" resultType="pd" parameterType="pd">
+select 
+	bc.gems_code,
+	kk.dk_total_price,
+	yb.name bank_name,
+	fs.name fs_name,
+	gems.name gems_name,
+	ac.*
+from 
+	loan_overdue_list lol
+LEFT JOIN kj_icbc bc ON bc.id=lol.icbc_id
+LEFT JOIN kjs_icbc_kk kk ON kk.icbc_id=bc.id
+LEFT JOIN yl_banklist yb ON bc.bank_id = yb.id
+LEFT JOIN assess_fs fs on lol.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on lol.gems_id=gems.id
+LEFT JOIN assess_cars ac on ac.icbc_id=bc.id
+where 1=1 and lol.id=#{id}
+</select> 
+<!-- 查询电催名单 -->
+<select id="selectPhoneList" resultType="pd" parameterType="pd">
+select 
+	lol.*,
+	bc.gems_code,
+	kk.dk_total_price,
+	yb.name bank_name,
+	fs.name fs_name,
+	gems.name gems_name
+from 
+	loan_overdue_list lol
+LEFT JOIN kj_icbc bc ON bc.id=lol.icbc_id
+LEFT JOIN kjs_icbc_kk kk ON kk.icbc_id=lol.icbc_id
+LEFT JOIN yl_banklist yb ON bc.bank_id = yb.id
+LEFT JOIN assess_fs fs on lol.gems_fs_id=fs.id
+LEFT JOIN assess_gems gems on lol.gems_id=gems.id
+where 1=1 and lol.type_id=2 and lol.gems_fs_id=#{gems_fs_id}
+<if test="param != null and param != ''">
+and lol.c_name like '%${param}%' 
+or lol.c_cardno like '%${param}%'
+</if>
+ORDER BY lol.dt_edit DESC
+</select> 
+<!-- 电催模块操作 end******************************** -->        
+    
+<!-- 逾期名单模块操作 start******************************** -->    
 <!-- 查询一条逾期名单 -->
 <select id="selectOverdueOne" resultType="pd" parameterType="pd">
 select 
@@ -36,6 +82,9 @@ and lol.c_name like '%${param}%' or lol.c_cardno like '%${param}%'
 </if>
 ORDER BY lol.dt_edit DESC
 </select> 
+<!-- 逾期名单模块操作 end******************************** -->
+
+
 
 <!-- 把操作数据记录到数据库 --> 
 <insert id="addOperationResult" parameterType="pd"  keyProperty="id">

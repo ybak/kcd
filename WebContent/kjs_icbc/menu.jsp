@@ -503,8 +503,8 @@
 					</c:if>
 			         <!--催缴作业  -->
 			        <c:if  test="${fn:contains(sessionScope.pd.purview_map,'dczy')==true}">
-			        <li ${requestScope.dn=='dh_electricOperation'?"class='active'":'' or requestScope.dn=='dh_repaymentTelReminders'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/electricityController/select.do?type=dczy&dn=dh_electricOperation&qn=list"> <i class="fa fa-file-text"></i> 
+			        <li ${requestScope.dn=='loan_phone'?"class='active'":'' or requestScope.dn=='dh_repaymentTelReminders'?"class='active'":''}>
+					<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type=dczy&dn=loan_phone&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-file-text"></i> 
 				    <span>电催作业 </span>
 				    </a>
 					</li>

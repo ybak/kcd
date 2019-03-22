@@ -60,7 +60,7 @@
 				<div class="row">
 					<div class="col-sm-10">
 						<div class="btn-group">		
-							<form style="float: left;" class="form-horizontal" id="ajaxForm" action="${pageContext.request.contextPath }/loan/selectImpRecordList.do?type=khhklr&dn=loan_repaymentEntry&qn=list&cn=w1&pagesize=${requestScope.pagesize}&pagenow=1&param=${requestScope.param}" enctype="multipart/form-data" method="post">
+							<form style="float: left;" class="form-horizontal" id="ajaxForm" action="${pageContext.request.contextPath }/loan/selectImpRecordList.do?type=khhklr&dn=loan_repaymentEntry&qn=list&pagesize=${requestScope.pagesize}&pagenow=1&param=${requestScope.param}" enctype="multipart/form-data" method="post">
 								<input type="text" placeholder="请输入文件名称" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" name="param" style="width:500px;">
 								<button class="btn btn-info search-btn" type="submit"  style="background-color:#00acd6;">查询</button> 
 							</form>	
