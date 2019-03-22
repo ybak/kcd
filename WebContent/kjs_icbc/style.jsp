@@ -14,7 +14,7 @@
 	<link rel="icon" href="${pageContext.request.contextPath }/cskjs_css/logo.png" type="image/x-icon"/>
 	    <link href="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/css/style1.css" rel="stylesheet" type="text/css">
 <!-- Bootstrap 3.3.4 -->
-<link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/font-awesome-4.7.0/css/font-awesome.min.css">
 <link href="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/css/bootstrap.css" rel="stylesheet" type="text/css">
 <!-- Font Awesome Icons -->
 <!-- Font Awesome Icons -->

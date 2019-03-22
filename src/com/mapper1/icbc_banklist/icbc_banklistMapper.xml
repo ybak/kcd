@@ -15,7 +15,7 @@ select * from icbc_banklist	where 1=1
 and fsid=#{fsid}
 </if>
 <if test="status_id!=null and status_id.size()>0">
-and id in 
+or id in 
 <foreach collection="status_id" item="dramaId" open="(" close=")" separator=",">
 #{dramaId}
 </foreach>

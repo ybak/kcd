@@ -246,7 +246,33 @@ public class erp_icbcController {
 		pd2.put("showtag", 1);
 		pd2.put("fsid", pData.get("icbc_erp_fsid"));
 		List<PageData> pageDatas2 = erp_userrootService.findtolist(pd2);
-		//
+		// 银行查询
+		List<PageData> banklist = new ArrayList<PageData>();
+		PageData bank_pd = new PageData();
+		if (Integer.parseInt(pData.get("icbc_erp_fsid").toString()) == 1708) {
+			System.out.println("进来啦吗");
+			banklist = icbc_banklistService.geticbc_banklist();
+		} else {
+			if (pData.get("fs_zy_bank") != null
+					&& !pData.get("fs_zy_bank").equals("")) {
+				String[] zy_banks = ((String) pData.get("fs_zy_bank"))
+						.split("\u0005");
+				List idlist = new ArrayList<Integer>();
+				for (int i = 0; i < zy_banks.length; i++) {
+					if (zy_banks[i] != null && !zy_banks[i].equals("")) {
+						idlist.add(zy_banks[i]);
+					}
+				}
+				System.out.println(idlist + "s数组**********");
+				bank_pd.put("status_id", idlist);
+				bank_pd.put("fsid", pData.get("icbc_erp_fsid"));
+			} else {
+				bank_pd.put("fsid", "0");
+			}
+			banklist = icbc_banklistService.geticbc_banklistbyID(bank_pd);
+		}
+		System.out.println("银行列表：" + banklist);
+		request.setAttribute("banklist", banklist);
 		request.setAttribute("pageDatas", pageDatas1);
 		request.setAttribute("pageDatas2", pageDatas2);
 		// cn 1增 2删 3改 4查

@@ -9,6 +9,10 @@
 select * from assess_fs_details where id=#{id}
 </if>
 
+<if test="dn=='byfsid'">
+select * from assess_fs_details where fs_id=#{fs_id}
+</if>
+
 </select>
 <!--新增操作-->
 <insert id="save" parameterType="pd" useGeneratedKeys="true" keyProperty="id">
