@@ -6,8 +6,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
-<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-1.8.3.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/js/ajaxfileupload.js"></script>
 <style>
 	.file {
 	    position: relative;

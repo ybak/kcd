@@ -30,12 +30,7 @@ long date = new Date().getTime();
 String dateString = formatter.format(date);
 
 %>
-<script>
-//执行一个laydate实例
-laydate.render({
-  elem: '#xdz_date' //指定元素
-});
-</script>
+
 <c:if  test="${fn:contains(sessionScope.pd.purview_map,'qrsqdz_48')==true}">
 <li class="text-primary">
 <em>合作商确认垫资</em>
@@ -137,6 +132,12 @@ laydate.render({
 <a onclick="qrsqdz()" class="btn btn-primary" >提交</a>
 </div>
 </form>
+<script>
+//执行一个laydate实例
+laydate.render({
+  elem: '#xdz_date' //指定元素
+});
+</script>
 <script type="text/javascript">
 
 var magId=0;
