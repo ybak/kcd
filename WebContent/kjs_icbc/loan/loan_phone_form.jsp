@@ -346,7 +346,7 @@ function appCar(clickType){
         success:function(data){  
         	alert(data);
 			//location.reload(true);
-			location.href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type=dczy&dn=loan_phone&qn=list&pagesize=10&pagenow=1";
+			location.href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=2&type_status=0&type=dczy&dn=loan_phone&qn=list&pagesize=10&pagenow=1";
         }
         
 	})
