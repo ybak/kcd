@@ -10,6 +10,8 @@ public interface LoanOverdueMapper {
 	/**
 	 * 电催
 	 */
+	//查询某一名单的操作记录
+	List<PageData> selectResults(PageData pd);
 	//查询电催form列表  客户信息+车辆信息+贷款方案信息
 	PageData selectPhoneClientCarLoanInfo(PageData pd);
 	//查询电催名单

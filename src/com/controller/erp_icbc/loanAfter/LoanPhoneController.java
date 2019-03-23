@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.model1.icbc.erp.PageData;
 import com.service1.Repayment.OverdueService;
+import com.service1.loan.ClientPaymentService;
 import com.service1.loan.LoanOverdueService;
 import com.util.limitutil;
 
@@ -26,6 +27,8 @@ import com.util.limitutil;
 public class LoanPhoneController {
 	@Autowired
 	private LoanOverdueService loanOverdueService;
+	@Autowired
+	private ClientPaymentService clientPaymentService;
 	
 	//查询客户电催名单
 	@RequestMapping("/selectPhoneList.do")
@@ -37,6 +40,8 @@ public class LoanPhoneController {
 			int pagesize,
 			int pagenow,
 			String param,
+			int type_id,
+			int type_status,
 			HttpServletRequest request){
 		//获取当前操作人信息
 		PageData pdsession= (PageData)request.getSession().getAttribute("pd");
@@ -45,6 +50,8 @@ public class LoanPhoneController {
 		pd.put("param",param);
 		System.err.println(pdsession.get("icbc_erp_fsid")+"--99999999");
 		pd.put("gems_fs_id",pdsession.get("icbc_erp_fsid"));
+		pd.put("type_id",type_id); // 查询贷后大类型  1逾期，2电催，3拖车，4诉讼，5拍卖，6结清
+		pd.put("type_status",type_status); // 查询贷后大类型下的小状态  详情见src/com/controller/erp_icbc/loanAfter/AddResult.java
 		List<PageData> pdList=loanOverdueService.selectPhoneList(pd);
 		newpdList = limitutil.fy(pdList,pagesize,pagenow);
 		int q=pdList.size()%pagesize;
@@ -85,13 +92,85 @@ public class LoanPhoneController {
 		//查询 客户信息+车辆信息+贷款方案
 		PageData CCL = loanOverdueService.selectPhoneClientCarLoanInfo(pd);
 		//查询还款计划
-		
+		List<PageData> paySchedule = clientPaymentService.selectPaySchedule(CCL.get("icbc_id").toString());
+		//查询操作记录
+		List<PageData> results = loanOverdueService.selectResults(pd);
+		//查询此条逾期名单  用于添加操作记录时使用 type_id、type_status等信息
+		PageData pdOne = loanOverdueService.selectOverdueOne(pd);
 		request.setAttribute("dn", dn);
 		request.setAttribute("cn", cn);
 		request.setAttribute("qn", qn);
-		request.setAttribute("type", type);	
-		request.setAttribute("CCL", CCL);
+		request.setAttribute("type",type);	
+		request.setAttribute("CCL",CCL);
+		request.setAttribute("paySchedule",paySchedule);
+		request.setAttribute("results",results);
+		request.setAttribute("pdOne",pdOne);
 		return "kjs_icbc/index";
 	}
 	
+	//添加电催记录
+	@RequestMapping("/addPhoneResult.do")
+	@ResponseBody
+	public String addPhoneResult(
+			int type_id,
+			int type_status,
+			String result_msg,
+			int icbc_id,
+			int lolId,
+			HttpServletRequest request){
+		//获取当前操作人信息
+		PageData pdsession= (PageData)request.getSession().getAttribute("pd");
+		PageData addResult=new PageData();
+		addResult.put("qryid",lolId);
+		addResult.put("mid_add",pdsession.get("id"));
+		addResult.put("mid_edit",pdsession.get("id"));
+		addResult.put("icbc_id",icbc_id);
+		addResult.put("type_id",type_id);
+		addResult.put("type_status",type_status);
+		addResult.put("result_msg",result_msg);
+		int b = loanOverdueService.addOperationResult(addResult);//添加记录
+		String reuslt = "提交失败";
+		if(b>0){
+			reuslt = "提交成功!";
+		}
+		return reuslt;
+	}
+	
+	//申请拖车或者申请诉讼
+	@RequestMapping("/updatePhoneStatusToCarOrLitigation.do")
+	@ResponseBody
+	public String updateOverdueStatus(
+			String result_msg,
+			int type_id,
+			int type_status,
+			int icbc_id,
+			int lolId,
+			HttpServletRequest request){
+		PageData pdsession= (PageData)request.getSession().getAttribute("pd");//获取当前操作人信息
+		//修改客户逾期状态-手动点击进入电催
+		PageData updateStatus = new PageData();
+		updateStatus.put("id",lolId);
+		updateStatus.put("type_id",type_id); // 进入拖车
+		updateStatus.put("type_status",type_status); // 进入拖车未处理
+		updateStatus.put("mid_edit",pdsession.get("id")); // 修改操作人
+		System.err.println(pdsession.get("id")+"-----------");
+		int a = loanOverdueService.updateOverdueStatus(updateStatus); // a == 1,修改成功
+		String reuslt = "申请失败";
+		if(a>0){
+			reuslt = "申请成功!";
+		}
+		//添加操作记录 start
+		PageData addResult=new PageData();
+		addResult.put("qryid",lolId);
+		addResult.put("mid_add",pdsession.get("id"));
+		addResult.put("mid_edit",pdsession.get("id"));
+		addResult.put("icbc_id",icbc_id);
+		addResult.put("type_id",type_id);
+		addResult.put("type_status",type_status);
+		addResult.put("result_msg",result_msg);
+		addResult.put("remark",result_msg);
+		int b = loanOverdueService.addOperationResult(addResult);//添加记录
+		//添加操作记录 end
+		return reuslt;
+	}
 }

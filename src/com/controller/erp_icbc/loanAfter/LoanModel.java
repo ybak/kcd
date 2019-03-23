@@ -13,11 +13,22 @@ public class LoanModel{
 		 loanTypeModel.put("11", "初级逾期");
 		 loanTypeModel.put("12", "中级逾期");
 		 loanTypeModel.put("13", "高级逾期");
+		 
 		 loanTypeModel.put("2", "电催");
-		 loanTypeModel.put("3", "拖车");
+		 
+		 loanTypeModel.put("3",  "拖车");
+		 loanTypeModel.put("31", "拖车未处理");
+		 loanTypeModel.put("32", "拖车已处理");
+		 loanTypeModel.put("33", "拖车完成");
+		 
 		 loanTypeModel.put("4", "诉讼");
+		 loanTypeModel.put("41", "未诉讼");
+		 loanTypeModel.put("42", "已诉讼");
+		 
 		 loanTypeModel.put("5", "拍卖");
+		 
 		 loanTypeModel.put("6", "结清");
+		 
 		 return loanTypeModel;	
 	}
 	

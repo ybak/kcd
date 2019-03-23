@@ -124,12 +124,11 @@
 						<td class="text-center">
 							<input type="hidden" value="${sel.overdue_days}"> 
 							<c:choose>
-								<c:when test="${sel.overdue_days >= 30}"><span class="label label-danger">高级逾期</span></c:when>
-								<c:when test="${sel.overdue_days >= 10}"><span class="label label-warning">中级逾期</span></c:when>
-								<c:when test="${sel.overdue_days >= 3}"><span class="label label-success">初级逾期</span></c:when>
+								<c:when test="${sel.overdue_days >= 10}"><span class="label label-danger">高级逾期</span></c:when>
+								<c:when test="${sel.overdue_days >= 3}"><span class="label label-warning">中级逾期</span></c:when>
+								<c:when test="${sel.overdue_days >= 0}"><span class="label label-success">初级逾期</span></c:when>
 								<c:otherwise>${sel.overdue_days}天</c:otherwise>
 							</c:choose>
-							
 						</td>
 						<td class="text-center">${sel.fs_name}</td>
 						<td class="text-center">${sel.gems_name}</td>

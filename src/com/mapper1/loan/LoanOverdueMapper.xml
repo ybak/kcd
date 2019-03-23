@@ -3,15 +3,28 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mapper1.loan.LoanOverdueMapper">
 <!-- 电催模块操作 start******************************** -->  
+<!-- 查询某一电催名单的操作记录 -->
+<select id="selectResults" resultType="pd" parameterType="pd">
+select 
+	lolr.*,
+	gems.name gems_name
+from 
+    loan_overdue_list_result lolr
+LEFT JOIN assess_gems gems ON gems.id=lolr.mid_edit
+where 1=1 and lolr.qryid=#{id}
+</select>    
+
 <!-- 查询一条电催名单form页面信息  客户信息+车辆信息+贷款方案信息 -->
 <select id="selectPhoneClientCarLoanInfo" resultType="pd" parameterType="pd">
 select 
-	bc.gems_code,
-	kk.dk_total_price,
+	bc.*,
+	kk.*,
+	ac.*,
 	yb.name bank_name,
 	fs.name fs_name,
 	gems.name gems_name,
-	ac.*
+	cm.name car_name,
+	cb.name car_brand
 from 
 	loan_overdue_list lol
 LEFT JOIN kj_icbc bc ON bc.id=lol.icbc_id
@@ -20,6 +33,8 @@ LEFT JOIN yl_banklist yb ON bc.bank_id = yb.id
 LEFT JOIN assess_fs fs on lol.gems_fs_id=fs.id
 LEFT JOIN assess_gems gems on lol.gems_id=gems.id
 LEFT JOIN assess_cars ac on ac.icbc_id=bc.id
+LEFT JOIN car_model cm on ac.carid=cm.id
+LEFT JOIN car_brand cb on ac.brid=cb.id
 where 1=1 and lol.id=#{id}
 </select> 
 <!-- 查询电催名单 -->
@@ -30,7 +45,9 @@ select
 	kk.dk_total_price,
 	yb.name bank_name,
 	fs.name fs_name,
-	gems.name gems_name
+	gems.name gems_name,
+	ac.c_carno c_carno,
+	ac.cars_type cars_type
 from 
 	loan_overdue_list lol
 LEFT JOIN kj_icbc bc ON bc.id=lol.icbc_id
@@ -38,7 +55,11 @@ LEFT JOIN kjs_icbc_kk kk ON kk.icbc_id=lol.icbc_id
 LEFT JOIN yl_banklist yb ON bc.bank_id = yb.id
 LEFT JOIN assess_fs fs on lol.gems_fs_id=fs.id
 LEFT JOIN assess_gems gems on lol.gems_id=gems.id
-where 1=1 and lol.type_id=2 and lol.gems_fs_id=#{gems_fs_id}
+LEFT JOIN assess_cars ac on ac.icbc_id=bc.id
+where 1=1 and 2=2 and lol.type_id=#{type_id} and lol.gems_fs_id=#{gems_fs_id}
+<if test="type_status != null and type_status != ''">
+and lol.type_status=#{type_status}
+</if>
 <if test="param != null and param != ''">
 and lol.c_name like '%${param}%' 
 or lol.c_cardno like '%${param}%'
@@ -63,7 +84,11 @@ where 1=1 and lol.id=#{id}
 <update id="updateOverdueStatus" parameterType="int">
 update loan_overdue_list set
 	type_id=#{type_id},
-	dt_edit=sysdate()
+	dt_edit=sysdate(),
+	mid_edit=#{mid_edit}
+<if test="type_status != null and type_status != ''">
+	,type_status=#{type_status}
+</if>
 where 
 	id=#{id}
 </update>    
