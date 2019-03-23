@@ -455,7 +455,7 @@ localStorage["photoGalleryActiveIndex"] = activeIndex;
     function dsj_bg1(report_id) {
    	 var dsj_code=document.getElementById(report_id).value;
    	 if(dsj_code!=null&&dsj_code!=""){
-   		 var frameSrc="${pageContext.request.contextPath }/dsj_result_jsp.do?report_id="+dsj_code;
+   		 var frameSrc="${pageContext.request.contextPath }/erp/getxdfx_dsjzx_result.do?id="+dsj_code;
      	   //给iframe加上src路径
           $("#NoPermissioniframe1").attr("src", frameSrc);
            //显示模态框  只有在选择编辑的行   然后根据回调函数成功后才会显示模态框

@@ -3000,11 +3000,11 @@ public class erp_wdrwController {
 							erp_status = 4;
 						}
 						if (pData2.get("status").toString().equals("5")) {
-							erp_status = 6;
-						}
-						if (pData2.get("status").toString().equals("6")) {
 							erp_status = 7;
 						}
+						// if (pData2.get("status").toString().equals("6")) {
+						// erp_status = 7;
+						// }
 						if (pData2.get("status").toString().equals("7")) {
 							if (pData2.get("result_1_code").toString()
 									.equals("1")
