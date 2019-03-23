@@ -78,14 +78,16 @@ public class LoanOverdueController {
 			int pagenow,
 			int id,
 			HttpServletRequest request){
+		PageData pdsession= (PageData)request.getSession().getAttribute("pd");//获取当前操作人信息
 		//修改客户逾期状态-手动点击进入电催
 		PageData updateStatus = new PageData();
 		updateStatus.put("id",id);
 		updateStatus.put("type_id","2"); // 进入电催(type_id=2)
+		updateStatus.put("mid_edit",pdsession.get("id")); // 修改操作人
+		System.err.println(pdsession.get("id")+"-----------");
 		int a = loanOverdueService.updateOverdueStatus(updateStatus); // a == 1,修改成功
 		//添加操作记录 start
 		PageData pdOne = loanOverdueService.selectOverdueOne(updateStatus);//从loan_overdue_list逾期名单表 获取到要修改某一客户
-		PageData pdsession= (PageData)request.getSession().getAttribute("pd");//获取当前操作人信息
 		PageData addResult =  AddResult.addResult(pdsession,pdOne);//构造添加信息
 		int b = loanOverdueService.addOperationResult(addResult);//添加记录
 		//添加操作记录 end

@@ -503,8 +503,8 @@
 					</c:if>
 			         <!--催缴作业  -->
 			        <c:if  test="${fn:contains(sessionScope.pd.purview_map,'dczy')==true}">
-			        <li ${requestScope.dn=='dh_electricOperation'?"class='active'":'' or requestScope.dn=='dh_repaymentTelReminders'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/electricityController/select.do?type=dczy&dn=dh_electricOperation&qn=list"> <i class="fa fa-file-text"></i> 
+			        <li ${requestScope.dn=='loan_phone'?"class='active'":'' or requestScope.dn=='dh_repaymentTelReminders'?"class='active'":''}>
+					<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=2&type_status=0&type=dczy&dn=loan_phone&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-file-text"></i> 
 				    <span>电催作业 </span>
 				    </a>
 					</li>
@@ -516,23 +516,23 @@
 				    <span>拖车管理 </span>
 				    </a>
 				    <ul class="treeview-menu">
-				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'tc_ysl')==true}">
-					<li ${requestScope.type=='tc_ysl'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/trailernotAcceptedController/select1.do?type=tc_ysl&dn=TrailernotAccepted1&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
-				    <span>拖车(已受理)</span>
+				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'tc_wsl')==true}">
+					<li ${requestScope.type=='tc_wsl'?"class='active'":''}>
+					<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=3&type_status=31&type=tc_wsl&dn=loan_car&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
+				    <span>拖车(未受理)</span>
 				    </a>
 					</li>
 					</c:if>
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'tc_wsl')==true}">
-					<li ${requestScope.type=='tc_wsl'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/trailernotAcceptedController/select.do?type=tc_wsl&dn=TrailernotAccepted&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
-				    <span>拖车(未受理)</span>
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'tc_ysl')==true}">
+					<li ${requestScope.type=='tc_ysl'?"class='active'":''}>
+					<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=3&type_status=32&type=tc_ysl&dn=loan_car&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
+				    <span>拖车(已受理)</span>
 				    </a>
 					</li>
 					</c:if>
 					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'tc_wc')==true}">
 					<li ${requestScope.type=='tc_wc'?"class='active'":''}>
-					<a href="${pageContext.request.contextPath}/trailernotAcceptedController/select2.do?type=tc_wc&dn=TrailernotAccepted2&qn=list"> <i class="fa fa-arrow-circle-o-right"></i> 
+					<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=3&type_status=33&type=tc_wc&dn=loan_car&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>拖车(完成)</span>
 				    </a>
 					</li>

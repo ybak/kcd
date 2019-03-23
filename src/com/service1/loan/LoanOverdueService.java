@@ -8,6 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.model1.icbc.erp.PageData;
 
 public interface LoanOverdueService {
+	//查询某一名单的操作记录
+	List<PageData> selectResults(PageData pd);
+	//查询电催form列表  客户信息+车辆信息+贷款方案信息
+	PageData selectPhoneClientCarLoanInfo(PageData pd);
+	//查询电催名单
+	List<PageData> selectPhoneList(PageData pd);
+	
 	//查询一条逾期名单
 	PageData selectOverdueOne(PageData pd);
 	//修改客户逾期状态
