@@ -39,7 +39,7 @@
 							</form>	
 						</div>
 					</div>		
-					<div class="col-sm-2">
+					<div class="col-sm-2 admin-page-top hidden-xs">
 					   <div class="btn-group">											
 					   <ul class="pagination no-margin">					     				       
 						<li>
@@ -120,7 +120,7 @@
 							<c:if test="${sel.type_status == '33'}">完成</c:if>
 						</td>
 						<td class="text-center">
-							<a href="${pageContext.request.contextPath }/trailernotAcceptedController/selectdetail1.do?type=tc_wsl&dn=TrailernotAccepted1&qn=form&icbc_id=${sel.icbc_id}">
+							<a href="${pageContext.request.contextPath }/loan/selectPhoneForm.do?type=${requestScope.type}&dn=loan_car&qn=form&id=${sel.id}">
 								<i class="fa fa-hand-paper-o"></i>
 							</a>
 						</td>

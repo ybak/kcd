@@ -108,33 +108,6 @@ public class LoanPhoneController {
 		return "kjs_icbc/index";
 	}
 	
-	//添加电催记录
-	@RequestMapping("/addPhoneResult.do")
-	@ResponseBody
-	public String addPhoneResult(
-			int type_id,
-			int type_status,
-			String result_msg,
-			int icbc_id,
-			int lolId,
-			HttpServletRequest request){
-		//获取当前操作人信息
-		PageData pdsession= (PageData)request.getSession().getAttribute("pd");
-		PageData addResult=new PageData();
-		addResult.put("qryid",lolId);
-		addResult.put("mid_add",pdsession.get("id"));
-		addResult.put("mid_edit",pdsession.get("id"));
-		addResult.put("icbc_id",icbc_id);
-		addResult.put("type_id",type_id);
-		addResult.put("type_status",type_status);
-		addResult.put("result_msg",result_msg);
-		int b = loanOverdueService.addOperationResult(addResult);//添加记录
-		String reuslt = "提交失败";
-		if(b>0){
-			reuslt = "提交成功!";
-		}
-		return reuslt;
-	}
 	
 	//申请拖车或者申请诉讼
 	@RequestMapping("/updatePhoneStatusToCarOrLitigation.do")
