@@ -128,9 +128,9 @@ public class LoanPhoneController {
 		updateStatus.put("mid_edit",pdsession.get("id")); // 修改操作人
 		System.err.println(pdsession.get("id")+"-----------");
 		int a = loanOverdueService.updateOverdueStatus(updateStatus); // a == 1,修改成功
-		String reuslt = "申请失败";
+		String reuslt = "failure";
 		if(a>0){
-			reuslt = "申请成功!";
+			reuslt = "successful!";
 		}
 		//添加操作记录 start
 		PageData addResult=new PageData();

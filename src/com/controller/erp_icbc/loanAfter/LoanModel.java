@@ -32,6 +32,10 @@ public class LoanModel{
 		 loanTypeModel.put("53", "盈利(拍卖完成)");
 		 
 		 loanTypeModel.put("6", "结清");
+		 loanTypeModel.put("61", "正常结清");
+		 loanTypeModel.put("62", "提前结清");
+		 loanTypeModel.put("63", "强制结清");
+		 loanTypeModel.put("64", "亏损结清");
 		 
 		 loanTypeModel.put("7", "核销");
 		 loanTypeModel.put("71", "未核销");

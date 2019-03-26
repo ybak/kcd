@@ -188,84 +188,36 @@
 			</div>
 		</div>
 	  <form id="form1" onsubmit="return false" action="##"  method="post">
-	  	  <!-- 拖车已受理  start -->
 	  	  <c:if test="${requestScope.type eq 'tc_ysl'}">
   	  	  	  <div style="margin-top:20px;">
   	  	  		<label>拖车结果<i class="red">*</i>:</label>
   	  	  	  </div>
 			   <ul class="pagination no-margin" style="padding-top: 10px;">					     				       
-					<select id="coolStatus" name="coolStatus" style="width: 180px;" class="form-control">
-					    <option value="">--请选择--</option>
-						<option value="33">拖车完成</option>
-						<option value="34">失败</option>
-					</select>
+						<select id="coolStatus" name="coolStatus" class="form-control">
+						    <option value="">--请选择--</option>
+							<option value="33">拖车完成</option>
+							<option value="34">失败</option>
+						</select>
 				</ul>
+			  
 	  		  <div style="margin-top:20px;">
 			  		<label>入库时间:</label>
 				  	<lable style="margin-left:310px;margin-top:40px;">入库地址:</lable>
 				  	<lable style="margin-left:415px;">入库影像:</lable>
+				  	
 		  	  </div>
 			  <div style="margin-top:10px;width:300px;">
 					<div class="input-group date ng-isolate-scope ng-not-empty ng-valid ng-valid-required">
 			  			<input id="coolTime"  name="coolTime" class="form-control" type="text"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 					</div>
 					<input id="coolAddress" name="coolAddress" type="text" style="margin-top:-35px;margin-left:380px;width:390px;" class="form-control">
-					<!-- <input name="coolVideo" id="coolVideo" style="margin-top:-35px;margin-left:870px;width:390px;height:35px;"  class="file-upload-input" type="file"> -->
-			  		<input type="hidden" id="coolVideo" name="coolVideo" value="" >
-		            <input style="display: none" onchange="javascript:setImagePreview();" type="file" value="" id="file" name="file" >
-		            <label for="file">
-		            <img  id="preview" style="margin-top:-35px;margin-left:870px;width:50px;height:50px;"  class="img-thumbnail"  src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/images/icon.png"/>     
-				    </label>
+					<input name="coolVideo" id="coolVideo" style="margin-top:-35px;margin-left:870px;width:390px;height:35px;"  class="file-upload-input" type="file">
+			  		
 			  </div>
+			  
 		  </c:if>
-		  <!-- 拖车已受理  end -->
-		  <!-- 拖车完成  start -->
-	  	  <c:if test="${requestScope.type eq 'tc_wc'}">
-  	  	  	  <div style="margin-top:20px;">
-  	  	  		<label>处置结果<i class="red">*</i>:</label>
-  	  	  	  </div>
-			   <ul class="pagination no-margin" style="padding-top: 10px;">					     				       
-					<select id="coolStatus" name="coolStatus" style="width: 180px;" class="form-control">
-					    <option value="">--请选择--</option>
-						<option value="51">拍卖</option>
-						<option value="63">强制结清</option>
-					</select>
-				</ul>
-		  </c:if>
-		  <!-- 拖车完成  end -->
-		  <!-- 拍卖未完成  start -->
-	  	  <c:if test="${requestScope.type eq 'auction_no'}">
-  	  	  	  <div style="margin-top:20px;">
-  	  	  		<label>处置结果<i class="red">*</i>:</label>
-  	  	  	  </div>
-			   <ul class="pagination no-margin" style="padding-top: 10px;">					     				       
-					<select id="coolStatus" name="coolStatus" style="width: 300px;" class="form-control">
-					    <option value="">--请选择--</option>
-						<option value="71">亏损<5000(拍卖完成)[进入未核销]</option>
-						<option value="41">亏损>5000(拍卖完成)[进入诉讼]</option>
-						<option value="53">盈利(拍卖完成)</option>
-					</select>
-				</ul>
-		  </c:if>
-		  <!-- 拍卖未完成  end -->
-		  <!-- 已核销  start -->
-	  	  <c:if test="${requestScope.type eq 'hx_yes'}">
-  	  	  	  <div style="margin-top:20px;">
-  	  	  		<label>处置结果<i class="red">*</i>:</label>
-  	  	  	  </div>
-			   <ul class="pagination no-margin" style="padding-top: 10px;">					     				       
-					<select id="coolStatus" name="coolStatus" style="width: 300px;" class="form-control">
-					    <option value="">--请选择--</option>
-						<option value="61">正常结清</option>
-						<option value="62">提前结清</option>
-						<option value="63">强制结清</option>
-						<option value="64">亏损结清</option>
-					</select>
-				</ul>
-		  </c:if>
-		  <!-- 已核销  end -->
 		  <div style="margin-top:10px;">
-		      <h4 class="modal-title">信息录入栏:</h4>	      
+		      <h4 class="modal-title">拖车录入栏:</h4>	      
 		      <textarea style="border:1px solid #ccc;margin-top:10px;height:120px" id="result_msg" name="result_msg" class="form-control"></textarea>		
 		  </div>
 		  <div style="height:50px;margin:20px 0 0 0;">
@@ -408,46 +360,11 @@ function addPhoneResult(){
 	var icbc_id = ${pdOne.icbc_id};
 	var lolId = ${pdOne.id};
 	//alert(lolId+"--"+icbc_id+"--"+type_status+"--"+type_id+"--");
-	//拖车未受理和拖车已受理和拖车完成和拖车失败公用一个页面
-	//获取是哪个页面的提交
-	var formTypeWsl = ${requestScope.type eq 'tc_wsl'};
-	var formType = ${requestScope.type eq 'tc_ysl'};
-	var formTypeWc = ${requestScope.type eq 'tc_wc'};
-	var formTypeSb = ${requestScope.type eq 'tc_sb'};
-	var formTypeAuctionNo = ${requestScope.type eq 'auction_no'};
-	var formTypehx_no = ${requestScope.type eq 'hx_no'};
-	var formTypehx_yes = ${requestScope.type eq 'hx_yes'};
-	var formTypessgl_no = ${requestScope.type eq 'ssgl_no'};
-	var formTypessgl_yes = ${requestScope.type eq 'ssgl_yes'};
-	if(formTypeWc || formTypeAuctionNo || formTypehx_yes){ //拖车完成页面提交
-		//alert("拖车完成页面提交");
-		//alert("未拍卖提交");
-		//alert("已核销页面提交");
-		var coolStatus = $('#coolStatus').val();
-		if(coolStatus==""){
-			alert("请选择处置结果!");
-			return false;
-		}
-		$.ajax({
-			type: "POST",
-	        url: "${pageContext.request.contextPath}/loan/addCarWcResult.do",
-	        data:{
-	        	coolStatus:coolStatus,
-	        	result_msg:result_msg,
-	        	type_id:type_id,
-	        	type_status:type_status,
-	        	icbc_id:icbc_id,
-	        	lolId:lolId
-	       	},
-	        success:function(data){  
-	        	alert(data);
-	        	self.location = document.referrer;
-	        }
-		})
-	}
 	
+	//拖车未受理和拖车已受理公用一个页面
+	//获取是哪个页面的提交
+	var formType = ${requestScope.type eq 'tc_ysl'};
 	if(formType){  //拖车已受理页面提交
-		//alert("拖车已受理页面提交");
 		var coolStatus = $('#coolStatus').val();
 		if(coolStatus==""){
 			alert("请选择拖车结果!");
@@ -455,14 +372,26 @@ function addPhoneResult(){
 		}
 		var coolTime = $('#coolTime').val();
 		var coolAddress = $('#coolAddress').val();
-		var coolVideo = $('#coolVideo').val();
+		//var coolVideo = new FormData($("#coolVideo")[0].files[0]);
+		//alert("已受理提交");
+		alert(lolId+"--"+icbc_id+"--"+type_status+"--"+type_id+"--"+coolTime+"--"+coolAddress+"--"+coolVideo);
+		/* var formFile = new FormData();
+        formFile.append("lolId",lolId);  
+        formFile.append("coolVideo",document.getElementById("coolVideo")[0].files[0]); //加入文件对象
+        formFile.append("coolTime",coolTime);  
+        formFile.append("coolAddress",coolAddress);  
+        formFile.append("coolStatus",coolStatus);  
+        formFile.append("result_msg",result_msg);  
+        formFile.append("type_id",type_id);  
+        formFile.append("type_status",type_status); 
+        formFile.append("icbc_id",icbc_id);  */
 		$.ajax({
 			type: "POST",
 	        url: "${pageContext.request.contextPath}/loan/addCarYslResult.do",
 	        data:{
 	        	coolTime:coolTime,
 	        	coolAddress:coolAddress,
-	        	coolVideo:coolVideo,
+	        	//coolVideo:coolVideo,
 	        	coolStatus:coolStatus,
 	        	result_msg:result_msg,
 	        	type_id:type_id,
@@ -470,20 +399,17 @@ function addPhoneResult(){
 	        	icbc_id:icbc_id,
 	        	lolId:lolId
 	       	},
+	        //contentType: false,
+	        //processData: false,
 	        success:function(data){  
 	        	alert(data);
+	        	alert("OK");
 	        	self.location = document.referrer;
 	        	//location.href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=3&type_status=32&type=tc_ysl&dn=loan_car&qn=list&pagesize=10&pagenow=1";
 	        }
-		})
-	}
-	
-	if(formTypeSb || formTypeWsl || formTypehx_no || formTypessgl_no || formTypessgl_yes){ //拖车未受理页面和拖车失败提交
+		}) 
+	}else{
 		//alert("未受理提交");
-		//alert("失败提交");
-		//alert("未核销提交");
-		//alert("未诉讼提交");
-		//alert("已诉讼页面提交");
 		$.ajax({
 			type: "POST",
 	        url: "${pageContext.request.contextPath}/loan/addPhoneResult.do",
@@ -501,70 +427,8 @@ function addPhoneResult(){
 				//window.location.go(-1); //刷新上一页 
 	            self.location = document.referrer;
 	        }
-		})
+		}) 
 	}
 	
-}
-
-
-function setImagePreview(avalue) {
-    var docObj = document.getElementById("file");
-    var imgObjPreview = document.getElementById("preview");
-    if(docObj.files && docObj.files[0])
-    {
-        //火狐下，直接设img属性
-        imgObjPreview.style.display = 'block';
-        imgObjPreview.style.width = '50px';
-        imgObjPreview.style.height = '50px';
-        //imgObjPreview.src = docObj.files[0].getAsDataURL();
-        //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
-        imgObjPreview.src = window.URL.createObjectURL(docObj.files[0]);
-    }
-    else
-    {
-        //IE下，使用滤镜
-        docObj.select();
-        var imgSrc = document.selection.createRange().text;
-        var localImagId = document.getElementById("localImag"); //必须设置初始大小
-        localImagId.style.width = "50px";
-        localImagId.style.height = "50px"; //图片异常的捕捉，防止用户修改后缀来伪造图片
-        try {
-            localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
-            localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
-        } catch(e) {
-            alert("您上传的图片格式不正确，请重新选择!");
-            return false;
-        }
-        imgObjPreview.style.display = 'none';
-        document.selection.empty();
-    }
-    file_up();
-    return true;
-}
-
-function file_up(){
-    var formData = new FormData();
-    formData.append("file", document.getElementById("file").files[0]);
-    $.ajax({
-        url: "${pageContext.request.contextPath}/erp/file_up_util.do",
-        type: "POST",
-        data: formData,
-        /**
-         *必须false才会自动加上正确的Content-Type
-         */
-        contentType: false,
-        /**
-         * 必须false才会避开jQuery对 formdata 的默认处理
-         * XMLHttpRequest会对 formdata 进行正确的处理
-         */
-        processData: false,
-        success: function (data) {
-            alert("上传成功！");
-            document.getElementById("coolVideo").value=data;
-        },
-        error: function () {
-            alert("上传失败！");
-        }
-    });
 }
 </script>			
