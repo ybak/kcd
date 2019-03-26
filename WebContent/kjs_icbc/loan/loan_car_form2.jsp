@@ -25,7 +25,6 @@
 	      <div style="display: inline-flex;">   
 		      <h4 style="line-height:30px">操作选项:</h4>	
 		     <!--   <image src="./../image/smcs.png" title="申请上门催收" style="height:30px;width:25px;margin-left:10px;"></image> --> 
-		      <image src="./../image/sqtc.png" title="申请拖车" style="height:30px;width:25px;margin-left:35px;" onclick="appCar(1)"></image>  
 		      <image src="./../image/sqss.png" title="申请诉讼" style="height:30px;width:25px;margin-left:40px;" onclick="appCar(2)"></image>  
 	      </div>	  
 	    </div>
@@ -188,47 +187,37 @@
 			    </div>
 			</div>
 		</div>
-
-		<div style="padding-top:20px;">
-	      <h4 class="modal-title">还款计划表:</h4>
-	    </div>
-	    <div class="box" style="margin-top:10px;">
-			<!-- 数据载入中结束 -->
-			<table class="table table-bordered table-hover">
-	    	<tr>
-				<th class="text-center">还款期数</th>
-				<th class="text-center">应还日期</th>
-				<th class="text-center">应还金额</th>
-				<th class="text-center">实还日期</th>
-				<th class="text-center">实还金额</th>
-				<th class="text-center">是否逾期</th>
-				<th class="text-center">逾期金额</th>
-				<!-- <th class="text-center">核销日期</th> -->
-			</tr>		   
-			<c:forEach items="${paySchedule}" var="map"  varStatus="status">
-			<tr>
-				<td class="text-center">${map.overdue_which}</td>
-				<td class="text-center">${map.should_date }</td>
-				<td class="text-center">${map.should_money}</td>
-				<td class="text-center">${map.practical_date}</td>
-				<td class="text-center">${map.practical_money}</td>
-				<td class="text-center">
-				<c:if test="${map.overdue_status == 1 }">
-				是
-				</c:if>
-				<c:if test="${map.overdue_status == 2 }">
-				否
-				</c:if>
-				</td>
-				<td class="text-center">${map.overdue_money}</td>
-				<%-- <td class="text-center">${map.hx_date }</td> --%>
-		    </tr>
-		    </c:forEach>
-       </table>
-	  </div>
 	  <form id="form1" onsubmit="return false" action="##"  method="post">
+	  	  <c:if test="${requestScope.type eq 'tc_ysl'}">
+  	  	  	  <div style="margin-top:20px;">
+  	  	  		<label>拖车结果<i class="red">*</i>:</label>
+  	  	  	  </div>
+			   <ul class="pagination no-margin" style="padding-top: 10px;">					     				       
+						<select id="coolStatus" name="coolStatus" class="form-control">
+						    <option value="">--请选择--</option>
+							<option value="33">拖车完成</option>
+							<option value="34">失败</option>
+						</select>
+				</ul>
+			  
+	  		  <div style="margin-top:20px;">
+			  		<label>入库时间:</label>
+				  	<lable style="margin-left:310px;margin-top:40px;">入库地址:</lable>
+				  	<lable style="margin-left:415px;">入库影像:</lable>
+				  	
+		  	  </div>
+			  <div style="margin-top:10px;width:300px;">
+					<div class="input-group date ng-isolate-scope ng-not-empty ng-valid ng-valid-required">
+			  			<input id="coolTime"  name="coolTime" class="form-control" type="text"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+					</div>
+					<input id="coolAddress" name="coolAddress" type="text" style="margin-top:-35px;margin-left:380px;width:390px;" class="form-control">
+					<input name="coolVideo" id="coolVideo" style="margin-top:-35px;margin-left:870px;width:390px;height:35px;"  class="file-upload-input" type="file">
+			  		
+			  </div>
+			  
+		  </c:if>
 		  <div style="margin-top:10px;">
-		      <h4 class="modal-title">电催录入栏:</h4>	      
+		      <h4 class="modal-title">拖车录入栏:</h4>	      
 		      <textarea style="border:1px solid #ccc;margin-top:10px;height:120px" id="result_msg" name="result_msg" class="form-control"></textarea>		
 		  </div>
 		  <div style="height:50px;margin:20px 0 0 0;">
@@ -318,14 +307,16 @@
 	    </div>
 	</div>
 </div>
-
+<script>
+lay('#version').html('-v'+ laydate.v);
+//执行一个laydate实例
+laydate.render({
+  elem: '#coolTime'
+});
+</script>
 <script type="text/javascript">
 function appCar(clickType){
-	if(clickType==1){//
-		var type_id = 3;
-		var type_status = 31;
-		var result_msg = "开始申请拖车";
-	}else if(clickType==2){
+	if(clickType==2){
 		var type_id = 4;
 		var type_status = 41;
 		var result_msg = "开始申请诉讼";
@@ -369,20 +360,75 @@ function addPhoneResult(){
 	var icbc_id = ${pdOne.icbc_id};
 	var lolId = ${pdOne.id};
 	//alert(lolId+"--"+icbc_id+"--"+type_status+"--"+type_id+"--");
-	$.ajax({
-		type: "POST",
-        url: "${pageContext.request.contextPath}/loan/addPhoneResult.do",
-        data:{
-        	result_msg:result_msg,
-        	type_id:type_id,
-        	type_status:type_status,
-        	icbc_id:icbc_id,
-        	lolId:lolId
-       	},
-        success:function(data){  
-        	alert(data);
-            location.reload(true);
-        }
-	})
+	
+	//拖车未受理和拖车已受理公用一个页面
+	//获取是哪个页面的提交
+	var formType = ${requestScope.type eq 'tc_ysl'};
+	if(formType){  //拖车已受理页面提交
+		var coolStatus = $('#coolStatus').val();
+		if(coolStatus==""){
+			alert("请选择拖车结果!");
+			return false;
+		}
+		var coolTime = $('#coolTime').val();
+		var coolAddress = $('#coolAddress').val();
+		//var coolVideo = new FormData($("#coolVideo")[0].files[0]);
+		//alert("已受理提交");
+		alert(lolId+"--"+icbc_id+"--"+type_status+"--"+type_id+"--"+coolTime+"--"+coolAddress+"--"+coolVideo);
+		/* var formFile = new FormData();
+        formFile.append("lolId",lolId);  
+        formFile.append("coolVideo",document.getElementById("coolVideo")[0].files[0]); //加入文件对象
+        formFile.append("coolTime",coolTime);  
+        formFile.append("coolAddress",coolAddress);  
+        formFile.append("coolStatus",coolStatus);  
+        formFile.append("result_msg",result_msg);  
+        formFile.append("type_id",type_id);  
+        formFile.append("type_status",type_status); 
+        formFile.append("icbc_id",icbc_id);  */
+		$.ajax({
+			type: "POST",
+	        url: "${pageContext.request.contextPath}/loan/addCarYslResult.do",
+	        data:{
+	        	coolTime:coolTime,
+	        	coolAddress:coolAddress,
+	        	//coolVideo:coolVideo,
+	        	coolStatus:coolStatus,
+	        	result_msg:result_msg,
+	        	type_id:type_id,
+	        	type_status:type_status,
+	        	icbc_id:icbc_id,
+	        	lolId:lolId
+	       	},
+	        //contentType: false,
+	        //processData: false,
+	        success:function(data){  
+	        	alert(data);
+	        	alert("OK");
+	        	self.location = document.referrer;
+	        	//location.href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=3&type_status=32&type=tc_ysl&dn=loan_car&qn=list&pagesize=10&pagenow=1";
+	        }
+		}) 
+	}else{
+		//alert("未受理提交");
+		$.ajax({
+			type: "POST",
+	        url: "${pageContext.request.contextPath}/loan/addPhoneResult.do",
+	        data:{
+	        	result_msg:result_msg,
+	        	type_id:type_id,
+	        	type_status:type_status,
+	        	icbc_id:icbc_id,
+	        	lolId:lolId
+	       	},
+	        success:function(data){  
+	        	alert(data);
+				//location.reload(true); // 刷新本页面
+	            //window.history.go(-1); //是返回上一页
+				//window.location.go(-1); //刷新上一页 
+	            self.location = document.referrer;
+	        }
+		}) 
+	}
+	
 }
 </script>			

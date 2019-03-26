@@ -20,14 +20,26 @@ public class LoanModel{
 		 loanTypeModel.put("31", "拖车未处理");
 		 loanTypeModel.put("32", "拖车已处理");
 		 loanTypeModel.put("33", "拖车完成");
+		 loanTypeModel.put("34", "失败");
 		 
 		 loanTypeModel.put("4", "诉讼");
 		 loanTypeModel.put("41", "未诉讼");
 		 loanTypeModel.put("42", "已诉讼");
 		 
 		 loanTypeModel.put("5", "拍卖");
+		 loanTypeModel.put("51", "未拍卖");
+		 loanTypeModel.put("52", "亏损(拍卖完成)");
+		 loanTypeModel.put("53", "盈利(拍卖完成)");
 		 
 		 loanTypeModel.put("6", "结清");
+		 loanTypeModel.put("61", "正常结清");
+		 loanTypeModel.put("62", "提前结清");
+		 loanTypeModel.put("63", "强制结清");
+		 loanTypeModel.put("64", "亏损结清");
+		 
+		 loanTypeModel.put("7", "核销");
+		 loanTypeModel.put("71", "未核销");
+		 loanTypeModel.put("72", "已核销");
 		 
 		 return loanTypeModel;	
 	}

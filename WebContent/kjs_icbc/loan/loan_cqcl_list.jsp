@@ -19,7 +19,7 @@
 		</script>
 		<section class="content-header">
 			<h1>
-			拖车管理<small>
+			结清管理<small>
 			共${requestScope.totalsize}个
 			</small>
 			</h1>
@@ -115,10 +115,9 @@
 						<td class="text-center">${sel.fs_name}</td>
 						<td class="text-center">${sel.c_carno}</td>
 						<td class="text-center">
-							<c:if test="${sel.type_status == '31'}">未处理</c:if>
-							<c:if test="${sel.type_status == '32'}">已处理</c:if>
-							<c:if test="${sel.type_status == '33'}">完成</c:if>
-							<c:if test="${sel.type_status == '34'}">失败</c:if>
+							<c:if test="${sel.type_status == '51'}">未拍卖</c:if>
+							<c:if test="${sel.type_status == '52'}">亏损</c:if>
+							<c:if test="${sel.type_status == '53'}">盈利</c:if>
 						</td>
 						<td class="text-center">
 							<a href="${pageContext.request.contextPath }/loan/selectPhoneForm.do?type=${requestScope.type}&dn=loan_car&qn=form&id=${sel.id}">
