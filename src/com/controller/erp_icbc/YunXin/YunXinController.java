@@ -193,44 +193,54 @@ public class YunXinController extends BaseController{
 				HttpServletRequest request) throws UnsupportedEncodingException{ //签约状态
 			request.setCharacterEncoding("utf-8");
 			//String  s = new String(request.getParameter("name").getBytes("ISO-8859-1"),"utf-8");
-			Map map=new HashMap();
-			//查询条件
-			if(!EmptyUtil.isEmpty(name)){//姓名
-				map.put("name", "%"+name+"%");
+			bank=yx.SelectBankIdByUid(super.getUserId(request));
+			if(!EmptyUtil.isEmpty(bank)) {//是面签账号
+				Map map=new HashMap();
+				map.put("bank", bank);
+				//查询条件
+				if(!EmptyUtil.isEmpty(name)){//姓名
+					map.put("name", "%"+name+"%");
+				}
+				//查询条件
+				if(!EmptyUtil.isEmpty(name)){//姓名
+					map.put("name", "%"+name+"%");
+				}
+				if(!EmptyUtil.isEmpty(idNumber) ){//身份证
+					map.put("idNumber", "%"+idNumber+"%");
+				}
+				if(!EmptyUtil.isEmpty(viedostartsvalue) ){
+					map.put("viedostartsvalue",viedostartsvalue);
+				}
+				if(!EmptyUtil.isEmpty(organization) ){
+					map.put("organization",organization);//机构
+				}
+				if(!EmptyUtil.isEmpty(contract) ){
+					map.put("contract", contract);
+				}
+				if(!EmptyUtil.isEmpty(viedotype) ){
+					map.put("viedotype",viedotype);
+				}
+				if(!EmptyUtil.isEmpty(bank) ){
+					map.put("bank",bank);
+				}
+				if(!EmptyUtil.isEmpty(timeInterval) ){
+					String[] ss=timeInterval.split(" - ");
+					map.put("startTime",ss[0].trim());
+					map.put("endTime",ss[1].trim());
+				}
+				PageInfo pageinfo=new PageInfo();
+				pageinfo.setFrom(offset);
+				pageinfo.setSize(pagesize);
+				if(map.size()>0){
+					pageinfo.setCondition(map);
+				}	
+				log.info("分页条件->"+JSON.toJSONString(pageinfo));
+				pageinfo.setRows(yx.select_operating(pageinfo));//数据
+				pageinfo.setTotal(yx.select_operating_count(pageinfo));//总条数
+				return pageinfo;
+			}else {
+				return null;
 			}
-			if(!EmptyUtil.isEmpty(idNumber) ){//身份证
-				map.put("idNumber", "%"+idNumber+"%");
-			}
-			if(!EmptyUtil.isEmpty(viedostartsvalue) ){
-				map.put("viedostartsvalue",viedostartsvalue);
-			}
-			if(!EmptyUtil.isEmpty(organization) ){
-				map.put("organization",organization);//机构
-			}
-			if(!EmptyUtil.isEmpty(contract) ){
-				map.put("contract", contract);
-			}
-			if(!EmptyUtil.isEmpty(viedotype) ){
-				map.put("viedotype",viedotype);
-			}
-			if(!EmptyUtil.isEmpty(bank) ){
-				map.put("bank",bank);
-			}
-			if(!EmptyUtil.isEmpty(timeInterval) ){
-				String[] ss=timeInterval.split(" - ");
-				map.put("startTime",ss[0].trim());
-				map.put("endTime",ss[1].trim());
-			}
-			PageInfo pageinfo=new PageInfo();
-			pageinfo.setFrom(offset);
-			pageinfo.setSize(pagesize);
-			if(map.size()>0){
-				pageinfo.setCondition(map);
-			}	
-			log.info("分页条件->"+pageinfo);
-			pageinfo.setRows(yx.select_operating(pageinfo));//数据
-			pageinfo.setTotal(yx.select_operating_count(pageinfo));//总条数
-			return pageinfo;
 		}
 
 	/*来电用户的信息*/
@@ -455,6 +465,7 @@ public class YunXinController extends BaseController{
 	@RequestMapping(value="addRealTimeVideoBinding.do")
 	@ResponseBody
 	public Object addRealTimeVideoBinding(String Id,String bankId,HttpServletRequest request){
+		log.info("创建视频用户->Id:"+Id+",bankId:"+bankId);
 		//下面的添加逻辑
 		if(StringUtils.isBlank(bankId)){
 			return renderError("bankId不能为空！");
@@ -469,15 +480,18 @@ public class YunXinController extends BaseController{
 		//查看用户id是否存在
 		int count=yx.selectCountAdminById(Id);
 		if(count==1){//此Id已注册
-			//查看是否已经分配
-			String delmark=yx.selectCountTokenByUid(Id);
-			if(StringUtils.isNotBlank(delmark)){//如果此映射不包含键-值映射关系，则返回 true。 
-				if(delmark.equals("0")){//可用			
-						return renderSuccess("此账号已存在此权限!");				
+			Map map=yx.selectCountTokenByUid(Id);
+			log.info("查看是否已经分配"+JSON.toJSONString(map));
+			if(!map.isEmpty()) {
+				//是当前银行相同 并且可用的
+				if(map.get("bankId").toString().equals(bankId) && map.get("delmark").toString().equals("0")) {
+					log.info("此账号已存在此权限");
+					return renderSuccess("此账号已存在此权限!");		
 				}
 				//如果这个用户不可用 绑定的银行默认不能修改
-				return yx.updateVideoTokenBinding("0",null, Id,super.getTime(),super.getUserId(request));	 
+				return yx.updateVideoTokenBinding("0",bankId, Id,super.getTime(),super.getUserId(request));	 
 			}
+			
 			//申请账号
 			Result result1=tokenDispose(HttpYX.getToken(MD5.sign(UUID.randomUUID().toString().replace("-", "").toLowerCase(),"utf-8")),"0");
 			log.info("创建点对点视频账户接口返回->"+result1);
@@ -526,7 +540,7 @@ public class YunXinController extends BaseController{
 		return renderError("此用户不存在!");
 	}
 	//解除绑定账号
-	@RequestMapping(value="VideoUnbind.do")
+	@RequestMapping(value="VideoUnbind.do") //delmark 1代表不可用  0代表可用
 	@ResponseBody
 	public Object removeRealTimeVideoUnbind(String Id,HttpServletRequest request){
 		return yx.updateVideoTokenBinding("1",null,Id,super.getTime(),super.getUserId(request));

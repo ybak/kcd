@@ -24,7 +24,7 @@ function graphTransform(){
  		   var summarydata = [];
  		   var timeline = [];
  		   var j;
- 		   //alert(111);
+ 		   //console.log(111);
  		   for(var i=0;i<9;i++){
  			 j=8-i;
  			 timeline[i]=data[1][j]=null?'2019-'+i:data[1][j];
@@ -108,7 +108,7 @@ function graphTransform(){
  		//ajax结尾
  		},
  		error : function(e, type, msg) {
- 			alert(type + "=报单统计=" + msg);
+ 			console.log(type + "=报单统计=" + msg);
  		}
  	}) 
 /*报单统计end*/
@@ -219,7 +219,7 @@ guojianlv.setOption(option_guojianlv);
 	//ajax结尾
  		},
  		error : function(e, type, msg) {
- 			alert(type + "=汽车贷款过件=" + msg);
+ 			console.log(type + "=汽车贷款过件=" + msg);
  		}
  	}) 
 /*过件率(汽车贷款通过)end*/
@@ -301,7 +301,7 @@ fangkkuan_bar_1.setOption(option_fangkkuan_bar_1);
 //ajax结尾
  		},
  		error : function(e, type, msg) {
- 			alert(type + "=车辆新旧=" + msg);
+ 			console.log(type + "=车辆新旧=" + msg);
  		}
  	}) 
  
@@ -383,7 +383,7 @@ option_fangkkuan_bar_2 = {
 //ajax结尾
 	},
 	error : function(e, type, msg) {
-		alert(type + "=贷款金额=" + msg);
+		console.log(type + "=贷款金额=" + msg);
 	}
 }) 
  
@@ -514,7 +514,7 @@ option_fangkkuan_lineANDbar_3 = {
 //ajax结尾
 		},
 		error : function(e, type, msg) {
-			alert(type + "=新旧车放款金额曲线=" + msg);
+			console.log(type + "=新旧车放款金额曲线=" + msg);
 		}
 	}) 
  
@@ -588,7 +588,7 @@ diyawancheng.setOption(option_diyawancheng);
 //ajax结尾
 		},
 		error : function(e, type, msg) {
-			alert(type + "=抵押情况=" + msg);
+			console.log(type + "=抵押情况=" + msg);
 		}
 	}) 
 /*---------------------------------------------------------------抵押完成情况end------------------------------------------------------*/
@@ -686,7 +686,7 @@ cailiaohuishou.setOption(option_cailiaohuishou);
 //ajax结尾
 },
 error : function(e, type, msg) {
-	alert(type + "=抵押材料情况=" + msg);
+	console.log(type + "=抵押材料情况=" + msg);
 }
 }) 
 /*材料回收情况end*/
@@ -1031,7 +1031,7 @@ zhengxinchaxuntongguolv.setOption(option_zhengxinchaxuntongguolv);
 //ajax结尾
 		},
 		error : function(e, type, msg) {
-			alert(type + "=征信查询=" + msg);
+			console.log(type + "=征信查询=" + msg);
 		}
 	}) 
 /*------------------------------------------------------------------征信查询通过率end-----------------------------------------------*/
@@ -1105,7 +1105,7 @@ kehunianling.setOption(option_kehunianling);
 //ajax结尾
 	 		},
 	 		error : function(e, type, msg) {
-	 			alert(type + "=客户年龄=" + msg);
+	 			console.log(type + "=客户年龄=" + msg);
 	 		}
 	 	}) 
 /*---------------------------------------------------------客户年龄right----------------------------------------------------*/
@@ -1177,7 +1177,7 @@ cheliangnianling.setOption(option_cheliangnianling);
 //ajax结尾
 	},
 	error : function(e, type, msg) {
-		alert(type + "=新车年龄=" + msg);
+		console.log(type + "=新车年龄=" + msg);
 	}
 }) 
 
@@ -1299,7 +1299,7 @@ zijinzhouzhuanlv.setOption(option_zijinzhouzhuanlv);
 //ajax结尾
 		},
 		error : function(e, type, msg) {
-			alert("=垫资失败=");
+			console.log("=垫资失败=");
 		}
 	}) 
 /*资金周转率(垫资方)end*/

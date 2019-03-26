@@ -163,11 +163,14 @@
 			limit 0,${size}
 		</if>
 	</select> 
-	<select id="selectCountTokenByUid" resultType="java.lang.String" parameterType="java.lang.String" >
-	select delmark from icbc_erp_token where uid=#{0}
+	<select id="selectCountTokenByUid" resultType="map" parameterType="java.lang.String" >
+	select delmark,bank_id bankId from icbc_erp_token where uid=#{0}
 	</select>
 	<select id="query_tokenbyid" resultType="scanpool" parameterType="java.lang.String">
 		select a.bank_id bankId,a.id mark,a.delmark,a.accid auditAccid ,a.token auditToken,b.accid clientAccid,b.token clientToken from  icbc_erp_token a,icbc_erp_token b where a.id=b.parentid and a.uid=#{0}
+	</select>
+	<select id="SelectBankIdByUid" resultType="java.lang.String" parameterType="java.lang.String">
+		select bank_id from icbc_erp_token where uid=#{0}
 	</select>
 	<!-- 记录上传回调信息 -->
 	<insert id="addcallback" parameterType="map">

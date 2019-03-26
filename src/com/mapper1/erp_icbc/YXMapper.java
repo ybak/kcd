@@ -53,11 +53,12 @@ public interface YXMapper {
 	String getCommCitys(Integer id);
 	String getCommZones(Integer id);
 	int updateVideoTokenBinding(@Param("delmark")Integer delmark,@Param("bankId")String bankId,@Param("Id")String Id,@Param("dt_edit")String dt_edit,@Param("mid_edit")String mid_edit);
-	String selectCountTokenByUid(String uid);
+	Map selectCountTokenByUid(String uid);
 	int selectCountAdminById(String id);
 	String selectBankId(String icbcId);
 	Integer selectBankCount(String id);
 	Integer addOccupyTest(Map map);
 	int updateServerPath(@Param("serverPath")String serverPath,@Param("id")String Id);
 	Map selectUrlAndVidById(String Id);
+	String SelectBankIdByUid(String id);
 }

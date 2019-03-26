@@ -167,7 +167,7 @@ public class YXServiceImpl implements YXService{
 		
 	}
 	@Override
-	public String selectCountTokenByUid(String uid) {
+	public Map selectCountTokenByUid(String uid) {
 		// TODO Auto-generated method stub
 		return yxmapper.selectCountTokenByUid(uid);
 	}
@@ -200,5 +200,10 @@ public class YXServiceImpl implements YXService{
 	public Map selectUrlAndVidById(String Id) {
 		// TODO Auto-generated method stub
 		return yxmapper.selectUrlAndVidById(Id);
+	}
+	@Override
+	public String SelectBankIdByUid(String id) {
+		// TODO Auto-generated method stub
+		return yxmapper.SelectBankIdByUid(id);
 	}
 }

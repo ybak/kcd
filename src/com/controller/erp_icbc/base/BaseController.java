@@ -69,6 +69,7 @@ public abstract class BaseController {
      * @return {Long}
      */
     public String getUserId(HttpServletRequest request) {
+    	//return "666";
         String id=((PageData)request.getSession().getAttribute("pd")).get("id").toString();
         log.info("获取当前登录用户唯一标识->"+id);
         return id;

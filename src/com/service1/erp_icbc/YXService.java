@@ -55,11 +55,12 @@ public interface YXService {
 	String getCommCitys(Integer id);
 	String getCommZones(Integer id);
 	Object updateVideoTokenBinding(String delmark,String bankId,String Id,String dt_edit,String mid_edit);
-	String selectCountTokenByUid(String uid);
+	Map selectCountTokenByUid(String uid);
 	int selectCountAdminById(String id);
 	String selectBankId(String icbcId);
 	Integer selectBankCount(String id);
 	Integer addOccupyTest(Map map);
 	int updateServerPath(String serverPath,String Id);
 	Map selectUrlAndVidById(String Id);
+	String SelectBankIdByUid(String id);
 }
