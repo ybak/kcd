@@ -15,11 +15,9 @@ import com.util.creditutil;
 
 @Component
 public class timedTaskController {
-
-	 @Autowired
-	 private erp_wdrwService erp_wdrwService;
+	@Autowired
+	private erp_wdrwService erp_wdrwService;
 	 
-	
 	@Scheduled(cron = "0 0 1 * * ?") //每天凌晨1点执行
 	public void tasktest(){	
 		PageData pData=new PageData();

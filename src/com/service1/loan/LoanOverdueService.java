@@ -23,4 +23,6 @@ public interface LoanOverdueService {
 	List<PageData> selectOverdueList(PageData pd);
 	//添加操作记录
 	Integer addOperationResult(PageData pd);
+	//定时任务-修改客户逾期天数
+	Integer updateOverdueDay();
 }

@@ -61,7 +61,8 @@ public class LoanPhoneController {
 		}else{
 			totalpage=pdList.size()/pagesize+1;
 		} 
-		
+		request.setAttribute("type_id", type_id);
+		request.setAttribute("type_status", type_status);
 		request.setAttribute("dn", dn);
 		request.setAttribute("cn", cn);
 		request.setAttribute("qn", qn);

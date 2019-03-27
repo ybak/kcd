@@ -27,7 +27,8 @@ public interface LoanOverdueMapper {
 	Integer updateOverdueStatus(PageData pd);
 	//查询逾期名单
 	List<PageData> selectOverdueList(PageData pd);
-	
+	//定时任务-修改客户逾期天数
+	Integer updateOverdueDay();
 	
 	//添加操作记录
 	Integer addOperationResult(PageData pd);

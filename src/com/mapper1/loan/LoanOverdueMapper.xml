@@ -93,6 +93,15 @@ where
 	id=#{id}
 </update>    
     
+<!-- 定时任务-修改客户逾期天数 -->
+<update id="updateOverdueDay" parameterType="int">
+update loan_overdue_list set
+	overdue_days=overdue_days+1,
+	dt_edit=sysdate()
+where 
+	overdue_amount > 0
+</update>
+
 <!-- 查询逾期名单 -->
 <select id="selectOverdueList" resultType="pd" parameterType="pd">
 select 
@@ -109,6 +118,64 @@ ORDER BY lol.dt_edit DESC
 </select> 
 <!-- 逾期名单模块操作 end******************************** -->
 
+<!-- 逾期配置 start******************************** -->
+
+<!-- 修改配置 -->
+<update id="updateConfig" parameterType="int">
+update loan_config set
+	mid_edit=#{gems_fs_id},
+	dt_edit=sysdate(),
+	gems_fs_id=#{gems_fs_id},
+	overdue_one=#{overdue_one},
+	overdue_two=#{overdue_two},
+	overdue_three=#{overdue_three},
+	overdue_to_phone=#{overdue_to_phone},
+	overdue_money=#{overdue_money}
+where 
+	gems_fs_id=#{gems_fs_id}
+</update>
+
+<!-- 查询配置 -->
+<select id="selectConfig" resultType="pd" parameterType="pd">
+select 
+	lc.*
+from 
+	loan_config lc
+LEFT JOIN assess_fs fs on lc.gems_fs_id=fs.id
+where lc.gems_fs_id=#{gems_fs_id}
+</select> 
+
+<!-- 添加配置 -->
+<insert id="addConfig" parameterType="pd"  keyProperty="id">
+insert into loan_config(
+id,
+mid_add,
+mid_edit,
+dt_add,
+dt_edit,
+gems_fs_id,
+company_name,
+overdue_one,
+overdue_two,
+overdue_three,
+overdue_to_phone,
+overdue_money
+)value(
+#{id},
+#{mid_add},
+#{mid_edit},
+#{dt_add},
+#{dt_edit},
+#{gems_fs_id},
+#{company_name},
+#{overdue_one},
+#{overdue_two},
+#{overdue_three},
+#{overdue_to_phone},
+#{overdue_money}
+)	    	
+</insert>
+<!-- 逾期配置 end******************************** -->
 
 
 <!-- 把操作数据记录到数据库 --> 

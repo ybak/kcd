@@ -10,7 +10,7 @@
 		var s=$("#page_limit_select").val();
 		var status=$("#status").val();
 		var querytype=$("#querytype").val();		
-		window.location.href ="${pageContext.request.contextPath}/loan/selectPhoneList.do?type=dczy&dn=loan_phone&qn=list&pagesize="+s+"&pagenow=1";
+		window.location.href ="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=${requestScope.type_id}&type_status=${requestScope.type_status}&type=${requestScope.type}&dn=${requestScope.dn}&qn=list&pagesize="+s+"&pagenow=1";
     }
     </script>
 		<section class="content-header">
@@ -42,10 +42,12 @@
 							</select>
 							</label>	
 							
-							<form class="form-horizontal" name="myform" action="${pageContext.request.contextPath }/loan/selectPhoneList.do?type=dczy&dn=loan_phone&qn=list&pagesize=${requestScope.pagesize}&pagenow=1" method="post">
+							<form class="form-horizontal" name="myform" action="${pageContext.request.contextPath }/loan/selectPhoneList.do?type_id=${requestScope.type_id}&type_status=${requestScope.type_status}&type=${requestScope.type}&dn=${requestScope.dn}&qn=list&pagesize=${requestScope.pagesize}&pagenow=1" method="post">
 								<input autocomplete="off" type="text" placeholder="请输入客户姓名或身份证号" name="param" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" style="width:500px;">
 								<button class="btn btn-info search-btn" type="submit" style="background-color:#00acd6;">查询</button>   			
 								<button class="btn btn-info search-btn" type="button" onclick="reset()" style="background-color:#00acd6;">重置</button>   																	
+								<button class="btn btn-info search-btn" type="button" onclick="config()" style="background-color:#FFA500;">配置</button> 
+								<!-- <i class="fa fa-search-plus" onclick="config()"></i> -->
 							</form>
 							
 					</div>		
@@ -73,12 +75,12 @@
 						    int totalpage1=Integer.parseInt(request.getAttribute("totalpage").toString());
 						    if(pagenow1>1&&pagenow1<=totalpage1){
 							%>
-							<a href="${pageContext.request.contextPath }/loan/selectPhoneList.do?type=dczy&dn=loan_phone&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" class="btn btn-default">«</a>						
+							<a href="${pageContext.request.contextPath }/loan/selectPhoneList.do?type_id=${requestScope.type_id}&type_status=${requestScope.type_status}&type=${requestScope.type}&dn=${requestScope.dn}&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" class="btn btn-default">«</a>						
 							<%				    	
 					         }						
 							 if(pagenow1>=1&&pagenow1<totalpage1){
 							%>
-							<a href="${pageContext.request.contextPath }/loan/selectPhoneList.do?type=dczy&dn=loan_phone&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" class="btn btn-default">»</a>
+							<a href="${pageContext.request.contextPath }/loan/selectPhoneList.do?type_id=${requestScope.type_id}&type_status=${requestScope.type_status}&type=${requestScope.type}&dn=${requestScope.dn}&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" class="btn btn-default">»</a>
 	                        <%
 	                        }
 	                        %>
@@ -148,7 +150,7 @@
 			<c:if test="${requestScope.totalpage ge '1' }">
 				<ul class="pagination no-margin">
 				       <c:if test="${requestScope.pagenow ne '1' }">
-				        <li><a href="${pageContext.request.contextPath }/loan/selectPhoneList.do?type=dczy&dn=loan_phone&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" aria-label="Next"><span aria-hidden="true">«</span></a></li>
+				        <li><a href="${pageContext.request.contextPath }/loan/selectPhoneList.do?type_id=${requestScope.type_id}&type_status=${requestScope.type_status}&type=${requestScope.type}&dn=${requestScope.dn}&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow-1}" aria-label="Next"><span aria-hidden="true">«</span></a></li>
 				       </c:if>
 					   <%
 				       int pagenow=Integer.parseInt(request.getAttribute("pagenow").toString());
@@ -170,7 +172,7 @@
 				       if(j==pagenow){
 				       %>
 					   <li id="l<%=j %>" class="active">
-					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/loan/selectPhoneList.do?type=dczy&dn=loan_phone&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
+					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/loan/selectPhoneList.do?type_id=${requestScope.type_id}&type_status=${requestScope.type_status}&type=${requestScope.type}&dn=${requestScope.dn}&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
 					   <%=j %>
 					   </a>
 					   </li>
@@ -178,7 +180,7 @@
 				       }else{
 					   %>
 	                   <li id="l<%=j %>" >
-					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/loan/selectPhoneList.do?type=dczy&dn=loan_phone&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
+					   <a id="a<%=j %>" href="${pageContext.request.contextPath }/loan/selectPhoneList.do?type_id=${requestScope.type_id}&type_status=${requestScope.type_status}&type=${requestScope.type}&dn=${requestScope.dn}&qn=list&pagesize=${requestScope.pagesize}&pagenow=<%=j %>">
 					   <%=j %>					   
 					   </a>
 					   </li>					   
@@ -191,7 +193,7 @@
 		               %>
 					   <c:if test="${requestScope.pagenow lt requestScope.totalpage}">
 			               <c:if test="${requestScope.totalpage gt 5}">
-						  <li><a href="${pageContext.request.contextPath }/loan/selectPhoneList.do?type=dczy&dn=loan_phone&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" aria-label="Next"><span aria-hidden="true">»</span></a></li>  
+						  <li><a href="${pageContext.request.contextPath }/loan/selectPhoneList.do?type_id=${requestScope.type_id}&type_status=${requestScope.type_status}&type=${requestScope.type}&dn=${requestScope.dn}&qn=list&pagesize=${requestScope.pagesize}&pagenow=${requestScope.pagenow+1}" aria-label="Next"><span aria-hidden="true">»</span></a></li>  
 						   </c:if>
 					   </c:if>
 					     				
@@ -202,3 +204,100 @@
 	</section>
 	<!-- /.content -->
 </div>
+<script>
+function config(){
+	$('#myModal').modal({ show: true });
+}
+</script>
+	<!-- 模态框 -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="addModal_nstrLabel" aria-hidden="true">
+	    <div class="modal-dialog modal-lg">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	                <h4 class="modal-title">逾期配置</h4>
+	            </div>
+	            <div class="modal-body" style="height:450px;">
+	             <!-- 模态框插入内容 start -->
+	             		<li class="text-primary">
+						<div class="big-conte_">  
+						<div class="task_margin ng-scope" style="border:1px solid #ccc; border-radius: 10px;background-color:#F7F7F7; padding-top:10px;">
+						<form id="configTable" name="modalForm" class="form-horizontal ng-pristine ng-valid ng-scope">
+						    <div class="form-group ng-scope">
+								<label class="col-sm-3 control-label">初级逾期:<i class="red">*</i></label>天
+								<div class="col-sm-2">
+									<input id="overdue_one" name="overdue_one" type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
+								</div>
+							</div>
+							<div class="form-group ng-scope">
+								<label class="col-sm-3 control-label">中级逾期:<i class="red">*</i></label>天
+								<div class="col-sm-2">
+									<input id="overdue_two" name="overdue_two" type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
+								</div>
+							</div>
+							<div class="form-group ng-scope">
+								<label class="col-sm-3 control-label">高级逾期:<i class="red">*</i></label>天
+								<div class="col-sm-2">
+									<input id="overdue_three" name="overdue_three" type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
+								</div>
+							</div>
+							<div class="form-group ng-scope">
+								<label class="col-sm-3 control-label">逾期时长进入电催:<i class="red">*</i></label>天
+								<div class="col-sm-2">
+									<input id="overdue_to_phone" name="overdue_to_phone" type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
+								</div>
+							</div>
+							<div class="form-group ng-scope">
+								<label class="col-sm-3 control-label">拍卖亏损金额:<i class="red">*</i></label>元
+								<div class="col-sm-2">
+									<input id="overdue_money" name="overdue_money" type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
+								</div>
+							</div>
+							<div class="modal-footer">
+								<a onclick="config_commit()" class="btn btn-primary">提交</a>	
+							</div>
+						</form>
+						<script type="text/javascript">
+						function config_commit(){
+								var overdue_one = $("#overdue_one").val();
+								var overdue_two = $("#overdue_two").val();
+								var overdue_three = $("#overdue_three").val();
+								var overdue_to_phone = $("#overdue_to_phone").val();
+								var overdue_money = $("#overdue_money").val();
+							
+								if(overdue_one=="" ||
+									overdue_two=="" ||
+									overdue_three=="" ||
+									overdue_to_phone=="" ||
+									overdue_money==""){
+									alert("请认真填写配置信息!");
+									return false;
+								}
+							   	var form = new FormData(document.getElementById("configTable"));
+							   	$.ajax({
+							           url:"${pageContext.request.contextPath }/loan/loanConfig.do",
+							           type:"post",
+							           data:form,
+							           processData:false,
+							           contentType:false,
+							           success:function(data){
+								            alert("提交成功!");
+								            location.reload();
+							           },
+							           error:function(e){
+							            	alert("错误！！");
+							           }
+							    });   
+						}
+						</script>
+						</div>                                             
+						</div>							  	
+						</li>
+				 <!-- 模态框插入内容 end -->
+				</div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>

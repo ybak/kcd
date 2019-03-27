@@ -214,7 +214,7 @@
 			  		<input type="hidden" id="coolVideo" name="coolVideo" value="" >
 		            <input style="display: none" onchange="javascript:setImagePreview();" type="file" value="" id="file" name="file" >
 		            <label for="file">
-		            <img  id="preview" style="margin-top:-35px;margin-left:870px;width:50px;height:50px;"  class="img-thumbnail"  src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/images/icon.png"/>     
+		            <img  id="preview" style="margin-top:-35px;margin-left:870px;width:50px;height:50px;"  class="img-thumbnail"  src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/images/logo.png"/>     
 				    </label>
 			  </div>
 		  </c:if>
