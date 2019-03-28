@@ -106,6 +106,11 @@ public class LoanPhoneController {
 		request.setAttribute("paySchedule",paySchedule);
 		request.setAttribute("results",results);
 		request.setAttribute("pdOne",pdOne);
+		//展示配置信息
+		PageData pp = new PageData();
+		pd.put("gems_fs_id",pdsession.get("icbc_erp_fsid"));
+		PageData getConfig = loanOverdueService.selectConfig(pd);
+		request.setAttribute("getConfig",getConfig);
 		return "kjs_icbc/index";
 	}
 	

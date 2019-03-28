@@ -6,6 +6,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <div class="content-wrapper" style="min-height: 943px;">
 <script type="text/javascript">
+	function a1(){
+		var situation=$("#situation").val();
+		window.location.href ="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=1&type_status="+situation+"&type=${requestScope.type}&dn=${requestScope.dn}&qn=list&pagesize=${requestScope.pagesize}&pagenow=1";
+	}
     function a3(){
 		var s=$("#page_limit_select").val();
 		var status=$("#status").val();
@@ -27,11 +31,11 @@
 					<div class="col-sm-10">
 							<label>
 								逾期情况
-								<select onchange="" class="form-control form-inline hidden-xs">
-									<option value="">***逾期情况***</option>
-									<option value="1">初级</option>
-									<option value="2">中级</option>
-									<option value="3">高级</option>
+								<select id="situation" name="situation" onchange="a1()"  class="form-control form-inline hidden-xs">
+									<option value="0">***逾期情况***</option>
+									<option value="11">初级</option>
+									<option value="12">中级</option>
+									<option value="13">高级</option>
 								</select>
 							</label>	
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -40,16 +44,15 @@
 							<select class="form-control form-inline hidden-xs">
 								<option value="">***金融产品***</option>
 							</select>
-							</label>	
-							
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							</label>
 							<form class="form-horizontal" name="myform" action="${pageContext.request.contextPath }/loan/selectPhoneList.do?type_id=${requestScope.type_id}&type_status=${requestScope.type_status}&type=${requestScope.type}&dn=${requestScope.dn}&qn=list&pagesize=${requestScope.pagesize}&pagenow=1" method="post">
-								<input autocomplete="off" type="text" placeholder="请输入客户姓名或身份证号" name="param" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" style="width:500px;">
+								查询<input autocomplete="off" type="text" placeholder="请输入客户姓名或身份证号" name="param" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" style="width:500px;">
 								<button class="btn btn-info search-btn" type="submit" style="background-color:#00acd6;">查询</button>   			
 								<button class="btn btn-info search-btn" type="button" onclick="reset()" style="background-color:#00acd6;">重置</button>   																	
 								<button class="btn btn-info search-btn" type="button" onclick="config()" style="background-color:#FFA500;">配置</button> 
 								<!-- <i class="fa fa-search-plus" onclick="config()"></i> -->
 							</form>
-							
 					</div>		
 					<div class="col-sm-2 admin-page-top hidden-xs">
 					   <div class="btn-group">											
@@ -206,7 +209,7 @@
 </div>
 <script>
 function config(){
-	$('#myModal').modal({ show: true });
+	$('#myModal').modal({show:true});
 }
 </script>
 	<!-- 模态框 -->
@@ -226,31 +229,31 @@ function config(){
 						    <div class="form-group ng-scope">
 								<label class="col-sm-3 control-label">初级逾期:<i class="red">*</i></label>天
 								<div class="col-sm-2">
-									<input id="overdue_one" name="overdue_one" type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
+									<input value="${getConfig.overdue_one}" id="overdue_one" name="overdue_one" type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
 								</div>
 							</div>
 							<div class="form-group ng-scope">
 								<label class="col-sm-3 control-label">中级逾期:<i class="red">*</i></label>天
 								<div class="col-sm-2">
-									<input id="overdue_two" name="overdue_two" type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
+									<input value="${getConfig.overdue_two}" id="overdue_two" name="overdue_two" type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
 								</div>
 							</div>
 							<div class="form-group ng-scope">
 								<label class="col-sm-3 control-label">高级逾期:<i class="red">*</i></label>天
 								<div class="col-sm-2">
-									<input id="overdue_three" name="overdue_three" type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
+									<input value="${getConfig.overdue_three}" id="overdue_three" name="overdue_three" type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
 								</div>
 							</div>
 							<div class="form-group ng-scope">
 								<label class="col-sm-3 control-label">逾期时长进入电催:<i class="red">*</i></label>天
 								<div class="col-sm-2">
-									<input id="overdue_to_phone" name="overdue_to_phone" type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
+									<input value="${getConfig.overdue_to_phone}" id="overdue_to_phone" name="overdue_to_phone" type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
 								</div>
 							</div>
 							<div class="form-group ng-scope">
 								<label class="col-sm-3 control-label">拍卖亏损金额:<i class="red">*</i></label>元
 								<div class="col-sm-2">
-									<input id="overdue_money" name="overdue_money" type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
+									<input value="${getConfig.overdue_money}" id="overdue_money" name="overdue_money" type="text" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required">
 								</div>
 							</div>
 							<div class="modal-footer">

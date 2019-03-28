@@ -10,6 +10,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <div class="content-wrapper" style="min-height: 943px;">
 <script type="text/javascript">
+	function a1(){
+		var situation=$("#situation").val();
+		window.location.href ="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=1&type_status="+situation+"&type=${requestScope.type}&dn=${requestScope.dn}&qn=list&pagesize=${requestScope.pagesize}&pagenow=1";
+	}
     function a3(){
 		var s=$("#page_limit_select").val();
 		var status=$("#status").val();
@@ -34,6 +38,15 @@
 			<div class="admin-tools">
 				<div class="row">
 					<div class="col-sm-10">
+					  <label>
+							逾期情况
+							<select id="situation" name="situation" onchange="a1()"  class="form-control form-inline hidden-xs">
+								<option value="0">***逾期情况***</option>
+								<option value="11">初级</option>
+								<option value="12">中级</option>
+								<option value="13">高级</option>
+							</select>
+						</label>
 						<div class="btn-group">		
 							<form class="form-horizontal" name="myform" action="${pageContext.request.contextPath }/loan/selectOverdue.do?type=khyqmd&dn=loan_overdue&qn=list&pagesize=10&pagenow=1" method="post">
 								<input autocomplete="off" type="text" placeholder="请输入客户姓名或身份证号" name="param" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" style="width:500px;">
@@ -123,9 +136,9 @@
 						<td class="text-center">
 							<input type="hidden" value="实际逾期${busin.overdue_days}天"> 
 							<c:choose>
-								<c:when test="${busin.overdue_days >= 10}"><span class="label label-danger">高级逾期</span></c:when>
-								<c:when test="${busin.overdue_days >= 3}"><span class="label label-warning">中级逾期</span></c:when>
-								<c:when test="${busin.overdue_days >= 0}"><span class="label label-success">初级逾期</span></c:when>
+								<c:when test="${busin.overdue_days >= (busin.overdue_three!=null?busin.overdue_three:9)}"><span class="label label-danger">高级逾期</span></c:when>
+								<c:when test="${busin.overdue_days >= (busin.overdue_two!=null?busin.overdue_two:6)}"><span class="label label-warning">中级逾期</span></c:when>
+								<c:when test="${busin.overdue_days >= (busin.overdue_one!=null?busin.overdue_one:3)}"><span class="label label-success">初级逾期</span></c:when>
 								<c:otherwise>${busin.overdue_days}天</c:otherwise>
 							</c:choose>
 						</td>

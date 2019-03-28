@@ -64,5 +64,23 @@ public class LoanOverdueServiceImpl implements LoanOverdueService{
 		// TODO Auto-generated method stub
 		return loanOverdueMapper.updateOverdueDay();
 	}
+
+	@Override
+	public Integer updateConfig(PageData pd) {
+		// TODO Auto-generated method stub
+		return loanOverdueMapper.updateConfig(pd);
+	}
+
+	@Override
+	public PageData selectConfig(PageData pd) {
+		// TODO Auto-generated method stub
+		return loanOverdueMapper.selectConfig(pd);
+	}
+
+	@Override
+	public Integer addConfig(PageData pd) {
+		// TODO Auto-generated method stub
+		return loanOverdueMapper.addConfig(pd);
+	}
 	
 }

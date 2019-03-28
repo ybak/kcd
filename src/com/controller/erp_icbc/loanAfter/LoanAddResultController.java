@@ -81,8 +81,12 @@ public class LoanAddResultController {
 		if(type_id==4 && type_status==41){  
 			update_wcl_to_ycl(request,lolId,4,42); 
 		}
-		//ËßËÏĞŞ¸Ä×´Ì¬   //ËßËÏ£¨4-42£©µ½ËßËÏ£¨7-71£©
+		//ËßËÏĞŞ¸Ä×´Ì¬   //ËßËÏ£¨4-42£©µ½Î´ºËÏú£¨7-71£©
 		if(type_id==4 && type_status==42){  
+			update_wcl_to_ycl(request,lolId,7,71); 
+		}
+		//ÅÄÂôĞŞ¸Ä×´Ì¬   //ËßËÏ£¨5-53£©µ½Î´ºËÏú£¨7-71£©
+		if(type_id==5 && type_status==53){  
 			update_wcl_to_ycl(request,lolId,7,71); 
 		}
 		return reuslt;

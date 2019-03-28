@@ -10,9 +10,9 @@ public class LoanModel{
 		 Map<Object,String> loanTypeModel=new HashMap<>();
 		 //逾期模块
 		 loanTypeModel.put("1", "逾期");
-		 loanTypeModel.put("11", "初级逾期");
-		 loanTypeModel.put("12", "中级逾期");
-		 loanTypeModel.put("13", "高级逾期");
+		 loanTypeModel.put("11", "初级逾期");  
+		 loanTypeModel.put("12", "中级逾期");   
+		 loanTypeModel.put("13", "高级逾期");  
 		 
 		 loanTypeModel.put("2", "电催");
 		 

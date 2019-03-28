@@ -94,22 +94,39 @@ where
 </update>    
     
 <!-- 定时任务-修改客户逾期天数 -->
-<update id="updateOverdueDay" parameterType="int">
-update loan_overdue_list set
+<update id="updateOverdueDay" parameterType="int">	
+<!-- update loan_overdue_list set
 	overdue_days=overdue_days+1,
 	dt_edit=sysdate()
 where 
-	overdue_amount > 0
+	overdue_amount > 0 -->    
+    
+<!-- UPDATE 
+loan_overdue_list l set
+dt_edit=sysdate(),
+l.overdue_days=l.overdue_days+1,
+l.type_status=(
+CASE
+    WHEN l.overdue_days>=(select c.overdue_one from loan_config c where c.gems_fs_id=l.gems_fs_id) and l.overdue_days<(select c.overdue_two from loan_config c where c.gems_fs_id=l.gems_fs_id) THEN 11
+    WHEN l.overdue_days>=(select c.overdue_two from loan_config c where c.gems_fs_id=l.gems_fs_id) and l.overdue_days<(select c.overdue_three from loan_config c where c.gems_fs_id=l.gems_fs_id) THEN 12
+    WHEN l.overdue_days>=(select c.overdue_three from loan_config c where c.gems_fs_id=l.gems_fs_id) THEN 13
+	ELSE l.type_status
+END
+)
+where 
+l.overdue_amount>0 and l.type_id=1 -->
 </update>
 
 <!-- 查询逾期名单 -->
 <select id="selectOverdueList" resultType="pd" parameterType="pd">
 select 
 	lol.*,
-	bc.gems_code
+	bc.gems_code,
+	lc.*
 from 
 	loan_overdue_list lol
 LEFT JOIN kj_icbc bc ON bc.id=lol.icbc_id
+LEFT JOIN loan_config lc ON lc.gems_fs_id=lol.gems_fs_id
 where 1=1 and lol.type_id=1 and lol.gems_fs_id=#{gems_fs_id}
 <if test="param != null and param != ''">
 and lol.c_name like '%${param}%' or lol.c_cardno like '%${param}%'
@@ -125,7 +142,6 @@ ORDER BY lol.dt_edit DESC
 update loan_config set
 	mid_edit=#{gems_fs_id},
 	dt_edit=sysdate(),
-	gems_fs_id=#{gems_fs_id},
 	overdue_one=#{overdue_one},
 	overdue_two=#{overdue_two},
 	overdue_three=#{overdue_three},
@@ -164,8 +180,8 @@ overdue_money
 #{id},
 #{mid_add},
 #{mid_edit},
-#{dt_add},
-#{dt_edit},
+sysdate(),
+sysdate(),
 #{gems_fs_id},
 #{company_name},
 #{overdue_one},

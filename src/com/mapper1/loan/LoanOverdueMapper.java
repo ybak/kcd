@@ -32,4 +32,14 @@ public interface LoanOverdueMapper {
 	
 	//添加操作记录
 	Integer addOperationResult(PageData pd);
+	
+	/**
+	 * 逾期配置
+	 */
+	//修改配置
+	Integer updateConfig(PageData pd);
+	//查询配置
+	PageData selectConfig(PageData pd);
+	//添加配置
+	Integer addConfig(PageData pd);
 }

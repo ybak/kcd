@@ -241,8 +241,8 @@
 			   <ul class="pagination no-margin" style="padding-top: 10px;">					     				       
 					<select id="coolStatus" name="coolStatus" style="width: 300px;" class="form-control">
 					    <option value="">--请选择--</option>
-						<option value="71">亏损<5000(拍卖完成)[进入未核销]</option>
-						<option value="41">亏损>5000(拍卖完成)[进入诉讼]</option>
+						<option value="71">亏损<${(getConfig.overdue_money!=null?getConfig.overdue_money:6000)}(拍卖完成)[进入未核销]</option>
+						<option value="41">亏损>${(getConfig.overdue_money!=null?getConfig.overdue_money:6000)}(拍卖完成)[进入诉讼]</option>
 						<option value="53">盈利(拍卖完成)</option>
 					</select>
 				</ul>
@@ -419,6 +419,7 @@ function addPhoneResult(){
 	var formTypehx_yes = ${requestScope.type eq 'hx_yes'};
 	var formTypessgl_no = ${requestScope.type eq 'ssgl_no'};
 	var formTypessgl_yes = ${requestScope.type eq 'ssgl_yes'};
+	var formTypeauction_profit = ${requestScope.type eq 'auction_profit'};
 	if(formTypeWc || formTypeAuctionNo || formTypehx_yes){ //拖车完成页面提交
 		//alert("拖车完成页面提交");
 		//alert("未拍卖提交");
@@ -478,12 +479,13 @@ function addPhoneResult(){
 		})
 	}
 	
-	if(formTypeSb || formTypeWsl || formTypehx_no || formTypessgl_no || formTypessgl_yes){ //拖车未受理页面和拖车失败提交
+	if(formTypeSb || formTypeWsl || formTypehx_no || formTypessgl_no || formTypessgl_yes || formTypeauction_profit){ //拖车未受理页面和拖车失败提交
 		//alert("未受理提交");
 		//alert("失败提交");
 		//alert("未核销提交");
 		//alert("未诉讼提交");
 		//alert("已诉讼页面提交");
+		//alert("盈利拍卖页面提交");
 		$.ajax({
 			type: "POST",
 	        url: "${pageContext.request.contextPath}/loan/addPhoneResult.do",

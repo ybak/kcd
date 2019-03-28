@@ -25,4 +25,11 @@ public interface LoanOverdueService {
 	Integer addOperationResult(PageData pd);
 	//定时任务-修改客户逾期天数
 	Integer updateOverdueDay();
+	
+	//修改配置
+	Integer updateConfig(PageData pd);
+	//查询配置
+	PageData selectConfig(PageData pd);
+	//添加配置
+	Integer addConfig(PageData pd);
 }
