@@ -61,4 +61,8 @@ public interface YXMapper {
 	int updateServerPath(@Param("serverPath")String serverPath,@Param("id")String Id);
 	Map selectUrlAndVidById(String Id);
 	String SelectBankIdByUid(String id);
+	//ΩÿÕºœ‡πÿ
+	int addVideoScreenshot(Map map);
+	List selectAllVideoScreenshot(String id);
+	int deleteVideoScreenshot(Map map);
 }

@@ -206,4 +206,19 @@ public class YXServiceImpl implements YXService{
 		// TODO Auto-generated method stub
 		return yxmapper.SelectBankIdByUid(id);
 	}
+	@Override
+	public int addVideoScreenshot(Map map) {
+		// TODO Auto-generated method stub
+		return yxmapper.addVideoScreenshot(map);
+	}
+	@Override
+	public List selectAllVideoScreenshot(String id) {
+		// TODO Auto-generated method stub
+		return yxmapper.selectAllVideoScreenshot(id);
+	}
+	@Override
+	public int deleteVideoScreenshot(Map map) {
+		// TODO Auto-generated method stub
+		return yxmapper.deleteVideoScreenshot(map);
+	}
 }

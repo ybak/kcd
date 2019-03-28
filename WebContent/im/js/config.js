@@ -28,7 +28,7 @@
     }
     
     //云信的
- /*  online: {
+  /*  online: {
         appkey: '45c6af3c98409b18a84451215d0bdd6e',
         url: 'https://app.netease.im',
         chatroomList: 'https://app.netease.im/api/chatroom/homeList',

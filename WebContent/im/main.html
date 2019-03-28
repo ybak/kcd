@@ -8,6 +8,7 @@
 	<link rel="icon" href="images/icon.ico" type="image/x-icon" />
 	<!--主界面 -->
 	<script src="../3rd/jquery-1.11.3.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link href="../kjs_icbc/kjs_icbc_style/bootstraptable/bootstrap-table.css" rel="stylesheet" type="text/css">
 	<script src="../kjs_icbc/kjs_icbc_style/bootstraptable/bootstrap-table.js" type="text/javascript"></script>
 	<script src="../kjs_icbc/kjs_icbc_style/bootstraptable/bootstrap-table-zh-CN.js" type="text/javascript"></script>
@@ -51,14 +52,146 @@
 		 .float-none {
 		  float: none !important;
 		}
+		/* 字体居中 */
+		.font-around-middle{
+			display: flex;
+    		align-items: center;
+    		justify-content: center;
+		}
+		/* 删除图标 */
+		.img-box{
+			max-width:100px;
+			height: 100px;
+			position: relative;
+			margin: 10px;
+		}
+		.img-box > img{
+			display: block;
+			width:100%;
+			height: 100%;
+		}
+		.img-box > span{
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            width: 20px;
+            height: 20px;
+			background-size: 100%;
+			border-radius:10px;
+			background-image: url(../kjs_icbc/kjs_icbc_style/developerLwStyle/delete2.png);
+		}
+		/* layer 自定义样式 */
+		#layui-layer1{
+			top: 100px !important;
+		}
+		 /* 屏幕截图 */	
+		 .big-screenCapture{
+			width:100%;
+			height:100%;
+		}	
+		.item{
+			height:100%;
+		}
+		.item > img{
+			width:10%;
+			display:inline-block !important;
+			height:100% !important;
+			box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+					transition: box-shadow 0.3s ease-in-out;
+		}
+		.item > img:nth-of-type(n+2){
+			margin-left:3px;
+		}
+		.item > img:hover {
+		  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+		}
+		/* 下载中 loading*/
+		.mq_arrows_box{
+			position: fixed;
+		    width: 24px;
+		    height: 24px;
+		    overflow: hidden;
+		   	top: 27px;
+		    right: 225px;
+		    background-image: url(./js/img/close3.png);
+		    background-size: 24px;
+		    border-radius: 50%;
+		}
 		
-		
-			
+		.loadEffect{
+            width: 100px;
+            height: 100px;
+            position: relative;
+            margin: 0 auto;
+            top: 100px;
+        }
+        .loadEffect span{
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #969696;
+            position: absolute;
+            -webkit-animation: load 1.04s ease infinite;
+        }
+        @-webkit-keyframes load{
+            0%{
+                opacity: 1;
+            }
+            100%{
+                opacity: 0.2;
+            }
+        }
+        .loadEffect span:nth-child(1){
+            left: 0;
+            top: 50%;
+            margin-top:-8px;
+            -webkit-animation-delay:0.13s;
+        }
+        .loadEffect span:nth-child(2){
+            left: 14px;
+            top: 14px;
+            -webkit-animation-delay:0.26s;
+        }
+        .loadEffect span:nth-child(3){
+            left: 50%;
+            top: 0;
+            margin-left: -8px;
+            -webkit-animation-delay:0.39s;
+        }
+        .loadEffect span:nth-child(4){
+            top: 14px;
+            right:14px;
+            -webkit-animation-delay:0.52s;
+        }
+        .loadEffect span:nth-child(5){
+            right: 0;
+            top: 50%;
+            margin-top:-8px;
+            -webkit-animation-delay:0.65s;
+        }
+        .loadEffect span:nth-child(6){
+            right: 14px;
+            bottom:14px;
+            -webkit-animation-delay:0.78s;
+        }
+        .loadEffect span:nth-child(7){
+            bottom: 0;
+            left: 50%;
+            margin-left: -8px;
+            -webkit-animation-delay:0.91s;
+        }
+        .loadEffect span:nth-child(8){
+            bottom: 14px;
+            left: 14px;
+            -webkit-animation-delay:1.04s;
+        }
 	</style>
 </head>
 <body>
 	<div class="wrapper box-sizing" >
-		<div id="becall-content"  style="height: 100%; margin:20px; ">
+		<!-- 历史界面一 class="hide" -->
+		<div id="becall-content" style="height: 100%; margin:20px; ">
 			<!-- 头部搜索开始-->
 			<div class="my-container">
 		        <label class="myLabel-content">姓名：</label>
@@ -100,8 +233,6 @@
 					</select>	
 		        </div>
 		    </div>
-	
-		
 			<!-- 录制播放开始 -->
 			<div class="my-container">
 		        <label class="myLabel-content">视频类型：</label>
@@ -148,27 +279,27 @@
 								<div class="mq_l_top">
 									<div class="mq_l_t_content" >
 										<div>
-											<div id="namedivB" class="l_content"></div>
-											<div id="idnumberAdivB" class="r_contetn"></div>
+											<div id="namedivB" class="l_content font-around-middle"></div>
+											<div id="idnumberAdivB" class="r_contetn  font-around-middle"></div>
 										</div>
 										<div>
-											<div class="l_content">人脸识别:</div>
-											<div class="r_contetn" id="manB"></div>
+											<div class="l_content font-around-middle">人脸识别:</div>
+											<div class="r_contetn  font-around-middle" id="manB"></div>
 										</div>
 										<div>
-											<div class="l_content">意向金额:</div>
-											<div class="r_contetn" id="totalpriceB"></div>
+											<div class="l_content font-around-middle">意向金额:</div>
+											<div class="r_contetn  font-around-middle" id="totalpriceB"></div>
 										</div>
 										<div>
-											<div class="l_content">GPS定位:</div>
-											<div class="r_contetn" id="addressB"></div>
+											<div class="l_content font-around-middle">GPS定位:</div>
+											<div class="r_contetn  font-around-middle" id="addressB"></div>
 										</div>
 										<div>
-											<div class="l_content">
+											<div class="l_content"  style="padding-top:20px">
 												<img id="positiveB" class="mq_img" />
 												<p class="mq_p">身份证照片</p>
 											</div>
-											<div class="r_contetn">
+											<div class="r_contetn"  style="padding-top:20px">
 												<img id="visaB" class="mq_img" />
 												<p class="mq_p">人脸照片</p>
 											</div>
@@ -222,6 +353,7 @@
 								  	  <li onclick="switchoverFun('C',this,'item_')"><a href="javascript:void(0);">客户信息</a></li>
 									  <li onclick="switchoverFun('D',this,'item_')"><a href="javascript:void(0);">贷款信息</a></li>
 									  <li onclick="switchoverFun('E',this,'item_')"><a href="javascript:void(0);">车辆信息</a></li>
+									  <li onclick="switchoverFun('F',this,'item_')"><a href="javascript:void(0)">截屏信息</a></li>
 									</ul>
 									<div id="item_A" class="item1_child">
 										<table class="mq_tabl" id="pastRecords" cellspacing="0"></table>
@@ -229,94 +361,12 @@
 									<div id="item_C" class="item1_child hide"></div>
 									<div id="item_D" class="item1_child hide"></div>
 									<div id="item_E" class="item1_child hide"></div>
+									<div id="item_F" class="item1_child hide"></div>
 								</div>
 							</div>
 					</div>
 				</div>
 			</div>
-			<style>
-				.mq_arrows_box{
-					position: fixed;
-				    width: 24px;
-				    height: 24px;
-				    overflow: hidden;
-				   	top: 27px;
-				    right: 225px;
-				    background-image: url(./js/img/close3.png);
-				    background-size: 24px;
-				    border-radius: 50%;
-				}
-				
-				.loadEffect{
-		            width: 100px;
-		            height: 100px;
-		            position: relative;
-		            margin: 0 auto;
-		            top: 100px;
-		        }
-		        .loadEffect span{
-		            display: inline-block;
-		            width: 16px;
-		            height: 16px;
-		            border-radius: 50%;
-		            background: #969696;
-		            position: absolute;
-		            -webkit-animation: load 1.04s ease infinite;
-		        }
-		        @-webkit-keyframes load{
-		            0%{
-		                opacity: 1;
-		            }
-		            100%{
-		                opacity: 0.2;
-		            }
-		        }
-		        .loadEffect span:nth-child(1){
-		            left: 0;
-		            top: 50%;
-		            margin-top:-8px;
-		            -webkit-animation-delay:0.13s;
-		        }
-		        .loadEffect span:nth-child(2){
-		            left: 14px;
-		            top: 14px;
-		            -webkit-animation-delay:0.26s;
-		        }
-		        .loadEffect span:nth-child(3){
-		            left: 50%;
-		            top: 0;
-		            margin-left: -8px;
-		            -webkit-animation-delay:0.39s;
-		        }
-		        .loadEffect span:nth-child(4){
-		            top: 14px;
-		            right:14px;
-		            -webkit-animation-delay:0.52s;
-		        }
-		        .loadEffect span:nth-child(5){
-		            right: 0;
-		            top: 50%;
-		            margin-top:-8px;
-		            -webkit-animation-delay:0.65s;
-		        }
-		        .loadEffect span:nth-child(6){
-		            right: 14px;
-		            bottom:14px;
-		            -webkit-animation-delay:0.78s;
-		        }
-		        .loadEffect span:nth-child(7){
-		            bottom: 0;
-		            left: 50%;
-		            margin-left: -8px;
-		            -webkit-animation-delay:0.91s;
-		        }
-		        .loadEffect span:nth-child(8){
-		            bottom: 14px;
-		            left: 14px;
-		            -webkit-animation-delay:1.04s;
-		        }
-									
-			</style>
 			<!-- 录制播放结束 -->
 			<div class="mq_arrows_box" title=""></div>
 		 </div>
@@ -363,45 +413,45 @@
 		<div id="mask" class="mask hide"></div>	
 		</div>
 	
-		<!-- BBB -->
+		<!-- 视频界面二  class="hide"-->
 		<div id="viedo-view" class="hide" style="margin: 0 auto;width:100%;height: 100%; ">
 			<div style="width: 100%;height: 100%; position: relative; margin: 0 auto;">
 			<div class="mq_title">面签报告--明细</div>
 			<div class="mq_subject mq_m_b">
 					<div class="mq_left">
-						<div class="mq_l_top">
+						<div class="mq_l_top" style="height:35%">
 							<div class="mq_l_t_content" >
 								<div>
-									<div id="namedivA" class="l_content"></div>
-									<div id="idnumberAdivA" class="r_contetn"></div>
+									<div id="namedivA" class="l_content font-around-middle"></div>
+									<div id="idnumberAdivA" class="r_contetn  font-around-middle"></div>
 								</div>
 								<div>
-									<div class="l_content">人脸识别:</div>
-									<div class="r_contetn" id="manA"></div>
+									<div class="l_content font-around-middle">人脸识别:</div>
+									<div class="r_contetn  font-around-middle" id="manA"></div>
 								</div>
 								<div>
-									<div class="l_content">意向金额:</div>
-									<div class="r_contetn" id="totalpriceA"></div>
+									<div class="l_content font-around-middle">意向金额:</div>
+									<div class="r_contetn  font-around-middle" id="totalpriceA"></div>
 								</div>
 								<div>
-									<div class="l_content">GPS定位:</div>
-									<div class="r_contetn" id="addressA"></div>
+									<div class="l_content font-around-middle">GPS定位:</div>
+									<div class="r_contetn  font-around-middle" id="addressA"></div>
 								</div>
 								<div>
-									<div class="l_content">
-										<img id="positiveA" class="mq_img" />
+									<div class="l_content" style="padding-top:20px">
+										<img id="positiveA" class="mq_img" style="margin-top: 0" />
 										<p class="mq_p">身份证照片</p>
 									</div>
-									<div class="r_contetn">
-										<img id="visaA" class="mq_img" />
+									<div class="r_contetn" style="padding-top:20px">
+										<img id="visaA" class="mq_img" style="margin-top: 0"  />
 										<p class="mq_p">人脸照片</p>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div style="height: 1px; background: #CCCCCC;width: 100%;"></div>
-						<div class="mq_l_bottom">
-							<div style="height: 85%;">
+						<div class="mq_l_bottom" style="height:65%">
+							<div style="height: 80%;">
 									<div class="right-panel-1">
 									<!-- 聊天面板 -->
 									<div class="chat-box"><!-- 对话框 -->	
@@ -415,7 +465,11 @@
 											<!-- 视频对话 -->
 											<div class="netcall-show-video">
 												<div class="netcall-video-left">
-													<div class="netcall-video-remote bigView empty">
+													<div id="media" class="netcall-video-remote bigView empty">
+													 <!-- 	 
+													 	<video id="media" src="./test.mp4" controls="ture" loop="loop"   height="100%" width="100%" autoplay="autoplay">
+															 视频走丢了。。
+														 </video> 	 -->
 														<div class="message"></div>
 														<!-- 切换视图位置按钮 -->
 														<span class="switchViewPositionButton"></span>
@@ -423,7 +477,7 @@
 												</div>
 										
 												<div class="netcall-video-right">
-													<div class="netcall-video-local smallView">
+													<div id="netcallVideoLocal" class="netcall-video-local smallView">
 														<div class="message"></div>
 														<span class="switchViewPositionButton"></span>
 													</div>
@@ -461,10 +515,18 @@
 									</div>
 								</div>		
 							</div>
+							<div id="printscreenBtn" class="operation_active font-around-middle" style="height:6%;font-size:16px;color: #23262B;" onclick="printscreen()">截取图片</div>
+							<div style="height:8%;">
+								<!-- 轮播（Carousel） -->
+								<div id="myCarousel" data-interval=false class="carousel slide"  style="height:100%;">  
+								    <ol id="toggleIndexButton" class="carousel-indicators" style="bottom: 0px;width: 20%;margin-left: -10%;"></ol>   
+									<div id="printscreenList" class="carousel-inner" style="height:100%"></div> 
+								</div> 
+							</div>
 						</div>
 					</div>
-					<div class="mq_right">
-					
+					<!-- <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script> -->
+					<div class="mq_right">	
 						<div class="mq_m_b" style="height: 98%;position: relative;">
 						  	<ul class="nav nav-tabs">
 						  	  <li class="active" onclick="switchoverFun('A',this,'item1_')"><a href="javascript:void(0)">实时面签问答题</a></li>
@@ -473,6 +535,7 @@
 							  <li onclick="switchoverFun('E',this,'item1_')"><a href="javascript:void(0)">车辆信息</a></li>
 							</ul>
 							<div id="item1_A" class="item1_child">
+								<!-- <img id="showScreenshots_img"></img> -->
 								<table class="mq_tabl" id="realTime"  cellspacing="0" style="border: 1px solid #CCCCCC; "></table>
 							</div>	
 							<div id="item1_C" class="item1_child hide"></div>
@@ -505,7 +568,8 @@
 		}
 	</script>
 	<script src="../3rd/nim_server_conf.js"></script>
-<!-- 	<script src="../3rd/NIM_Web_SDK_v5.4.0.js"></script>
+	<!-- 	
+	<script src="../3rd/NIM_Web_SDK_v5.4.0.js"></script>
 	<script src="../3rd/NIM_Web_Netcall_v5.4.0.js"></script>
 	<script src="../3rd/NIM_Web_WebRTC_v5.4.0.js"></script> - -->
 	<script src="../3rd/NIM_Web_SDK_v6.1.0.js"></script>
@@ -549,7 +613,6 @@
 	<!-- <script src="js/module/personCard.js"></script> --> <!-- 个人名片 -->
 	<!-- <script src="js/module/session.js"></script><!-- 会话模块  -->
 	<!-- <script src="js/module/friend.js"></script> --> <!-- 好友相关 -->
- 
 	 <!-- <script src="js/module/team.js"></script> --> <!-- 群组相关 -->
 	 <!-- <script src="js/module/dialog_team.js"></script> --><!-- 选择/添加成员的弹框组件 -->
 	 <!-- <script src="js/module/cloudMsg.js"></script>  --> <!-- 云记录 -->
@@ -562,6 +625,108 @@
 	<script src="../3rd/vue.min.js"></script>
 	<script type="text/javascript" src="../kjs_icbc/kjs_icbc_style/layer/layer.js"></script>
 	<script src="../kjs_icbc/kjs_icbc_style/laydate/laydate.js"></script>
+	<script src="../kjs_icbc/kjs_icbc_style/developerLwStyle/html2canvas.js"></script>
+	<script>
+     //将base64转换为文件
+	 var  dataURLtoBlob=function(dataurl, filename) { 
+		  var arr = dataurl.split(','),
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]),
+            n = bstr.length,
+            u8arr = new Uint8Array(n);
+	        while (n--) {
+	            u8arr[n] = bstr.charCodeAt(n);
+	        }
+	        return new Blob([u8arr], { type: mime });
+	}
+     //ajax提示
+     function layer1(message){
+    	 layer.msg(message,{time:700,maxWidth:150});
+     }
+	//canvas画出该图 →调用canvas的方法生成base64编码 → 将编码转换成file对象
+	function printscreen(){
+		var video =$("#media").find("video")[0];//获取前台要截图的video对象，
+		var canvas =  document.createElement('canvas'); 
+		var width = 400;
+		var height = 300;
+		canvas.width = width;
+		canvas.height = height;
+		var ctx = canvas.getContext('2d');//设置canvas绘制2d图，
+		try{ 
+			ctx.drawImage(video, 0, 0, width, height);//将video视频绘制到canvas中
+		}catch(err){
+			console.error(err);
+			html2canvas( [ document.getElementById("media") ], {
+				onrendered: function(canvaS) {
+					canvas=canvaS;
+				}
+			});
+		}
+		var imageS = canvas.toDataURL('image/png');//canvas的api中的toDataURL（）保存图像
+		/* document.getElementById("showScreenshots").appendChild(canvas); */
+		//document.getElementById("showScreenshots_img").src=images;
+	    var blob=dataURLtoBlob(imageS);
+	    var formData = new FormData();
+           formData.append("file",blob);
+           formData.append("icbcId",window.custom.id);
+           $.ajax({
+                  url: "../yx/pImg.do",
+                  type: "POST",
+                  data: formData,
+                  /**
+                   *必须false才会自动加上正确的Content-Type
+                   */
+                   contentType: false,
+                   /**
+                   * 必须false才会避开jQuery对 formdata 的默认处理
+                   * XMLHttpRequest会对 formdata 进行正确的处理
+                   */
+                  processData: false,
+                  success: function (data) {
+                  	if(data.success){
+                  		$("#printscreenBtn").text("重新截取")
+                        window.listOfAdditional(data.message);
+                  	}else{
+                  		layer.msg('截取失败，请重新截取');
+                  	}
+                  },
+                  error: function () {
+                	  layer1('异常');  
+                  }
+              })
+	}
+	//动态轮播图
+	function listOfAdditional(path){
+		var printscreenList=$("#printscreenList")
+		var div_=printscreenList.children("div")
+		var div_Last=div_.last();
+		var img_Len=div_Last.children("img").length;
+		if(img_Len<9 && img_Len!=0){
+			div_Last.append(`<img onclick="showBigScreenCapture('${path}')" src="${path}">`)
+		}else{
+			var div_L=div_.length;
+			console.log(div_L)
+			$("#toggleIndexButton").append(` <li data-target="#myCarousel" data-slide-to="${div_L}" class="${div_L==0?'active':''}"></li>`)
+			printscreenList.append(`
+					<div class="item ${div_L==0?'active':''}">
+						<img onclick="showBigScreenCapture('${path}')" src="${path}">
+					</div>
+					`);
+		}
+	}
+	function showBigScreenCapture(url){
+		layer.open({
+		  type: 1,
+		  shade: 'background-color:rgba(255,255,255,0.1)',//背景透明
+		  /* closeBtn: 0, */
+		  title:'图片',
+		  maxWidth:700,
+		  maxHeight:700,
+		  shadeClose: true,
+		  content: `<img  class="big-screenCapture" src="${url}">`
+		}); 
+	} 
+</script>
 	<script>
 	  //日期范围
 	  laydate.render({
@@ -2078,12 +2243,25 @@
 					</div>
 				</li>
 			</ul>`;
-								
+			var item_F=`<div style="display: flex;	flex-wrap: wrap;">`;
+			var allVideoScreenshot=data.allVideoScreenshot;
+			for(var i=0;i<allVideoScreenshot.length;i++ ){
+				var avs=allVideoScreenshot[i];
+				item_F+=
+				`<div class="img-box">
+					<img onclick="showBigScreenCapture('${avs.path}')" src="${avs.path}"> 
+					<span onclick="deleteVideoScreenshot('${avs.id}',this)"></span>
+				</div>
+				`;
+			}
+			item_F+=`</div>`;
+			
 		if(dom=="B"){//历史
 			$("#item_E").html(item_E)
 			$("#item_D").html(item_D)
 			$("#item_C").html(item_C)
 			$("#pastRecords").html(item_A);
+			$("#item_F").html(item_F)
 		}else if(dom=='A'){//实时
 			$("#item1_E").html(item_E)
 			$("#item1_D").html(item_D)
@@ -2097,6 +2275,26 @@
 		$(".mq_tabl tr td:last-child:even").css("background-color","#e7e9f1");
 		$(".mq_tabl tr td:last-child:odd").css("background-color","#d5d8df");
 	}
+    function deleteVideoScreenshot(Id,that){
+    	$.ajax({
+            url:'../yx/DImg.do',
+            type:'POST',
+            data:{id:Id},
+            dataType:'json',
+            success: function (data) {
+            	if(data.success){
+       				//删除这个div
+            		$(that).parent().remove();
+            	}else{
+            		layer1("删除失败请重试")
+            	}
+            	
+            },
+            error: function(d){
+            	layer1("异常")
+            }
+        });
+    }
  	//关闭浏览器之前的js动作 兼容多浏览器
 /* 	window.onbeforeunload = function(e) {
 	var evt = e ? e : (window.event ? window.event : null); //此方法专门兼容firefox的解决方案

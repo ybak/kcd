@@ -1,9 +1,12 @@
 package com.controller.erp_icbc.YunXin;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +22,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -35,10 +41,11 @@ import com.controller.htpdf.DoubleUtil;
 import com.service1.erp_icbc.YXService;
 import com.util.creditutil;
 import com.util.duoying.MD5;
+import Decoder.BASE64Decoder;
 /**
  * @Description:TODO
  * @author:LiWang
- * @time:2018Äê8ÔÂ22ÈÕ
+ * @time:2018å¹´8æœˆ22æ—¥
  */
 @Controller
 @RequestMapping("yx/")
@@ -50,98 +57,98 @@ public class YunXinController extends BaseController{
 	@Autowired
 	private YXService yx;
 	/**
-	 * @param icbcid Õ÷ĞÅid ÓÃÀ´ÅĞ´ó×´Ì¬ÊÇ·ñ´æÔÚ ºÍ²éÑ¯ÓÃ»§µÄÆÀ¹ÀĞÅÏ¢ºÍÕ÷ĞÅĞÅÏ¢
-	 * @param through Í¨¹ı»òÕß²»Í¨¹ı
+	 * @param icbcid å¾ä¿¡id ç”¨æ¥åˆ¤å¤§çŠ¶æ€æ˜¯å¦å­˜åœ¨ å’ŒæŸ¥è¯¢ç”¨æˆ·çš„è¯„ä¼°ä¿¡æ¯å’Œå¾ä¿¡ä¿¡æ¯
+	 * @param through é€šè¿‡æˆ–è€…ä¸é€šè¿‡
 	 */
 	@RequestMapping(value="sutitstatus.do")
 	@ResponseBody
 	public void auditStatus(String icbcid,String auditstatus,String channel,HttpServletRequest request){
 		Map map=autioMonth(icbcid,auditstatus,channel,request);
-		/*¹ØÁªÒ»ÏÂ´Ëresult²Ù×÷ºÍÃæÇ©ĞÅÏ¢*/
+		/*å…³è”ä¸€ä¸‹æ­¤resultæ“ä½œå’Œé¢ç­¾ä¿¡æ¯*/
 		int i0=yx.update_infocopy_viedo_vid(map);
-		log.info("¹ØÁªĞ¡¼ÇÂ¼ºÍÃæÇ©ĞÅÏ¢->update:"+i0);
-		//Èç¹ûÉóÅúÍ¨¹ı  25µÄĞ¡×´Ì¬
+		log.info("å…³è”å°è®°å½•å’Œé¢ç­¾ä¿¡æ¯->update:"+i0);
+		//å¦‚æœå®¡æ‰¹é€šè¿‡  25çš„å°çŠ¶æ€
 		if(auditstatus.equals("1")){
-			//ÔòÌí¼ÓÒ»¸öÍê³ÉµÄĞ¡×´Ì¬
+			//åˆ™æ·»åŠ ä¸€ä¸ªå®Œæˆçš„å°çŠ¶æ€
 			map.put("status",25);
-			map.put("remark","Íê³É");
-			map.put("resultmsg","Íê³É");
-			int i=yx.insert_kjicbcresult(map);//Ìí¼ÓÒ»¸öÍê³ÉµÄĞ¡×´Ì¬
-			log.info("Ìí¼ÓÒ»¸öÍê³ÉµÄĞ¡×´Ì¬->insert:"+i);
+			map.put("remark","å®Œæˆ");
+			map.put("resultmsg","å®Œæˆ");
+			int i=yx.insert_kjicbcresult(map);//æ·»åŠ ä¸€ä¸ªå®Œæˆçš„å°çŠ¶æ€
+			log.info("æ·»åŠ ä¸€ä¸ªå®Œæˆçš„å°çŠ¶æ€->insert:"+i);
 		}
 	}
-	//²éÑ¯ËùÓĞµÄ»ú¹¹
+	//æŸ¥è¯¢æ‰€æœ‰çš„æœºæ„
 	@RequestMapping(value="cl.do")
 	@ResponseBody
 	public List getOrganization(){
 		return yx.getOrganization();
 	}
-	//²éÑ¯ËùÓĞµÄÒøĞĞ
+	//æŸ¥è¯¢æ‰€æœ‰çš„é“¶è¡Œ
 	@RequestMapping(value="getBank.do")
 	@ResponseBody
 	public List getBank(){
 		return yx.getBank();
 	}
-	/**	ÌáÈ¡¹«¹²²¿·Ö
-	 * @param icbcid ÉóºËµÄid
-	 * auditstatus   Í¨¹ı»òÕß²»Í¨¹ı 0´ú±íÍ¨¹ı ´ú±í²»Í¨¹ı
-	 * @param request ÓÃÀ´»ñ
+	/**	æå–å…¬å…±éƒ¨åˆ†
+	 * @param icbcid å®¡æ ¸çš„id
+	 * auditstatus   é€šè¿‡æˆ–è€…ä¸é€šè¿‡ 0ä»£è¡¨é€šè¿‡ ä»£è¡¨ä¸é€šè¿‡
+	 * @param request ç”¨æ¥è·
 	 */
 	public Map  autioMonth(String icbcid,String auditstatus,String channel,HttpServletRequest request){
-		String parentid = yx.select_kjicbc_byid("6",icbcid);//²éÑ¯¶ÔÓ¦µÄÊÓÆµÃæÇ©´ó×´Ì¬ÊÇ·ñ´æÔÚ
+		String parentid = yx.select_kjicbc_byid("6",icbcid);//æŸ¥è¯¢å¯¹åº”çš„è§†é¢‘é¢ç­¾å¤§çŠ¶æ€æ˜¯å¦å­˜åœ¨
 		Map map=new HashMap<>();
 		map.put("channel", channel);
-		//Í¨ÓÃµÄÖ±½Ó¸³Öµ°É
-		map.put("addadmin","121");//pdsession.get("id").toString();//»ñµÃµ±Ç°µÇÂ¼ÓÃ»§µÄÖ÷¼ü
-		map.put("editadmin","121");//ĞŞ¸ÄÈË
-		map.put("addtime",creditutil.time());//ĞÂ½¨Ê±¼ä
-		map.put("editime",creditutil.time());//×îºó±à¼­Ê±¼ä
-		map.put("sub",creditutil.time());//Ìá½»Ê±¼ä
+		//é€šç”¨çš„ç›´æ¥èµ‹å€¼å§
+		map.put("addadmin","121");//pdsession.get("id").toString();//è·å¾—å½“å‰ç™»å½•ç”¨æˆ·çš„ä¸»é”®
+		map.put("editadmin","121");//ä¿®æ”¹äºº
+		map.put("addtime",creditutil.time());//æ–°å»ºæ—¶é—´
+		map.put("editime",creditutil.time());//æœ€åç¼–è¾‘æ—¶é—´
+		map.put("sub",creditutil.time());//æäº¤æ—¶é—´
 		map.put("icbcid",icbcid);
 		map.put("typeid", 6);
-		if(auditstatus.equals("1")){//Èç¹ûÉóºËÍ¨¹ı
-			int i=yx.updata_mq_status("3",icbcid);//¸üĞÂÃâÇ©±í×´Ì¬ 3´ú±íÉóºËÍ¨¹ı
-			log.info("¸üĞÂÃæÇ©±í×´Ì¬(ÃæÇ©Í¨¹ı)->update"+i);
-			map.put("status","25");//25´ú±íÍê³É
-			map.put("resultmsg","ÃæÇ©Í¨¹ı");
-		}else if(auditstatus.equals("3")){//»ØÍË
-			int i=yx.updata_mq_status("4",icbcid);//ÃâÇ©²»Í¨¹ı
-			log.info("¸üĞÂÃæÇ©±í×´Ì¬(ÃæÇ©²»Í¨¹ı)->update"+i);
+		if(auditstatus.equals("1")){//å¦‚æœå®¡æ ¸é€šè¿‡
+			int i=yx.updata_mq_status("3",icbcid);//æ›´æ–°å…ç­¾è¡¨çŠ¶æ€ 3ä»£è¡¨å®¡æ ¸é€šè¿‡
+			log.info("æ›´æ–°é¢ç­¾è¡¨çŠ¶æ€(é¢ç­¾é€šè¿‡)->update"+i);
+			map.put("status","25");//25ä»£è¡¨å®Œæˆ
+			map.put("resultmsg","é¢ç­¾é€šè¿‡");
+		}else if(auditstatus.equals("3")){//å›é€€
+			int i=yx.updata_mq_status("4",icbcid);//å…ç­¾ä¸é€šè¿‡
+			log.info("æ›´æ–°é¢ç­¾è¡¨çŠ¶æ€(é¢ç­¾ä¸é€šè¿‡)->update"+i);
 			map.put("status","24");
-			map.put("resultmsg","ÃæÇ©²»Í¨¹ı");
+			map.put("resultmsg","é¢ç­¾ä¸é€šè¿‡");
 		}
-		if(parentid==null){//²»´æÔÚ´ó×´Ì¬  ÔòÌí¼Ó
-			//²éÑ¯ĞÅÏ¢
+		if(parentid==null){//ä¸å­˜åœ¨å¤§çŠ¶æ€  åˆ™æ·»åŠ 
+			//æŸ¥è¯¢ä¿¡æ¯
 			Map icbc = yx.select_icbc_byid(icbcid);
 			Map car = yx.select_car_byid(icbcid);
-			map.put("c_name", icbc.get("c_name").toString());//ĞÕÃû
-			map.put("gems_id", icbc.get("gems_id").toString());//ÒµÎñÔ±
-			map.put("gems_fs_id",icbc.get("gems_fs_id").toString());//»ú¹¹
-			map.put("c_cardno", icbc.get("c_cardno").toString());//»ú¹¹
-			map.put("vincode",car.get("vincode").toString());//vinÂë
-			map.put("code", car.get("code").toString());//³µÅÆ
-			//Ìí¼ÓÒ»¸ö´ó×´Ì¬
+			map.put("c_name", icbc.get("c_name").toString());//å§“å
+			map.put("gems_id", icbc.get("gems_id").toString());//ä¸šåŠ¡å‘˜
+			map.put("gems_fs_id",icbc.get("gems_fs_id").toString());//æœºæ„
+			map.put("c_cardno", icbc.get("c_cardno").toString());//æœºæ„
+			map.put("vincode",car.get("vincode").toString());//vinç 
+			map.put("code", car.get("code").toString());//è½¦ç‰Œ
+			//æ·»åŠ ä¸€ä¸ªå¤§çŠ¶æ€
 			int i=yx.insert_kjicbc(map);
-			log.info("Ìí¼ÓÒ»Ìõda×´Ì¬->"+i);
-			map.put("parentid",map.get("id"));//ÖØĞÂÉèÖÃÒ»ÏÂresultµÄ¸¸¼¶µÄid
+			log.info("æ·»åŠ ä¸€æ¡daçŠ¶æ€->"+i);
+			map.put("parentid",map.get("id"));//é‡æ–°è®¾ç½®ä¸€ä¸‹resultçš„çˆ¶çº§çš„id
 		}else{
-			//¸üĞÂÒ»ÏÂ´ó×´Ì¬ 
-			int i=yx.update_kjicbc(map);//¸ù¾İicbcId ºÍ typeid Ö÷ÒªĞŞ¸ÄÒ»ÏÂ×îĞÂµÄ î‘B ºÍ×îáá¸üĞÂ•rég ºÍ ×îáá²Ù×÷µÄÈË
-			log.info("¸üĞÂÒ»Ìõ´ó×´Ì¬->"+i);
-			map.put("parentid",parentid);//ÖØĞÂÉèÖÃÒ»ÏÂresultµÄ¸¸¼¶µÄid
+			//æ›´æ–°ä¸€ä¸‹å¤§çŠ¶æ€ 
+			int i=yx.update_kjicbc(map);//æ ¹æ®icbcId å’Œ typeid ä¸»è¦ä¿®æ”¹ä¸€ä¸‹æœ€æ–°çš„ç‹€æ…‹ å’Œæœ€å¾Œæ›´æ–°æ™‚é–“ å’Œ æœ€å¾Œæ“ä½œçš„äºº
+			log.info("æ›´æ–°ä¸€æ¡å¤§çŠ¶æ€->"+i);
+			map.put("parentid",parentid);//é‡æ–°è®¾ç½®ä¸€ä¸‹resultçš„çˆ¶çº§çš„id
 		}	
-		//±£´æÒ»¸ö24Ğ¡×´Ì¬ ½á¹û·´À¡
+		//ä¿å­˜ä¸€ä¸ª24å°çŠ¶æ€ ç»“æœåé¦ˆ
 		map.put("status",24);
-		map.put("remark","½á¹û·´À¡");
-		map.put("resultcode",auditstatus);//1Í¨¹ı 3»ØÍË
-		int i=yx.insert_kjicbcresult(map);//Ìí¼ÓÒ»¸öĞ¡×´Ì¬
-		log.info("Ìí¼ÓÒ»¸öĞ¡×´Ì¬(½á¹û·´À¡)->"+i);
+		map.put("remark","ç»“æœåé¦ˆ");
+		map.put("resultcode",auditstatus);//1é€šè¿‡ 3å›é€€
+		int i=yx.insert_kjicbcresult(map);//æ·»åŠ ä¸€ä¸ªå°çŠ¶æ€
+		log.info("æ·»åŠ ä¸€ä¸ªå°çŠ¶æ€(ç»“æœåé¦ˆ)->"+i);
 		return map;
 	}
-	/**Ò»ÏµÁĞµÄĞÅÏ¢ Èç¹ûÊÓÆµÃæÇ©ºóÃ»ÓĞµã»÷Í¨¹ı»òÕß²»Í¨¹ı ÄÇÃ´ÕâÀïÃæµÄÂß¼­¾Í²»»áÖ´ĞĞ ÉóºËµÄÂß¼­·ÅÔÚ²é¿´ÀúÊ·¶©µ¥ÖĞµÄ ÇĞ¼Ç£¡£¡£¡
-	 * @param auditstatus ÉóºË×´Ì¬
-	 * @param customvalue icbc_id addressµÈ
-	 * @param chanelid Í¨µÀid
+	/**ä¸€ç³»åˆ—çš„ä¿¡æ¯ å¦‚æœè§†é¢‘é¢ç­¾åæ²¡æœ‰ç‚¹å‡»é€šè¿‡æˆ–è€…ä¸é€šè¿‡ é‚£ä¹ˆè¿™é‡Œé¢çš„é€»è¾‘å°±ä¸ä¼šæ‰§è¡Œ å®¡æ ¸çš„é€»è¾‘æ”¾åœ¨æŸ¥çœ‹å†å²è®¢å•ä¸­çš„ åˆ‡è®°ï¼ï¼ï¼
+	 * @param auditstatus å®¡æ ¸çŠ¶æ€
+	 * @param customvalue icbc_id addressç­‰
+	 * @param chanelid é€šé“id
 	 * @param request 
 	 * @Description: TODO
 	 * @param name
@@ -151,68 +158,68 @@ public class YunXinController extends BaseController{
 	@RequestMapping(value="viedoAudit.do")
 	@ResponseBody
 	public void viedoAudit(String auditstatus, String customvalue,String channel,HttpServletRequest request) throws UnsupportedEncodingException{
-		log.info("ÇëÇó²ÎÊı:"+auditstatus+" "+customvalue+" "+channel);
+		log.info("è¯·æ±‚å‚æ•°:"+auditstatus+" "+customvalue+" "+channel);
 		JSONObject custom = JSONObject.parseObject(customvalue);
 		String icbcid=custom.getString("id");
 		Map map=autioMonth(icbcid,auditstatus,channel,request);
-		//¶ÔĞ¡ÊÓÆµµÄ²Ù×÷
+		//å¯¹å°è§†é¢‘çš„æ“ä½œ
 		map.put("address", custom.getString("address"));
-		if(yx.select_infocopy(channel)!=null){//ÃæÇ©±í
-			//¸üĞÂ
+		if(yx.select_infocopy(channel)!=null){//é¢ç­¾è¡¨
+			//æ›´æ–°
 			int i=yx.update_infocopy_viedo(map);
-			log.info("¸üĞÂicbc_erp_video_info±í->update:"+i);
+			log.info("æ›´æ–°icbc_erp_video_infoè¡¨->update:"+i);
 		}else{
-			//Ìí¼Ó
+			//æ·»åŠ 
 			int i=yx.insert_infocopy_viedo(map);
-			log.info("Ìí¼Óicbc_erp_video_info±í->insert:"+i);
+			log.info("æ·»åŠ icbc_erp_video_infoè¡¨->insert:"+i);
 		}
 		
-		//Èç¹ûÉóÅúÍ¨¹ı  25µÄĞ¡×´Ì¬
+		//å¦‚æœå®¡æ‰¹é€šè¿‡  25çš„å°çŠ¶æ€
 		if(auditstatus.equals("1")){
-			//ÔòÌí¼ÓÒ»¸öÍê³ÉµÄĞ¡×´Ì¬
+			//åˆ™æ·»åŠ ä¸€ä¸ªå®Œæˆçš„å°çŠ¶æ€
 			map.put("status",25);
-			map.put("remark","Íê³É");
-			map.put("resultmsg","Íê³É");
-			int i=yx.insert_kjicbcresult(map);//Ìí¼ÓÒ»¸öÍê³ÉµÄĞ¡×´Ì¬
-			log.info("Ìí¼ÓĞ¡×´Ì¬icbc_erp_kj_icbc_result±í->insert"+i);
+			map.put("remark","å®Œæˆ");
+			map.put("resultmsg","å®Œæˆ");
+			int i=yx.insert_kjicbcresult(map);//æ·»åŠ ä¸€ä¸ªå®Œæˆçš„å°çŠ¶æ€
+			log.info("æ·»åŠ å°çŠ¶æ€icbc_erp_kj_icbc_resultè¡¨->insert"+i);
 		}
 	}
-		//·ÖÒ³²éÑ¯ÀúÊ·
+		//åˆ†é¡µæŸ¥è¯¢å†å²
 		@RequestMapping(value="selectOperatingFalse.do")
 		@ResponseBody
 		public PageInfo selectOperatingFalse(Integer pagesize,
 				Integer offset,
 				String name,
 				String idNumber,
-				String organization, //»ú¹¹µÄÖ÷¼ü
-				String viedostartsvalue,//ÉóºË×´Ì¬ 1ÒÑÉóºË 2Î´ÉóºË
-				String viedotype,//ÊÓÆµÀàĞÍ 1ÊÓÆµÃæÇ© 2ÊÓÆµÂ¼ÖÆ
-				String contract,//Ç©Ô¼×´Ì¬ 1³É¹¦ 3»ØÍË
-				String bank,//ÒøĞĞid
+				String organization, //æœºæ„çš„ä¸»é”®
+				String viedostartsvalue,//å®¡æ ¸çŠ¶æ€ 1å·²å®¡æ ¸ 2æœªå®¡æ ¸
+				String viedotype,//è§†é¢‘ç±»å‹ 1è§†é¢‘é¢ç­¾ 2è§†é¢‘å½•åˆ¶
+				String contract,//ç­¾çº¦çŠ¶æ€ 1æˆåŠŸ 3å›é€€
+				String bank,//é“¶è¡Œid
 				String timeInterval,
-				HttpServletRequest request) throws UnsupportedEncodingException{ //Ç©Ô¼×´Ì¬
+				HttpServletRequest request) throws UnsupportedEncodingException{ //ç­¾çº¦çŠ¶æ€
 			request.setCharacterEncoding("utf-8");
 			//String  s = new String(request.getParameter("name").getBytes("ISO-8859-1"),"utf-8");
 			bank=yx.SelectBankIdByUid(super.getUserId(request));
-			if(!EmptyUtil.isEmpty(bank)) {//ÊÇÃæÇ©ÕËºÅ
+			if(!EmptyUtil.isEmpty(bank)) {//æ˜¯é¢ç­¾è´¦å·
 				Map map=new HashMap();
 				map.put("bank", bank);
-				//²éÑ¯Ìõ¼ş
-				if(!EmptyUtil.isEmpty(name)){//ĞÕÃû
+				//æŸ¥è¯¢æ¡ä»¶
+				if(!EmptyUtil.isEmpty(name)){//å§“å
 					map.put("name", "%"+name+"%");
 				}
-				//²éÑ¯Ìõ¼ş
-				if(!EmptyUtil.isEmpty(name)){//ĞÕÃû
+				//æŸ¥è¯¢æ¡ä»¶
+				if(!EmptyUtil.isEmpty(name)){//å§“å
 					map.put("name", "%"+name+"%");
 				}
-				if(!EmptyUtil.isEmpty(idNumber) ){//Éí·İÖ¤
+				if(!EmptyUtil.isEmpty(idNumber) ){//èº«ä»½è¯
 					map.put("idNumber", "%"+idNumber+"%");
 				}
 				if(!EmptyUtil.isEmpty(viedostartsvalue) ){
 					map.put("viedostartsvalue",viedostartsvalue);
 				}
 				if(!EmptyUtil.isEmpty(organization) ){
-					map.put("organization",organization);//»ú¹¹
+					map.put("organization",organization);//æœºæ„
 				}
 				if(!EmptyUtil.isEmpty(contract) ){
 					map.put("contract", contract);
@@ -234,28 +241,28 @@ public class YunXinController extends BaseController{
 				if(map.size()>0){
 					pageinfo.setCondition(map);
 				}	
-				log.info("·ÖÒ³Ìõ¼ş->"+JSON.toJSONString(pageinfo));
-				pageinfo.setRows(yx.select_operating(pageinfo));//Êı¾İ
-				pageinfo.setTotal(yx.select_operating_count(pageinfo));//×ÜÌõÊı
+				log.info("åˆ†é¡µæ¡ä»¶->"+JSON.toJSONString(pageinfo));
+				pageinfo.setRows(yx.select_operating(pageinfo));//æ•°æ®
+				pageinfo.setTotal(yx.select_operating_count(pageinfo));//æ€»æ¡æ•°
 				return pageinfo;
 			}else {
 				return null;
 			}
 		}
 
-	/*À´µçÓÃ»§µÄĞÅÏ¢*/
+	/*æ¥ç”µç”¨æˆ·çš„ä¿¡æ¯ è¯¦æƒ…*/
 	@RequestMapping(value="viedoinfo.do")
 	@ResponseBody
 	public Object selectViedobyid(String id,String domvalue){
 		Map map=null;
 		List select_mq_info=null;
 		String icbcid="-1";
-		if(domvalue.equals("A")){//ÊÓÆµ¶Ô»° idÎªicbc_id
+		if(domvalue.equals("A")){//è§†é¢‘å¯¹è¯ idä¸ºicbc_id
 			 map= yx.select_viedo_byid(id);
-			 log.info("ÊµÊ±ÊÓÆµ·µ»ØÔªÊı¾İ->{}"+JSON.toJSONString(map));
+			 log.info("å®æ—¶è§†é¢‘è¿”å›å…ƒæ•°æ®->{}"+JSON.toJSONString(map));
 		}else if(domvalue.equals("B")){
 			 map=(Map) yx.select_viedo_byid2(id).get(0);
-			 log.info("²é¿´ÀúÊ·ÊÓÆµ·µ»ØÔªÊı¾İ->{}"+JSON.toJSONString(map));
+			 log.info("æŸ¥çœ‹å†å²è§†é¢‘è¿”å›å…ƒæ•°æ®->{}"+JSON.toJSONString(map));
 		}
 		 if(map.get("kk_car_stateid")!=null){
 			map.put("kk_car_stateid",yx.getCommStates(Integer.parseInt(map.get("kk_car_stateid").toString()))); 
@@ -278,7 +285,7 @@ public class YunXinController extends BaseController{
 		 if(map.get("kk_kpj")!=null && Integer.parseInt(DataConversionParent.subZeroAndDot(map.get("kk_kpj").toString()))>0 &&  map.get("sfje")!=null){
 			 map.put("sfbl",DataConversionParent.subZeroAndDot(DoubleUtil.mul(DoubleUtil.div( map.get("sfje").toString(),map.get("kk_kpj").toString(),4),"100")));
 		 }	
-		//ĞŞÀíÏÂÍ¼Æ¬
+		//ä¿®ç†ä¸‹å›¾ç‰‡
 		Object imgstep2_1ss=map.get("imgstep2_1ss");
 		if(imgstep2_1ss!=null && !imgstep2_1ss.toString().equals("")){
 			String ss[]=imgstep2_1ss.toString().split("");
@@ -290,15 +297,17 @@ public class YunXinController extends BaseController{
 				}
 			}
 		}
-		select_mq_info = yx.select_mq_info(map.get("id").toString());//¸Ä  ¶à¸öÃæÇ©Ö»È¡µÚÒ»¸ö
+		String icbcId=map.get("id").toString();
+		select_mq_info = yx.select_mq_info(icbcId);//æ”¹  å¤šä¸ªé¢ç­¾åªå–ç¬¬ä¸€ä¸ª
 		if(select_mq_info.size()>0){
-			 map.putAll((Map)select_mq_info.get(0));//Ìí¼Óµ½¼¯ºÏÖĞ
+			 map.putAll((Map)select_mq_info.get(0));//æ·»åŠ åˆ°é›†åˆä¸­
 		 }
-		//´¦ÀíÏÂÔØµÄµØÖ· ÏÈ´Ó±¾µØÏÂÔØÔÙ¿¼ÂÇ´ÓÔÆĞÅÏÂÔØ
-		//±¾µØ
+		map.put("allVideoScreenshot", yx.selectAllVideoScreenshot(icbcId));
+		//å¤„ç†ä¸‹è½½çš„åœ°å€ å…ˆä»æœ¬åœ°ä¸‹è½½å†è€ƒè™‘ä»äº‘ä¿¡ä¸‹è½½
+		//æœ¬åœ°
 		Object serverPath= map.get("serverPath");
 		if(serverPath!=null && StringUtils.isNotBlank(serverPath.toString())){
-			log.info("±¾µØÏÂÔØÂ·¾¶ÒÑ¾­´æÔÚ");
+			log.info("æœ¬åœ°ä¸‹è½½è·¯å¾„å·²ç»å­˜åœ¨");
 			//http://a.kcway.net/assess/upload/0-50873460261080-0-mix.mp4
 			String serverPath1=serverPath.toString();
 			int i=serverPath1.indexOf("upload");
@@ -307,23 +316,23 @@ public class YunXinController extends BaseController{
 				//C:/Users/Administrator/Desktop/word/haha1/upload/0-50873460261080-0-mix.mp4
 			}
 		}else{
-			log.info("Ö»´æÔÚÔÆĞÅµÄÏÂÔØÂ·¾¶");
-			//ÔÆĞÅ
+			log.info("åªå­˜åœ¨äº‘ä¿¡çš„ä¸‹è½½è·¯å¾„");
+			//äº‘ä¿¡
 			Object url=map.get("url");
 			if(url!=null && StringUtils.isNotBlank(url.toString())){
 				map.put("downUrl",RootStatic.url+url.toString());
 				//http://localhost/kcd/yx/downloadClient.do?url=http://jdvod6ep5thqk.vod.126.net/jdvod6ep5thqk/0-50873460261080-0-mix.mp4
 			}
 		}
-		log.info("²é¿´ÀúÊ·ÊÓÆµ»òÕßÊµÊ±ÃæÇ©·µ»Ø´¦Àí¹ıÓÃ»§ĞÅÏ¢->{}"+JSON.toJSONString(map));
+		log.info("æŸ¥çœ‹å†å²è§†é¢‘æˆ–è€…å®æ—¶é¢ç­¾è¿”å›å¤„ç†è¿‡ç”¨æˆ·ä¿¡æ¯->{}"+JSON.toJSONString(map));
 		return map;
 	}
 	
-	/**ÉÏ´«³É¹¦µÄ»Øµ÷µØÖ·
+	/**ä¸Šä¼ æˆåŠŸçš„å›è°ƒåœ°å€
 	 * @param callback
 	 * @Description: TODO
 	 * @param name
-	 * ÇëÇóÊ¾Àı:
+	 * è¯·æ±‚ç¤ºä¾‹:
 	 * $.ajax({
 	        type: "POST",
 	        url: "${pageContext.request.contextPath}/yx/callback.do",
@@ -339,19 +348,19 @@ public class YunXinController extends BaseController{
 			String body="";
 			try {
 				body = readBody(request);
-				log.info("ÉÏ´«³É¹¦µÄ»Øµ÷×Ö·û´®->"+body);
-				StringBuilder redundant=new StringBuilder(body.replaceAll("(\\})|(\\{)|(\\[)|(\\])|(\")", ""));//³­ËÍµÄÍêÕûĞÅÏ¢
-	    		//×Ö·û´®´¦Àí
+				log.info("ä¸Šä¼ æˆåŠŸçš„å›è°ƒå­—ç¬¦ä¸²->"+body);
+				StringBuilder redundant=new StringBuilder(body.replaceAll("(\\})|(\\{)|(\\[)|(\\])|(\")", ""));//æŠ„é€çš„å®Œæ•´ä¿¡æ¯
+	    		//å­—ç¬¦ä¸²å¤„ç†
 	    		body=body.replaceAll("\\\\", "").replaceAll("\"\\{","{").replaceAll("\\}\"","}").replaceAll("\"\\[\\{", "[{").replaceAll("\\}\\]\"", "}]");
 	    		JSONObject map = JSONObject.parseObject(body);
-				//×Ô¶¨ÒåÍ¨µÀid ÕâÀïÓëÇ°¶ËµÄ²Ù×÷¹ØÁªÊ¹ÓÃÍ¨µÀid Ò²¿ÉÒÔÊ¹ÓÃÊéÖ÷¼üid
+				//è‡ªå®šä¹‰é€šé“id è¿™é‡Œä¸å‰ç«¯çš„æ“ä½œå…³è”ä½¿ç”¨é€šé“id ä¹Ÿå¯ä»¥ä½¿ç”¨ä¹¦ä¸»é”®id
 	    		map.put("channelid",MD5.sign(UUID.randomUUID().toString().replace("-", "").toLowerCase(),"utf-8"));
 	    		map.put("viedotype", 0);
 	    		map.put("te", redundant.toString());
 				int i=yx.addcallback(map);
-				log.info("ÉÏ´«³É¹¦Ìí¼Ó->"+i);
+				log.info("ä¸Šä¼ æˆåŠŸæ·»åŠ ->"+i);
 			} catch (Exception e) {
-				yx.insert_M(body+"----error:"+getErrorInfoFromException(e));//Èç¹û´íÎóÖ±½Ó±£´æ
+				yx.insert_M(body+"----error:"+getErrorInfoFromException(e));//å¦‚æœé”™è¯¯ç›´æ¥ä¿å­˜
 			}
 	}
 	@RequestMapping(value="selectvideo.do")
@@ -362,26 +371,26 @@ public class YunXinController extends BaseController{
 	
 	
 	
-	//ÉèÖÃÉÏ´«³É¹¦ºóµÄ»Øµ÷µØÖ· {"ret":{},"requestId":"vodc59a1e37-9654-4314-89fb-406b5661086f","code":200}
+	//è®¾ç½®ä¸Šä¼ æˆåŠŸåçš„å›è°ƒåœ°å€ {"ret":{},"requestId":"vodc59a1e37-9654-4314-89fb-406b5661086f","code":200}
 	public static String setCallBack(){
 		Map map=new HashMap(2);
 		map.put("callbackUrl","http://apitest.kcway.net/kcd/yx/callback.do");
 		map.put("signKey","kjs9999");
 		return HttpYX.doPost(YXConstant.SetCallBack,map);
 	}
-	/**ÓÃÓÚÎÄ¼şÉÏ´«µÄ³õÊ¼»¯£¬»ñÈ¡xNosToken£¨ÉÏ´«Æ¾Ö¤£©¡¢bucket£¨´æ´¢¶ÔÏóµÄÍ°Ãû£©¡¢object£¨Éú³ÉµÄÎ¨Ò»¶ÔÏóÃû£©¡£
-	 * @param originFileName ÉÏ´«ÎÄ¼şµÄÔ­Ê¼Ãû³Æ£¨°üº¬ºó×ºÃû£©
-	 * @param userFileName ÓÃ»§ÃüÃûµÄÉÏ´«ÎÄ¼şÃû³Æ
-	 * @param typeId ÊÓÆµËùÊôµÄÀà±ğId£¨²»ÌîĞ´ÎªÄ¬ÈÏ·ÖÀà£©
-	 * @param presetId ÊÓÆµËùĞè×ªÂëÄ£°åId£¨²»ÌîĞ´ÎªÄ¬ÈÏÄ£°å£¬Ä¬ÈÏÄ£°å²»½øĞĞ×ªÂë£©
-	 * @param uploadCallbackUrl ÉÏ´«³É¹¦ºó»Øµ÷¿Í»§¶ËµÄURLµØÖ·£¨Ğè±ê×¼http¸ñÊ½£©
-	 * @param callbackUrl ×ªÂë³É¹¦ºó»Øµ÷¿Í»§¶ËµÄURLµØÖ·£¨Ğè±ê×¼http¸ñÊ½£©
-	 * @param description ÉÏ´«ÊÓÆµµÄÃèÊöĞÅÏ¢
-	 * @param watermarkId ÊÓÆµË®Ó¡Id£¨²»ÌîĞ´Îª²»Ìí¼ÓË®Ó¡£¬Èç¹ûÑ¡Ôñ£¬ÇëÎñ±ØÔÚË®Ó¡¹ÜÀíÖĞÌáÇ°Íê³ÉË®Ó¡Í¼Æ¬µÄÉÏ´«ºÍ²ÎÊıµÄÅäÖÃ£»ÇÒ±ØĞèÉèÖÃprestId×Ö¶Î£¬ÇÒpresetId×Ö¶Î²»ÎªÄ¬ÈÏÄ£°å£©
-	 * @param userDefInfo ÓÃ»§×Ô¶¨ÒåĞÅÏ¢£¬»Øµ÷»á·µ»Ø´ËĞÅÏ¢£¨³¤¶È²»ÄÜ³¬¹ı256×Ö·û£©
-	 * @param transOffset ÊÓÆµ×ªÂë´¦Àí²Ã¼ôÊÓÆµµÄÆğÊ¼Î»ÖÃ£¨µ¥Î»£ºÃë£©
-	 * @param transDuration ÊÓÆµ×ªÂë´¦Àí²Ã¼ôÊÓÆµµÄÊÓÆµÊ±³¤£¨µ¥Î»£ºÃë£©
-	 	Ê¾Àı£º
+	/**ç”¨äºæ–‡ä»¶ä¸Šä¼ çš„åˆå§‹åŒ–ï¼Œè·å–xNosTokenï¼ˆä¸Šä¼ å‡­è¯ï¼‰ã€bucketï¼ˆå­˜å‚¨å¯¹è±¡çš„æ¡¶åï¼‰ã€objectï¼ˆç”Ÿæˆçš„å”¯ä¸€å¯¹è±¡åï¼‰ã€‚
+	 * @param originFileName ä¸Šä¼ æ–‡ä»¶çš„åŸå§‹åç§°ï¼ˆåŒ…å«åç¼€åï¼‰
+	 * @param userFileName ç”¨æˆ·å‘½åçš„ä¸Šä¼ æ–‡ä»¶åç§°
+	 * @param typeId è§†é¢‘æ‰€å±çš„ç±»åˆ«Idï¼ˆä¸å¡«å†™ä¸ºé»˜è®¤åˆ†ç±»ï¼‰
+	 * @param presetId è§†é¢‘æ‰€éœ€è½¬ç æ¨¡æ¿Idï¼ˆä¸å¡«å†™ä¸ºé»˜è®¤æ¨¡æ¿ï¼Œé»˜è®¤æ¨¡æ¿ä¸è¿›è¡Œè½¬ç ï¼‰
+	 * @param uploadCallbackUrl ä¸Šä¼ æˆåŠŸåå›è°ƒå®¢æˆ·ç«¯çš„URLåœ°å€ï¼ˆéœ€æ ‡å‡†httpæ ¼å¼ï¼‰
+	 * @param callbackUrl è½¬ç æˆåŠŸåå›è°ƒå®¢æˆ·ç«¯çš„URLåœ°å€ï¼ˆéœ€æ ‡å‡†httpæ ¼å¼ï¼‰
+	 * @param description ä¸Šä¼ è§†é¢‘çš„æè¿°ä¿¡æ¯
+	 * @param watermarkId è§†é¢‘æ°´å°Idï¼ˆä¸å¡«å†™ä¸ºä¸æ·»åŠ æ°´å°ï¼Œå¦‚æœé€‰æ‹©ï¼Œè¯·åŠ¡å¿…åœ¨æ°´å°ç®¡ç†ä¸­æå‰å®Œæˆæ°´å°å›¾ç‰‡çš„ä¸Šä¼ å’Œå‚æ•°çš„é…ç½®ï¼›ä¸”å¿…éœ€è®¾ç½®prestIdå­—æ®µï¼Œä¸”presetIdå­—æ®µä¸ä¸ºé»˜è®¤æ¨¡æ¿ï¼‰
+	 * @param userDefInfo ç”¨æˆ·è‡ªå®šä¹‰ä¿¡æ¯ï¼Œå›è°ƒä¼šè¿”å›æ­¤ä¿¡æ¯ï¼ˆé•¿åº¦ä¸èƒ½è¶…è¿‡256å­—ç¬¦ï¼‰
+	 * @param transOffset è§†é¢‘è½¬ç å¤„ç†è£å‰ªè§†é¢‘çš„èµ·å§‹ä½ç½®ï¼ˆå•ä½ï¼šç§’ï¼‰
+	 * @param transDuration è§†é¢‘è½¬ç å¤„ç†è£å‰ªè§†é¢‘çš„è§†é¢‘æ—¶é•¿ï¼ˆå•ä½ï¼šç§’ï¼‰
+	 	ç¤ºä¾‹ï¼š
 	  	sbucket": "jdvod6ep5thqk",
         "xNosToken": "UPLOAD ab1856bb39044591939d7b94e1b8e5ee:Lvz8pD5w0VFDnr6DfS4DdUEh/Pjr6QlUbB5fp7SgOV8=:eyJCdWNrZXQiOiJqZHZvZDZlcDV0aHFrIiwiT2JqZWN0IjoiNjM0MzA2ZjctYWE4Mi00ZmE2LWFjM2QtOTZlMDcyNWUyZjBhLm1wNCIsIkV4cGlyZXMiOjE1NjU0OTM5MjgsIkNhbGxiYWNrVXJsIjoiaHR0cDovL3ZjbG91ZC4xNjMuY29tL3hoci92b2Qvbm9zL2NhbGxiYWNrIiwiQ2FsbGJhY2tCb2R5IjoiZmlsZU5hbWU9dGVzdC5tcDQmb2JqZWN0TmFtZT02MzQzMDZmNy1hYTgyLTRmYTYtYWMzZC05NmUwNzI1ZTJmMGEubXA0JiQoT2JqZWN0U2l6ZSkmdWlkPTEwMjMxMDAwOCZ0eXBlSWQ9MTA0MjY3NDY0JnByZXNldElkPTEwNDI4MjQyNCZ3YXRlcm1hcmtJZHM9MTAyMzY2NDQxJmRlc2NyaXB0aW9uPW51bGwmdHJhbnNjb2RlQ2FsbGJhY2s9bnVsbCYkKEFWaW5mby5WaWRlby5EdXJhdGlvbikmJChBVmluZm8uVmlkZW8uSGVpZ2h0KSYkKEFWaW5mby5WaWRlby5XaWR0aCkmMCYwJjAmbnVsbCZ1cGxvYWRTdGFydD0xNTMzOTU3OTI4MzQzJnVwbG9hZENhbGxiYWNrPW51bGwmbnVsbCZtcDQmMCYwJnRyYW5zT2Zmc2V0PW51bGwmdHJhbnNEdXJhdGlvbj1udWxsJmFwcGtleT05MDM5MmNkNDEzMGIzNmJlNTIzMjk5Y2M5YmJhYmVlOCIsIlJlZ2lvbiI6IkpEIn0=",
         "object": "634306f7-aa82-4fa6-ac3d-96e0725e2f0a.mp4"
@@ -424,17 +433,74 @@ public class YunXinController extends BaseController{
 				map.put("icbcId", id);
 				map.put("dataTime",creditutil.time());
 				map.put("result", obj);
-				map.put("describe","ÎÄ¼şÉÏ´«³õÊ¼»¯");
+				map.put("describe","æ–‡ä»¶ä¸Šä¼ åˆå§‹åŒ–");
 				int i=yx.addOccupyTest(map);
-				log.info("Ìí¼Óµ÷ÓÃ¼ÇÂ¼->addCount:+"+i);
+				log.info("æ·»åŠ è°ƒç”¨è®°å½•->addCount:+"+i);
 				return tokenDispose(obj,"1");
 			}else{
-				return renderError("ÇëÊäÈëÉÏ´«ÎÄ¼şµÄÔ­Ê¼Ãû³Æ(°üº¬ºó×ºÃû)!");
+				return renderError("è¯·è¾“å…¥ä¸Šä¼ æ–‡ä»¶çš„åŸå§‹åç§°(åŒ…å«åç¼€å)!");
 			}
 	}
-	/**¸ù¾İ´«ÈëµÄaccid´´½¨ÍøÒ×ÔÆÉÏ´«ÕËºÅ Èç¹ûÃ»ÓĞ´«ÈëaccidÔòÓÉÏµÍ³´´½¨Ò»¸ö32Î»µÄaccid
-	 * @param accid ×Ô¶¨Òåaccid
-	 * @param cfcode ·ÖÀàÃû³Æ 
+	
+	@RequestMapping(value="DImg.do",method = RequestMethod.POST)
+	@ResponseBody
+	//é‡åˆ°é—®é¢˜:ä¸Šä¼ å›¾ç‰‡base64 SringMVC+Tomcat æŠ¥é”™ Request header is too large 
+	public Object deletePrintscreenImg(String id,HttpServletRequest request){
+		Map map=super.updateBoToMap(request);
+		map.put("id", id);
+		int i=yx.deleteVideoScreenshot(map);
+		log.info("åˆ é™¤æˆªå›¾->Id:"+id+",updateCount:"+i);
+		if(i>0) {
+			return renderSuccess("åˆ é™¤æˆåŠŸï¼");
+		}else {
+			return renderError("åˆ é™¤å¤±è´¥è¯·é‡è¯•ï¼");
+		}
+	}
+	@RequestMapping(value="pImg.do",method = RequestMethod.POST)
+	@ResponseBody
+	//é‡åˆ°é—®é¢˜:ä¸Šä¼ å›¾ç‰‡base64 SringMVC+Tomcat æŠ¥é”™ Request header is too large 
+	public Object addPrintscreenImg(MultipartFile file,HttpServletRequest request,String icbcId){
+		log.info("canshu+"+JSON.toJSONString(file));
+		String fileName=MD5.sign(UUID.randomUUID().toString().replace("-", "").toLowerCase(),"utf-8")+".png";
+		String savepdfpath="upload/"+new SimpleDateFormat("yyyy/MM/dd/").format(new Date());
+		String roorSavePath=RootStatic.root_Directory+savepdfpath;
+		boolean b=super.uploadServer(file,roorSavePath, fileName);
+		log.info("æˆªå›¾ä¿å­˜->YorX:"+b+",ä¿å­˜è·¯å¾„:"+roorSavePath+",æ–‡ä»¶å:"+fileName);
+		if(b) {
+			Map map=super.AddBoToMap(request);
+			String dataStorePath=savepdfpath+fileName;
+			map.put("path", dataStorePath);
+			map.put("icbcId", icbcId);
+			log.info(JSON.toJSONString(map));
+			int i=yx.addVideoScreenshot(map);
+			if(i>0) {
+				log.info("æˆªå›¾ä¿å­˜æˆåŠŸ->icbcId"+icbcId);
+				return renderSuccess(RootStatic.download_prefix+dataStorePath);//è¿”å›å›¾ç‰‡è·¯å¾„æ˜¾ç¤ºåœ¨å‰ç«¯
+			}else {
+				return renderError("ä¿å­˜å¤±è´¥ï¼");
+			}
+		}else {
+			return renderError("ä¸Šä¼ å¤±è´¥ï¼");
+		}
+//		byte[] buffer;//å›¾åƒè½¬æ¢çš„ç›®çš„å­—èŠ‚æ•°ç»„
+//		String ab=param.substring(22);//imagesä¸ºå›¾ç‰‡å­—ç¬¦ä¸²æ•°æ®ï¼Œé€šè¿‡springæ–¹å¼è·å–ï¼Œåœ¨è¿™é‡Œæˆªå»å­—ç¬¦ä¸²ä¸­â€data:image/png;base64,â€œï¼Œä½¿å…¶æ ¼å¼æ­£ç¡®
+//		BASE64Decoder base64=new BASE64Decoder();//æ–°å»º64ä½è§£ç å™¨
+//		try {
+//			buffer = base64.decodeBuffer(ab);//64ä½è§£ç åˆ°å­—èŠ‚æ•°ç»„ä¸­
+//			FileOutputStream fos=new FileOutputStream(new File(savepdfpath)); //è®¾ç½®å¥½ä¿å­˜è·¯å¾„ï¼Œåˆ›å»ºæ–‡ä»¶è¾“å‡ºæµã€‚
+//			fos.write(buffer);//å†™å…¥
+//			fos.flush();//åˆ·æ–°
+//			fos.close();//å…³é—­
+//			fos=null;//é‡Šæ”¾
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//			return renderError("ä¸Šä¼ å¤±è´¥ï¼"+e.getMessage());
+//		}
+//		return renderSuccess(RootStatic.download_prefix+savepdfpath);//è¿”å›å›¾ç‰‡è·¯å¾„æ˜¾ç¤ºåœ¨å‰ç«¯
+	}
+	/**æ ¹æ®ä¼ å…¥çš„accidåˆ›å»ºç½‘æ˜“äº‘ä¸Šä¼ è´¦å· å¦‚æœæ²¡æœ‰ä¼ å…¥accidåˆ™ç”±ç³»ç»Ÿåˆ›å»ºä¸€ä¸ª32ä½çš„accid
+	 * @param accid è‡ªå®šä¹‰accid
+	 * @param cfcode åˆ†ç±»åç§° 
 	 */
 	@RequestMapping(value="ct.do")
 	@ResponseBody
@@ -443,72 +509,72 @@ public class YunXinController extends BaseController{
 			accid=MD5.sign(UUID.randomUUID().toString().replace("-", "").toLowerCase(),"utf-8");
 		}
 		Result result=tokenDispose(HttpYX.geMobileUpload(accid),"1");
-		log.info("´´½¨ÒÆ¶¯ÉÏ´«ÕË»§½Ó¿Ú·µ»Ø->"+result);
-		if(result.isSuccess()){//ÇëÇó³É¹¦£¡
+		log.info("åˆ›å»ºç§»åŠ¨ä¸Šä¼ è´¦æˆ·æ¥å£è¿”å›->"+result);
+		if(result.isSuccess()){//è¯·æ±‚æˆåŠŸï¼
 			Map map=((Map) result.getData());
-			map.put("employcode","1");//ÉèÖÃÀàĞÍ
+			map.put("employcode","1");//è®¾ç½®ç±»å‹
 			map.put("delmark", 0);
 			map.put("dt_add",super.getTime());
 			map.put("dt_edit",super.getTime());
 			map.put("mid_add", super.getUserId(request));
 			map.put("mid_edit", super.getUserId(request));
-			int i=yx.add_YX_account(map);//±£´æ 
-			if(i>0){//±£´æ³É¹¦
+			int i=yx.add_YX_account(map);//ä¿å­˜ 
+			if(i>0){//ä¿å­˜æˆåŠŸ
 				return result;
 			}else{
-				return renderError("±£´æÊ§°Ü:"+JSON.toJSONString(result.getData()));//±£´æÊ§°Ü·µ»Øaccid¡¢token
+				return renderError("ä¿å­˜å¤±è´¥:"+JSON.toJSONString(result.getData()));//ä¿å­˜å¤±è´¥è¿”å›accidã€token
 			}
 		}
-		return result;//ÇëÇóÊ§°Ü »òÕß±£´æÊ§°Ü
+		return result;//è¯·æ±‚å¤±è´¥ æˆ–è€…ä¿å­˜å¤±è´¥
 	}
-	//´´½¨ÊÓÆµÓÃ»§
+	//åˆ›å»ºè§†é¢‘ç”¨æˆ·
 	@RequestMapping(value="addRealTimeVideoBinding.do")
 	@ResponseBody
 	public Object addRealTimeVideoBinding(String Id,String bankId,HttpServletRequest request){
-		log.info("´´½¨ÊÓÆµÓÃ»§->Id:"+Id+",bankId:"+bankId);
-		//ÏÂÃæµÄÌí¼ÓÂß¼­
+		log.info("åˆ›å»ºè§†é¢‘ç”¨æˆ·->Id:"+Id+",bankId:"+bankId);
+		//ä¸‹é¢çš„æ·»åŠ é€»è¾‘
 		if(StringUtils.isBlank(bankId)){
-			return renderError("bankId²»ÄÜÎª¿Õ£¡");
+			return renderError("bankIdä¸èƒ½ä¸ºç©ºï¼");
 		}
 		int i=yx.selectBankCount(bankId);
 		if(i==0){
-			return renderError("²»´æÔÚ´ËÒøĞĞ£¡");
+			return renderError("ä¸å­˜åœ¨æ­¤é“¶è¡Œï¼");
 		}
 		if(StringUtils.isBlank(Id)){
-			return renderError("Id²»ÄÜÎª¿Õ£¡");
+			return renderError("Idä¸èƒ½ä¸ºç©ºï¼");
 		}
-		//²é¿´ÓÃ»§idÊÇ·ñ´æÔÚ
+		//æŸ¥çœ‹ç”¨æˆ·idæ˜¯å¦å­˜åœ¨
 		int count=yx.selectCountAdminById(Id);
-		if(count==1){//´ËIdÒÑ×¢²á
+		if(count==1){//æ­¤Idå·²æ³¨å†Œ
 			Map map=yx.selectCountTokenByUid(Id);
-			log.info("²é¿´ÊÇ·ñÒÑ¾­·ÖÅä"+JSON.toJSONString(map));
+			log.info("æŸ¥çœ‹æ˜¯å¦å·²ç»åˆ†é…"+JSON.toJSONString(map));
 			if(!map.isEmpty()) {
-				//ÊÇµ±Ç°ÒøĞĞÏàÍ¬ ²¢ÇÒ¿ÉÓÃµÄ
+				//æ˜¯å½“å‰é“¶è¡Œç›¸åŒ å¹¶ä¸”å¯ç”¨çš„
 				if(map.get("bankId").toString().equals(bankId) && map.get("delmark").toString().equals("0")) {
-					log.info("´ËÕËºÅÒÑ´æÔÚ´ËÈ¨ÏŞ");
-					return renderSuccess("´ËÕËºÅÒÑ´æÔÚ´ËÈ¨ÏŞ!");		
+					log.info("æ­¤è´¦å·å·²å­˜åœ¨æ­¤æƒé™");
+					return renderSuccess("æ­¤è´¦å·å·²å­˜åœ¨æ­¤æƒé™!");		
 				}
-				//Èç¹ûÕâ¸öÓÃ»§²»¿ÉÓÃ °ó¶¨µÄÒøĞĞÄ¬ÈÏ²»ÄÜĞŞ¸Ä
+				//å¦‚æœè¿™ä¸ªç”¨æˆ·ä¸å¯ç”¨ ç»‘å®šçš„é“¶è¡Œé»˜è®¤ä¸èƒ½ä¿®æ”¹
 				return yx.updateVideoTokenBinding("0",bankId, Id,super.getTime(),super.getUserId(request));	 
 			}
 			
-			//ÉêÇëÕËºÅ
+			//ç”³è¯·è´¦å·
 			Result result1=tokenDispose(HttpYX.getToken(MD5.sign(UUID.randomUUID().toString().replace("-", "").toLowerCase(),"utf-8")),"0");
-			log.info("´´½¨µã¶ÔµãÊÓÆµÕË»§½Ó¿Ú·µ»Ø->"+result1);
+			log.info("åˆ›å»ºç‚¹å¯¹ç‚¹è§†é¢‘è´¦æˆ·æ¥å£è¿”å›->"+result1);
 			if(result1.isSuccess()){
 				Map map1=((Map) result1.getData());
 				map1.put("delmark", 0);
 				map1.put("uid", Id);
 				map1.put("bankId", bankId);
-				map1.put("employcode","0");//ÉèÖÃÀàĞÍ
+				map1.put("employcode","0");//è®¾ç½®ç±»å‹
 				map1.put("dt_add",super.getTime());
 				map1.put("dt_edit",super.getTime());
 				map1.put("mid_add", super.getUserId(request));
 				map1.put("mid_edit", super.getUserId(request));
-				int i1=yx.add_YX_account(map1);//±£´æ 
+				int i1=yx.add_YX_account(map1);//ä¿å­˜ 
 				if(i1==1){
 					Result result2=tokenDispose(HttpYX.getToken(MD5.sign(UUID.randomUUID().toString().replace("-", "").toLowerCase(),"utf-8")),"0");
-					log.info("´´½¨µã¶ÔµãÊÓÆµÕË»§½Ó¿Ú·µ»Ø->"+result2);
+					log.info("åˆ›å»ºç‚¹å¯¹ç‚¹è§†é¢‘è´¦æˆ·æ¥å£è¿”å›->"+result2);
 					if(result2.isSuccess()){
 						Map map2=((Map) result2.getData());
 						map2.put("parentid",map1.get("id").toString());
@@ -519,40 +585,40 @@ public class YunXinController extends BaseController{
 						map2.put("dt_edit",super.getTime());
 						map2.put("mid_add", super.getUserId(request));
 						map2.put("mid_edit", super.getUserId(request));
-						int i2=yx.add_YX_account(map2);//±£´æ 
+						int i2=yx.add_YX_account(map2);//ä¿å­˜ 
 						if(i2==1){
-							//Ìí¼ÓºÃÓÑ
+							//æ·»åŠ å¥½å‹
 							String addBuddy=HttpYX.addBuddy(map1.get("accid").toString(), map2.get("accid").toString());
-							log.info("Ìí¼ÓºÃÓÑ·µ»Ø->"+addBuddy);
-							return renderSuccess("´´½¨³É¹¦!");
+							log.info("æ·»åŠ å¥½å‹è¿”å›->"+addBuddy);
+							return renderSuccess("åˆ›å»ºæˆåŠŸ!");
 						}else{
-							return renderError("±£´æÕË»§2Ê§°Ü!");
+							return renderError("ä¿å­˜è´¦æˆ·2å¤±è´¥!");
 						}
 					}else{
-						return renderError("´´½¨ÕË»§2Ê§°Ü!");
+						return renderError("åˆ›å»ºè´¦æˆ·2å¤±è´¥!");
 					}
 				}else{
-					return renderError("±£´æÕË»§1Ê§°Ü!");
+					return renderError("ä¿å­˜è´¦æˆ·1å¤±è´¥!");
 				}
 			}
 			return result1;
 		}
-		return renderError("´ËÓÃ»§²»´æÔÚ!");
+		return renderError("æ­¤ç”¨æˆ·ä¸å­˜åœ¨!");
 	}
-	//½â³ı°ó¶¨ÕËºÅ
-	@RequestMapping(value="VideoUnbind.do") //delmark 1´ú±í²»¿ÉÓÃ  0´ú±í¿ÉÓÃ
+	//è§£é™¤ç»‘å®šè´¦å·
+	@RequestMapping(value="VideoUnbind.do") //delmark 1ä»£è¡¨ä¸å¯ç”¨  0ä»£è¡¨å¯ç”¨
 	@ResponseBody
 	public Object removeRealTimeVideoUnbind(String Id,HttpServletRequest request){
 		return yx.updateVideoTokenBinding("1",null,Id,super.getTime(),super.getUserId(request));
 	}
-	/** ½âÎö ´´½¨ÍøÒ×ÔÆÍ¨ĞÅID ·µ»Ø½á¹û 
-	 * @param s ½Ó¿ÚÖĞ·µ»ØµÄ×Ö·û´®
+	/** è§£æ åˆ›å»ºç½‘æ˜“äº‘é€šä¿¡ID è¿”å›ç»“æœ 
+	 * @param s æ¥å£ä¸­è¿”å›çš„å­—ç¬¦ä¸²
 	 */
 	public  Result tokenDispose(String s,String type){
-		if(s!=null){//Èç¹û²»´æÔÚ
-			log.info("ÇëÇó½Ó¿Ú·µ»Ø->"+s+",ÀàĞÍ->"+type);
-			JSONObject jo = JSONObject.parseObject(s);//ÏÈ´´½¨
-			if(jo.getInteger("code")==200){//ÇëÇó³É¹¦
+		if(s!=null){//å¦‚æœä¸å­˜åœ¨
+			log.info("è¯·æ±‚æ¥å£è¿”å›->"+s+",ç±»å‹->"+type);
+			JSONObject jo = JSONObject.parseObject(s);//å…ˆåˆ›å»º
+			if(jo.getInteger("code")==200){//è¯·æ±‚æˆåŠŸ
 				Map map =null;
 				if(type.equals("0")){
 					map=jo.getJSONObject("info");
@@ -560,16 +626,16 @@ public class YunXinController extends BaseController{
 					map=jo.getJSONObject("ret");
 				}
 				return renderSuccess(map);
-			}else{//ÇëÇóÊ§°Ü 
-				return renderError(jo.getString("code")+"!");//ÕâÀïÊ§°ÜµÄ×´Ì¬Âë¿ÉÒÔ ÓÃÀ´È·¶¨ÍøÒ× http://dev.netease.im/docs/product/%E9%80%9A%E7%94%A8/%E7%8A%B6%E6%80%81%E7%A0%81
+			}else{//è¯·æ±‚å¤±è´¥ 
+				return renderError(jo.getString("code")+"!");//è¿™é‡Œå¤±è´¥çš„çŠ¶æ€ç å¯ä»¥ ç”¨æ¥ç¡®å®šç½‘æ˜“ http://dev.netease.im/docs/product/%E9%80%9A%E7%94%A8/%E7%8A%B6%E6%80%81%E7%A0%81
 			}		
 		}
-		return renderError("ÇëÇó½Ó¿ÚÊ§°Ü£¡");
+		return renderError("è¯·æ±‚æ¥å£å¤±è´¥ï¼");
 	}
 	
-	/**Ö±½ÓÌí¼ÓºÃÓÑ
-	 * @param accid  ¼ÓºÃÓÑ·¢ÆğÕßaccid
-	 * @param faccid ¼ÓºÃÓÑ½ÓÊÕÕßaccid
+	/**ç›´æ¥æ·»åŠ å¥½å‹
+	 * @param accid  åŠ å¥½å‹å‘èµ·è€…accid
+	 * @param faccid åŠ å¥½å‹æ¥æ”¶è€…accid
 	 * http://localhost/kcd/yx/Buddy.do?accid=75dd5d18ee7c102b4aa3ff5c12a5936a&faccid=4a21effaf6827d9a312e628a929f6525
 	 */
 /*	@RequestMapping(value="Buddy.do")
@@ -577,90 +643,90 @@ public class YunXinController extends BaseController{
 	public Object addBuddy(String accid,String faccid){
 		Result result=new Result();
 		if(EmptyUtil.isEmpty(accid) || EmptyUtil.isEmpty(faccid)){
-			return renderError("ÇëÊäÈëÕıÈ·µÄ·¢ÆğÕßºÍ½ÓÊÜÕß£¡");
+			return renderError("è¯·è¾“å…¥æ­£ç¡®çš„å‘èµ·è€…å’Œæ¥å—è€…ï¼");
 		}else{
 			String s=HttpYX.addBuddy(accid,faccid);
 			if(s!=null){
-				if(s.indexOf("200")!=-1){//±íÊ¾³É¹¦
+				if(s.indexOf("200")!=-1){//è¡¨ç¤ºæˆåŠŸ
 					return renderSuccess();
 				}else{
-					return renderError("Ìí¼ÓÊ§°Ü£¡");
+					return renderError("æ·»åŠ å¤±è´¥ï¼");
 				}
 			}else{
-				return renderError("ÇëÇó½Ó¿ÚÊ§°Ü£¡");
+				return renderError("è¯·æ±‚æ¥å£å¤±è´¥ï¼");
 			}
 		}
 	}*/
 	/**
-	 *ÒÆ¶¯¶ËÕ¼Î» 
+	 *ç§»åŠ¨ç«¯å ä½ 
 	 *http://localhost/kcd/yx/occupy.do
 	 */
 	@RequestMapping(value="occupy.do")
 	@ResponseBody
 	public Object occupy(Integer id){
-		log.info("Õ¼Î»icbcId->"+id);
+		log.info("å ä½icbcId->"+id);
 		String bankId=yx.selectBankId(String.valueOf(id));
 		ScanPool1 scanPool1=null;;
 		if(id==null || StringUtils.isBlank(bankId)){
 			scanPool1=PoolCache1.defaultSeat();
-			log.info("Ëæ»ú»ñÈ¡Ò»¸ö°É->"+scanPool1);
-			//return renderError("icbcId²»´æÔÚ»òÕßbankId²»´æÔÚ£¡");
+			log.info("éšæœºè·å–ä¸€ä¸ªå§->"+scanPool1);
+			//return renderError("icbcIdä¸å­˜åœ¨æˆ–è€…bankIdä¸å­˜åœ¨ï¼");
 		}else{
-			log.info("Õ¼Î»bankId->"+bankId);
+			log.info("å ä½bankId->"+bankId);
 			scanPool1 =PoolCache1.aReduceBusy(bankId);
-			log.info("Õ¼Î»½á¹û->"+scanPool1);
+			log.info("å ä½ç»“æœ->"+scanPool1);
 		}
 		Map map=new HashMap<>();
 		map.put("icbcId", id);
 		map.put("dataTime",creditutil.time());
 		map.put("result", JSON.toJSONString(scanPool1));
-		map.put("describe","»ñÈ¡ÊÓÆµÍ¨»°ÕËºÅ");
+		map.put("describe","è·å–è§†é¢‘é€šè¯è´¦å·");
 		int i=yx.addOccupyTest(map);
 		String Id=map.get("id").toString();
-		log.info("Ìí¼Óµ÷ÓÃ¼ÇÂ¼->addCount:+"+i+",Ö÷¼ü:"+Id);
+		log.info("æ·»åŠ è°ƒç”¨è®°å½•->addCount:+"+i+",ä¸»é”®:"+Id);
 		
 		if(scanPool1!=null){
-			scanPool1.setId(Id);//¼ÇÂ¼id
+			scanPool1.setId(Id);//è®°å½•id
 			return renderSuccess(scanPool1);
 		}else{
-			return renderError("ÔİÇÒÃ»ÓĞÏĞÖÃµÄÊÓÆµÍ¨»°×øÏ¯,ÇëÉÔºóÔÙÊÔ£¡");
+			return renderError("æš‚ä¸”æ²¡æœ‰é—²ç½®çš„è§†é¢‘é€šè¯åå¸­,è¯·ç¨åå†è¯•ï¼");
 		}
 	}
 	/**
-	 *ÒÆ¶¯¶ËÊÍ·Å
+	 *ç§»åŠ¨ç«¯é‡Šæ”¾
 	 */
 	@RequestMapping(value="free.do")
 	@ResponseBody
 	public Object freeToken(String mark){
-		log.info("ÒÆ¶¯¶Ë¹Ò¶ÏÍ¨Öª->"+mark);
+		log.info("ç§»åŠ¨ç«¯æŒ‚æ–­é€šçŸ¥->"+mark);
 		return null;
 	}
 	
-	//web¶Ë¹Ò¶ÏÊÍ·Å
+	//webç«¯æŒ‚æ–­é‡Šæ”¾
 	@RequestMapping(value="free1.do")
 	@ResponseBody
 	public Object freeToken1(ScanPool1 data){
-		log.info("web¶Ë¹Ò¶ÏÊÍ·Å->param:"+data.toString());
+		log.info("webç«¯æŒ‚æ–­é‡Šæ”¾->param:"+data.toString());
 		ScanPool1 scanPool1=PoolCache1.deleteBusy(data.getMark());
 		
 		if(scanPool1!=null){
-			log.info("web¶ËÊÍ·Å³É¹¦");
+			log.info("webç«¯é‡Šæ”¾æˆåŠŸ");
 			return renderSuccess(scanPool1);
 		}else{
-			log.info("web¶ËÊÍ·ÅÊ§°Ü");
-			return renderError("ÊÍ·ÅÊ§°Ü");
+			log.info("webç«¯é‡Šæ”¾å¤±è´¥");
+			return renderError("é‡Šæ”¾å¤±è´¥");
 		}
 		 
 	}
-	//web¶ËË¢ĞÂÔÚÏß£¬Èç¹û²»´æÔÚÔòÌí¼Ó
+	//webç«¯åˆ·æ–°åœ¨çº¿ï¼Œå¦‚æœä¸å­˜åœ¨åˆ™æ·»åŠ 
 	@RequestMapping(value="refreshtime.do")
 	@ResponseBody
 	public Object refreshTime(ScanPool1 data){
-		log.info("web¶ËË¢ĞÂÔÚÏß->param:"+data.toString());
+		log.info("webç«¯åˆ·æ–°åœ¨çº¿->param:"+data.toString());
 		return PoolCache1.add(data);
 	}
 	/**
-		µÇÂ½ ³É¹¦²¢·µ»ØÔÆĞÅID
+		ç™»é™† æˆåŠŸå¹¶è¿”å›äº‘ä¿¡ID
 	 * @throws Exception 
 	 */
 	@RequestMapping(value="login.do")
@@ -675,7 +741,7 @@ public class YunXinController extends BaseController{
 				return null;
 			}
 		}  
-		if(!EmptyUtil.isEmpty(id)){//´æÔÚ
+		if(!EmptyUtil.isEmpty(id)){//å­˜åœ¨
 			List list = yx.query_tokenbyid(id);
 			if(list.size()>0){
 				ScanPool1 scanpool=(ScanPool1)list.get(0);
@@ -683,40 +749,40 @@ public class YunXinController extends BaseController{
 					ScanPool1 offer=null;
 					ScanPool1 poolCache1= PoolCache1.isMarkToBusy(scanpool.getMark());
 					if(poolCache1!=null){
-						return renderError("´ËÕËºÅÕıÔÚÊÓÆµÖĞ");
+						return renderError("æ­¤è´¦å·æ­£åœ¨è§†é¢‘ä¸­");
 					}else{
 						offer =PoolCache1.add(scanpool);
 					}
 					return renderSuccess(offer);
 				}else{
-					log.info("´ËÕËºÅ±»½ûÓÃ");
-					return renderError("´ËÕËºÅ±»½ûÓÃ");
+					log.info("æ­¤è´¦å·è¢«ç¦ç”¨");
+					return renderError("æ­¤è´¦å·è¢«ç¦ç”¨");
 				}
 			}else{
-				log.info("´ËÕËºÅÃ»ÓĞ°ó¶¨ÊÓÆµtoken");
-				return renderError("´ËÕËºÅÃ»ÓĞ°ó¶¨ÊÓÆµtoken");
+				log.info("æ­¤è´¦å·æ²¡æœ‰ç»‘å®šè§†é¢‘token");
+				return renderError("æ­¤è´¦å·æ²¡æœ‰ç»‘å®šè§†é¢‘token");
 			}
 		}
-		return renderError("´ËÕËºÅÃ»ÓĞ°ó¶¨ÊÓÆµtoken");                                                                                                                       
+		return renderError("æ­¤è´¦å·æ²¡æœ‰ç»‘å®šè§†é¢‘token");                                                                                                                       
 	}
 	
-	//É¾³ı»îÔ¾ÖĞµÄ
+	//åˆ é™¤æ´»è·ƒä¸­çš„
 	@RequestMapping(value="deleteActive.do")
 	@ResponseBody
 	public  Object deleteActive(ScanPool1 data){
-		log.info("Web¶ËÊÕµ½Becall->»Ø»°ÓÃ»§ĞÅÏ¢:"+data.toString());
+		log.info("Webç«¯æ”¶åˆ°Becall->å›è¯ç”¨æˆ·ä¿¡æ¯:"+data.toString());
 		return renderSuccess(PoolCache1.deleteActive(data));
 	}	
 	
-	/*ÍË³ö²Ù×÷*/
+	/*é€€å‡ºæ“ä½œ*/
 	@RequestMapping(value="outlogin.do")
 	@ResponseBody
 	public  Object outLogin(ScanPool1 data){
-		log.info("webÍË³ö²Ù×÷->param:"+data.toString());
+		log.info("webé€€å‡ºæ“ä½œ->param:"+data.toString());
 		return renderSuccess(PoolCache1.outLogin(data));
 	}	
 	/**
-	 *»ñÈ¡Ëæ»úÒ»¸öÉÏ´«accid
+	 *è·å–éšæœºä¸€ä¸ªä¸Šä¼ accid
 	 */
 	@RequestMapping(value="sur.do")
 	@ResponseBody
@@ -730,18 +796,18 @@ public class YunXinController extends BaseController{
 		map.put("icbcId", id);
 		map.put("dataTime",creditutil.time());
 		map.put("result", JSON.toJSONString(object));
-		map.put("describe", "»ñÈ¡Ëæ»úÉÏ´«ÕËºÅ");
+		map.put("describe", "è·å–éšæœºä¸Šä¼ è´¦å·");
 		int i=yx.addOccupyTest(map);
-		log.info("Ìí¼Óµ÷ÓÃ¼ÇÂ¼->addCount:+"+i);
+		log.info("æ·»åŠ è°ƒç”¨è®°å½•->addCount:+"+i);
 		
 		return renderSuccess(object);
 	}
 	/**
-	 * @param infocopy  ĞÅÏ¢³­ËÍ ×Ô¶¨ÒåÏûÏ¢
+	 * @param infocopy  ä¿¡æ¯æŠ„é€ è‡ªå®šä¹‰æ¶ˆæ¯
 	 */
-	/*Ê±³¤:
-		routeBody = {"ext":"{\"id\":\"761\",\"latitude\":31.182165,\"longitude\":121.488821,\"address\":\"ÉÏº£ÊĞÆÖ¶«ĞÂÇø¿§à¬¿Í(ÊÀ²©Ô´µê)ÊÀ²©Ô´\"}","routeResult":true,"createtime":"1552897298949","routePriority":1,"eventType":"5","type":"VEDIO","routeHttpCode":200,"duration":"22","members":"[{\"duration\":11,\"accid\":\"123456\"},{\"duration\":11,\"caller\":true,\"accid\":\"75dd5d18ee7c102b4aa3ff5c12a5936a\"}]","appkey":"90392cd4130b36be523299cc9bbabee8","channelId":"50885338660987","live":"0","status":"SUCCESS
-	ÏÂÔØ:
+	/*æ—¶é•¿:
+		routeBody = {"ext":"{\"id\":\"761\",\"latitude\":31.182165,\"longitude\":121.488821,\"address\":\"ä¸Šæµ·å¸‚æµ¦ä¸œæ–°åŒºå’–å–±å®¢(ä¸–åšæºåº—)ä¸–åšæº\"}","routeResult":true,"createtime":"1552897298949","routePriority":1,"eventType":"5","type":"VEDIO","routeHttpCode":200,"duration":"22","members":"[{\"duration\":11,\"accid\":\"123456\"},{\"duration\":11,\"caller\":true,\"accid\":\"75dd5d18ee7c102b4aa3ff5c12a5936a\"}]","appkey":"90392cd4130b36be523299cc9bbabee8","channelId":"50885338660987","live":"0","status":"SUCCESS
+	ä¸‹è½½:
 		routeBody = {"routeResult":true,"routePriority":1,"fileinfo":"[{\"vid\":\"2384372030\",\"caller\":true,\"filename\":\"2469468234-50885338660987.mp4\",\"pieceindex\":\"0\",\"size\":\"411213\",\"type\":\"mp4\",\"user\":\"75dd5d18ee7c102b4aa3ff5c12a5936a\",\"mix\":false,\"url\":\"http://jdvod6ep5thqk.vod.126.net/jdvod6ep5thqk/2469468234-50885338660987-0.mp4\",\"channelid\":\"50885338660987\",\"timestamp\":\"1552897312\",\"md5\":\"5340e67f6e589d66fd6b7a49e46b2c1f\"}]","appkey":"90392cd4130b36be523299cc9bbabee8","eventType":"6","routeHttpCode":200
 		
 	 */	
@@ -753,76 +819,76 @@ public class YunXinController extends BaseController{
         String body=null;
         JSONObject map=null;
         try {
-            // »ñÈ¡ÇëÇóÌå
+            // è·å–è¯·æ±‚ä½“
         	body = readBody(request);
-            log.info("ĞÅÏ¢³­ËÍÔ­->"+body);
-            body=body.replaceAll("\\\\", "");// È¥µô\\
-            if (EmptyUtil.isEmpty(body)) {//Èç¹ûÎªnull »òÕß¿Õ×Ö·û
+            log.info("ä¿¡æ¯æŠ„é€åŸ->"+body);
+            body=body.replaceAll("\\\\", "");// å»æ‰\\
+            if (EmptyUtil.isEmpty(body)) {//å¦‚æœä¸ºnull æˆ–è€…ç©ºå­—ç¬¦
                 result.put("code", 414);
                 return result;
             }else{
-	    		StringBuilder redundant=new StringBuilder(body.replaceAll("(\\})|(\\{)|(\\[)|(\\])", ""));//³­ËÍµÄÍêÕûĞÅÏ¢
-	    		//×Ö·û´®´¦Àí
+	    		StringBuilder redundant=new StringBuilder(body.replaceAll("(\\})|(\\{)|(\\[)|(\\])", ""));//æŠ„é€çš„å®Œæ•´ä¿¡æ¯
+	    		//å­—ç¬¦ä¸²å¤„ç†
 	    		body=body.replaceAll("\"\\{","{").replaceAll("\\}\"","}").replaceAll("\"\\[\\{", "[{").replaceAll("\\}\\]\"", "}]");
 	    		 map = JSONObject.parseObject(body);
-	    		log.info("ĞÅÏ¢³­ËÍ´¦ÀíJSON->"+map.toJSONString());
-	    		map.put("viedotype", "1");//ÉèÖÃÊÓÆµµÄÀàĞÍ
+	    		log.info("ä¿¡æ¯æŠ„é€å¤„ç†JSON->"+map.toJSONString());
+	    		map.put("viedotype", "1");//è®¾ç½®è§†é¢‘çš„ç±»å‹
 	    		String eventType = map.get("eventType").toString();
 	    		String id_=null;
 	    			//{"channelId":"6265490045067594274","createtime":"1458798080073","duration":"22","eventType":"5","live":"1","members":"[{\"accid\":\"789\",\"duration\":11},{\"accid\":\"123456\",\"caller\":true,\"duration\":11}]","status":"SUCCESS","type":"VEDIO"}
-	    			if(eventType.equals("5")){//±íÊ¾AUDIO/VEDIO/DataTunnelÏûÏ¢£¬¼´»ã±¨ÊµÊ±ÒôÊÓÆµÍ¨»°Ê±³¤¡¢°×°åÊÂ¼şÊ±³¤µÄÏûÏ¢
-	    				log.info("Ê±³¤ĞÅÏ¢start");
-	    				//JSONArray members  =JSONArray.parseArray(map.getString("members").toString().replaceAll("(^\"*)|(\"*$)","")); //»ñµÃ×Ö·û´® È¥µôÊÕÎ²µÄ"ºÅ ÔÙ×ª»»Îªjsonarray
-	    				id_ = yx.select_infocopy(map.get("channelId").toString());//»ñÈ¡Í¨µÀid
+	    			if(eventType.equals("5")){//è¡¨ç¤ºAUDIO/VEDIO/DataTunnelæ¶ˆæ¯ï¼Œå³æ±‡æŠ¥å®æ—¶éŸ³è§†é¢‘é€šè¯æ—¶é•¿ã€ç™½æ¿äº‹ä»¶æ—¶é•¿çš„æ¶ˆæ¯
+	    				log.info("æ—¶é•¿ä¿¡æ¯start");
+	    				//JSONArray members  =JSONArray.parseArray(map.getString("members").toString().replaceAll("(^\"*)|(\"*$)","")); //è·å¾—å­—ç¬¦ä¸² å»æ‰æ”¶å°¾çš„"å· å†è½¬æ¢ä¸ºjsonarray
+	    				id_ = yx.select_infocopy(map.get("channelId").toString());//è·å–é€šé“id
 	    				JSONArray members=map.getJSONArray("members");
-	    				map.put("duration_time",redundant.toString());//ÍêÕûµÄÍ¨»°Ê±³¤³­ËÍ
-	    				 for(int i=0;i<members.size();i++){//È·¶¨³ö·¢ÆğÕßºÍ½ÓÊÕÕß
+	    				map.put("duration_time",redundant.toString());//å®Œæ•´çš„é€šè¯æ—¶é•¿æŠ„é€
+	    				 for(int i=0;i<members.size();i++){//ç¡®å®šå‡ºå‘èµ·è€…å’Œæ¥æ”¶è€…
 	    					JSONObject members2=members.getJSONObject(i);
-	    					//Èç¹ûÊÇÍ¨»°µÄ·¢ÆğÕßµÄ»°£¬caller×Ö¶ÎÎªtrue,·ñÔòÎŞcaller×Ö¶Î;         
-	    					if(members2.toString().indexOf("caller")==-1){//Èç¹ûÊÇÍ¨»°µÄ·¢ÆğÕßµÄ»°£¬caller×Ö¶ÎÎªtrue£¬·ñÔòÎŞcaller×Ö¶Î£»duration±íÊ¾¶ÔÓ¦accidÓÃ»§µÄµ¥·½Ê±³¤
+	    					//å¦‚æœæ˜¯é€šè¯çš„å‘èµ·è€…çš„è¯ï¼Œcallerå­—æ®µä¸ºtrue,å¦åˆ™æ— callerå­—æ®µ;         
+	    					if(members2.toString().indexOf("caller")==-1){//å¦‚æœæ˜¯é€šè¯çš„å‘èµ·è€…çš„è¯ï¼Œcallerå­—æ®µä¸ºtrueï¼Œå¦åˆ™æ— callerå­—æ®µï¼›durationè¡¨ç¤ºå¯¹åº”accidç”¨æˆ·çš„å•æ–¹æ—¶é•¿
 	    						String uid=yx.selectUidByAccid(members2.getString("accid"));
-	    						log.info("¸ù¾İaccid²éÑ¯uid->accid:"+members2.getString("accid")+",uid:"+uid);
+	    						log.info("æ ¹æ®accidæŸ¥è¯¢uid->accid:"+members2.getString("accid")+",uid:"+uid);
 	    						map.put("createtime", DataUtil.millisecondTodate(Long.parseLong(map.getString("createtime").toString())));
-	    						map.put("faccid",uid);//¸Ä³É½ÓÊÜ
-	    						if(id_!=null){//´æÔÚ¸ù¾İchanneid¸üĞÂ 
+	    						map.put("faccid",uid);//æ”¹æˆæ¥å—
+	    						if(id_!=null){//å­˜åœ¨æ ¹æ®channeidæ›´æ–° 
 	            					 int count=yx.update_infocopy_durationM(map);
-	            					 log.info("¸üĞÂÍ¨»°Ê±³¤ÏûÏ¢->"+count);
-	            				 }else{//²»´æÔÚÔòÌí¼Ó
+	            					 log.info("æ›´æ–°é€šè¯æ—¶é•¿æ¶ˆæ¯->"+count);
+	            				 }else{//ä¸å­˜åœ¨åˆ™æ·»åŠ 
 	            					 int count=yx.insert_infocopy_durationM(map);
-	            					 log.info("Ìí¼ÓÍ¨»°Ê±³¤ÏûÏ¢->"+count);
+	            					 log.info("æ·»åŠ é€šè¯æ—¶é•¿æ¶ˆæ¯->"+count);
 	            				 }
 	    					}
-	    					//²»¹ı²»ÊÇ½ÓÊÕÕß Ôò¶ªµôÕâÌõ 
+	    					//ä¸è¿‡ä¸æ˜¯æ¥æ”¶è€… åˆ™ä¸¢æ‰è¿™æ¡ 
 	    				 }	
 	    			//{"eventType":"6","fileinfo":"[{\"caller\":true,\"channelid\":\"6290737000999815988\",\"filename\":\"xxxxxx.type\",\"md5\":\"a9b248e29669d588dd0b10259dedea1a\",\"mix\":true,\"size\":\"2167\",\"type\":\"gz\",\"vid\":\"1062591\",\"url\":\"http://xxxxxxxxxxxxxxxxxxxx.mp4\",\"user\":\"zhangsan\"}]"}
-	    			}else if(eventType.equals("6")){//±íÊ¾ÒôÊÓÆµ/°×°åÎÄ¼ş´æ´¢ĞÅÏ¢£¬¼´»ã±¨ÒôÊÓÆµ/°×°åÎÄ¼şµÄ´óĞ¡¡¢ÏÂÔØµØÖ·µÈÏûÏ¢
-	    					log.info("ÏÂÔØĞÅÏ¢start");
+	    			}else if(eventType.equals("6")){//è¡¨ç¤ºéŸ³è§†é¢‘/ç™½æ¿æ–‡ä»¶å­˜å‚¨ä¿¡æ¯ï¼Œå³æ±‡æŠ¥éŸ³è§†é¢‘/ç™½æ¿æ–‡ä»¶çš„å¤§å°ã€ä¸‹è½½åœ°å€ç­‰æ¶ˆæ¯
+	    					log.info("ä¸‹è½½ä¿¡æ¯start");
 	    					JSONArray fileinfo = map.getJSONArray("fileinfo");
 	    					 String url="";
 	    					map.put("download_info", redundant.toString());
 	    					for(int j=0;j<fileinfo.size();j++){
 	    						JSONObject fileinfo2 = fileinfo.getJSONObject(j);
-	    						boolean b=fileinfo2.getBooleanValue("mix");//mix£ºÊÇ·ñÎª»ìºÏÂ¼ÖÆÎÄ¼ş£¬true£º»ìºÏÂ¼ÖÆÎÄ¼ş£»false£ºµ¥ÈËÂ¼ÖÆÎÄ¼ş
+	    						boolean b=fileinfo2.getBooleanValue("mix");//mixï¼šæ˜¯å¦ä¸ºæ··åˆå½•åˆ¶æ–‡ä»¶ï¼Œtrueï¼šæ··åˆå½•åˆ¶æ–‡ä»¶ï¼›falseï¼šå•äººå½•åˆ¶æ–‡ä»¶
 	    						url=fileinfo2.getString("url");
-	    						if(b && url.indexOf("mp4")!=-1){//mix£ºÊÇ·ñÎª»ìºÏÂ¼ÖÆÎÄ¼ş£¬true£º»ìºÏÂ¼ÖÆÎÄ¼ş£»false£ºµ¥ÈËÂ¼ÖÆÎÄ¼ş ²¢ÇÒÎªmp4¸ñÊ½
-	    							id_ = yx.select_infocopy(fileinfo2.getString("channelid"));//ÅĞ¶ÏÊÇ·ñ´æÔÚÍ¨µÀid
-	    							map.put("fi", fileinfo2);//ÕâÀï½â¾öÍ¬Ò»´Î³­ËÍ£¬¿ÉÄÜ»á³­¸øÄã²»Í¬channel ID µÄĞÅÏ¢µÄ
+	    						if(b && url.indexOf("mp4")!=-1){//mixï¼šæ˜¯å¦ä¸ºæ··åˆå½•åˆ¶æ–‡ä»¶ï¼Œtrueï¼šæ··åˆå½•åˆ¶æ–‡ä»¶ï¼›falseï¼šå•äººå½•åˆ¶æ–‡ä»¶ å¹¶ä¸”ä¸ºmp4æ ¼å¼
+	    							id_ = yx.select_infocopy(fileinfo2.getString("channelid"));//åˆ¤æ–­æ˜¯å¦å­˜åœ¨é€šé“id
+	    							map.put("fi", fileinfo2);//è¿™é‡Œè§£å†³åŒä¸€æ¬¡æŠ„é€ï¼Œå¯èƒ½ä¼šæŠ„ç»™ä½ ä¸åŒchannel ID çš„ä¿¡æ¯çš„
 	    							map.put("url", fileinfo2.get("url"));
 	    							map.put("vid", fileinfo2.get("vid"));
-	    							 if(id_!=null){//´æÔÚ ĞŞ¸Ä
+	    							 if(id_!=null){//å­˜åœ¨ ä¿®æ”¹
 	    								 map.put("id11", id_);
 	    								 int i=yx.update_infocopy_downloadM(map);
-	    								 log.info("¸üĞÂÏÂÔØµØÖ·ĞÅÏ¢->"+i);
-	    							 }else{//²»´æÔÚÔòÌí¼Ó
+	    								 log.info("æ›´æ–°ä¸‹è½½åœ°å€ä¿¡æ¯->"+i);
+	    							 }else{//ä¸å­˜åœ¨åˆ™æ·»åŠ 
 	    								map.put("channelid", fileinfo2.get("channelid"));
 	    								 int i=yx.insert_infocopy_downloadM(map);
-	    								 log.info("Ìí¼ÓÏÂÔØµØÖ·ĞÅÏ¢->"+i);
+	    								 log.info("æ·»åŠ ä¸‹è½½åœ°å€ä¿¡æ¯->"+i);
 	    							 }
 	    						}
 	    					}
 	    				}	
             }
-            // TODO: ±È½Ïmd5¡¢checkSumÊÇ·ñÒ»ÖÂ£¬ÒÔ¼°ºóĞøÒµÎñ´¦Àí
+            // TODO: æ¯”è¾ƒmd5ã€checkSumæ˜¯å¦ä¸€è‡´ï¼Œä»¥åŠåç»­ä¸šåŠ¡å¤„ç†
             result.put("code", 200);
             return result;
         } catch (Exception ex) {
@@ -830,7 +896,7 @@ public class YunXinController extends BaseController{
 			if(map!=null){
 				map1=JSON.toJSONString(map);
 			}
-        	yx.insert_M(body+",map:"+map1+"----error:"+getErrorInfoFromException(ex));//Èç¹û´íÎóÖ±½Ó±£´æ
+        	yx.insert_M(body+",map:"+map1+"----error:"+getErrorInfoFromException(ex));//å¦‚æœé”™è¯¯ç›´æ¥ä¿å­˜
             result.put("code",414);
             return result;
         }
@@ -840,7 +906,7 @@ public class YunXinController extends BaseController{
         	BufferedReader br = new BufferedReader(new InputStreamReader((ServletInputStream) request.getInputStream(), "utf-8"));
 			StringBuffer sb = new StringBuffer("");
 			String temp;
-			//Ñ­»·¶ÁÈ¡
+			//å¾ªç¯è¯»å–
 			while ((temp = br.readLine()) != null) { 
 			  sb.append(temp);
 			}
@@ -852,14 +918,14 @@ public class YunXinController extends BaseController{
     @RequestMapping(value="downloadClient.do")
 	@ResponseBody
     public void downloadClient(String url,HttpServletResponse response) throws Exception{
-    	log.info("¿Í»§¶ËÏÂÔØÊÓÆµÎÄ¼ş->"+url);
+    	log.info("å®¢æˆ·ç«¯ä¸‹è½½è§†é¢‘æ–‡ä»¶->"+url);
         String[] ss=url.split("/");
         String fileName= ss[ss.length-1];
-        if(url.indexOf("www")!=-1 || url.indexOf("http")!=-1){//Í¨¹ıurlÏÂÔØ
-        	log.info("Í¨¹ıurlÏÂÔØ");
+        if(url.indexOf("www")!=-1 || url.indexOf("http")!=-1){//é€šè¿‡urlä¸‹è½½
+        	log.info("é€šè¿‡urlä¸‹è½½");
         	super.urlToWeb(url, response, fileName);
         }else{
-        	log.info("±¾µØÏÂÔØ");
+        	log.info("æœ¬åœ°ä¸‹è½½");
         	super.	download(url,response);
         }
     	
@@ -869,39 +935,39 @@ public class YunXinController extends BaseController{
 	@ResponseBody
     public Object downloadServiceDatabase(String id){
     	if(StringUtils.isBlank(id)){
-    		return renderError("²ÎÊı²»ÕıÈ·");
+    		return renderError("å‚æ•°ä¸æ­£ç¡®");
     	}
     	Map map1=yx.selectUrlAndVidById(id);
     	String url=map1.get("url").toString();
-    	log.info("id:"+id+"ÊÇ·ñ´æÔÚ->"+map__1.get("id"));
+    	log.info("id:"+id+"æ˜¯å¦å­˜åœ¨->"+map__1.get("id"));
     	if(map__1.get(id)==null){
-    		//É¾³ıÔÆ¶ËµÄÊÓÆµ
+    		//åˆ é™¤äº‘ç«¯çš„è§†é¢‘
         	String[] s=url.split("/");
         	try {
         		map__1.put(id,creditutil.time());
         		String last=s[s.length-1];
-        		log.info("Ô­ÊÓÆµÎÄ¼şÃû->"+last);
+        		log.info("åŸè§†é¢‘æ–‡ä»¶å->"+last);
         		String scen="upload/mp4/"+DataUtil.splicingPath;
         		String download_path=RootStatic.root_Directory+scen;
         		String play_path=RootStatic.download_prefix+scen+last;
-        		log.info("ÊÓÆµ²¥·ÅµØÖ·->"+play_path);
+        		log.info("è§†é¢‘æ’­æ”¾åœ°å€->"+play_path);
         		
         		File file=new File(download_path);
     
     	     
     	       if(!file.exists()){
-    	     	   file.mkdirs();//´´½¨Ä¿Â¼
+    	     	   file.mkdirs();//åˆ›å»ºç›®å½•
     	       }  
-    	       log.info("±¾µØÂ·¾¶->"+file.getAbsolutePath());
+    	       log.info("æœ¬åœ°è·¯å¾„->"+file.getAbsolutePath());
     			downloadFile(url,download_path+last);
-    			//¸üĞÂÊı¾İ¿â²¥·ÅµØÖ·
+    			//æ›´æ–°æ•°æ®åº“æ’­æ”¾åœ°å€
     			int updateCount=yx.updateServerPath(play_path,id);
-    			if(updateCount>0){//¸üĞÂ³É¹¦
-    				//„h³ıÔ­Ò•îl
+    			if(updateCount>0){//æ›´æ–°æˆåŠŸ
+    				//åˆªé™¤åŸè¦–é »
     				 String result=HttpYX.delteViedo(map1.get("vid").toString());
-    				 log.info("„h³ıÊÓÆµÔ´ÎÄ¼ş·µ»Ø->"+result);
+    				 log.info("åˆªé™¤è§†é¢‘æºæ–‡ä»¶è¿”å›->"+result);
     			}
-    			log.info("¸üĞÂ²¥·ÅµØÖ·->id:"+id+",count"+updateCount);
+    			log.info("æ›´æ–°æ’­æ”¾åœ°å€->id:"+id+",count"+updateCount);
     			Map map=new HashMap<>();
     			map.put("play_path", play_path);
     			map.put("AbsolutePath", file.getAbsolutePath());
@@ -909,29 +975,29 @@ public class YunXinController extends BaseController{
     			map.put("id", id);
     			return renderSuccess(map);
     		} catch (Exception e) {
-    			log.info("ÏÂÔØÊÓÆµµ½±¾µØ·şÎñÆ÷Òì³£");
+    			log.info("ä¸‹è½½è§†é¢‘åˆ°æœ¬åœ°æœåŠ¡å™¨å¼‚å¸¸");
     			e.printStackTrace();
-    			return renderError("ÏÂÔØÊ§°Ü£¬Ê§°ÜÔ­Òò£º"+e.getMessage());
+    			return renderError("ä¸‹è½½å¤±è´¥ï¼Œå¤±è´¥åŸå› ï¼š"+e.getMessage());
     		}finally {
     			map__1.remove(id);
 			}
     	}else{
-    		return renderError(map__1.get(id).toString()+",ÕıÔÚÏÂÔØÖĞ£¬ÇëµÈ´ı...");
+    		return renderError(map__1.get(id).toString()+",æ­£åœ¨ä¸‹è½½ä¸­ï¼Œè¯·ç­‰å¾…...");
     	}
     }
 	public static void main(String[] args) throws Exception{
-		//´´½¨Ä¿Â¼²âÊÔ
+		//åˆ›å»ºç›®å½•æµ‹è¯•
 		/*String scen="upload/mp4/"+DataUtil.splicingPath;
 		String download_path=RootStatic.root_Directory+scen;
 		File file =new File(download_path);
 		if(file.exists()){
-			System.out.println("Ä¿Â¼´æÔÚ");
+			System.out.println("ç›®å½•å­˜åœ¨");
 		}else{
-			System.out.println("´´½¨");
+			System.out.println("åˆ›å»º");
 			file.mkdirs();
 		}*/
 		
-		//ĞÅÏ¢Ê±³¤³­ËÍ²âÊÔ
+		//ä¿¡æ¯æ—¶é•¿æŠ„é€æµ‹è¯•
 /*		InfoCopy infocopy=new InfoCopy();
 		infocopy.setChannelId("62654898432013131");
 		infocopy.setCreatetime(System.currentTimeMillis()+"");
@@ -955,77 +1021,77 @@ public class YunXinController extends BaseController{
 		//System.out.println(HttpYX.doPost("http://localhost:80/yx/infocopy.do",JSON.toJSONString(infocopy)));*/
 		
 		
-		//É¾³ıºÃÓÑ ¿ªÊ¼
+		//åˆ é™¤å¥½å‹ å¼€å§‹
 	/*	List list = yx.query_token("1",-1);
 		String s;
 		String s1 = "";
-		String s2;//½ÓÊÕ·µ»Ø½á¹û
+		String s2;//æ¥æ”¶è¿”å›ç»“æœ
 		StringBuilder sb=new StringBuilder();*/
-		//Ñ­»·É¾³ıºÃÓÑ 
+		//å¾ªç¯åˆ é™¤å¥½å‹ 
 	/*	int i=0;
 		for(int j=0;j<list.size();j++){
-			s=((Map)list.get(j)).get("accid").toString();//·¢ÆğÕß
+			s=((Map)list.get(j)).get("accid").toString();//å‘èµ·è€…
 			List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 			nvps.add(new BasicNameValuePair("accid",s));
 			nvps.add(new BasicNameValuePair("faccid",s1));
 			s2=HttpYX.doPost("https://api.netease.im/nimserver/friend/delete.action",nvps);
 			if(s2.indexOf("200")==-1){
-				sb.append(s1).append("É¾³ı£º").append(s).append("Ê§°Ü£¡");
+				sb.append(s1).append("åˆ é™¤ï¼š").append(s).append("å¤±è´¥ï¼");
 				i++;
 			}
 		}
-		//System.out.println("×ÜµÄºÃÓÑÊı:"+list.size()+",Ê§°Ü¸öÊı£º"+i+" "+sb.toString());*/
-		//É¾³ıºÃÓÑ½áÊø
+		//System.out.println("æ€»çš„å¥½å‹æ•°:"+list.size()+",å¤±è´¥ä¸ªæ•°ï¼š"+i+" "+sb.toString());*/
+		//åˆ é™¤å¥½å‹ç»“æŸ
 		
-		//Ìí¼ÓºÃÓÑ
+		//æ·»åŠ å¥½å‹
 		//System.out.println(HttpYX.addBuddy("c6fa296f9c17c8032be6593a5d02269b", "507da3a2ddd113ec9166fb8e58005fb5"));
 		//System.out.print(DataConversionParent.subZeroAndDot("0.0"));
-		//Ñ­»·É¾³ıºÃÓÑ ¿ªÊ¼
-		//»ñÈ¡ËùÓĞµÄÉóºË
+		//å¾ªç¯åˆ é™¤å¥½å‹ å¼€å§‹
+		//è·å–æ‰€æœ‰çš„å®¡æ ¸
 		/*List list0 = yx.query_token("0",-1);
-		//»ñÈ¡ËùÓĞµÄ¿Í»§
+		//è·å–æ‰€æœ‰çš„å®¢æˆ·
 		List list = yx.query_token("1",-1);
 		String s;
 		String s1 = "";
-		String s2;//½ÓÊÕ·µ»Ø½á¹û
+		String s2;//æ¥æ”¶è¿”å›ç»“æœ
 		
-		//Ñ­»·É¾³ıºÃÓÑ 
+		//å¾ªç¯åˆ é™¤å¥½å‹ 
 		for(int i=0;i<list0.size();i++){
 			s1=((Map)list0.get(i)).get("accid").toString();
 			int sum=0;
 			StringBuilder sb=new StringBuilder();
 			for(int j=0;j<list.size();j++){
-				s=((Map)list.get(j)).get("accid").toString();//·¢ÆğÕß
+				s=((Map)list.get(j)).get("accid").toString();//å‘èµ·è€…
 				List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 				nvps.add(new BasicNameValuePair("accid",s));
 				nvps.add(new BasicNameValuePair("faccid",s1));
 				s2=HttpYX.doPost("https://api.netease.im/nimserver/friend/delete.action",nvps);
 				if(s2.indexOf("200")==-1){
-					sb.append(s1).append("É¾³ı£º").append(s).append("Ê§°Ü£¡");
+					sb.append(s1).append("åˆ é™¤ï¼š").append(s).append("å¤±è´¥ï¼");
 					sum++;
 				}
 			}
-			//System.out.println(s1+"×ÜµÄºÃÓÑÊı:"+list.size()+",Ê§°Ü¸öÊı£º"+sum+" "+sb.toString());
+			//System.out.println(s1+"æ€»çš„å¥½å‹æ•°:"+list.size()+",å¤±è´¥ä¸ªæ•°ï¼š"+sum+" "+sb.toString());
 		}*/
-		//Ñ­»·É¾³ıºÃÓÑ½áÊø
+		//å¾ªç¯åˆ é™¤å¥½å‹ç»“æŸ
 //		String s="dfd'{dfd}''{";
 //		//System.out.println(s.replaceAll("\\'\\{","{"));
-//		//char5·Ö¸î
+//		//char5åˆ†å‰²
 //		String s1="upload/2018/12/05/b96488e4cb8801432fd5c5a1944751a0.jpgupload/2018/12/05/0480eb24d3448ceade8ad0f84fd57458.jpgupload/2018/12/05/19c43d2433d75441c2dd7be45a604ff8.jpgupload/2018/12/05/250126c780fd93b29e175db5ec00db8d.jpg";
 //		String ss[]=s1.split("");
 //		for(String s2:ss){
 //			if(!s2.equals("")){
-//				System.out.println("Êä³ö"+s2);
+//				System.out.println("è¾“å‡º"+s2);
 //				break;
 //			}
 //		}
-		//ÊÓÆµÏÂÔØ
+		//è§†é¢‘ä¸‹è½½
 	/*	Long l=System.currentTimeMillis();
 		downloadFile("http://jdvod6ep5thqk.vod.126.net/jdvod6ep5thqk/0-50870502883509-0-mix.mp4","C:\\Users\\Administrator\\Desktop\\word\\haha1\\upload\\0-6324213347287310-0-mix.mp4");
 		Long l1=System.currentTimeMillis();
 		System.out.println(l1-l);*/
 		
-		//½ØÈ¡×Ö·û²âÊÔ
+		//æˆªå–å­—ç¬¦æµ‹è¯•
 		/*String s="http://a.kcway.net/assess/upload/0-50873460261080-0-mix.mp4";
 		int i=s.indexOf("upload");
 		if(i!=-1){

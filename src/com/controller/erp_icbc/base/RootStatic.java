@@ -10,6 +10,6 @@ public class RootStatic {
 	public static String download_prefix="http://a.kcway.net/assess/";
 	
 	//±¾µØ
-	/*public static String root_Directory="C:/Users/Administrator/Desktop/word/haha1/";
-	public static String url="http://localhost/kcd/yx/downloadClient.do?url=";*/
+	//public static String root_Directory="C:/Users/wang/Desktop/word/haha1/";
+	//public static String url="http://localhost/kcd/yx/downloadClient.do?url=";
 }

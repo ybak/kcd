@@ -122,9 +122,6 @@ tr{
 	height: 55%;
 }
 
-.r_contetn,.l_content{
-	padding-top:12px;
-}
 .mq_l_t_content .l_content{
 	float: left;
 	width: 40%;
