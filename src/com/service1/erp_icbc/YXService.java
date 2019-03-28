@@ -63,4 +63,8 @@ public interface YXService {
 	int updateServerPath(String serverPath,String Id);
 	Map selectUrlAndVidById(String Id);
 	String SelectBankIdByUid(String id);
+	//ΩÿÕºœ‡πÿ
+	int addVideoScreenshot(Map map);
+	List selectAllVideoScreenshot(String id);
+	int deleteVideoScreenshot(Map map);
 }

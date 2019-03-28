@@ -731,12 +731,12 @@ fn.hangup = function (param) {
 //    this.stopRemoteStream();//(己方本地操作，对端不受影响)关闭对方画面
 //    this.stopLocalStream();//(己方本地操作，对端不受影响)关闭自己画面
     /**状态重置 */
-    if(this.netcallDuration!=0 && this.netcallDuration!='00分00秒'){
+    /*if(this.netcallDuration!=0 && this.netcallDuration!='00分00秒'){
     	console.log("通话时长大于0->"+this.netcallDuration)
     	window.hangupexit(this.channelId,this.beCalledInfo.custom,this.netcallDuration,this.beCallData.c_name);
     }else{
     	console.log("通话时长小于等于0->"+this.netcallDuration)
-    }
+    }*/
     this.resetWhenHangup();//释放资源
 };
 // 其它端已处理
@@ -784,12 +784,12 @@ fn.onHangup = function (obj) {
 //            this.setDeviceAudioIn(false);
 //            this.setDeviceAudioOut(false);
         }.bind(this));
-        if(this.netcallDuration!=0 && this.netcallDuration!='00分00秒'){
+        /*if(this.netcallDuration!=0 && this.netcallDuration!='00分00秒'){
         	console.log("通话时长大于0->"+this.netcallDuration)
         	window.hangupexit(this.channelId,this.beCalledInfo.custom,this.netcallDuration,this.beCallData.c_name);
         }else{
         	console.log("通话时长小于等于0->"+this.netcallDuration)
-        }
+        }*/
         /**状态重置 */
         this.resetWhenHangup();//释放资源
     }
@@ -816,6 +816,7 @@ fn.onBeCalling = function (obj, scene) {
     if(!!myPlayer){
     	myPlayer.pause();
     }
+    layer.closeAll();
     scene = scene || 'p2p';
     this.log("收到音视频呼叫(onBeCalling):"+JSON.stringify(obj));
     var channelId = obj.channelId;
@@ -866,12 +867,12 @@ fn.onBeCalling = function (obj, scene) {
     }.bind(this), 62 * 1000)
     //p2p场景
     this.beCalledInfo = obj;
-   /* this.beCalledInfo.custom='{"id":"706",\"latitude\":26.056487,\"longitude\":119.336294,"address":"上海市"}';
+    /*this.beCalledInfo.custom='{"id":"706",\"latitude\":26.056487,\"longitude\":119.336294,"address":"上海市"}';
     obj.custom='{"id":"706",\"latitude\":26.056487,\"longitude\":119.336294,"address":"上海市"}';*/
     this.netcallActive = true;
     this.netcallAccount = obj.account;//即帐号
     this.doOpenChatBox();
-    var custom=JSON.parse(obj.custom.replace("\\","").replace("(null)",""));
+    custom=JSON.parse(obj.custom.replace("\\","").replace("(null)",""));
     var that=this;
     $.ajax({
         url:'../yx/viedoinfo.do',

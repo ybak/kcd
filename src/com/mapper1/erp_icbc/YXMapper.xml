@@ -10,9 +10,21 @@
 <!-- 	<update id="update_YX_account" parameterType="java.util.HashMap">
 		UPDATE  assess_gems SET token=#{token},accid=#{accid} WHERE id=#{id};
 	</update> -->
-	<select id="selectUidByAccid" resultType="java.lang.String" parameterType="java.lang.String" >
-	select uid from icbc_erp_token where accid=#{0}
-	</select>	
+	<!-- 截图删除 -->
+	<update id="deleteVideoScreenshot" parameterType="map">
+		UPDATE  video_screenshot SET delmark=1,dt_edit=#{dtEdit},mid_edit=#{midEdit} WHERE id=#{id}
+	</update> 
+	<!-- 截图查询所有 -->
+	<select id="selectAllVideoScreenshot" resultType="map" parameterType="java.lang.String">
+		select concat('http://a.kcway.net/assess/',path) path,dt_add dtAdd,id from  video_screenshot where delmark=0 and icbc_id=#{0}
+	</select>
+	<!-- 截图保存 -->
+	<!-- {"path":"upload/2019/03/28/fe706b84a996ed8b65a4bcde670a241d.png","dtEdit":"2019-03-28 15:22:50","midEdit":"4793","dtAdd":"2019-03-28 15:22:50","icbcId":"706","midAdd":"4793"}-->
+	<insert id="addVideoScreenshot" parameterType="java.lang.String">
+		INSERT INTO video_screenshot(`mid_add`, `mid_edit`, `dt_add`, `dt_edit`, `delmark`, `path`, `icbc_id`) 
+		VALUES 
+		(#{midAdd}, #{midEdit}, #{dtAdd},#{dtEdit}, 0, #{path}, #{icbcId});
+	</insert>	
 	<!-- 查询出所有的机构 -->
 	<select id="getOrganization" resultType="java.util.HashMap">
 		select id,name from assess_fs

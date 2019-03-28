@@ -15,6 +15,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -31,12 +34,19 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.controller.erp_icbc.YunXin.YunXinController;
 import com.controller.erp_icbc.result.Result;
 import com.controller.erp_icbc.utils.Charsets;
 import com.controller.erp_icbc.utils.StringEscapeEditor;
 import com.model1.icbc.erp.PageData;
+import com.util.creditutil;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 /**基础 controller
  * @Description:TODO
  * @author:LiWang
@@ -64,6 +74,20 @@ public abstract class BaseController {
             return "bad getErrorInfoFromException";  
         }  
     }  
+    //业务对象
+    public Map AddBoToMap(HttpServletRequest request) {
+    	Map map=this.updateBoToMap(request);
+    	map.put("midAdd", this.getUserId(request));
+    	map.put("dtAdd", creditutil.time());
+		return map;
+    }
+    
+    public Map updateBoToMap(HttpServletRequest request) {
+    	Map map=new HashMap<>();
+    	map.put("midEdit", this.getUserId(request));
+    	map.put("dtEdit", creditutil.time());
+		return map;
+    }
     /**
      * 获取当前登录用户id
      * @return {Long}
@@ -189,9 +213,9 @@ public abstract class BaseController {
 	}
 	
 	
-
-public HttpServletResponse download(String path, HttpServletResponse response) {
-        try {
+	//下载服务器端文件到浏览器
+	public HttpServletResponse download(String path, HttpServletResponse response) {
+	        try {
             // path是指欲下载的文件的路径。
             File file = new File(path);
             // 取得文件名。
@@ -219,6 +243,28 @@ public HttpServletResponse download(String path, HttpServletResponse response) {
         }
         return response;
     }
+		//文件上传
+	 protected boolean uploadServer(MultipartFile file, String path,String fileName) {
+		// 判断文件是否为空  
+        if (!file.isEmpty()) {  
+            try {  
+                File filepath = new File(path);
+                if (!filepath.exists()) 
+                    filepath.mkdirs();
+                // 文件保存路径  
+                String savePath = path + fileName;
+                log.info("图片路径->"+savePath);
+                File imgPath=new File(savePath);
+                imgPath.createNewFile();//且仅当不存在具有此抽象路径名指定名称的文件时，不可分地创建一个新的空文件
+                // 转存文件  
+                file.transferTo(imgPath);  
+                return true;
+            } catch (Exception e) {  
+                e.printStackTrace();  
+            }  
+        }
+        return false;
+	 }
 	/**
      * TODO 下载文件到本地
      * @author nadim  
@@ -249,6 +295,7 @@ public HttpServletResponse download(String path, HttpServletResponse response) {
        bufferedInputStream.close();
        fileOutputStream.close();
   }
+    //浏览器端下载
     public static void urlToWeb(String farUrl, HttpServletResponse response,String fileName) throws Exception{
     	 URL url = new URL(farUrl);
          HttpURLConnection urlCon = (HttpURLConnection) url.openConnection();

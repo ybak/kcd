@@ -124,46 +124,17 @@ fn.showTip = function (message, duration, done) {
         this.showTipTimer = null;
     }.bind(this), duration);
 };
-/** 
- * 设置视频画面尺寸 
- * 
-*/
-fn.setVideoSize = function (sizeObj) {
-    var bigSize = {
-        width: this.isFullScreen ? 640 : 320,
-        height: this.isFullScreen ? 480 : 240
-    };
-    var smallSize = {
-        width: this.isFullScreen ? 240 : 160,
-        height: this.isFullScreen ? 180 : 120
-    };
-    var size = sizeObj && sizeObj.constructor === Object ? sizeObj : $(".netcall-video-local").is(".bigView") ? bigSize : smallSize;
-    this.netcall.setVideoViewSize(size);
-}
-fn.setVideoRemoteSize = function (sizeObj) {
-    var bigSize = {
-        width: this.isFullScreen ? 640 : 320,
-        height: this.isFullScreen ? 480 : 240
-    };
-    var smallSize = {
-        width: this.isFullScreen ? 240 : 160,
-        height: this.isFullScreen ? 180 : 120
-    };
-
-    var size = sizeObj && sizeObj.constructor === Object ? sizeObj : $(".netcall-video-local").is(".bigView") ? bigSize : smallSize;
-    this.netcall.setVideoViewRemoteSize(size);
-}
 // 更新视频画面显示尺寸
 fn.updateVideoShowSize = function (local, remote) {
     var bigSize = {
         cut: true,
-        width: this.isFullScreen ? 640 : 320,
-        height: this.isFullScreen ? 480 : 240
+        width: this.isFullScreen ? 640 : 400,//320,
+        height: this.isFullScreen ? 480 : 300//240
     };
     var smallSize = {
         cut: true,
-        width: this.isFullScreen ? 240 : 160,
-        height: this.isFullScreen ? 180 : 120
+        width: this.isFullScreen ? 240 : 180,// 160,
+        height: this.isFullScreen ? 180 : 140//120
     };
     if (local) {
         var isBig = $(".netcall-video-local").is(".bigView")
@@ -192,8 +163,7 @@ fn.hideAllNetcallUI = function () {
     //播放声音画面相关: (己方本地操作，对端不受影响)
     this.stopRemoteStream();//关闭自己画面
     this.stopLocalStream();//关闭对方画面
-    
- 
+    window.custom=null;
     this.netcallActive = false; //被叫不活跃
     this.netcallAccount = ""; //清空被叫accid
 
