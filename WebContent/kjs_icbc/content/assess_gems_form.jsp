@@ -108,6 +108,20 @@
 			</div>
 		</div>
 		<div class="form-group">
+			<label class="col-sm-2 control-label">账户登录标识(默认APP和后台都可登录)：</label>
+			<div class="col-sm-10">
+				<div class="row inline-from">
+					<div class="col-sm-4">
+					<select id="login_type" name="login_type" class="form-control">
+						<option value="0">请选择</option>
+						<option value="1" ${requestScope.pd.login_type eq '1'?"selected='selected'":'' }>APP</option>
+						<option value="2" ${requestScope.pd.login_type eq '2'?"selected='selected'":'' }>后台</option>
+					</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
 			<label class="col-sm-2 control-label">人员姓名：</label>
 			<div class="col-sm-10">
 				<div class="row inline-from">

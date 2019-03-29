@@ -387,11 +387,11 @@ public class erp_icbcController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "erp/admin_gems_update.do", produces = "text/html;charset=UTF-8")
-	public ModelAndView admin_gems_update(Integer fsid, String name,
-			String mobile, String username, String password, Integer cp,
-			Integer upac_id, String idcard, String dn, String qn, String type,
-			String userid, String agpid, String mid_add, String bc_title,
-			String email, Integer adminid, Integer gemsid,
+	public ModelAndView admin_gems_update(Integer login_type, Integer fsid,
+			String name, String mobile, String username, String password,
+			Integer cp, Integer upac_id, String idcard, String dn, String qn,
+			String type, String userid, String agpid, String mid_add,
+			String bc_title, String email, Integer adminid, Integer gemsid,
 			@RequestParam("file") MultipartFile file, int ssbm,
 			HttpServletRequest request) throws IOException {
 		System.out.println("********编辑更新admin&gems********");
@@ -453,6 +453,7 @@ public class erp_icbcController {
 		pd.put("upac_id", upac_id);
 		pd.put("cp", cp);
 		pd.put("id", adminid);
+		pd.put("login_type", login_type);
 		erp_userrootService.updatebyid(pd);
 		request.setAttribute("dn", dn);
 		request.setAttribute("qn", qn);
@@ -465,11 +466,12 @@ public class erp_icbcController {
 	// 添加gems 人员
 	@Transactional
 	@RequestMapping(value = "erp/assess_gems_add.do", produces = "text/html;charset=UTF-8")
-	public ModelAndView assess_gems_add(Integer fsid, String name,
-			String mobile, String username, String password, Integer cp,
-			Integer upac_id, String idcard, String dn, String qn, String type,
-			String userid, String agpid, String mid_add, String bc_title,
-			String email, @RequestParam("file") MultipartFile file, int ssbm,
+	public ModelAndView assess_gems_add(Integer login_type, Integer fsid,
+			String name, String mobile, String username, String password,
+			Integer cp, Integer upac_id, String idcard, String dn, String qn,
+			String type, String userid, String agpid, String mid_add,
+			String bc_title, String email,
+			@RequestParam("file") MultipartFile file, int ssbm,
 			HttpServletRequest request) throws IOException {
 		PageData pagedate = new PageData();
 		System.out.println("file:" + file);
@@ -516,8 +518,10 @@ public class erp_icbcController {
 		pagedate.put("dt_add", new Date());
 		pagedate.put("dt_edit", new Date());
 		pagedate.put("appkey", "");
-		erp_userrootService.save(pagedate);
 		PageData pd = new PageData();
+		erp_userrootService.save(pagedate);
+		pd.put("gemsid", pagedate.get("id"));
+		pd.put("login_type", login_type);
 		pd.put("dn", "assess_admin");
 		pd.put("username", username);
 		pd.put("userpass", MD5.sign(MD5.sign(password, "UTF-8"), "UTF-8"));
@@ -550,7 +554,7 @@ public class erp_icbcController {
 		// pd.put("eeid","");
 		// pd.put("note","");
 		// pd.put("wx_openid","");
-		pd.put("gemsid", pagedate.get("id"));
+
 		// pd.put("bc_title","");
 		// pd.put("jgid","");
 		pd.put("loginip", 0);
@@ -640,7 +644,7 @@ public class erp_icbcController {
 		pagedate.put("namepy", paramemap.get("namepy"));
 		pagedate.put("create_time", getSecondTimestamp(new Date()));
 		pagedate.put("update_time", getSecondTimestamp(new Date()));
-		pagedate.put("fs_type", 2);
+		pagedate.put("fs_type", paramemap.get("fs_type"));
 		pagedate.put("oem", "");
 		pagedate.put("rec_id", 0);
 		pagedate.put("support", "");
@@ -670,8 +674,22 @@ public class erp_icbcController {
 		pagedate.put("purview_map", paramemap.get("purview_map"));
 		pagedate.put("purview_map_kjs", paramemap.get("purview_map_kjs"));
 		pagedate.put("mgicbc_tag", 0);
-		erp_userrootService.save(pagedate);
+		int bank_id = 0;// 关联银行id
+		pagedate.put("bank_id", paramemap.get("bank_id"));
 
+		erp_userrootService.save(pagedate);
+		if (paramemap.get("bank_id").equals("0")
+				&& paramemap.get("fs_type").equals("3")) {
+			PageData bank = new PageData();
+			bank.put("name", paramemap.get("name"));
+			bank.put("dt_add", creditutil.time());
+			bank.put("dt_edit", creditutil.time());
+			bank.put("fsid", pagedate.get("id"));
+			bank.put("mid_add", pData.get("icbc_erp_fsid"));
+			bank.put("mid_edit", pData.get("icbc_erp_fsid"));
+			bank.put("showtag", "0");
+			icbc_banklistService.saveicbc_banklist(bank);
+		}
 		fs_details.put("dn", "assess_fs_details");
 		fs_details.put("xt_name", paramemap.get("xt_name"));
 		fs_details.put("mid_add", paramemap.get("userid"));
@@ -984,8 +1002,9 @@ public class erp_icbcController {
 		}
 		System.out.println("******************" + pData.get("icbc_erp_fsid"));
 		pagedate.put("mid_edit", paramemap.get("userid"));
+		pagedate.put("bank_id", paramemap.get("bank_id"));
+		pagedate.put("fs_type", paramemap.get("fs_type"));
 		erp_userrootService.updatebyid(pagedate);
-
 		fs_details.put("dn", "assess_fs_details");
 		fs_details.put("xt_name", paramemap.get("xt_name"));
 		fs_details.put("mid_edit", paramemap.get("userid"));

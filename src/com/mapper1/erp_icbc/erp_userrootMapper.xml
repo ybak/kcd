@@ -91,9 +91,9 @@ insert into assess_fs
 <if test="address != null">address,</if>
 <if test="create_time != null">create_time,</if>
 <if test="update_time != null">update_time,</if>
-<if test="showtag != null">showtag,</if>
+<if test="showtag != null and showtag!=''">showtag,</if>
 <if test="code_pre != null">code_pre,</if>
-<if test="fs_type != null">fs_type,</if>
+fs_type,
 <if test="oem != null">oem,</if>
 <if test="oemimgurl != null">oemimgurl,</if>
 <if test="rec_id != null">rec_id,</if>
@@ -123,6 +123,7 @@ insert into assess_fs
 <if test="mgicbc_tag != null">mgicbc_tag,</if>
 <if test="up_id != null and up_id!=''">up_id,</if>
 <if test="icbc_erp_tag!= null and icbc_erp_tag!=''">icbc_erp_tag,</if>
+bank_id,
 </trim>
 values
 <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -134,9 +135,9 @@ values
 <if test="address != null">#{address},</if>
 <if test="create_time != null">#{create_time},</if>
 <if test="update_time != null">#{update_time},</if>
-<if test="showtag != null">#{showtag},</if>
+<if test="showtag != null and showtag!=''">#{showtag},</if>
 <if test="code_pre != null">#{code_pre},</if>
-<if test="fs_type != null">#{fs_type},</if>
+#{fs_type},
 <if test="oem != null">#{oem},</if>
 <if test="oemimgurl != null">#{oemimgurl},</if>
 <if test="rec_id != null">#{rec_id},</if>
@@ -166,6 +167,7 @@ values
 <if test="mgicbc_tag != null">#{mgicbc_tag},</if>
 <if test="up_id != null and up_id!=''">#{up_id},</if>
 <if test="icbc_erp_tag!= null and icbc_erp_tag!=''">#{icbc_erp_tag},</if>
+#{bank_id},
 </trim>
 </if>
 
@@ -208,6 +210,7 @@ agpid,
 <if test="upac_id!= null and upac_id!=''">upac_id,</if>
 cp,
 erp_agpid,
+login_type,
 </trim>
 values
 <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -247,6 +250,7 @@ values
 <if test="upac_id!= null and upac_id!=''">#{upac_id},</if>
 #{cp},
 #{erp_agpid},
+#{login_type},
 </trim>
 </if>
 <if test="dn=='icbc_erp_admin_agp'">
@@ -407,7 +411,7 @@ f1.name as fsname,
               select t1.*,
               if(find_in_set(up_id, @pids) > 0, @pids := concat(@pids, ',', id), 0) as ischild
               from (
-                   select * from assess_fs fs where fs.fs_type=2 and fs.deltag=0 order by fs.up_id,fs.id
+                   select * from assess_fs fs where (fs.fs_type=2 or fs.fs_type=3) and fs.deltag=0 order by fs.up_id,fs.id
                   ) t1,
               (select @pids :=#{fsid} ) t2
 ) t3 
@@ -568,6 +572,8 @@ showtag=#{showtag},
 <if test="purview_map!=null and purview_map!=''">purview_map=#{purview_map},</if>
 <if test="purview_map_kjs!=null and purview_map_kjs!=''">purview_map_kjs=#{purview_map_kjs},</if>
 icbc_erp_tag=#{icbc_erp_tag},
+bank_id={bank_id},
+fs_type={fs_type},
 </trim>
 where id=#{id}
 </if>
@@ -613,6 +619,7 @@ agpid=#{agpid},
 <if test="upac_id!=null and upac_id!=''">upac_id=#{upac_id},</if>
 cp=#{cp},
 erp_agpid=#{erp_agpid},
+login_type=#{login_type},
 </trim>
 where id=#{id}
 </if>

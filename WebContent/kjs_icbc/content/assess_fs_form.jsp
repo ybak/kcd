@@ -87,13 +87,34 @@
 							<input  id="xt_name" name="xt_name" value="${requestScope.pd.xt_name }" class="form-control"  placeholder="" type="text">
 						</div>
 					</div>
-					
+					<div class="col-sm-4">
+						<div class="input-group">
+							<span class="input-group-addon">
+								公司类型
+							</span>
+						    <select id="fs_type" name="fs_type" class="form-control">
+						     <option value="2">公司</option>
+						     <option value="3" ${pd.bank_type eq '1'?"selected='selected'":''}>银行</option>
+						    </select>
+						</div>
+					</div>
 					<div class="col-sm-4">
 						<div class="input-group">
 							<span class="input-group-addon">
 								<a href="javascript:dofind()">公司简称</a>
 							</span>
 							<input  id="name" name="name" value="${requestScope.pd.name }" class="form-control" onblur="showun();" placeholder="" type="text">
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="input-group">
+							<span class="input-group-addon">关联已有银行</span>
+							<select id="bank_id" name="bank_id" class="form-control">
+							<option value="0">请选择</option>
+							<c:forEach var="b" items="${requestScope.banklist }">
+							 <option value="${b.id }">${b.name }</option>
+							</c:forEach>
+							</select>
 						</div>
 					</div>
 					<div class="col-sm-4">
@@ -110,6 +131,12 @@
 					</div>
 					<div class="col-sm-4">
 						<div class="input-group">
+							<span class="input-group-addon">法人姓名</span>
+							<input id="fr_name" name="fr_name" value="${requestScope.pd.fr_name }" class="form-control" placeholder="" type="text">
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<div class="input-group">
 							<span class="input-group-addon">合作起止日期</span>
 							<input id="hz_date1" name="hz_date1" value="${requestScope.pd.hz_date1 }" class="form-control" placeholder="" type="text">
 						</div>
@@ -117,12 +144,7 @@
 					<div class="col-sm-4">
 							<input id="hz_date2" name="hz_date2" value="${requestScope.pd.hz_date2 }" class="form-control" placeholder="" type="text">
 					</div>
-					<div class="col-sm-4">
-						<div class="input-group">
-							<span class="input-group-addon">法人姓名</span>
-							<input id="fr_name" name="fr_name" value="${requestScope.pd.fr_name }" class="form-control" placeholder="" type="text">
-						</div>
-					</div>
+					
 					<div class="col-sm-4">
 						<div class="input-group">
 							<span class="input-group-addon">法人身份证号</span>
