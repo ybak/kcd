@@ -28,9 +28,9 @@ public class LoanAutomaticTaskController {
     // JDBC URL
 	private final String JDBCURL = "jdbc:mysql://localhost:3306/kcway2?relaxAutoCommit=true&zeroDateTimeBehavior=convertToNull&characterEncoding=UTF-8&useUnicode=true&autoReconnect=true";
     // user
-	private final String USER = "root";  //kcway
+	private final String USER = "kcway";  //root   kcway
     // password
-	private final String PASSWORD = "root";  //NDXppG2qUNB6pXcA
+	private final String PASSWORD = "NDXppG2qUNB6pXcA";  //root   NDXppG2qUNB6pXcA
 	
 	@Autowired
 	private LoanOverdueService loanOverdueService;
