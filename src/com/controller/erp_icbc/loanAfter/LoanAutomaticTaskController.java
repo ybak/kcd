@@ -79,8 +79,8 @@ public class LoanAutomaticTaskController {
 	
 	
 	//从逾期修改到电催
-	@Scheduled(cron="0/6 * *  * * ? ")   //每6秒执行一次   
-//	@Scheduled(cron = "0 0 6 * * ?") //每天凌晨6点执行
+//	@Scheduled(cron="0/6 * *  * * ? ")   //每6秒执行一次   
+	@Scheduled(cron = "0 0 6 * * ?") //每天凌晨6点执行
 	public void tasktestTo(){	
 		// 1. 准备连接数据库的 4 个字符串.
         // 驱动的全类名.

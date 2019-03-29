@@ -14,4 +14,7 @@ public interface AboutExcelService {
 	Integer addExcelRecord(PageData pd);
 	//添加逾期客户到数据库表中
 	Integer addOverdueClient(PageData pd);
+	
+	//查询逾期表中是否有该客户，如果有咋不在逾期表中添加
+	Integer selectOverdueClintOnAdd(PageData pd);
 }

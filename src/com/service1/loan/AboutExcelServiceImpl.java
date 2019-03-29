@@ -51,6 +51,12 @@ public class AboutExcelServiceImpl implements AboutExcelService{
 		// TODO Auto-generated method stub
 		return aboutExcelMapper.updatePaySchedule(pd);
 	}
+
+	@Override
+	public Integer selectOverdueClintOnAdd(PageData pd) {
+		// TODO Auto-generated method stub
+		return aboutExcelMapper.selectOverdueClintOnAdd(pd);
+	}
 	
 
 	

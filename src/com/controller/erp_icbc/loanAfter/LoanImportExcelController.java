@@ -145,8 +145,9 @@ public class LoanImportExcelController {
 					icbcInfo.put("c_cardno", rowMap.getString("id_card"));
 					PageData getIcbcInfo = new PageData();
 					getIcbcInfo = AboutExcelService.icbcInfo(icbcInfo); //根据excel表格里面身份证号获取用户信息
+					int a = AboutExcelService.selectOverdueClintOnAdd(icbcInfo); //查询逾期表是否有该客户，如果没有，即a==0,则把客户添加到逾期表，否则不添加
 					//excel表格里面的数据  证明客户逾期
-					if(overdue_amount>0){ 
+					if(overdue_amount>0 && a==0){ 
 						PageData addOverdueClient = new PageData();
 						addOverdueClient.put("mid_add",pdsession.getInt("id"));
 						addOverdueClient.put("mid_edit",pdsession.getInt("id") );

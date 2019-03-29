@@ -56,6 +56,15 @@ where 1=1 and gems_fs_id=#{gems_fs_id}
 order by dt_add desc 
 </select>
 
+<!-- 查询逾期表中是否有该客户，如果有咋不在逾期表中添加 -->
+<select id="selectOverdueClintOnAdd" resultType="int" parameterType="pd">
+select 
+	count(*)
+from 
+	loan_overdue_list lol
+where 1=1 and lol.c_cardno=#{c_cardno}
+</select> 
+
 <!-- 把逾期客户添加到表中 -->
 <insert id="addOverdueClient" parameterType="pd" keyProperty="id" >
 insert into loan_overdue_list(
