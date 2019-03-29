@@ -98,10 +98,6 @@ public class YXServiceImpl implements YXService{
 	public int insert_infocopy_viedo(Map map){
 		return yxmapper.insert_infocopy_viedo(map);
 	}
-	//视频面前在视频表中更新一个记录
-	public int update_infocopy_viedo(Map map){
-		return yxmapper.update_infocopy_viedo(map);
-	}
 	@Override
 	public int select_operating_count(PageInfo pageinfo) {
 		// TODO Auto-generated method stub
@@ -113,7 +109,7 @@ public class YXServiceImpl implements YXService{
 		return yxmapper.query_token(label,count);
 	}
 	public int update_infocopy_viedo_vid(Map map){
-		return yxmapper.update_infocopy_viedo(map);
+		return yxmapper.update_infocopy_viedo_vid(map);
 	}
 	public int updata_mq_status(String bcstatus,String icbcid){
 		return yxmapper.updata_mq_status(bcstatus,icbcid);
@@ -212,9 +208,9 @@ public class YXServiceImpl implements YXService{
 		return yxmapper.addVideoScreenshot(map);
 	}
 	@Override
-	public List selectAllVideoScreenshot(String id) {
+	public List selectAllVideoScreenshot(Map map) {
 		// TODO Auto-generated method stub
-		return yxmapper.selectAllVideoScreenshot(id);
+		return yxmapper.selectAllVideoScreenshot(map);
 	}
 	@Override
 	public int deleteVideoScreenshot(Map map) {

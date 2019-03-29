@@ -731,12 +731,14 @@ fn.hangup = function (param) {
 //    this.stopRemoteStream();//(己方本地操作，对端不受影响)关闭对方画面
 //    this.stopLocalStream();//(己方本地操作，对端不受影响)关闭自己画面
     /**状态重置 */
-    /*if(this.netcallDuration!=0 && this.netcallDuration!='00分00秒'){
+    if(this.netcallDuration!=0 && this.netcallDuration!='00分00秒'){
     	console.log("通话时长大于0->"+this.netcallDuration)
-    	window.hangupexit(this.channelId,this.beCalledInfo.custom,this.netcallDuration,this.beCallData.c_name);
+    	/*window.hangupexit(this.channelId,this.beCalledInfo.custom,this.netcallDuration,this.beCallData.c_name);*/
+    	
+    	window.viedoAudit('1',this.channelId,this.beCalledInfo.custom);
     }else{
     	console.log("通话时长小于等于0->"+this.netcallDuration)
-    }*/
+    }
     this.resetWhenHangup();//释放资源
 };
 // 其它端已处理
@@ -784,12 +786,13 @@ fn.onHangup = function (obj) {
 //            this.setDeviceAudioIn(false);
 //            this.setDeviceAudioOut(false);
         }.bind(this));
-        /*if(this.netcallDuration!=0 && this.netcallDuration!='00分00秒'){
+        if(this.netcallDuration!=0 && this.netcallDuration!='00分00秒'){
         	console.log("通话时长大于0->"+this.netcallDuration)
-        	window.hangupexit(this.channelId,this.beCalledInfo.custom,this.netcallDuration,this.beCallData.c_name);
+        	/*window.hangupexit(this.channelId,this.beCalledInfo.custom,this.netcallDuration,this.beCallData.c_name);*/
+        	window.viedoAudit('1',this.channelId,this.beCalledInfo.custom);
         }else{
         	console.log("通话时长小于等于0->"+this.netcallDuration)
-        }*/
+        }
         /**状态重置 */
         this.resetWhenHangup();//释放资源
     }
@@ -819,7 +822,7 @@ fn.onBeCalling = function (obj, scene) {
     layer.closeAll();
     scene = scene || 'p2p';
     this.log("收到音视频呼叫(onBeCalling):"+JSON.stringify(obj));
-    var channelId = obj.channelId;
+    window.channelId = obj.channelId;
     var netcall = this.netcall;
     // 如果是同一通呼叫，直接丢掉
     if (obj.channelId === this.channelId) return
@@ -829,12 +832,12 @@ fn.onBeCalling = function (obj, scene) {
 		console.log("关闭刷新定时器")
 		clearTimeout(refreshTime)
 	}
-	deleteActive()
+	window.deleteActive()
 	
     // p2p场景，先通知对方自己收到音视频通知
      if (scene === 'p2p') {
          netcall.control({
-             channelId: channelId,
+             channelId:  window.channelId,
              command: Netcall.NETCALL_CONTROL_COMMAND_START_NOTIFY_RECEIVED
          });
      }
@@ -842,7 +845,7 @@ fn.onBeCalling = function (obj, scene) {
     if (netcall.calling || this.beCalling ) {
         var tmp = { command: Netcall.NETCALL_CONTROL_COMMAND_BUSY };
         if (scene === 'p2p') {
-            tmp.channelId = channelId;
+            tmp.channelId = window.channelId;
         }
         this.log("通知呼叫方我方不空");
         netcall.control(tmp);
@@ -851,7 +854,7 @@ fn.onBeCalling = function (obj, scene) {
     /*{"timetag":1550823353987,"type":2,"channelId":50817379631128,"account":"507da3a2ddd113ec9166fb8e58005fb5","uid":2498098925,"turnServerList":["223.112.179.146:80","223.112.179.146:8080","223.112.179.146:16285"],"sturnServerList":["223.112.179.146:3478","223.112.179.146:3479"],"proxyServerList":[],"accountUidMap":{"507da3a2ddd113ec9166fb8e58005fb5":2509901713,"c6fa296f9c17c8032be6593a5d02269b":2498098925},"clientConfig":"{\"net\":{\"record\":true,\"dtunnel\":true,\"p2p\":false}}","custom":"{\"id\":\"706\",\"latitude\":26.056487,\"longitude\":119.336294,\"address\":\"福建省\"}","pushConfig":{"enable":"1","needBadge":"1","needPushNick":"1","pushContent":"","custom":"{\"id\":\"706\",\"latitude\":26.056487,\"longitude\":119.336294,\"address\":\"福建省福州市台江区曙光路126号宇洋中央金座\"}","pushPayload":"","sound":"","webrtcEnable":"1"},"serverMap":"{\"webrtcarray\":[\"webrtcgwcn.netease.im/?ip=223.112.179.146:5060\",\"webrtcgwhz.netease.im/?ip=223.112.179.146:5060\"],\"wechatapparray\":[\"webrtcgwcn.netease.im/?ip=223.112.179.146:5061\",\"webrtcgwhz.netease.im/?ip=223.112.179.146:5061\"],\"token\":\"mljxyxct3qgh8h6rw41waxpunnje1n5rqwuw3s7k\",\"detectTurnAddrs\":[\"223.112.179.146:80\",\"113.108.226.138:80\",\"117.158.188.82:80\"],\"turnaddrs\":[[\"223.112.179.146:80\",\"223.112.179.146:8080\",\"223.112.179.146:16285\"]],\"grey\":false,\"webrtc\":\"webrtcgwcn.netease.im/?ip=223.112.179.146:5060\"}"}*/
     //设置状态:被叫中
     this.beCalling = true;
-    this.channelId=channelId;
+    this.channelId=window.channelId;
     this.dialog_call && this.dialog_call.close();
     //更新被叫支持ui
     this.updateBeCallingSupportUI(true);
@@ -872,17 +875,17 @@ fn.onBeCalling = function (obj, scene) {
     this.netcallActive = true;
     this.netcallAccount = obj.account;//即帐号
     this.doOpenChatBox();
-    custom=JSON.parse(obj.custom.replace("\\","").replace("(null)",""));
+    window.custom=JSON.parse(obj.custom.replace("\\","").replace("(null)",""));
     var that=this;
     $.ajax({
         url:'../yx/viedoinfo.do',
         type:'POST',
-        data:{id:custom.id,domvalue:"A"},
+        data:{id:window.custom.id,domvalue:"A"},
         dataType:'json',
         success: function (data) {
         	console.log("用户信息->"+JSON.stringify(data))
         	that.beCallData=data;
-        	that.beCallData.address=custom.address;
+        	that.beCallData.address=window.custom.address;
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
         	var prefix="请求实时视频客户信息异常";

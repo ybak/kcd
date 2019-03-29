@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.controller.erp_icbc.YunXin.bean.CallBack;
 import com.controller.erp_icbc.YunXin.bean.InfoCopy;
 import com.controller.erp_icbc.utils.PageInfo;
 public interface YXMapper {
@@ -20,8 +19,7 @@ public interface YXMapper {
 	int update_infocopy_download(InfoCopy infocopy);
 	//视频面前在视频表中添加一个记录
 	int insert_infocopy_viedo(Map map);
-	//视频面前在视频表中更新一个记录
-	int update_infocopy_viedo(Map map);
+
 	int insert_M(String s);
 	int insert_infocopy_durationM(Map infocopy);
 	int insert_infocopy_downloadM(Map infocopy);
@@ -63,6 +61,6 @@ public interface YXMapper {
 	String SelectBankIdByUid(String id);
 	//截图相关
 	int addVideoScreenshot(Map map);
-	List selectAllVideoScreenshot(String id);
+	List selectAllVideoScreenshot(Map map);
 	int deleteVideoScreenshot(Map map);
 }

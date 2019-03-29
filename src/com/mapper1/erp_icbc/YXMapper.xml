@@ -15,16 +15,19 @@
 		UPDATE  video_screenshot SET delmark=1,dt_edit=#{dtEdit},mid_edit=#{midEdit} WHERE id=#{id}
 	</update> 
 	<!-- 截图查询所有 -->
-	<select id="selectAllVideoScreenshot" resultType="map" parameterType="java.lang.String">
-		select concat('http://a.kcway.net/assess/',path) path,dt_add dtAdd,id from  video_screenshot where delmark=0 and icbc_id=#{0}
+	<select id="selectAllVideoScreenshot" resultType="map" parameterType="map">
+		select concat('http://a.kcway.net/assess/',path) path,dt_add dtAdd,id from  video_screenshot where delmark=0 and icbc_id=#{id} and channelId=#{channelId}
 	</select>
 	<!-- 截图保存 -->
 	<!-- {"path":"upload/2019/03/28/fe706b84a996ed8b65a4bcde670a241d.png","dtEdit":"2019-03-28 15:22:50","midEdit":"4793","dtAdd":"2019-03-28 15:22:50","icbcId":"706","midAdd":"4793"}-->
 	<insert id="addVideoScreenshot" parameterType="java.lang.String">
-		INSERT INTO video_screenshot(`mid_add`, `mid_edit`, `dt_add`, `dt_edit`, `delmark`, `path`, `icbc_id`) 
+		INSERT INTO video_screenshot(`mid_add`, `mid_edit`, `dt_add`, `dt_edit`, `delmark`, `path`, `icbc_id`,`channelId`) 
 		VALUES 
-		(#{midAdd}, #{midEdit}, #{dtAdd},#{dtEdit}, 0, #{path}, #{icbcId});
-	</insert>	
+		(#{midAdd}, #{midEdit}, #{dtAdd},#{dtEdit}, 0, #{path}, #{icbcId},#{channelId});
+	</insert>
+	<select id="selectUidByAccid" resultType="java.lang.String" parameterType="java.lang.String" >
+	select uid from icbc_erp_token where accid=#{0}
+	</select>	
 	<!-- 查询出所有的机构 -->
 	<select id="getOrganization" resultType="java.util.HashMap">
 		select id,name from assess_fs
@@ -220,15 +223,10 @@
 	<update id="update_infocopy_viedo_vid"  parameterType="map">
 		update icbc_erp_video_info set result_id=#{id} where channelId=#{channel}
 	</update>
-	<!-- 实时免签更新地址 和g关联result表的id -->
-	<update id="update_infocopy_viedo">
-		update icbc_erp_video_info set address=#{address},result_id=#{id} where channelId=#{channel}
-	</update>
-	<!-- 实时免签添加通道信息 -->
-	<insert id="insert_infocopy_viedo"> <!-- 视频面签为1 -->
-		insert into icbc_erp_video_info(ext,result_id,viedotype,address,channelId) values(#{icbcid},#{id},'1',#{address},#{channel})
+	 
+	<insert id="insert_infocopy_viedo">
+		insert into icbc_erp_video_info(ext,viedotype,address,channelId) values(#{id},'1',#{address},#{channel})
 	</insert>
-	
 	<!-- map类型的输入参数 -->
 	<!-- 添加时长通话记录抄送 -->
 	<insert id="insert_infocopy_durationM" parameterType="java.util.HashMap"  keyProperty="id" useGeneratedKeys="true">

@@ -159,7 +159,7 @@ public class YunXinController extends BaseController{
 	@ResponseBody
 	public void viedoAudit(String auditstatus, String customvalue,String channel,HttpServletRequest request) throws UnsupportedEncodingException{
 		log.info("请求参数:"+auditstatus+" "+customvalue+" "+channel);
-		JSONObject custom = JSONObject.parseObject(customvalue);
+		/*JSONObject custom = JSONObject.parseObject(customvalue);
 		String icbcid=custom.getString("id");
 		Map map=autioMonth(icbcid,auditstatus,channel,request);
 		//对小视频的操作
@@ -182,6 +182,13 @@ public class YunXinController extends BaseController{
 			map.put("resultmsg","完成");
 			int i=yx.insert_kjicbcresult(map);//添加一个完成的小状态
 			log.info("添加小状态icbc_erp_kj_icbc_result表->insert"+i);
+		}*/
+		JSONObject custom = JSONObject.parseObject(customvalue);
+		if(yx.select_infocopy(channel)==null){
+			custom.put("channel", channel);
+			//添加
+			int i=yx.insert_infocopy_viedo(custom);
+			log.info("添加icbc_erp_video_info表->insert:"+i);
 		}
 	}
 		//分页查询历史
@@ -256,12 +263,12 @@ public class YunXinController extends BaseController{
 	public Object selectViedobyid(String id,String domvalue){
 		Map map=null;
 		List select_mq_info=null;
-		String icbcid="-1";
 		if(domvalue.equals("A")){//视频对话 id为icbc_id
 			 map= yx.select_viedo_byid(id);
 			 log.info("实时视频返回元数据->{}"+JSON.toJSONString(map));
 		}else if(domvalue.equals("B")){
 			 map=(Map) yx.select_viedo_byid2(id).get(0);
+			map.put("allVideoScreenshot", yx.selectAllVideoScreenshot(map));
 			 log.info("查看历史视频返回元数据->{}"+JSON.toJSONString(map));
 		}
 		 if(map.get("kk_car_stateid")!=null){
@@ -302,7 +309,7 @@ public class YunXinController extends BaseController{
 		if(select_mq_info.size()>0){
 			 map.putAll((Map)select_mq_info.get(0));//添加到集合中
 		 }
-		map.put("allVideoScreenshot", yx.selectAllVideoScreenshot(icbcId));
+
 		//处理下载的地址 先从本地下载再考虑从云信下载
 		//本地
 		Object serverPath= map.get("serverPath");
@@ -459,8 +466,7 @@ public class YunXinController extends BaseController{
 	@RequestMapping(value="pImg.do",method = RequestMethod.POST)
 	@ResponseBody
 	//遇到问题:上传图片base64 SringMVC+Tomcat 报错 Request header is too large 
-	public Object addPrintscreenImg(MultipartFile file,HttpServletRequest request,String icbcId){
-		log.info("canshu+"+JSON.toJSONString(file));
+	public Object addPrintscreenImg(MultipartFile file,HttpServletRequest request,String icbcId,String channelId){
 		String fileName=MD5.sign(UUID.randomUUID().toString().replace("-", "").toLowerCase(),"utf-8")+".png";
 		String savepdfpath="upload/"+new SimpleDateFormat("yyyy/MM/dd/").format(new Date());
 		String roorSavePath=RootStatic.root_Directory+savepdfpath;
@@ -471,12 +477,13 @@ public class YunXinController extends BaseController{
 			String dataStorePath=savepdfpath+fileName;
 			map.put("path", dataStorePath);
 			map.put("icbcId", icbcId);
-			log.info(JSON.toJSONString(map));
+			map.put("channelId", channelId);
 			int i=yx.addVideoScreenshot(map);
 			if(i>0) {
 				log.info("截图保存成功->icbcId"+icbcId);
 				return renderSuccess(RootStatic.download_prefix+dataStorePath);//返回图片路径显示在前端
 			}else {
+				log.info("截图保存失败");
 				return renderError("保存失败！");
 			}
 		}else {

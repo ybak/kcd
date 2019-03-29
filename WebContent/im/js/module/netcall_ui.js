@@ -164,6 +164,7 @@ fn.hideAllNetcallUI = function () {
     this.stopRemoteStream();//关闭自己画面
     this.stopLocalStream();//关闭对方画面
     window.custom=null;
+    window.channelId=null;
     this.netcallActive = false; //被叫不活跃
     this.netcallAccount = ""; //清空被叫accid
 

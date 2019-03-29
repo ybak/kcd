@@ -20,15 +20,14 @@
       chatroomList: 'https://apptest.netease.im/api/chatroom/homeList',
       chatroomAddr: 'https://apptest.netease.im/api/chatroom/requestAddress'
     },
-   online: {
+    online: {
       appkey: '90392cd4130b36be523299cc9bbabee8',
       url: 'https://app.netease.im',
       chatroomList: 'https://app.netease.im/api/chatroom/homeList',
       chatroomAddr: 'https://app.netease.im/api/chatroom/requestAddress'
     }
-    
     //云信的
-  /*  online: {
+   /* online: {
         appkey: '45c6af3c98409b18a84451215d0bdd6e',
         url: 'https://app.netease.im',
         chatroomList: 'https://app.netease.im/api/chatroom/homeList',

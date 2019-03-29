@@ -22,8 +22,6 @@ public interface YXService {
 	int update_infocopy_download(InfoCopy infocopy);
 	//视频面前在视频表中添加一个记录
 	int insert_infocopy_viedo(Map map);
-	//视频面前在视频表中更新一个记录
-	int update_infocopy_viedo(Map map);
 	
 	int insert_M(String s);
 	int insert_infocopy_durationM(Map infocopy);
@@ -65,6 +63,6 @@ public interface YXService {
 	String SelectBankIdByUid(String id);
 	//截图相关
 	int addVideoScreenshot(Map map);
-	List selectAllVideoScreenshot(String id);
+	List selectAllVideoScreenshot(Map map);
 	int deleteVideoScreenshot(Map map);
 }
