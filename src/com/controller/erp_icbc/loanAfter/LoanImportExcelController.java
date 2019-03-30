@@ -69,7 +69,7 @@ public class LoanImportExcelController {
 	 */
 	@RequestMapping(value="/readExcel.do",method=RequestMethod.POST)
 	@ResponseBody
-	public Map readExcel(String id_card, HttpServletRequest request,
+	public String readExcel(String id_card, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile("file");
@@ -208,11 +208,15 @@ public class LoanImportExcelController {
 		map.put("gems_fs_id",pdsession.get("icbc_erp_fsid"));// 公司ID
 		map.put("gems_id", pdsession.get("gemsid"));// 公司人员ID
 		map.put("fsname", pdsession.getString("fsname"));// 公司名字
-		AboutExcelService.addExcelRecord(map); //添加excel导入文件记录
+		int a = AboutExcelService.addExcelRecord(map); //添加excel导入文件记录
 //		repaymenttest.selectImport(); //修改客户还款计划里面的还款记录
-		Map result = new HashMap();
-		result.put("msg", "导入成功");
-		result.put("code", "1");
+//		Map result = new HashMap();
+//		result.put("msg", "导入成功");
+//		result.put("code", "1");
+		String result = "0"; //导入失败
+		if(a > 0){
+			result = "1";  //导入成功
+		}
 		return result;
 	}
 

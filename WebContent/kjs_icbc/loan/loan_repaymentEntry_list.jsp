@@ -238,12 +238,17 @@
 		                fileElementId: feid,    //需要上传的文件域的ID，即<input type="file">的ID。
 		                url:"${pageContext.request.contextPath}/loan/readExcel.do",		
 		                type: 'post',   //当要提交自定义参数时，这个参数要设置成post
-		                dataType: 'json',   //服务器返回的数据类型。可以为xml,script,json,html。如果不填写，jQuery会自动判断。
-		                secureuri: false,   //是否启用安全提交，默认为false。
+		               	dataType: 'text/html',   //服务器返回的数据类型。可以为xml,script,json,html。如果不填写，jQuery会自动判断。
+		               	secureuri: false,   //是否启用安全提交，默认为false。
 		                async : true,   //是否是异步
 		                success: function(data) {   //提交成功后自动执行的处理函数，参数data就是服务器返回的数据。
 		                	//$("#titleBox").html("");  
-		                     alert(data.msg);
+		                     //alert(data);
+		                     if(data == 1){
+		                    	 alert("导入成功");
+		                     }else if(data == 0){
+		                    	 alert("导入失败");
+		                     }
 		                	 location.href="${pageContext.request.contextPath }/loan/selectImpRecordList.do?type=khhklr&dn=loan_repaymentEntry&qn=list&pagesize=10&pagenow=1";
 						
 		                },
