@@ -35,6 +35,7 @@ public class LoanAutomaticTaskController {
 	@Autowired
 	private LoanOverdueService loanOverdueService;
 
+
 	// @Scheduled(cron = "0/5 * *  * * ? ")
 	// 每5秒执行一次
 	@Scheduled(cron = "0 0 1 * * ?")
