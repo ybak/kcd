@@ -33,7 +33,7 @@
 				<div class="row">
 					<div class="col-sm-10">
 						<div class="btn-group">		
-							<form name="myform" class="form-horizontal" action="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=${requestScope.type_id}&type_status=${requestScope.type_status}&type=${requestScope.type}&dn=${requestScope.dn}&qn=list" enctype="multipart/form-data" method="post">
+							<form name="myform" class="form-horizontal" action="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=${requestScope.type_id}&type_status=${requestScope.type_status}&type=${requestScope.type}&dn=${requestScope.dn}&qn=list&pagesize=10&pagenow=1" enctype="multipart/form-data" method="post">
 								<input autocomplete="off" type="text" placeholder="请输入客户姓名或身份证号" name="param" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" style="width:500px;">
 								<button class="btn btn-info search-btn" type="submit" style="background-color:#00acd6;">查询</button>  
 							</form>	

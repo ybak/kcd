@@ -270,6 +270,7 @@
 								<c:if test="${results.type_id eq 4 }">诉讼</c:if>
 								<c:if test="${results.type_id eq 5 }">拍卖</c:if>
 								<c:if test="${results.type_id eq 6 }">结清</c:if>
+								<c:if test="${results.type_id eq 7 }">核销</c:if>
 							</span>
 						</td>
 						<td class="text-center">${results.gems_name}</td>

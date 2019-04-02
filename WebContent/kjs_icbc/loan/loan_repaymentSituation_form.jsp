@@ -166,6 +166,18 @@
 				<td class="text-center" onclick="jjlxrModel()">--</td>	
 		    </tr>
 		    </c:if>
+		    <c:if test="${not empty mapafter.qtlxr_c_name}">
+		     <tr>
+				<td class="text-center">紧急联系人2</td>
+				<td class="text-center">${mapafter.qtlxr_c_name}</td>
+				<td class="text-center"></td>
+				<td class="text-center">${mapafter.qtlxr_jdrgx}</td>
+				<td class="text-center"></i>--</td>
+				<td class="text-center"></i>--</td>
+				<td class="text-center">${mapafter.qtlxr_c_tel}</td>	
+				<td class="text-center" onclick="jjlxrModel()">--</td>	
+		    </tr>
+		    </c:if>
 		    <c:if test="${not empty mapafter.c_name_gj1}">
 		     <tr>
 				<td class="text-center">共借人1</td>

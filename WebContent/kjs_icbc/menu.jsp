@@ -660,14 +660,14 @@
 					</c:if>
 					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl')==true}">
 						<li ${requestScope.type=='cqcl_mandatory'?"class='active'":''}>
-						<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=6&type_status=63&type=cqcl_mandatory&dn=loan_auction&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
+						<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=6&type_status=63&type=cqcl_mandatory&dn=loan_cqcl&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
 					    <span>强制结清</span>
 					    </a>
 					    </li>
 					</c:if>
 					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl')==true}">
 						<li ${requestScope.type=='cqcl_loss'?"class='active'":''}>
-						<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=6&type_status=64&type=cqcl_loss&dn=loan_auction&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
+						<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=6&type_status=64&type=cqcl_loss&dn=loan_cqcl&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
 					    <span>亏损结清</span>
 					    </a>
 					    </li>

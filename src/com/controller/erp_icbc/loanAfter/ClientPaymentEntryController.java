@@ -45,7 +45,7 @@ public class ClientPaymentEntryController {
 			BigDecimal mm = null;
 			// ×Ü¶î
 			if (lborrow.get("dk_total_price") != null
-					&& lborrow.get("dk_total_price").equals("")) {
+					&& !lborrow.get("dk_total_price").equals("")) {
 				mm = new BigDecimal(lborrow.get("dk_total_price").toString());
 
 				System.out.println("-----mm:" + mm);
