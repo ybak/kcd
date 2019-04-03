@@ -537,7 +537,7 @@
 				    </a>
 					</li>
 					</c:if>
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'tc_wc')==true}">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'tc_sb')==true}">
 					<li ${requestScope.type=='tc_sb'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=3&type_status=34&type=tc_sb&dn=loan_car&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>拖车(失败)</span>
@@ -548,27 +548,27 @@
 					</li>
 					</c:if>
 					<!--拍卖管理  -->
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'tcgl')==true}">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'auction')==true}">
 			        <li>
 					<a href="#"> <i class="fa fa-truck"></i> 
 				    <span>拍卖管理 </span>
 				    </a>
 				    <ul class="treeview-menu">
-				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'tcgl')==true}">
+				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'auction_no')==true}">
 					<li ${requestScope.type=='auction_no'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=5&type_status=51&type=auction_no&dn=loan_auction&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>未拍卖</span>
 				    </a>
 					</li>
 					</c:if>
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'tcgl')==true}">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'auction_loss')==true}">
 					<li ${requestScope.type=='auction_loss'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=5&type_status=52&type=auction_loss&dn=loan_auction&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>亏损(拍卖完成)</span>
 				    </a>
 					</li>
 					</c:if>
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'tcgl')==true}">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'auction_profit')==true}">
 					<li ${requestScope.type=='auction_profit'?"class='active'":''}>
 					<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=5&type_status=53&type=auction_profit&dn=loan_auction&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
 				    <span>盈利(拍卖完成)</span>
@@ -585,16 +585,20 @@
 					    <span>诉讼管理</span>
 					    </a>
 					    <ul class="treeview-menu">
+					    	<c:if  test="${fn:contains(sessionScope.pd.purview_map,'ssgl_no')==true}">
 							<li ${requestScope.type=='ssgl_no'?"class='active'":''}>
 								<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=4&type_status=41&type=ssgl_no&dn=loan_ss&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
 							    <span>未诉讼</span>
 							    </a>
 							</li>
+							</c:if>
+							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'ssgl_yes')==true}">
 							<li ${requestScope.type=='ssgl_yes'?"class='active'":''}>
 								<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=4&type_status=42&type=ssgl_yes&dn=loan_ss&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
 							    <span>已诉讼</span>
 							    </a>
 							</li>
+							</c:if>
 					    </ul>
 					</li>
 					</c:if>
@@ -614,20 +618,20 @@
 					</li>
 					</c:if>
 					<!--核销管理  -->
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'tcgl')==true}">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'hx')==true}">
 			        <li>
 						<a href="#"> <i class="fa fa-exclamation-triangle"></i> 
 					    <span>核销管理</span>
 					    </a>
 					    <ul class="treeview-menu">
-					    	<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl')==true}">
+					    	<c:if  test="${fn:contains(sessionScope.pd.purview_map,'hx_no')==true}">
 								<li ${requestScope.type=='hx_no'?"class='active'":''}>
 									<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=7&type_status=71&type=hx_no&dn=loan_hx&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
 								    <span>未核销</span>
 								    </a>
 								</li>
 							</c:if>
-							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl')==true}">
+							<c:if  test="${fn:contains(sessionScope.pd.purview_map,'hx_yes')==true}">
 								<li ${requestScope.type=='hx_yes'?"class='active'":''}>
 									<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=7&type_status=72&type=hx_yes&dn=loan_hx&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
 								    <span>已核销</span>
@@ -644,28 +648,28 @@
 				    <span>结清处理</span>
 				    </a>
 				    <ul class="treeview-menu">
-				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl')==true}">
+				    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl_normal')==true}">
 						<li ${requestScope.type=='cqcl_normal'?"class='active'":''}>
 						<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=6&type_status=61&type=cqcl_normal&dn=loan_cqcl&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
 					    <span>正常结清</span>
 					    </a>
 						</li>
 					</c:if>
-                    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl')==true}">
+                    <c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl_before')==true}">
 						<li ${requestScope.type=='cqcl_before'?"class='active'":''}>
 						<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=6&type_status=62&type=cqcl_before&dn=loan_cqcl&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
 					    <span>提前结清</span>
 					    </a>
 					    </li>
 					</c:if>
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl')==true}">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl_mandatory')==true}">
 						<li ${requestScope.type=='cqcl_mandatory'?"class='active'":''}>
 						<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=6&type_status=63&type=cqcl_mandatory&dn=loan_cqcl&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
 					    <span>强制结清</span>
 					    </a>
 					    </li>
 					</c:if>
-					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl')==true}">
+					<c:if  test="${fn:contains(sessionScope.pd.purview_map,'cqcl_loss')==true}">
 						<li ${requestScope.type=='cqcl_loss'?"class='active'":''}>
 						<a href="${pageContext.request.contextPath}/loan/selectPhoneList.do?type_id=6&type_status=64&type=cqcl_loss&dn=loan_cqcl&qn=list&pagesize=10&pagenow=1"> <i class="fa fa-arrow-circle-o-right"></i> 
 					    <span>亏损结清</span>

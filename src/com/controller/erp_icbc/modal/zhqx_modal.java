@@ -118,18 +118,30 @@ public class zhqx_modal {
 	private String tc_ysl;
 	private String tc_wsl;
 	private String tc_wc;
+	private String tc_sb; //2019-4-3 add
+	//拍卖管理 //2019-4-3 add
+	private String auction;
+	private String auction_no;
+	private String auction_loss;
+	private String auction_profit;
 	// 诉讼管理
 	private String ssgl;
-	private String ssgl_ysl;
-	private String ssgl_wsl;
+	private String ssgl_yes;
+	private String ssgl_no;
 	// 保险管理
 	private String bxgl;
 	// 车险理赔
 	private String cxlp;
+	//拍卖管理 //2019-4-3 add
+	private String hx;
+	private String hx_yes;
+	private String hx_no;
 	// 结清处理
 	private String cqcl;
-	private String cqcl_yjq;
-	private String cqcl_wjq;
+	private String cqcl_normal; //add
+	private String cqcl_before; //add
+	private String cqcl_mandatory; //add
+	private String cqcl_loss; //add
 	// 7.在线视频
 	private String zxsp;
 	// 8.处理过程
@@ -290,9 +302,9 @@ public class zhqx_modal {
 				+ "," + zxsp + "," + zxsp + "," + cldy + "," + gpsaz + ","
 				+ gpsgl + "," + khhkgl + "," + khhklr + "," + khhkqk + ","
 				+ khyqmd + "," + dczy + "," + tcgl + "," + tc_ysl + ","
-				+ tc_wsl + "," + tc_wc + "," + ssgl + "," + ssgl_ysl + ","
-				+ ssgl_wsl + "," + bxgl + "," + cxlp + "," + cqcl + ","
-				+ cqcl_yjq + "," + cqcl_wjq + "," + zxcx + "," + cxjg_3 + ","
+				+ tc_wsl + "," + tc_wc + "," + ssgl + "," + ssgl_yes + ","
+				+ ssgl_no + "," + bxgl + "," + cxlp + "," + cqcl + ","
+				+ cqcl_normal + "," + cqcl_before + "," + zxcx + "," + cxjg_3 + ","
 				+ zxtr + "," + zxyhyj_6 + "," + trsh_7 + "," + clpg + ","
 				+ pgjsh_11 + "," + yhds + "," + dsjg_15 + "," + kksq + ","
 				+ sfhcjg_19 + "," + fkkkjg_20 + "," + spmq + "," + jgfk_24
@@ -319,7 +331,11 @@ public class zhqx_modal {
 				+ "," + yycl5 + "," + yycl6 + "," + yycl7 + "," + yycl8 + ","
 				+ yycl9 + "," + yycl10 + "," + sfmx + "," + clhsqk + "," + rwcl
 				+ "," + financing + "," + financing_101 + "," + financing_102
-				+ "," + financing_103 + ",";
+				+ "," + financing_103 + ","
+				+ tc_sb + ","
+				+ auction + "," + auction_no + "," + auction_loss + "," + auction_profit + ","
+				+ hx + "," + hx_yes + "," + hx_no + ","
+				+ cqcl_mandatory + "," + cqcl_loss + ",";
 		return gpurview_map.replace("null,", "");
 	}
 
@@ -1963,22 +1979,6 @@ public class zhqx_modal {
 		this.cqcl = cqcl;
 	}
 
-	public String getCqcl_yjq() {
-		return cqcl_yjq;
-	}
-
-	public void setCqcl_yjq(String cqcl_yjq) {
-		this.cqcl_yjq = cqcl_yjq;
-	}
-
-	public String getCqcl_wjq() {
-		return cqcl_wjq;
-	}
-
-	public void setCqcl_wjq(String cqcl_wjq) {
-		this.cqcl_wjq = cqcl_wjq;
-	}
-
 	public String getCwgl_yhdk() {
 		return cwgl_yhdk;
 	}
@@ -1986,21 +1986,119 @@ public class zhqx_modal {
 	public void setCwgl_yhdk(String cwgl_yhdk) {
 		this.cwgl_yhdk = cwgl_yhdk;
 	}
-
-	public String getSsgl_ysl() {
-		return ssgl_ysl;
+	
+	public String getTc_sb() {
+		return tc_sb;
 	}
 
-	public void setSsgl_ysl(String ssgl_ysl) {
-		this.ssgl_ysl = ssgl_ysl;
+	public void setTc_sb(String tc_sb) {
+		this.tc_sb = tc_sb;
 	}
 
-	public String getSsgl_wsl() {
-		return ssgl_wsl;
+	public String getAuction() {
+		return auction;
 	}
 
-	public void setSsgl_wsl(String ssgl_wsl) {
-		this.ssgl_wsl = ssgl_wsl;
+	public void setAuction(String auction) {
+		this.auction = auction;
 	}
 
+	public String getAuction_no() {
+		return auction_no;
+	}
+
+	public void setAuction_no(String auction_no) {
+		this.auction_no = auction_no;
+	}
+
+	public String getAuction_loss() {
+		return auction_loss;
+	}
+
+	public void setAuction_loss(String auction_loss) {
+		this.auction_loss = auction_loss;
+	}
+
+	public String getAuction_profit() {
+		return auction_profit;
+	}
+
+	public void setAuction_profit(String auction_profit) {
+		this.auction_profit = auction_profit;
+	}
+
+	public String getHx() {
+		return hx;
+	}
+
+	public void setHx(String hx) {
+		this.hx = hx;
+	}
+
+	public String getHx_yes() {
+		return hx_yes;
+	}
+
+	public void setHx_yes(String hx_yes) {
+		this.hx_yes = hx_yes;
+	}
+
+	public String getHx_no() {
+		return hx_no;
+	}
+
+	public void setHx_no(String hx_no) {
+		this.hx_no = hx_no;
+	}
+
+	public String getCqcl_normal() {
+		return cqcl_normal;
+	}
+
+	public void setCqcl_normal(String cqcl_normal) {
+		this.cqcl_normal = cqcl_normal;
+	}
+
+	public String getCqcl_before() {
+		return cqcl_before;
+	}
+
+	public void setCqcl_before(String cqcl_before) {
+		this.cqcl_before = cqcl_before;
+	}
+
+	public String getCqcl_mandatory() {
+		return cqcl_mandatory;
+	}
+
+	public void setCqcl_mandatory(String cqcl_mandatory) {
+		this.cqcl_mandatory = cqcl_mandatory;
+	}
+
+	public String getCqcl_loss() {
+		return cqcl_loss;
+	}
+
+	public void setCqcl_loss(String cqcl_loss) {
+		this.cqcl_loss = cqcl_loss;
+	}
+
+	public String getSsgl_yes() {
+		return ssgl_yes;
+	}
+
+	public void setSsgl_yes(String ssgl_yes) {
+		this.ssgl_yes = ssgl_yes;
+	}
+
+	public String getSsgl_no() {
+		return ssgl_no;
+	}
+
+	public void setSsgl_no(String ssgl_no) {
+		this.ssgl_no = ssgl_no;
+	}
+	
+	
+	
 }

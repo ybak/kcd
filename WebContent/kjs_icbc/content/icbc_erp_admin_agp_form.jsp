@@ -304,6 +304,18 @@
                                 <label class="checkbox-inline"><input name="tc_ysl" id="tc_ysl" value="0" onclick="check(this)" type="checkbox">拖车(已受理)</label>
                                 <label class="checkbox-inline"><input name="tc_wsl" id="tc_wsl" value="0" onclick="check(this)" type="checkbox">拖车(未受理)</label>
                                 <label class="checkbox-inline"><input name="tc_wc" id="tc_wc" value="0" onclick="check(this)" type="checkbox">拖车(完成)</label>
+                                <label class="checkbox-inline"><input name="tc_sb" id="tc_sb" value="0" onclick="check(this)" type="checkbox">拖车(失败)</label>
+                                </td>
+                                </tr>
+                                <!-- 拍卖管理 -->
+                                <tr >
+								<td>
+								<label class="checkbox-inline"><input name="auction" id="auction" value="0" onclick="checkfl(this)" type="checkbox">拍卖管理</label>
+								</td>
+                                <td id="auction1" name="node">
+                                <label class="checkbox-inline"><input name="auction_no" id="auction_no" value="0" onclick="check(this)" type="checkbox">未拍卖</label>
+                                <label class="checkbox-inline"><input name="auction_loss" id="auction_loss" value="0" onclick="check(this)" type="checkbox">亏损(拍卖完成)</label>
+                                <label class="checkbox-inline"><input name="auction_profit" id="auction_profit" value="0" onclick="check(this)" type="checkbox">盈利(拍卖完成)</label>
                                 </td>
                                 </tr>
                                 <!-- 诉讼管理 -->
@@ -311,9 +323,9 @@
 								<td>
 								<label class="checkbox-inline"><input name="ssgl" id="ssgl" value="0" onclick="checkfl(this)" type="checkbox">诉讼管理 </label>
 								</td>
-                                <td d="ssgl1" name="node">
-                                <label class="checkbox-inline"><input name="ssgl_ysl" id="ssgl_ycl" value="0" onclick="check(this)" type="checkbox">已处理</label>
-                                <label class="checkbox-inline"><input name="ssgl_wsl" id="ssgl_dcl" value="0" onclick="check(this)" type="checkbox">待处理</label>
+                                <td id="ssgl1" name="node">
+                                <label class="checkbox-inline"><input name="ssgl_yes" id="ssgl_yes" value="0" onclick="check(this)" type="checkbox">已处理</label>
+                                <label class="checkbox-inline"><input name="ssgl_no" id="ssgl_no" value="0" onclick="check(this)" type="checkbox">待处理</label>
                                 </td>
                                 </tr>
                                 <!-- 保险管理 -->
@@ -332,14 +344,26 @@
                                 <td>
                                 </td>
                                 </tr>
+                                <!-- 核销管理 -->
+                                <tr >
+								<td>
+								<label class="checkbox-inline"><input name="hx" id="hx" value="0" onclick="checkfl(this)" type="checkbox">核销管理</label>
+								</td>
+                                <td id="hx1" name="node">
+                                <label class="checkbox-inline"><input name="hx_yes" id="hx_yes" value="0" onclick="check(this)" type="checkbox">已核销</label>
+                                <label class="checkbox-inline"><input name="hx_no" id="hx_no" value="0" onclick="check(this)" type="checkbox">未核销</label>
+                                </td>
+                                </tr>
                                 <!-- 结清处理 -->
                                 <tr >
 								<td>
 								<label class="checkbox-inline"><input name="cqcl" id="cqcl" value="0" onclick="checkfl(this)" type="checkbox">结清处理</label>
 								</td>
                                 <td id="cqcl1" name="node">
-                                <label class="checkbox-inline"><input name="cqcl_yjq" id="cqcl_yjq" value="0" onclick="check(this)" type="checkbox">已结清</label>
-                                <label class="checkbox-inline"><input name="cqcl_wjq" id="cqcl_wjq" value="0" onclick="check(this)" type="checkbox">未结清</label>
+                                <label class="checkbox-inline"><input name="cqcl_normal" id="cqcl_normal" value="0" onclick="check(this)" type="checkbox">正常结清</label>
+                                <label class="checkbox-inline"><input name="cqcl_before" id="cqcl_before" value="0" onclick="check(this)" type="checkbox">提前结清</label>
+                                <label class="checkbox-inline"><input name="cqcl_mandatory" id="cqcl_mandatory" value="0" onclick="check(this)" type="checkbox">强制结清</label>
+                                <label class="checkbox-inline"><input name="cqcl_loss" id="cqcl_loss" value="0" onclick="check(this)" type="checkbox">亏损结清</label>
                                 </td>
                                 </tr>
                                 <!--  -->
