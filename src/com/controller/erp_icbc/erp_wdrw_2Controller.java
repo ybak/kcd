@@ -811,22 +811,22 @@ public class erp_wdrw_2Controller {
 					case "35":
 						if (dkbj < 300000) {
 							if (pData.get("kir_code").toString().equals("1")) {
-								pData.put("erp_status", 35);
+								pData.put("erp_status", 40);
 							} else if (pData.get("kir_code").toString()
 									.equals("3")
 									|| pData.get("kir_code").toString()
 											.equals("2")) {
-								pData.put("erp_status", 35);
+								pData.put("erp_status", 31);
 							}
 						} else {
 							if (pData.get("kir_code").toString().equals("1")
 									|| pData.get("kir_code").toString()
 											.equals("2")) {
-								pData.put("erp_status", 35);
+								pData.put("erp_status", 36);
 
 							} else if (pData.get("kir_code").toString()
 									.equals("3")) {
-								pData.put("erp_status", 35);
+								pData.put("erp_status", 31);
 							}
 						}
 						break;
