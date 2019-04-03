@@ -61,8 +61,9 @@ where 1=1 and 2=2 and lol.type_id=#{type_id} and lol.gems_fs_id=#{gems_fs_id}
 and lol.type_status=#{type_status}
 </if>
 <if test="param != null and param != ''">
-and lol.c_name like '%${param}%' 
-or lol.c_cardno like '%${param}%'
+and (lol.c_name like '%${param}%' or lol.c_cardno like '%${param}%')
+<!-- and (lol.c_name like concat('%',#{param},'%')
+or lol.c_cardno like concat('%',#{param},'%')) -->
 </if>
 ORDER BY lol.dt_edit DESC
 </select> 
@@ -129,7 +130,9 @@ LEFT JOIN kj_icbc bc ON bc.id=lol.icbc_id
 LEFT JOIN loan_config lc ON lc.gems_fs_id=lol.gems_fs_id
 where 1=1 and lol.type_id=1 and lol.gems_fs_id=#{gems_fs_id}
 <if test="param != null and param != ''">
-and lol.c_name like '%${param}%' or lol.c_cardno like '%${param}%'
+and (lol.c_name like '%${param}%' or lol.c_cardno like '%${param}%')
+<!-- and (lol.c_name like concat('%',#{param},'%')
+or lol.c_cardno like concat('%',#{param},'%')) -->
 </if>
 ORDER BY lol.dt_edit DESC
 </select> 
