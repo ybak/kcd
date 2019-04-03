@@ -25,6 +25,7 @@
 	      <div style="display: inline-flex;">   
 		      <h4 style="line-height:30px">操作选项:</h4>	
 		     <!--   <image src="./../image/smcs.png" title="申请上门催收" style="height:30px;width:25px;margin-left:10px;"></image> --> 
+		      <image src="./../image/sqtc.png" title="申请拖车" style="height:30px;width:25px;margin-left:35px;" onclick="appCar(1)"></image>
 		      <image src="./../image/sqss.png" title="申请诉讼" style="height:30px;width:25px;margin-left:40px;" onclick="appCar(2)"></image>  
 	      </div>	  
 	    </div>
@@ -403,7 +404,11 @@ laydate.render({
 </script>
 <script type="text/javascript">
 function appCar(clickType){
-	if(clickType==2){
+	if(clickType==1){//
+		var type_id = 3;
+		var type_status = 31;
+		var result_msg = "开始申请拖车";
+	}else if(clickType==2){
 		var type_id = 4;
 		var type_status = 41;
 		var result_msg = "开始申请诉讼";
