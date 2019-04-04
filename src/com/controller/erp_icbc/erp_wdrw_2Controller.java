@@ -360,7 +360,6 @@ public class erp_wdrw_2Controller {
 								break;
 							case "33":
 								erp_statuslist.add(32);
-								erp_statuslist.add(35);
 								break;
 							case "40":
 								erp_statuslist.add(33);
@@ -379,11 +378,11 @@ public class erp_wdrw_2Controller {
 							case "35":
 								erp_statuslist.add(34);
 								erp_statuslist.add(35);
-								erp_statuslist.add(37); //add
+
 								break;
 							case "37":
 								erp_statuslist.add(36);
-								erp_statuslist.add(39); //add
+
 								break;
 							case "38":
 								erp_statuslist.add(37);
