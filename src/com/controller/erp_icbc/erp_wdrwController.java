@@ -1289,7 +1289,7 @@ public class erp_wdrwController {
 		pd.put("dn", "icbc_erp_kj_icbc");
 		pd.put("mid_edit", admin_id);
 		pd.put("dt_edit", creditutil.time());
-		pd.put("status", status_id);
+		pd.put("status", (status_id+1)); //add
 		pd.put("id", yw_id);
 		// 更新贷款表
 		icbc_dk.setBc_status(status);
@@ -1826,7 +1826,7 @@ public class erp_wdrwController {
 		pd.put("dn", "icbc_erp_kj_icbc");
 		pd.put("mid_edit", admin_id);
 		pd.put("dt_edit", creditutil.time());
-		pd.put("status", (status_id+1)); //add
+		pd.put("status", status_id);
 		pd.put("id", yw_id);
 		// 更新开卡表
 		kk.setMid_edit(admin_id);
