@@ -96,11 +96,11 @@ where
     
 <!-- 定时任务-修改客户逾期天数 -->
 <update id="updateOverdueDay" parameterType="int">	
-<!-- update loan_overdue_list set
+update loan_overdue_list set
 	overdue_days=overdue_days+1,
 	dt_edit=sysdate()
 where 
-	overdue_amount > 0 -->    
+	overdue_amount > 0  
     
 <!-- UPDATE 
 loan_overdue_list l set
