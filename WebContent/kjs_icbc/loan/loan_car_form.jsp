@@ -188,44 +188,6 @@
 			    </div>
 			</div>
 		</div>
-		<div style="padding-top:20px;">
-	      <h4 class="modal-title">还款计划表:</h4>
-	    </div>
-	    <div class="box" style="margin-top:10px;">
-			<!-- 数据载入中结束 -->
-			<table class="table table-bordered table-hover">
-	    	<tr>
-				<th class="text-center">还款期数</th>
-				<th class="text-center">应还日期</th>
-				<th class="text-center">应还金额</th>
-				<th class="text-center">实还日期</th>
-				<th class="text-center">实还金额</th>
-				<th class="text-center">是否逾期</th>
-				<th class="text-center">逾期金额</th>
-				<!-- <th class="text-center">核销日期</th> -->
-			</tr>		   
-			<c:forEach items="${paySchedule}" var="map"  varStatus="status">
-			<tr>
-				<td class="text-center">${map.overdue_which}</td>
-				<td class="text-center">${map.should_date }</td>
-				<td class="text-center">${map.should_money}</td>
-				<td class="text-center">${map.practical_date}</td>
-				<td class="text-center">${map.practical_money}</td>
-				<td class="text-center">
-				<c:if test="${map.overdue_status == 1 }">
-				是
-				</c:if>
-				<c:if test="${map.overdue_status == 2 }">
-				否
-				</c:if>
-				</td>
-				<td class="text-center">${map.overdue_money}</td>
-				<%-- <td class="text-center">${map.hx_date }</td> --%>
-		    </tr>
-		    </c:forEach>
-       </table>
-	  </div>
-		
 	  <form id="form1" onsubmit="return false" action="##"  method="post">
 	  	  <!-- 拖车已受理  start -->
 	  	  <c:if test="${requestScope.type eq 'tc_ysl'}">
@@ -249,12 +211,17 @@
 			  			<input id="coolTime"  name="coolTime" class="form-control" type="text"><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 					</div>
 					<input id="coolAddress" name="coolAddress" type="text" style="margin-top:-35px;margin-left:380px;width:390px;" class="form-control">
-					<!-- <input name="coolVideo" id="coolVideo" style="margin-top:-35px;margin-left:870px;width:390px;height:35px;"  class="file-upload-input" type="file"> -->
+					 <!-- <input onchange="javascript:setImagePreview();"  name="coolVideo" id="coolVideo" style="display: none;margin-top:-35px;margin-left:870px;width:390px;height:35px;"  class="file-upload-input" type="file">  -->
 			  		<input type="hidden" id="coolVideo" name="coolVideo" value="" >
-		            <input style="display: none" onchange="javascript:setImagePreview();" type="file" value="" id="file" name="file" >
-		            <label for="file">
-		            <img  id="preview" style="margin-top:-35px;margin-left:870px;width:50px;height:50px;"  class="img-thumbnail"  src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/images/logo.png"/>     
-				    </label>
+		            <input style="display: none" onchange="javascript:setImagePreview();" enctype="multipart/form-data" type="file" value="" id="file" name="file" class="file-upload-input" >
+		             		             	            
+		             <label for="file">	           	            			    
+				     	<!--上传图片    -->           
+		                 <img id="preview" style="margin-top:-35px;margin-left:870px;width:50px;height:50px;" class="img-thumbnail" src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/images/logo.png"></img>     				    
+		      
+				     </label>
+				     
+
 			  </div>
 		  </c:if>
 		  <!-- 拖车已受理  end -->
@@ -346,7 +313,6 @@
 								<c:if test="${results.type_id eq 4 }">诉讼</c:if>
 								<c:if test="${results.type_id eq 5 }">拍卖</c:if>
 								<c:if test="${results.type_id eq 6 }">结清</c:if>
-								<c:if test="${results.type_id eq 7 }">核销</c:if>
 							</span>
 						</td>
 						<td class="text-center">${results.gems_name}</td>
@@ -404,11 +370,7 @@ laydate.render({
 </script>
 <script type="text/javascript">
 function appCar(clickType){
-	if(clickType==1){//
-		var type_id = 3;
-		var type_status = 31;
-		var result_msg = "开始申请拖车";
-	}else if(clickType==2){
+	if(clickType==2){
 		var type_id = 4;
 		var type_status = 41;
 		var result_msg = "开始申请诉讼";
@@ -551,11 +513,57 @@ function addPhoneResult(){
 	}
 	
 }
-
-
+//入库影像
 function setImagePreview(avalue) {
     var docObj = document.getElementById("file");
-    var imgObjPreview = document.getElementById("preview");
+    var imgObjPreview = document.getElementById("preview"); 
+    
+  	//获取上传的文件扩展名
+    var fileValue = docObj.value;
+    var fileIndex = fileValue.lastIndexOf('.');
+    var extend = fileValue.substring(fileIndex);
+	var name='.mp4';
+	var name2='.avi';
+	//判断后缀名
+	if(extend == name || extend == name2){
+ 		 imgObjPreview.style.visibility="hidden";//隐藏img,追加video
+ 		 $("<video id='preview1' style='margin-top:-50px;margin-left:870px;width:50px;height:50px;' class='img-thumbnail' ></video>").insertAfter($("#preview"));
+ 		var imgObjPreview1 = document.getElementById("preview1");//重新获取id
+ 		/* 上传视频分割线*//* 上传视频分割线*//* 上传视频分割线*/
+ 		if(docObj.files && docObj.files[0])
+ 	    {
+ 	        //火狐下，直接设img属性
+ 	        imgObjPreview1.style.display = 'block';
+ 	        imgObjPreview1.style.width = '50px';
+ 	        imgObjPreview1.style.height = '50px';
+ 	        //imgObjPreview.src = docObj.files[0].getAsDataURL();
+ 	        //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+ 	        imgObjPreview1.src = window.URL.createObjectURL(docObj.files[0]);
+ 	    }
+ 	    else
+ 	    {
+ 	        //IE下，使用滤镜
+ 	        docObj.select();
+ 	        var imgSrc = document.selection.createRange().text;
+ 	        var localImagId = document.getElementById("localImag"); //必须设置初始大小
+ 	        localImagId.style.width = "50px";
+ 	        localImagId.style.height = "50px"; //图片异常的捕捉，防止用户修改后缀来伪造图片
+ 	        try {
+ 	            localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+ 	            localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+ 	        } catch(e) {
+ 	            alert("您上传的图片格式不正确，请重新选择!");
+ 	            return false;
+ 	        }
+ 	       imgObjPreview1.style.display = 'none';
+ 	        document.selection.empty();
+ 	    }
+ 		 file_up();
+ 	    return true;
+ 	}
+	
+	/* 上传图片分割线*//* 上传图片分割线*//* 上传图片分割线*//* 上传图片分割线*/
+	//如果上传的文件是图片就走这里
     if(docObj.files && docObj.files[0])
     {
         //火狐下，直接设img属性
@@ -586,6 +594,8 @@ function setImagePreview(avalue) {
     }
     file_up();
     return true;
+	
+    
 }
 
 function file_up(){
@@ -606,6 +616,7 @@ function file_up(){
         processData: false,
         success: function (data) {
             alert("上传成功！");
+            
             document.getElementById("coolVideo").value=data;
         },
         error: function () {
