@@ -27,8 +27,8 @@ public class LoanAutomaticTaskController {
 	@Autowired
 	private LoanOverdueService loanOverdueService;
 	 
-	@Scheduled(cron="0/5 * *  * * ? ")   //每5秒执行一次   
-//	@Scheduled(cron = "0 0 1 * * ?") //每天凌晨1点执行
+//	@Scheduled(cron="0/5 * *  * * ? ")   //每5秒执行一次   
+	@Scheduled(cron = "0 0 1 * * ?") //每天凌晨1点执行
 	public void tasktest(){	
 		// 1. 准备连接数据库的 4 个字符串.
         // 驱动的全类名.
@@ -36,9 +36,9 @@ public class LoanAutomaticTaskController {
         // JDBC URL
         String jdbcUrl = "jdbc:mysql://localhost:3306/kcway2?relaxAutoCommit=true&zeroDateTimeBehavior=convertToNull&characterEncoding=UTF-8&useUnicode=true&autoReconnect=true";
         // user
-        String user = "kcway";
+        String user = "root";
         // password
-        String password = "NDXppG2qUNB6pXcA";
+        String password = "root";
         Connection connection = null;
         try {
         	// 2. 加载数据库驱动程序(对应的 Driver 实现类中有注册驱动的静态代码块.)
