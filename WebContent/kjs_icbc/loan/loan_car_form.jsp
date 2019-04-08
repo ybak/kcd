@@ -188,6 +188,43 @@
 			    </div>
 			</div>
 		</div>
+		<div style="padding-top:20px;">
+		      <h4 class="modal-title">还款计划表:</h4>
+		    </div>
+		    <div class="box" style="margin-top:10px;">
+				<!-- 数据载入中结束 -->
+				<table class="table table-bordered table-hover">
+		    	<tr>
+					<th class="text-center">还款期数</th>
+					<th class="text-center">应还日期</th>
+					<th class="text-center">应还金额</th>
+					<th class="text-center">实还日期</th>
+					<th class="text-center">实还金额</th>
+					<th class="text-center">是否逾期</th>
+					<th class="text-center">逾期金额</th>
+					<!-- <th class="text-center">核销日期</th> -->
+				</tr>		   
+				<c:forEach items="${paySchedule}" var="map"  varStatus="status">
+				<tr>
+					<td class="text-center">${map.overdue_which}</td>
+					<td class="text-center">${map.should_date }</td>
+					<td class="text-center">${map.should_money}</td>
+					<td class="text-center">${map.practical_date}</td>
+					<td class="text-center">${map.practical_money}</td>
+					<td class="text-center">
+					<c:if test="${map.overdue_status == 1 }">
+					是
+					</c:if>
+					<c:if test="${map.overdue_status == 2 }">
+					否
+					</c:if>
+					</td>
+					<td class="text-center">${map.overdue_money}</td>
+					<%-- <td class="text-center">${map.hx_date }</td> --%>
+			    </tr>
+			    </c:forEach>
+	       </table>
+		  </div>
 	  <form id="form1" onsubmit="return false" action="##"  method="post">
 	  	  <!-- 拖车已受理  start -->
 	  	  <c:if test="${requestScope.type eq 'tc_ysl'}">
@@ -313,6 +350,7 @@
 								<c:if test="${results.type_id eq 4 }">诉讼</c:if>
 								<c:if test="${results.type_id eq 5 }">拍卖</c:if>
 								<c:if test="${results.type_id eq 6 }">结清</c:if>
+								<c:if test="${results.type_id eq 7 }">核销</c:if>
 							</span>
 						</td>
 						<td class="text-center">${results.gems_name}</td>
@@ -370,7 +408,11 @@ laydate.render({
 </script>
 <script type="text/javascript">
 function appCar(clickType){
-	if(clickType==2){
+	if(clickType==1){//
+		var type_id = 3;
+		var type_status = 31;
+		var result_msg = "开始申请拖车";
+	}else if(clickType==2){
 		var type_id = 4;
 		var type_status = 41;
 		var result_msg = "开始申请诉讼";
