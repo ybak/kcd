@@ -572,8 +572,8 @@ showtag=#{showtag},
 <if test="purview_map!=null and purview_map!=''">purview_map=#{purview_map},</if>
 <if test="purview_map_kjs!=null and purview_map_kjs!=''">purview_map_kjs=#{purview_map_kjs},</if>
 icbc_erp_tag=#{icbc_erp_tag},
-bank_id={bank_id},
-fs_type={fs_type},
+bank_id=#{bank_id},
+fs_type=#{fs_type},
 </trim>
 where id=#{id}
 </if>

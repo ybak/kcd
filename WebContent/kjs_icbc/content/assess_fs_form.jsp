@@ -935,15 +935,19 @@
 								</label></th>
 					</tr>
 						<tr>
-							<td><label class="btn btn-info" style="">
-									<input type="checkbox" name="order_kjs_icbc" id="order_kjs_icbc" value="0" onclick="checkfl(this)">工行贷										</label>
-									<label class="btn btn-info" style="">
-									<input type="checkbox" name="order_kjs_mgcert" id="order_kjs_mgcert" value="0" onclick="checkfl(this)">优信租赁										</label><label class="btn btn-info" style="">
-									<input type="checkbox" name="order_kjs_mgcar" id="order_kjs_mgcar" value="0" onclick="checkfl(this)">快车贷										</label><label class="btn btn-info" style="">
-									<input type="checkbox" name="order_kjs_cxfq" id="order_kjs_cxfq" value="0" onclick="checkfl(this)">车险分期										</label><label class="btn btn-info" style="">
-									<input type="checkbox" name="order_kjs_pazl" id="order_kjs_pazl" value="0" onclick="checkfl(this)">平安租赁										</label><label class="btn btn-info" style="">
-									<input type="checkbox" name="order_kjs_zjzl" id="order_kjs_zjzl" value="0" onclick="checkfl(this)">安吉租赁										</label></td>
-					</tr>
+							<td>
+								<label class="btn btn-info" style=""><input type="checkbox" name="order_kjs_icbc" id="order_kjs_icbc" value="0" onclick="checkfl(this)">工行贷
+								</label><label class="btn btn-info" style=""><input type="checkbox" name="order_kjs_mgcert" id="order_kjs_mgcert" value="0" onclick="checkfl(this)">优信租赁
+								</label><label class="btn btn-info" style=""><input type="checkbox" name="order_kjs_mgcar" id="order_kjs_mgcar" value="0" onclick="checkfl(this)">快车贷
+								</label><label class="btn btn-info" style=""><input type="checkbox" name="order_kjs_cxfq" id="order_kjs_cxfq" value="0" onclick="checkfl(this)">车险分期
+								</label><label class="btn btn-info" style=""><input type="checkbox" name="order_kjs_pazl" id="order_kjs_pazl" value="0" onclick="checkfl(this)">平安租赁
+								</label><label class="btn btn-info" style=""><input type="checkbox" name="order_kjs_zjzl" id="order_kjs_zjzl" value="0" onclick="checkfl(this)">安吉租赁
+								</label><label class="btn btn-info" style=""><input type="checkbox" name="order_kjs_hbyh" id="order_kjs_hbyh" value="0" onclick="checkfl(this)">河北银行
+								</label><label class="btn btn-info" style=""><input type="checkbox" name="order_kjs_xmgjyh" id="order_kjs_xmgjyh" value="0" onclick="checkfl(this)">厦门国际银行
+								</label><label class="btn btn-info" style=""><input type="checkbox" name="order_kjs_hxyh" id="order_kjs_hxyh" value="0" onclick="checkfl(this)">华夏银行
+								</label>
+							</td>
+						</tr>
 				</tbody>
 				</table>
 			</div>
