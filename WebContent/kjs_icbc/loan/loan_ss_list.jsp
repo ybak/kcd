@@ -19,7 +19,7 @@
 		</script>
 		<section class="content-header">
 			<h1>
-			核销管理<small>
+			诉讼管理<small>
 			共${requestScope.totalsize}个
 			</small>
 			</h1>

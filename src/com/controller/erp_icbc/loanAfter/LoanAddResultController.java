@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.model1.icbc.erp.PageData;
 import com.service1.Repayment.OverdueService;
@@ -59,7 +60,7 @@ public class LoanAddResultController {
 		addResult.put("type_id",type_id);
 		addResult.put("type_status",type_status);
 		addResult.put("result_msg",result_msg);
-		addResult.put("result_value",addResult.toString());
+		addResult.put("result_value",JSONObject.parseObject(JSON.toJSONString(addResult)).toString());
 		int b = loanOverdueService.addOperationResult(addResult);//添加记录
 		String reuslt = "failure";
 		if(b>0){
@@ -142,7 +143,7 @@ public class LoanAddResultController {
 		addResult.put("coolTime", coolTime);
 		addResult.put("coolAddress", coolAddress);
 		addResult.put("coolVideo", coolVideo);
-		addResult.put("result_value",addResult.toString());
+		addResult.put("result_value",JSONObject.parseObject(JSON.toJSONString(addResult)).toString());
 		int b = loanOverdueService.addOperationResult(addResult);//添加记录
 		String reuslt = "failure";
 		if(b>0){
@@ -176,7 +177,7 @@ public class LoanAddResultController {
 		addResult.put("result_msg",result_msg);
 		//添加记录
 		addResult.put("coolStatus",coolStatus);
-		addResult.put("result_value",addResult.toString());
+		addResult.put("result_value",JSONObject.parseObject(JSON.toJSONString(addResult)).toString());
 		int b = loanOverdueService.addOperationResult(addResult);//添加记录
 		String reuslt = "failure";
 		if(b>0){

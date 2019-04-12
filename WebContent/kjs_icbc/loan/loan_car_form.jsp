@@ -217,15 +217,40 @@
 		             <label for="file">	           	            			    
 				     	<!--上传图片    -->           
 		                 <img id="preview" style="margin-top:-35px;margin-left:870px;width:50px;height:50px;" class="img-thumbnail" src="${pageContext.request.contextPath }/kjs_icbc/kjs_icbc_style/images/logo.png"></img>     				    
-		      
 				     </label>
-				     
-
 			  </div>
 		  </c:if>
 		  <!-- 拖车已受理  end -->
 		  <!-- 拖车完成  start -->
 	  	  <c:if test="${requestScope.type eq 'tc_wc'}">
+	  	  	<div style="margin-top:20px;">
+			  		<label>入库时间:</label>
+				  	<lable style="margin-left:310px;margin-top:40px;">入库地址:</lable>
+				  	<lable style="margin-left:415px;">入库影像:</lable>
+		  	  </div>
+		  	  
+			  <div style="margin-top:10px;width:300px;">
+					<div class="input-group date ng-isolate-scope ng-not-empty ng-valid ng-valid-required">
+			  			<input id="coolTime" value="${maps.coolTime}"  name="coolTime" class="form-control" type="text" ><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+					</div>
+					<input id="coolAddress" value="${maps.coolAddress}" name="coolAddress" type="text" style="margin-top:-35px;margin-left:380px;width:390px;" class="form-control">
+					 <!-- <input onchange="javascript:setImagePreview();"  name="coolVideo" id="coolVideo" style="display: none;margin-top:-35px;margin-left:870px;width:390px;height:35px;"  class="file-upload-input" type="file">  -->
+			  		<input type="hidden" id="coolVideo" name="coolVideo" value="" >
+		            <input style="display: none" value="" id="file" name="file" class="file-upload-input" >
+		             		             	            
+		             <label for="file" >	           	            			    
+				     	<!--图片   --> 
+				     	<c:if test="${fn:substring(maps.remark,51,54) == 'JPG' || fn:substring(maps.remark,51,54) == 'jpg' || fn:substring(maps.remark,51,54) == 'png' || fn:substring(maps.remark,51,54) == 'PNG'}">  
+		                 <img id="preview"  style="margin-top:-35px;margin-left:870px;width:50px;height:50px;" class="img-thumbnail" src="http://a.kcway.net/assess/${maps.remark}"></img>     				    			    	
+				    	</c:if>
+				    	<!-- 视频-->
+				    	<c:if test="${fn:substring(maps.remark,51,54) == 'mp4' || fn:substring(maps.remark,51,54) == 'avi'}">  
+		                 <video id="preview" style="margin-top:-35px;margin-left:870px;width:50px;height:50px;" class="img-thumbnail" src="http://a.kcway.net/assess/${maps.remark}"></video>     				    
+				    	</c:if>
+				    	 
+				     </label>
+			  </div> 
+			   	  
   	  	  	  <div style="margin-top:20px;">
   	  	  		<label>处置结果<i class="red">*</i>:</label>
   	  	  	  </div>

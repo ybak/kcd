@@ -1,6 +1,7 @@
 package com.service1.loan;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,6 +82,12 @@ public class LoanOverdueServiceImpl implements LoanOverdueService{
 	public Integer addConfig(PageData pd) {
 		// TODO Auto-generated method stub
 		return loanOverdueMapper.addConfig(pd);
+	}
+
+	@Override
+	public Map<String, Object> selectCool(Integer lol_id) {
+		// TODO Auto-generated method stub
+		return loanOverdueMapper.selectCool(lol_id);
 	}
 	
 }

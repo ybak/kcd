@@ -1,6 +1,7 @@
 package com.mapper1.loan;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -42,4 +43,7 @@ public interface LoanOverdueMapper {
 	PageData selectConfig(PageData pd);
 	//添加配置
 	Integer addConfig(PageData pd);
+	
+	//在拖车完成中显示已受理页面上传的入库时间、地址、影像
+	Map<String,Object> selectCool(Integer lol_id);
 }
