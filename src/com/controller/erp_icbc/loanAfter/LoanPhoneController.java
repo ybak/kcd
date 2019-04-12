@@ -20,9 +20,9 @@ import com.service1.loan.LoanOverdueService;
 import com.util.limitutil;
 
 /**
- * ¿Í»§µç´ß¿ØÖÆÆ÷
+ * å®¢æˆ·ç”µå‚¬æ§åˆ¶å™¨
  * 
- * @author ÈıÊ®»­Éú
+ * @author ä¸‰åç”»ç”Ÿ
  * 2019-3-22
  */
 @Controller
@@ -33,7 +33,7 @@ public class LoanPhoneController {
 	@Autowired
 	private ClientPaymentService clientPaymentService;
 	
-	//²éÑ¯¿Í»§µç´ßÃûµ¥
+	//æŸ¥è¯¢å®¢æˆ·ç”µå‚¬åå•
 	@RequestMapping("/selectPhoneList.do")
 	public String select(
 			String qn,
@@ -46,7 +46,7 @@ public class LoanPhoneController {
 			int type_id,
 			int type_status,
 			HttpServletRequest request){
-		//»ñÈ¡µ±Ç°²Ù×÷ÈËĞÅÏ¢
+		//è·å–å½“å‰æ“ä½œäººä¿¡æ¯
 		PageData pdsession= (PageData)request.getSession().getAttribute("pd");
 		System.out.println("denglu:"+pdsession);
 		List<PageData> newpdList=new ArrayList<>();
@@ -54,12 +54,12 @@ public class LoanPhoneController {
 		pd.put("param",param);
 		System.err.println(pdsession.get("icbc_erp_fsid")+"--99999999");
 		pd.put("gems_fs_id",pdsession.get("icbc_erp_fsid"));
-		pd.put("type_id",type_id); // ²éÑ¯´ûºó´óÀàĞÍ  1ÓâÆÚ£¬2µç´ß£¬3ÍÏ³µ£¬4ËßËÏ£¬5ÅÄÂô£¬6½áÇå
-		pd.put("type_status",type_status); // ²éÑ¯´ûºó´óÀàĞÍÏÂµÄĞ¡×´Ì¬  ÏêÇé¼ûsrc/com/controller/erp_icbc/loanAfter/AddResult.java
+		pd.put("type_id",type_id); // æŸ¥è¯¢è´·åå¤§ç±»å‹  1é€¾æœŸï¼Œ2ç”µå‚¬ï¼Œ3æ‹–è½¦ï¼Œ4è¯‰è®¼ï¼Œ5æ‹å–ï¼Œ6ç»“æ¸…
+		pd.put("type_status",type_status); // æŸ¥è¯¢è´·åå¤§ç±»å‹ä¸‹çš„å°çŠ¶æ€  è¯¦æƒ…è§src/com/controller/erp_icbc/loanAfter/AddResult.java
 		List<PageData> pdList=loanOverdueService.selectPhoneList(pd);
 		newpdList = limitutil.fy(pdList,pagesize,pagenow);
 		int q=pdList.size()%pagesize;
-		int totalpage=0;//×ÜÒ³Êı
+		int totalpage=0;//æ€»é¡µæ•°
 		if(q==0){
 			totalpage=pdList.size()/pagesize;	    		
 		}else{
@@ -76,7 +76,7 @@ public class LoanPhoneController {
 		request.setAttribute("pagesize",pagesize);
 		request.setAttribute("pagenow",pagenow);
 		request.setAttribute("newpdList", newpdList);
-		//Õ¹Ê¾ÅäÖÃĞÅÏ¢
+		//å±•ç¤ºé…ç½®ä¿¡æ¯
 		PageData pp = new PageData();
 		pd.put("gems_fs_id",pdsession.get("icbc_erp_fsid"));
 		PageData getConfig = loanOverdueService.selectConfig(pd);
@@ -84,7 +84,7 @@ public class LoanPhoneController {
 		return "kjs_icbc/index";
 	}
 	
-	//µã»÷µç´ß¿Í»§½øÈëÏêÇé
+	//ç‚¹å‡»ç”µå‚¬å®¢æˆ·è¿›å…¥è¯¦æƒ…
 	@RequestMapping("/selectPhoneForm.do")
 	public String selectPhoneForm(
 			String qn,
@@ -94,30 +94,30 @@ public class LoanPhoneController {
 			String param,
 			int id,
 			HttpServletRequest request){
-		//»ñÈ¡µ±Ç°²Ù×÷ÈËĞÅÏ¢
+		//è·å–å½“å‰æ“ä½œäººä¿¡æ¯
 		PageData pdsession= (PageData)request.getSession().getAttribute("pd");
 		
 		List<PageData> newpdList=new ArrayList<>();
 		PageData pd=new PageData();
 		pd.put("id",id);
-		//²éÑ¯ ¿Í»§ĞÅÏ¢+³µÁ¾ĞÅÏ¢+´û¿î·½°¸
+		//æŸ¥è¯¢ å®¢æˆ·ä¿¡æ¯+è½¦è¾†ä¿¡æ¯+è´·æ¬¾æ–¹æ¡ˆ
 		PageData CCL = loanOverdueService.selectPhoneClientCarLoanInfo(pd);
-		//²éÑ¯»¹¿î¼Æ»®
+		//æŸ¥è¯¢è¿˜æ¬¾è®¡åˆ’
 		List<PageData> paySchedule = clientPaymentService.selectPaySchedule(CCL.get("icbc_id").toString());
-		//²éÑ¯²Ù×÷¼ÇÂ¼
+		//æŸ¥è¯¢æ“ä½œè®°å½•
 		List<PageData> results = loanOverdueService.selectResults(pd);
-		//ÔÚÍÏ³µÍê³ÉÖĞÏÔÊ¾ÒÑÊÜÀíÒ³ÃæÉÏ´«µÄÈë¿âÊ±¼ä¡¢µØÖ·¡¢Ó°Ïñ
+		//åœ¨æ‹–è½¦å®Œæˆä¸­æ˜¾ç¤ºå·²å—ç†é¡µé¢ä¸Šä¼ çš„å…¥åº“æ—¶é—´ã€åœ°å€ã€å½±åƒ
 		Map<String, Object> coolMap = loanOverdueService.selectCool(id);
 		Map<String, Object> maps = null;
 		if(coolMap != null){
-			// String ×ª JSONObject 
+			// String è½¬ JSONObject 
 			JSONObject json = (JSONObject) JSON.parse(coolMap.get("result_value").toString()); 
 			System.err.println("---------------:"+json.get("result_msg"));
 			maps = (Map<String, Object>)json; 
 			
 		}
 		
-		//²éÑ¯´ËÌõÓâÆÚÃûµ¥  ÓÃÓÚÌí¼Ó²Ù×÷¼ÇÂ¼Ê±Ê¹ÓÃ type_id¡¢type_statusµÈĞÅÏ¢
+		//æŸ¥è¯¢æ­¤æ¡é€¾æœŸåå•  ç”¨äºæ·»åŠ æ“ä½œè®°å½•æ—¶ä½¿ç”¨ type_idã€type_statusç­‰ä¿¡æ¯
 		PageData pdOne = loanOverdueService.selectOverdueOne(pd);
 		request.setAttribute("dn", dn);
 		request.setAttribute("cn", cn);
@@ -128,27 +128,10 @@ public class LoanPhoneController {
 		request.setAttribute("results",results);
 		request.setAttribute("pdOne",pdOne);
 		request.setAttribute("maps", maps);
-		//Õ¹Ê¾ÅäÖÃĞÅÏ¢
-		PageData pp = new PageData();
-		pd.put("gems_fs_id",pdsession.get("icbc_erp_fsid"));
-		PageData getConfig = loanOverdueService.selectConfig(pd);
-		request.setAttribute("getConfig",getConfig);
 		return "kjs_icbc/index";
 	}
 	
-	
-	
-	private Map<String, Object> getMapToString(String vv) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private Map getStringToMap(String vv) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	//ÉêÇëÍÏ³µ»òÕßÉêÇëËßËÏ
+	//ç”³è¯·æ‹–è½¦æˆ–è€…ç”³è¯·è¯‰è®¼
 	@RequestMapping("/updatePhoneStatusToCarOrLitigation.do")
 	@ResponseBody
 	public String updateOverdueStatus(
@@ -158,20 +141,20 @@ public class LoanPhoneController {
 			int icbc_id,
 			int lolId,
 			HttpServletRequest request){
-		PageData pdsession= (PageData)request.getSession().getAttribute("pd");//»ñÈ¡µ±Ç°²Ù×÷ÈËĞÅÏ¢
-		//ĞŞ¸Ä¿Í»§ÓâÆÚ×´Ì¬-ÊÖ¶¯µã»÷½øÈëµç´ß
+		PageData pdsession= (PageData)request.getSession().getAttribute("pd");//è·å–å½“å‰æ“ä½œäººä¿¡æ¯
+		//ä¿®æ”¹å®¢æˆ·é€¾æœŸçŠ¶æ€-æ‰‹åŠ¨ç‚¹å‡»è¿›å…¥ç”µå‚¬
 		PageData updateStatus = new PageData();
 		updateStatus.put("id",lolId);
-		updateStatus.put("type_id",type_id); // ½øÈëÍÏ³µ
-		updateStatus.put("type_status",type_status); // ½øÈëÍÏ³µÎ´´¦Àí
-		updateStatus.put("mid_edit",pdsession.get("id")); // ĞŞ¸Ä²Ù×÷ÈË
+		updateStatus.put("type_id",type_id); // è¿›å…¥æ‹–è½¦
+		updateStatus.put("type_status",type_status); // è¿›å…¥æ‹–è½¦æœªå¤„ç†
+		updateStatus.put("mid_edit",pdsession.get("id")); // ä¿®æ”¹æ“ä½œäºº
 		System.err.println(pdsession.get("id")+"-----------");
-		int a = loanOverdueService.updateOverdueStatus(updateStatus); // a == 1,ĞŞ¸Ä³É¹¦
+		int a = loanOverdueService.updateOverdueStatus(updateStatus); // a == 1,ä¿®æ”¹æˆåŠŸ
 		String reuslt = "failure";
 		if(a>0){
 			reuslt = "successful!";
 		}
-		//Ìí¼Ó²Ù×÷¼ÇÂ¼ start
+		//æ·»åŠ æ“ä½œè®°å½• start
 		PageData addResult=new PageData();
 		addResult.put("qryid",lolId);
 		addResult.put("mid_add",pdsession.get("id"));
@@ -181,8 +164,8 @@ public class LoanPhoneController {
 		addResult.put("type_status",type_status);
 		addResult.put("result_msg",result_msg);
 		addResult.put("remark",result_msg);
-		int b = loanOverdueService.addOperationResult(addResult);//Ìí¼Ó¼ÇÂ¼
-		//Ìí¼Ó²Ù×÷¼ÇÂ¼ end
+		int b = loanOverdueService.addOperationResult(addResult);//æ·»åŠ è®°å½•
+		//æ·»åŠ æ“ä½œè®°å½• end
 		return reuslt;
 	}
 }
