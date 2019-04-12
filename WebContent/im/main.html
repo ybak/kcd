@@ -2250,19 +2250,21 @@
 					</div>
 				</li>
 			</ul>`;
-			var item_F=`<div style="display: flex;	flex-wrap: wrap;">`;
+			var item_F=``;
 			var allVideoScreenshot=data.allVideoScreenshot;
-			for(var i=0;i<allVideoScreenshot.length;i++ ){
-				var avs=allVideoScreenshot[i];
-				item_F+=
-				`<div class="img-box">
-					<img onclick="showBigScreenCapture('${avs.path}')" src="${avs.path}"> 
-					<span onclick="deleteVideoScreenshot('${avs.id}',this)"></span>
-				</div>
-				`;
+			if(allVideoScreenshot){	
+				item_F+=`<div style="display: flex;	flex-wrap: wrap;">`;
+				for(var i=0;i<allVideoScreenshot.length;i++ ){
+					var avs=allVideoScreenshot[i];
+					item_F+=
+					`<div class="img-box">
+						<img onclick="showBigScreenCapture('${avs.path}')" src="${avs.path}"> 
+						<span onclick="deleteVideoScreenshot('${avs.id}',this)"></span>
+					</div>
+					`;
+				}
+				item_F+=`</div>`;
 			}
-			item_F+=`</div>`;
-			
 		if(dom=="B"){//历史
 			$("#item_E").html(item_E)
 			$("#item_D").html(item_D)

@@ -270,12 +270,13 @@ public class YunXinController extends BaseController{
 		Map map=null;
 		List select_mq_info=null;
 		if(domvalue.equals("A")){//视频对话 id为icbc_id
-			 map= yx.select_viedo_byid(id);
-			 log.info("实时视频返回元数据->{}"+JSON.toJSONString(map));
+			String[] ss=id.split("-");
+			 map= yx.select_viedo_byid(ss[0]);
+			/* log.info("实时视频返回元数据->{}"+JSON.toJSONString(map));*/
 		}else if(domvalue.equals("B")){
 			 map=(Map) yx.select_viedo_byid2(id).get(0);
 			map.put("allVideoScreenshot", yx.selectAllVideoScreenshot(map));
-			 log.info("查看历史视频返回元数据->{}"+JSON.toJSONString(map));
+			/* log.info("查看历史视频返回元数据->{}"+JSON.toJSONString(map));*/
 		}
 		 if(map.get("kk_car_stateid")!=null){
 			map.put("kk_car_stateid",yx.getCommStates(Integer.parseInt(map.get("kk_car_stateid").toString()))); 
