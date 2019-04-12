@@ -676,8 +676,8 @@
 	    var blob=dataURLtoBlob(imageS);
 	    var formData = new FormData();
            formData.append("file",blob);
-        /*    formData.append("icbcId",window.custom.id);
-           formData.append("channelId",window.channelId); */
+            formData.append("icbcId",window.custom.id);
+           formData.append("channelId",window.channelId); 
            $.ajax({
                   url: "../yx/pImg.do",
                   type: "POST",

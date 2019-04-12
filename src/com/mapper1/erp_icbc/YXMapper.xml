@@ -14,13 +14,22 @@
 	<update id="deleteVideoScreenshot" parameterType="map">
 		UPDATE  video_screenshot SET delmark=1,dt_edit=#{dtEdit},mid_edit=#{midEdit} WHERE id=#{id}
 	</update> 
+	<select id="selectRealtimeUrl" parameterType="string" resultType="string">
+		select real_time_url from erp_viedo_app where app_mark=#{0}
+	</select>
+	<select id="selectRecordingRrl" parameterType="string" resultType="string">
+		select recording_url from erp_viedo_app where app_mark=#{0}
+	</select>
+	<delete id="deleteViedoInfoBychannelId"  parameterType="string">
+		delete from icbc_erp_video_info where channelId=#{0}
+	</delete>
 	<!-- 截图查询所有 -->
 	<select id="selectAllVideoScreenshot" resultType="map" parameterType="map">
 		select concat('http://a.kcway.net/assess/',path) path,dt_add dtAdd,id from  video_screenshot where delmark=0 and icbc_id=#{id} and channelId=#{channelId}
 	</select>
 	<!-- 截图保存 -->
 	<!-- {"path":"upload/2019/03/28/fe706b84a996ed8b65a4bcde670a241d.png","dtEdit":"2019-03-28 15:22:50","midEdit":"4793","dtAdd":"2019-03-28 15:22:50","icbcId":"706","midAdd":"4793"}-->
-	<insert id="addVideoScreenshot" parameterType="java.lang.String">
+	<insert id="addVideoScreenshot" parameterType="map">
 		INSERT INTO video_screenshot(`mid_add`, `mid_edit`, `dt_add`, `dt_edit`, `delmark`, `path`, `icbc_id`,`channelId`) 
 		VALUES 
 		(#{midAdd}, #{midEdit}, #{dtAdd},#{dtEdit}, 0, #{path}, #{icbcId},#{channelId});
@@ -181,7 +190,7 @@
 	<select id="selectCountTokenByUid" resultType="map" parameterType="java.lang.String" >
 	select delmark,bank_id bankId from icbc_erp_token where uid=#{0}
 	</select>
-	<select id="query_tokenbyid" resultType="scanpool" parameterType="java.lang.String">
+	<select id="query_tokenbyid" resultType="ScanPool1" parameterType="java.lang.String">
 		select a.bank_id bankId,a.id mark,a.delmark,a.accid auditAccid ,a.token auditToken,b.accid clientAccid,b.token clientToken from  icbc_erp_token a,icbc_erp_token b where a.id=b.parentid and a.uid=#{0}
 	</select>
 	<select id="SelectBankIdByUid" resultType="java.lang.String" parameterType="java.lang.String">
@@ -189,7 +198,7 @@
 	</select>
 	<!-- 记录上传回调信息 -->
 	<insert id="addcallback" parameterType="map">
-		insert into icbc_erp_video_info(viedotype,url,ext,address,channelid,te,vid) values(#{viedotype},#{origAddr},#{user_defined.id},#{user_defined.address},#{channelid},#{te},#{vid})
+		insert into icbc_erp_video_info(viedotype,url,ext,address,channelid,te,vid,app_mark,createtime) values(#{viedotype},#{origAddr},#{ext},#{user_defined.address},#{channelid},#{te},#{vid},#{appMark},sysdate())
 	</insert>
 	<!-- 查询上传回调信息 没有用到 -->
 	<!-- <select id="selectcallback" resultType="callBacK">
@@ -207,9 +216,12 @@
 	<insert id="insert_infocopy_download" parameterType="infocopy" >
 		insert into icbc_erp_video_info(filename,url,vid,channelid) values(#{fi.filename},#{fi.url},#{fi.vid},#{fi.channelid})
 	</insert>
-	<!-- 查询通道id是否存在 -->
-	<select id="select_infocopy" parameterType="java.lang.String" resultType="java.lang.String">
-		select id from icbc_erp_video_info where channelId=#{0}
+	<delete id="deleteViedoInfoById" parameterType="string">
+		delete from icbc_erp_video_info where id=#{0}
+	</delete>
+	<!-- 查询通道id是否存在 (防止脏数据)-->
+	<select id="select_infocopy" parameterType="java.lang.String" resultType="map">
+		select id,app_mark appMark,download_info downloadInfo,duration_time durationTime from icbc_erp_video_info where channelId=#{0}
 	</select>
 	<!-- 更新时长通话记录抄送 -->
 	<update id="update_infocopy_duration" parameterType="infocopy">
@@ -225,7 +237,7 @@
 	</update>
 	 
 	<insert id="insert_infocopy_viedo">
-		insert into icbc_erp_video_info(ext,viedotype,address,channelId) values(#{id},'1',#{address},#{channel})
+		insert into icbc_erp_video_info(ext,viedotype,address,channelId,app_mark) values(#{extId},'1',#{address},#{channel},#{appMark})
 	</insert>
 	<!-- map类型的输入参数 -->
 	<!-- 添加时长通话记录抄送 -->
@@ -238,15 +250,16 @@
 		ext,
 		address,
 		viedotype,
-		duration_time) VALUES(
+		duration_time,app_mark) VALUES(
 		#{channelId},
 		#{createtime},
 		#{duration},
 		#{faccid},
-		#{ext.id},
+		#{extId},
 		#{ext.address},
 		#{viedotype},
-		#{duration_time})
+		#{duration_time},
+		#{appMark})
 	</insert>
 	<!-- 添加下载抄送 -->
 	<insert id="insert_infocopy_downloadM" parameterType="java.util.HashMap" >
@@ -256,11 +269,11 @@
 		viedotype,
 		download_info,
 		vid) values(
-		#{url},
+		#{fi.url},
 		#{channelid},
 		#{viedotype},
 		#{download_info},
-		#{vid}
+		#{fi.vid}
 		)
 	</insert>
 	<!-- 查询通道id是否存在 -->
@@ -273,11 +286,11 @@
 	</select>
 	<!-- 更新时长通话记录抄送 -->
 	<update id="update_infocopy_durationM" parameterType="java.util.HashMap">
-		update icbc_erp_video_info set createtime=#{createtime},duration=#{duration},faccid=#{faccid},ext=#{ext.id},address=#{ext.address},duration_time=#{duration_time} where channelId=#{channelId}
+		update icbc_erp_video_info set createtime=#{createtime},duration=#{duration},faccid=#{faccid},ext=#{extId},address=#{ext.address},duration_time=#{duration_time},app_mark=#{appMark} where channelId=#{channelId}
 	</update>
 	<!-- 更新下载通话记录抄送 -->
 	<update id="update_infocopy_downloadM" parameterType="java.util.HashMap">
-		update icbc_erp_video_info set url=#{url},download_info=#{download_info},vid=#{vid} where id=#{id11}
+		update icbc_erp_video_info set url=#{fi.url},download_info=#{download_info},vid=#{fi.vid} where id=#{id11}
 	</update>
 
 	<insert id="insert_M" parameterType="java.lang.String">
@@ -369,6 +382,7 @@ from icbc_erp_video_info yvi
 join icbc_erp_kj_icbc ieki on yvi.ext=ieki.icbc_id  and ieki.type_id=6
 join assess_fs fs on ieki.gems_fs_id=fs.id  
 <include refid="condition-viedo"></include>
+and yvi.app_mark=#{condition.appMark}
 left JOIN icbc_erp_kj_icbc_result iekir ON iekir.id=yvi.result_id 
 join kj_icbc ki on ki.id=ieki.icbc_id
 JOIN icbc_banklist yb on yb.id=ki.bank_id) b  
@@ -387,6 +401,7 @@ from icbc_erp_video_info yvi
 join icbc_erp_kj_icbc ieki on yvi.ext=ieki.icbc_id  and ieki.type_id=6
 join assess_fs fs on ieki.gems_fs_id=fs.id 
 <include refid="condition-viedo"></include>
+and yvi.app_mark=#{condition.appMark}
 left JOIN icbc_erp_kj_icbc_result iekir ON iekir.id=yvi.vid 
 join kj_icbc ki on ki.id=ieki.icbc_id
 JOIN icbc_banklist yb on yb.id=ki.bank_id) b  

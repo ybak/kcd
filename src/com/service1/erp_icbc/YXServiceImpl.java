@@ -37,7 +37,7 @@ public class YXServiceImpl implements YXService{
 	public int insert_infocopy_download(InfoCopy infocopy){
 		return yxmapper.insert_infocopy_download(infocopy);
 	}
-	public String select_infocopy(String channelId){
+	public Map select_infocopy(String channelId){
 		return yxmapper.select_infocopy(channelId);
 	}
 	public int update_infocopy_duration(InfoCopy infocopy){
@@ -216,5 +216,25 @@ public class YXServiceImpl implements YXService{
 	public int deleteVideoScreenshot(Map map) {
 		// TODO Auto-generated method stub
 		return yxmapper.deleteVideoScreenshot(map);
+	}
+	@Override
+	public int deleteViedoInfoBychannelId(String channelId) {
+		// TODO Auto-generated method stub
+		return yxmapper.deleteViedoInfoBychannelId(channelId);
+	}
+	@Override
+	public String selectRealtimeUrl(String mark) {
+		// TODO Auto-generated method stub
+		return yxmapper.selectRealtimeUrl(mark);
+	}
+	@Override
+	public String selectRecordingRrl(String mark) {
+		// TODO Auto-generated method stub
+		return yxmapper.selectRecordingRrl(mark);
+	}
+	@Override
+	public int deleteViedoInfoById(String s) {
+		// TODO Auto-generated method stub
+		return yxmapper.deleteViedoInfoById(s);
 	}
 }

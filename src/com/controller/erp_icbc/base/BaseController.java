@@ -14,15 +14,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -30,23 +34,19 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.controller.erp_icbc.YunXin.YunXinController;
 import com.controller.erp_icbc.result.Result;
 import com.controller.erp_icbc.utils.Charsets;
 import com.controller.erp_icbc.utils.StringEscapeEditor;
 import com.model1.icbc.erp.PageData;
 import com.util.creditutil;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 /**基础 controller
  * @Description:TODO
  * @author:LiWang
@@ -74,6 +74,10 @@ public abstract class BaseController {
             return "bad getErrorInfoFromException";  
         }  
     }  
+    //获取随机的字符串
+    public static String getRandomMark(){
+        return  DigestUtils.md5DigestAsHex(UUID.randomUUID().toString().replace("-", "").toLowerCase().getBytes());
+    }
     //业务对象
     public Map AddBoToMap(HttpServletRequest request) {
     	Map map=this.updateBoToMap(request);
@@ -99,10 +103,10 @@ public abstract class BaseController {
         return id;
     }
     public static String getTime(){
-    	Date time = new Date(System.currentTimeMillis());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String current = sdf.format(time);
-        return current;
+         LocalDateTime now = LocalDateTime.now();
+         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+         String nowStr = now .format(format);
+        return nowStr;
     }
     /**
      * ajax失败

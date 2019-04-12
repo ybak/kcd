@@ -17,11 +17,12 @@ public interface YXService {
 	
 	int insert_infocopy_duration(InfoCopy infocopy);
 	int insert_infocopy_download(InfoCopy infocopy);
-	String select_infocopy(String channelId);
+	Map select_infocopy(String channelId);
 	int update_infocopy_duration(InfoCopy infocopy);
 	int update_infocopy_download(InfoCopy infocopy);
 	//视频面前在视频表中添加一个记录
 	int insert_infocopy_viedo(Map map);
+	int deleteViedoInfoById(String s);
 	
 	int insert_M(String s);
 	int insert_infocopy_durationM(Map infocopy);
@@ -65,4 +66,9 @@ public interface YXService {
 	int addVideoScreenshot(Map map);
 	List selectAllVideoScreenshot(Map map);
 	int deleteVideoScreenshot(Map map);
+	
+	
+	int deleteViedoInfoBychannelId(String channelId);
+	String selectRealtimeUrl(String mark);
+	String selectRecordingRrl(String mark);
 }

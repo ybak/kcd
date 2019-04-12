@@ -13,7 +13,7 @@
 		<typeAlias alias="pd" type="com.model1.icbc.erp.PageData" />
 		<typeAlias alias="hk" type="com.model1.icbc.erp.HK" />
 		<typeAlias alias="pageinfo" type="com.controller.erp_icbc.utils.PageInfo" />
-		<typeAlias alias="scanpool"
+		<typeAlias alias="ScanPool1"
 			type="com.controller.erp_icbc.YunXin.seats.ScanPool1" />
 		<typeAlias alias="infocopy"
 			type="com.controller.erp_icbc.YunXin.bean.InfoCopy" />

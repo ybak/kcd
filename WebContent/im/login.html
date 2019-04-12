@@ -8,16 +8,16 @@
 	<script src="js/util.js"></script>
 	<script src="js/md5.js"></script>
 	<script type="text/javascript">
-    	 /* 	 
-     	setCookie('uid', '13703452740');
+    		 
+/*       setCookie('uid', '13703452740');
 	     var password = MD5('13703452740');
-	     setCookie('sdktoken', password);   */ 
+	     setCookie('sdktoken', password);    */
 	    // window.location.href = './main.html'; 
      
 		window.onload=function(){
 			function login(){
 				//测试界面频繁刷新的原因是因为下面的没有注释
-				window.deleteCookie();  
+				 window.deleteCookie();  
 				$.ajax({
 			        type: "post",
 			        url: "../yx/login.do",

@@ -870,7 +870,7 @@ fn.onBeCalling = function (obj, scene) {
     }.bind(this), 62 * 1000)
     //p2p场景
     this.beCalledInfo = obj;
-    /*this.beCalledInfo.custom='{"id":"706",\"latitude\":26.056487,\"longitude\":119.336294,"address":"上海市"}';
+   /* this.beCalledInfo.custom='{"id":"706",\"latitude\":26.056487,\"longitude\":119.336294,"address":"上海市"}';
     obj.custom='{"id":"706",\"latitude\":26.056487,\"longitude\":119.336294,"address":"上海市"}';*/
     this.netcallActive = true;
     this.netcallAccount = obj.account;//即帐号

@@ -1,7 +1,6 @@
 package com.controller.erp_icbc.YunXin;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -11,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,9 +37,6 @@ import com.controller.erp_icbc.utils.PageInfo;
 import com.controller.htpdf.DataConversionParent;
 import com.controller.htpdf.DoubleUtil;
 import com.service1.erp_icbc.YXService;
-import com.util.creditutil;
-import com.util.duoying.MD5;
-import Decoder.BASE64Decoder;
 /**
  * @Description:TODO
  * @author:LiWang
@@ -101,9 +96,9 @@ public class YunXinController extends BaseController{
 		//通用的直接赋值吧
 		map.put("addadmin","121");//pdsession.get("id").toString();//获得当前登录用户的主键
 		map.put("editadmin","121");//修改人
-		map.put("addtime",creditutil.time());//新建时间
-		map.put("editime",creditutil.time());//最后编辑时间
-		map.put("sub",creditutil.time());//提交时间
+		map.put("addtime",super.getTime());//新建时间
+		map.put("editime",super.getTime());//最后编辑时间
+		map.put("sub",super.getTime());//提交时间
 		map.put("icbcid",icbcid);
 		map.put("typeid", 6);
 		if(auditstatus.equals("1")){//如果审核通过
@@ -184,6 +179,16 @@ public class YunXinController extends BaseController{
 			log.info("添加小状态icbc_erp_kj_icbc_result表->insert"+i);
 		}*/
 		JSONObject custom = JSONObject.parseObject(customvalue);
+		
+		String additional=custom.getString("id");
+		String[] ss=additional.split("-");
+		custom.put("extId", ss[0]);
+		if(ss.length>1) {
+			custom.put("appMark", ss[1]);
+		}else {
+			custom.put("appMark",RootStatic.appMark);
+		}
+	
 		if(yx.select_infocopy(channel)==null){
 			custom.put("channel", channel);
 			//添加
@@ -211,6 +216,7 @@ public class YunXinController extends BaseController{
 			if(!EmptyUtil.isEmpty(bank)) {//是面签账号
 				Map map=new HashMap();
 				map.put("bank", bank);
+				map.put("appMark", RootStatic.appMark);
 				//查询条件
 				if(!EmptyUtil.isEmpty(name)){//姓名
 					map.put("name", "%"+name+"%");
@@ -245,9 +251,9 @@ public class YunXinController extends BaseController{
 				PageInfo pageinfo=new PageInfo();
 				pageinfo.setFrom(offset);
 				pageinfo.setSize(pagesize);
-				if(map.size()>0){
-					pageinfo.setCondition(map);
-				}	
+		
+				pageinfo.setCondition(map);
+					
 				log.info("分页条件->"+JSON.toJSONString(pageinfo));
 				pageinfo.setRows(yx.select_operating(pageinfo));//数据
 				pageinfo.setTotal(yx.select_operating_count(pageinfo));//总条数
@@ -351,7 +357,7 @@ public class YunXinController extends BaseController{
 	 */
 	@RequestMapping(value="callback.do")
 	@ResponseBody
-	public void callBack(HttpServletRequest request){
+	public Object callBack(HttpServletRequest request){
 			String body="";
 			try {
 				body = readBody(request);
@@ -360,14 +366,41 @@ public class YunXinController extends BaseController{
 	    		//字符串处理
 	    		body=body.replaceAll("\\\\", "").replaceAll("\"\\{","{").replaceAll("\\}\"","}").replaceAll("\"\\[\\{", "[{").replaceAll("\\}\\]\"", "}]");
 	    		JSONObject map = JSONObject.parseObject(body);
+	    		String id=map.getJSONObject("user_defined").getString("id");
+	    		String[] ss=id.split("-");
+	    		map.put("ext",ss[0]);
+	    		if(ss.length>1) {//说明为其他平台的
+	    			map.put("appMark", ss[1]);
+	    			if(RootStatic.appMark.equals("0")) {
+	    				/*查询对应的访问地址*/
+		    			String recordingRrl=yx.selectRecordingRrl(ss[1]);
+		    			String s=HttpYX.doPost(recordingRrl, body);
+		    			log.info("跨平台录制抄送结果:"+s);
+		    			if(!JSONObject.parseObject(s).getBooleanValue("success")) {
+		    				throw new RuntimeException("跨平台抄送失败，返回"+s);
+		    			}else {
+		    				return renderError("跨平台录制抄送成功");
+		    			}
+	    			}
+	    		}else {
+	    			map.put("appMark", RootStatic.appMark);
+	    		}
 				//自定义通道id 这里与前端的操作关联使用通道id 也可以使用书主键id
-	    		map.put("channelid",MD5.sign(UUID.randomUUID().toString().replace("-", "").toLowerCase(),"utf-8"));
+	    		String channelid=super.getRandomMark();
+	    		log.info("channelid"+channelid);
+	    		map.put("channelid",channelid);
 	    		map.put("viedotype", 0);
 	    		map.put("te", redundant.toString());
 				int i=yx.addcallback(map);
 				log.info("上传成功添加->"+i);
+				if(i>0) {
+					return renderSuccess();
+				}else {
+					return renderError("保存失败");
+				}
 			} catch (Exception e) {
 				yx.insert_M(body+"----error:"+getErrorInfoFromException(e));//如果错误直接保存
+				return renderError("异常");
 			}
 	}
 	@RequestMapping(value="selectvideo.do")
@@ -438,7 +471,7 @@ public class YunXinController extends BaseController{
 				String obj=HttpYX.doPost(YXConstant.InitUpload,jsonobject.toJSONString());
 				Map map=new HashMap<>();
 				map.put("icbcId", id);
-				map.put("dataTime",creditutil.time());
+				map.put("dataTime",super.getTime());
 				map.put("result", obj);
 				map.put("describe","文件上传初始化");
 				int i=yx.addOccupyTest(map);
@@ -467,7 +500,7 @@ public class YunXinController extends BaseController{
 	@ResponseBody
 	//遇到问题:上传图片base64 SringMVC+Tomcat 报错 Request header is too large 
 	public Object addPrintscreenImg(MultipartFile file,HttpServletRequest request,String icbcId,String channelId){
-		String fileName=MD5.sign(UUID.randomUUID().toString().replace("-", "").toLowerCase(),"utf-8")+".png";
+		String fileName=super.getRandomMark()+".png";
 		String savepdfpath="upload/"+new SimpleDateFormat("yyyy/MM/dd/").format(new Date());
 		String roorSavePath=RootStatic.root_Directory+savepdfpath;
 		boolean b=super.uploadServer(file,roorSavePath, fileName);
@@ -476,7 +509,8 @@ public class YunXinController extends BaseController{
 			Map map=super.AddBoToMap(request);
 			String dataStorePath=savepdfpath+fileName;
 			map.put("path", dataStorePath);
-			map.put("icbcId", icbcId);
+			String[] ss=icbcId.split("-");
+			map.put("icbcId", ss[0]);
 			map.put("channelId", channelId);
 			int i=yx.addVideoScreenshot(map);
 			if(i>0) {
@@ -513,7 +547,7 @@ public class YunXinController extends BaseController{
 	@ResponseBody
 	public Object createAccount(String accid,HttpServletRequest request){
 		if(EmptyUtil.isEmpty(accid)){
-			accid=MD5.sign(UUID.randomUUID().toString().replace("-", "").toLowerCase(),"utf-8");
+			accid=super.getRandomMark();
 		}
 		Result result=tokenDispose(HttpYX.geMobileUpload(accid),"1");
 		log.info("创建移动上传账户接口返回->"+result);
@@ -566,7 +600,7 @@ public class YunXinController extends BaseController{
 			}
 			
 			//申请账号
-			Result result1=tokenDispose(HttpYX.getToken(MD5.sign(UUID.randomUUID().toString().replace("-", "").toLowerCase(),"utf-8")),"0");
+			Result result1=tokenDispose(HttpYX.getToken(super.getRandomMark()),"0");
 			log.info("创建点对点视频账户接口返回->"+result1);
 			if(result1.isSuccess()){
 				Map map1=((Map) result1.getData());
@@ -580,7 +614,7 @@ public class YunXinController extends BaseController{
 				map1.put("mid_edit", super.getUserId(request));
 				int i1=yx.add_YX_account(map1);//保存 
 				if(i1==1){
-					Result result2=tokenDispose(HttpYX.getToken(MD5.sign(UUID.randomUUID().toString().replace("-", "").toLowerCase(),"utf-8")),"0");
+					Result result2=tokenDispose(HttpYX.getToken(super.getRandomMark()),"0");
 					log.info("创建点对点视频账户接口返回->"+result2);
 					if(result2.isSuccess()){
 						Map map2=((Map) result2.getData());
@@ -685,7 +719,7 @@ public class YunXinController extends BaseController{
 		}
 		Map map=new HashMap<>();
 		map.put("icbcId", id);
-		map.put("dataTime",creditutil.time());
+		map.put("dataTime",super.getTime());
 		map.put("result", JSON.toJSONString(scanPool1));
 		map.put("describe","获取视频通话账号");
 		int i=yx.addOccupyTest(map);
@@ -801,7 +835,7 @@ public class YunXinController extends BaseController{
 		Map map=new HashMap<>();
 		Object object=list.get(n);
 		map.put("icbcId", id);
-		map.put("dataTime",creditutil.time());
+		map.put("dataTime",super.getTime());
 		map.put("result", JSON.toJSONString(object));
 		map.put("describe", "获取随机上传账号");
 		int i=yx.addOccupyTest(map);
@@ -828,35 +862,81 @@ public class YunXinController extends BaseController{
         try {
             // 获取请求体
         	body = readBody(request);
+        	Object redundant=body;
             log.info("信息抄送原->"+body);
             body=body.replaceAll("\\\\", "");// 去掉\\
             if (EmptyUtil.isEmpty(body)) {//如果为null 或者空字符
                 result.put("code", 414);
                 return result;
             }else{
-	    		StringBuilder redundant=new StringBuilder(body.replaceAll("(\\})|(\\{)|(\\[)|(\\])", ""));//抄送的完整信息
+	    		//StringBuilder redundant=new StringBuilder(body.replaceAll("(\\})|(\\{)|(\\[)|(\\])", ""));//抄送的完整信息
 	    		//字符串处理
 	    		body=body.replaceAll("\"\\{","{").replaceAll("\\}\"","}").replaceAll("\"\\[\\{", "[{").replaceAll("\\}\\]\"", "}]");
 	    		 map = JSONObject.parseObject(body);
 	    		log.info("信息抄送处理JSON->"+map.toJSONString());
 	    		map.put("viedotype", "1");//设置视频的类型
 	    		String eventType = map.get("eventType").toString();
-	    		String id_=null;
+	    		Object id_=null;//主键
+	    		String appMark=null;//app标识
 	    			//{"channelId":"6265490045067594274","createtime":"1458798080073","duration":"22","eventType":"5","live":"1","members":"[{\"accid\":\"789\",\"duration\":11},{\"accid\":\"123456\",\"caller\":true,\"duration\":11}]","status":"SUCCESS","type":"VEDIO"}
 	    			if(eventType.equals("5")){//表示AUDIO/VEDIO/DataTunnel消息，即汇报实时音视频通话时长、白板事件时长的消息
 	    				log.info("时长信息start");
 	    				//JSONArray members  =JSONArray.parseArray(map.getString("members").toString().replaceAll("(^\"*)|(\"*$)","")); //获得字符串 去掉收尾的"号 再转换为jsonarray
-	    				id_ = yx.select_infocopy(map.get("channelId").toString());//获取通道id
+	    		
 	    				JSONArray members=map.getJSONArray("members");
+	    				String additional=map.getJSONObject("ext").getString("id");
+	    				String[] ss=additional.split("-");
+	    				map.put("extId", ss[0]);//icbcId
+	    				if(ss.length>1) {//因为最初的快进所app传递的为icbcId，后续其他app传递为icbcId-标识,所以这里加一层>1
+	    					appMark=ss[1];
+	    					map.put("appMark", appMark);
+	    					if(!appMark.equals(RootStatic.appMark)) {//不是自己的平台的
+	    						if(RootStatic.appMark.equals("0")) {//我是分发总平台 
+				    				/*查询对应的挂平台实时视频相关信息 抄送访问地址*/
+					    			String realtimeUrl=yx.selectRealtimeUrl(appMark);
+					    			String s=HttpYX.doPost(realtimeUrl, body);
+					    			log.info("跨平台时长信息抄送结果:"+s);
+					    			if(!JSONObject.parseObject(s).getBooleanValue("success")) {
+					    				throw new RuntimeException("跨平台时长信息抄送失败，返回"+s);
+					    			}else {
+					    				 Map map5 = yx.select_infocopy(map.get("channelId").toString());//获取通道id
+					    				 if(map5!=null) {
+					    					 id_=map5.get("id");
+					    				 }
+					    				 if(id_!=null) {//已经收到了下载信息抄送  抄送一下载信息   					 
+					    					String s1=HttpYX.doPost(realtimeUrl, map5.get("downloadInfo").toString());
+					    					log.info("跨平台下载信息抄送结果:"+s1);
+					    					 //抄送下载信息成功
+					    					if(!JSONObject.parseObject(s1).getBooleanValue("success")) {
+							    				throw new RuntimeException("跨平台下载信息抄送失败，返回"+s1);
+					    					}else {
+					    						//删除脏数据
+						    					 int deleteCount= yx.deleteViedoInfoById(id_.toString());
+						    					 log.info("删除脏数据->id:"+id_.toString()+",deleteCount:"+(deleteCount==0?"删除失败":"删除成功"));
+						    					 result.put("code", 200);
+									    	     return result;
+					    					} 
+					    				 }//继续下面的操作，然后脏数据放在收到下载信息抄送的时候清理
+					    			}
+				    			}
+	    					}	
+	    				}else {
+	    					map.put("appMark",RootStatic.appMark);
+	    					Map map5 = yx.select_infocopy(map.getString("channelId"));//获取通道id
+		    				if(map5!=null) {
+		    					id_=map5.get("id");
+		    				}
+	    				}
+	    				
 	    				map.put("duration_time",redundant.toString());//完整的通话时长抄送
 	    				 for(int i=0;i<members.size();i++){//确定出发起者和接收者
 	    					JSONObject members2=members.getJSONObject(i);
 	    					//如果是通话的发起者的话，caller字段为true,否则无caller字段;         
 	    					if(members2.toString().indexOf("caller")==-1){//如果是通话的发起者的话，caller字段为true，否则无caller字段；duration表示对应accid用户的单方时长
-	    						String uid=yx.selectUidByAccid(members2.getString("accid"));
-	    						log.info("根据accid查询uid->accid:"+members2.getString("accid")+",uid:"+uid);
+	    						/*String uid=yx.selectUidByAccid(members2.getString("accid"));
+	    						log.info("根据accid查询uid->accid:"+members2.getString("accid")+",uid:"+uid);*/
 	    						map.put("createtime", DataUtil.millisecondTodate(Long.parseLong(map.getString("createtime").toString())));
-	    						map.put("faccid",uid);//改成接受
+	    						map.put("faccid",members2.getString("accid"));//改成接受
 	    						if(id_!=null){//存在根据channeid更新 
 	            					 int count=yx.update_infocopy_durationM(map);
 	            					 log.info("更新通话时长消息->"+count);
@@ -878,14 +958,34 @@ public class YunXinController extends BaseController{
 	    						boolean b=fileinfo2.getBooleanValue("mix");//mix：是否为混合录制文件，true：混合录制文件；false：单人录制文件
 	    						url=fileinfo2.getString("url");
 	    						if(b && url.indexOf("mp4")!=-1){//mix：是否为混合录制文件，true：混合录制文件；false：单人录制文件 并且为mp4格式
-	    							id_ = yx.select_infocopy(fileinfo2.getString("channelid"));//判断是否存在通道id
+	    							Map map5 = yx.select_infocopy(fileinfo2.get("channelid").toString());
+	    							if(map5!=null) {
+	    								id_=map5.get("id");
+	    								appMark=map5.get("appMark").toString();
+	    							}
 	    							map.put("fi", fileinfo2);//这里解决同一次抄送，可能会抄给你不同channel ID 的信息的
-	    							map.put("url", fileinfo2.get("url"));
-	    							map.put("vid", fileinfo2.get("vid"));
-	    							 if(id_!=null){//存在 修改
+	    							 if(id_!=null){//已经收到了抄送，这个抄送可能是别的平台通话时长的 和自己平台的通话时长信息、挂断后提交的
+	    								 if(!appMark.equals(RootStatic.appMark)) {//不是当前的平台
+	    									 if(RootStatic.appMark.equals("0")) {//我是分发总平台 
+	    										 String realtimeUrl=yx.selectRealtimeUrl(appMark);
+	    										 String s1=HttpYX.doPost(realtimeUrl, body);
+	 					    					log.info("跨平台下载信息抄送结果:"+s1);
+	 					    					 //抄送下载信息成功
+	 					    					if(!JSONObject.parseObject(s1).getBooleanValue("success")) {
+	 							    				throw new RuntimeException("跨平台下载信息抄送失败，返回"+s1);
+	 					    					}else {
+	 					    						//删除脏数据
+	 						    					 int deleteCount= yx.deleteViedoInfoById(id_.toString());
+	 						    					 log.info("删除脏数据->id:"+id_.toString()+",deleteCount:"+(deleteCount==0?"删除失败":"删除成功"));
+	 						    					 result.put("code", 200);
+	 									    	     return result;
+	 					    					} 
+		    								 }
+	    								 }
 	    								 map.put("id11", id_);
 	    								 int i=yx.update_infocopy_downloadM(map);
 	    								 log.info("更新下载地址信息->"+i);
+ 	    								 
 	    							 }else{//不存在则添加
 	    								map.put("channelid", fileinfo2.get("channelid"));
 	    								 int i=yx.insert_infocopy_downloadM(map);
@@ -899,11 +999,7 @@ public class YunXinController extends BaseController{
             result.put("code", 200);
             return result;
         } catch (Exception ex) {
-			String map1="";
-			if(map!=null){
-				map1=JSON.toJSONString(map);
-			}
-        	yx.insert_M(body+",map:"+map1+"----error:"+getErrorInfoFromException(ex));//如果错误直接保存
+        	yx.insert_M(body+"，----error:"+getErrorInfoFromException(ex));//如果错误直接保存
             result.put("code",414);
             return result;
         }
@@ -951,10 +1047,10 @@ public class YunXinController extends BaseController{
     		//删除云端的视频
         	String[] s=url.split("/");
         	try {
-        		map__1.put(id,creditutil.time());
+        		map__1.put(id,super.getTime());
         		String last=s[s.length-1];
         		log.info("原视频文件名->"+last);
-        		String scen="upload/mp4/"+DataUtil.splicingPath;
+        		String scen="upload/mp4/"+new SimpleDateFormat("yyyy/MM/dd/").format(new Date());
         		String download_path=RootStatic.root_Directory+scen;
         		String play_path=RootStatic.download_prefix+scen+last;
         		log.info("视频播放地址->"+play_path);
