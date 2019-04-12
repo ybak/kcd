@@ -2,6 +2,7 @@ package com.controller.erp_icbc.loanAfter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.model1.icbc.erp.PageData;
 import com.service1.Repayment.OverdueService;
 import com.service1.loan.ClientPaymentService;
@@ -45,6 +48,7 @@ public class LoanPhoneController {
 			HttpServletRequest request){
 		//获取当前操作人信息
 		PageData pdsession= (PageData)request.getSession().getAttribute("pd");
+		System.out.println("denglu:"+pdsession);
 		List<PageData> newpdList=new ArrayList<>();
 		PageData pd=new PageData();
 		pd.put("param",param);
@@ -92,6 +96,7 @@ public class LoanPhoneController {
 			HttpServletRequest request){
 		//获取当前操作人信息
 		PageData pdsession= (PageData)request.getSession().getAttribute("pd");
+		
 		List<PageData> newpdList=new ArrayList<>();
 		PageData pd=new PageData();
 		pd.put("id",id);
@@ -101,6 +106,17 @@ public class LoanPhoneController {
 		List<PageData> paySchedule = clientPaymentService.selectPaySchedule(CCL.get("icbc_id").toString());
 		//查询操作记录
 		List<PageData> results = loanOverdueService.selectResults(pd);
+		//在拖车完成中显示已受理页面上传的入库时间、地址、影像
+		Map<String, Object> coolMap = loanOverdueService.selectCool(id);
+		Map<String, Object> maps = null;
+		if(coolMap != null){
+			// String 转 JSONObject 
+			JSONObject json = (JSONObject) JSON.parse(coolMap.get("result_value").toString()); 
+			System.err.println("---------------:"+json.get("result_msg"));
+			maps = (Map<String, Object>)json; 
+			
+		}
+		
 		//查询此条逾期名单  用于添加操作记录时使用 type_id、type_status等信息
 		PageData pdOne = loanOverdueService.selectOverdueOne(pd);
 		request.setAttribute("dn", dn);
@@ -111,11 +127,27 @@ public class LoanPhoneController {
 		request.setAttribute("paySchedule",paySchedule);
 		request.setAttribute("results",results);
 		request.setAttribute("pdOne",pdOne);
+		request.setAttribute("maps", maps);
+		//展示配置信息
+		PageData pp = new PageData();
+		pd.put("gems_fs_id",pdsession.get("icbc_erp_fsid"));
+		PageData getConfig = loanOverdueService.selectConfig(pd);
+		request.setAttribute("getConfig",getConfig);
 		return "kjs_icbc/index";
 	}
 	
 	
 	
+	private Map<String, Object> getMapToString(String vv) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private Map getStringToMap(String vv) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	//申请拖车或者申请诉讼
 	@RequestMapping("/updatePhoneStatusToCarOrLitigation.do")
 	@ResponseBody

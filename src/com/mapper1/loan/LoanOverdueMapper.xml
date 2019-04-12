@@ -10,7 +10,7 @@ select
 	gems.name gems_name
 from 
     loan_overdue_list_result lolr
-LEFT JOIN assess_gems gems ON gems.id=lolr.mid_edit
+LEFT JOIN assess_admin gems ON gems.id=lolr.mid_edit
 where 1=1 and lolr.qryid=#{id}
 </select>    
 
@@ -227,5 +227,15 @@ sysdate(),
 #{icbc_id}
 )	    	
 </insert>
+
+<!-- 在拖车完成中显示已受理页面上传的入库时间、地址、影像 -->
+<select id="selectCool" parameterType="integer" resultType="map">
+	select 
+		lolr.result_value 
+	from 
+		loan_overdue_list lol 
+		LEFT JOIN loan_overdue_list_result lolr on lol.id=lolr.qryid 
+	where 1=1 and lol.id=#{lol_id} and lolr.type_status=32
+</select>
 
 </mapper>
