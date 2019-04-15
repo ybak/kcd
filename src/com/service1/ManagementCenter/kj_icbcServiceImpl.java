@@ -18,6 +18,18 @@ public class kj_icbcServiceImpl implements kj_icbcService{
 
 	@Resource
 	private assess_fsMapper assess_fsmapper;
+	
+	//查询省份
+	@Override
+	public List<HashMap> SelectCity(){
+		return assess_fsmapper.selectcity();
+	} 
+	
+	//查询代理商
+	@Override
+	public String SelectGemsId(assess_fs ass_fs){
+		return assess_fsmapper.selectgemsid(ass_fs);
+	}
 	            
 	//每月报单总量
 	@Override

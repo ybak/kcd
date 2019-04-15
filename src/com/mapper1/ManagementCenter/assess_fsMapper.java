@@ -7,6 +7,12 @@ import com.model1.ManagementCenter.assess_fs;
 
 public interface assess_fsMapper {
 	
+	//查询省份
+	public List<HashMap> selectcity(); 
+	
+	//查询代理商
+	public String selectgemsid(assess_fs ass_fs); 
+	
 	//每月总订单各代理商排名
 	public List<HashMap> selectgems(assess_fs ass_fs); 
 	

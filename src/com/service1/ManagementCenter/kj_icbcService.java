@@ -7,6 +7,13 @@ import com.model1.ManagementCenter.assess_fs;
 import com.model1.ManagementCenter.kj_icbc;
 
 public interface kj_icbcService {
+	
+	//查询省份
+	public List<HashMap> SelectCity(); 
+	
+	//查询代理商
+	public String SelectGemsId(assess_fs ass_fs); 
+	
 	//每月报单总量
 	public List<HashMap> SelectBill(assess_fs ass_fs);
 	

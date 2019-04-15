@@ -1,6 +1,8 @@
 package com.controller.ManagementCenter.Management;
 
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,8 +24,19 @@ import com.service1.ManagementCenter.kj_icbcService;
 public class Management {
 	@Autowired
 	private kj_icbcService kj_icbcService;
-
+	private String gems;
 	assess_fs assess_fs = new assess_fs();
+	
+	//查询代理商ID
+    private String SelectGems(String gems){
+        String s;
+        assess_fs.setGems(gems);
+        s = kj_icbcService.SelectGemsId(assess_fs);//数据库查询操作
+        if(s == null || s == ""){
+            s="0";
+        }
+        return s;
+    }
 
 	// 前台数据后台获取
 	public void management(HttpServletRequest request) {
@@ -103,6 +116,24 @@ public class Management {
 				cardpassgems.get(i).put("name", " ");
 			}
 		}
+		
+		List<HashMap> comm_city=kj_icbcService.SelectCity();
+		request.setAttribute("comm_city",comm_city );//省份列表
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int formatDate = Integer.parseInt(sdf.format(date));
+        int[] years=new int[5];
+        for(int i=0;i<5;i++){
+            years[i]=formatDate-i;
+        }
+        request.setAttribute("years",years );//年份列表
+
+        String[] count = new String[10];
+        for(int i=0;i<10;i++){
+            count[i]=i+"";
+        }
+        request.setAttribute("count",count );
 
 		request.setAttribute("billlist", kj_icbcService.SelectBill(assess_fs));// 每月报单总量
 																				// 0
@@ -126,7 +157,7 @@ public class Management {
 	@RequestMapping("erp/Management/getPathMap.do")
 	@ResponseBody
 	public String getPathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String baodanname,String baodancity,String baodantime) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -135,6 +166,23 @@ public class Management {
 					.toString()));
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			if(!baodanname.equals("请输入代理商") && !baodanname.equals("")) {
+				gems=SelectGems(baodanname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+	        if(!baodancity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(baodancity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        //判断是否选择时间
+	        if(!baodantime.equals("0")){
+	        	assess_fs.setTimedate(Integer.parseInt(baodantime));
+	        }else{
+	        	assess_fs.setTimedate(0);
+			}
 			List<HashMap> chart = kj_icbcService.SelectChart(assess_fs);// 后台获取查询数据
 			Object[][] Ochart = new Object[2][9];
 			if (chart.size() < 9) {
@@ -172,7 +220,7 @@ public class Management {
 	@RequestMapping("erp/Management/getCarPathMap.do")
 	@ResponseBody
 	public String getCarPathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String guojianname,String guojiancity,String guojiantime) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -181,6 +229,23 @@ public class Management {
 					.toString()));
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			if(!guojianname.equals("请输入代理商") && !guojianname.equals("")) {
+				gems=SelectGems(guojianname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+	        if(!guojiancity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(guojiancity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        //判断是否选择时间
+	        if(!guojiantime.equals("0")){
+	        	assess_fs.setTimedate(Integer.parseInt(guojiantime));
+	        }else{
+	        	assess_fs.setTimedate(0);
+			}
 			List<HashMap> chart = kj_icbcService.SelectCarChart(assess_fs);// 后台获取查询数据
 			Object[][] Ochart = new Object[2][9];
 			if (chart.size() < 9) {
@@ -218,7 +283,7 @@ public class Management {
 	@RequestMapping("erp/Management/getCarFkPathMap.do")
 	@ResponseBody
 	public String getCarFkPathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String fangkuanname,String fangkuancity,String fangkuantime) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -227,6 +292,23 @@ public class Management {
 					.toString()));
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			if(!fangkuanname.equals("请输入代理商") && !fangkuanname.equals("")) {
+				gems=SelectGems(fangkuanname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+	        if(!fangkuancity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(fangkuancity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        //判断是否选择时间
+	        if(!fangkuantime.equals("0")){
+	        	assess_fs.setTimedate(Integer.parseInt(fangkuantime));
+	        }else{
+	        	assess_fs.setTimedate(0);
+			}
 			List<HashMap> chart = kj_icbcService.SelectCarFk(assess_fs);// 后台获取查询数据
 			String[] s = new String[2];
 			if (chart.size() < 2) {
@@ -265,7 +347,7 @@ public class Management {
 	@RequestMapping("erp/Management/getMoneyPathMap.do")
 	@ResponseBody
 	public String getMoneyPathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String fangkuanname,String fangkuancity,String fangkuantime) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -274,6 +356,23 @@ public class Management {
 					.toString()));
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			if(!fangkuanname.equals("请输入代理商") && !fangkuanname.equals("")) {
+				gems=SelectGems(fangkuanname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+	        if(!fangkuancity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(fangkuancity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        //判断是否选择时间
+	        if(!fangkuantime.equals("0")){
+	        	assess_fs.setTimedate(Integer.parseInt(fangkuantime));
+	        }else{
+	        	assess_fs.setTimedate(0);
+			}
 			List<HashMap> chart = kj_icbcService
 					.SelectMoneyDistribute(assess_fs);// 后台获取查询数据
 			String[] s = new String[4];
@@ -307,7 +406,7 @@ public class Management {
 	@RequestMapping("erp/Management/getPawnPathMap.do")
 	@ResponseBody
 	public String getPawnPathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String diyaname,String diyacity,String diyatime) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -316,6 +415,23 @@ public class Management {
 					.toString()));// Integer.parseInt(pdLoginSession.get("fs_id").toString())
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			if(!diyaname.equals("请输入代理商") && !diyaname.equals("")) {
+				gems=SelectGems(diyaname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+	        if(!diyacity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(diyacity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        //判断是否选择时间
+	        if(!diyatime.equals("0")){
+	        	assess_fs.setTimedate(Integer.parseInt(diyatime));
+	        }else{
+	        	assess_fs.setTimedate(0);
+			}
 			List<HashMap> chart = kj_icbcService.SelectResult(assess_fs);// 后台获取查询数据
 
 			String[] s = new String[5];
@@ -349,7 +465,7 @@ public class Management {
 	@RequestMapping("erp/Management/getCreditPathMap.do")
 	@ResponseBody
 	public String getCreditPathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String zhengxinname,String zhengxincity,String zhengxintime) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -358,6 +474,23 @@ public class Management {
 					.toString()));
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			if(!zhengxinname.equals("请输入代理商") && !zhengxinname.equals("")) {
+				gems=SelectGems(zhengxinname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+	        if(!zhengxincity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(zhengxincity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        //判断是否选择时间
+	        if(!zhengxintime.equals("0")){
+	        	assess_fs.setTimedate(Integer.parseInt(zhengxintime));
+	        }else{
+	        	assess_fs.setTimedate(0);
+			}
 			List<HashMap> credit = kj_icbcService.SelectCredit(assess_fs);// 后台获取查询数据
 			String[] s = new String[2];
 			if (credit.size() < 2) {
@@ -479,7 +612,7 @@ public class Management {
 	@RequestMapping("erp/Management/getAdvanceFundPathMap.do")
 	@ResponseBody
 	public String getAdvanceFundPathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String dianzicity) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -488,6 +621,11 @@ public class Management {
 					.toString()));
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			 if(!dianzicity.equals("0")){
+		        	assess_fs.setCity_id(Integer.parseInt(dianzicity));
+		        }else{
+		        	assess_fs.setCity_id(0);
+				}
 			List<HashMap> fund = kj_icbcService.SelectAdvanceFund(assess_fs);// 后台获取查询数据
 			Object[][] Ofund = new Object[2][12];
 			if (fund.size() < 12) {
@@ -527,7 +665,7 @@ public class Management {
 	@RequestMapping("erp/Management/getRecyclePathMap.do")
 	@ResponseBody
 	public String getRecyclePathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String cailiaoname,String cailiaocity,String cailiaotime) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -536,6 +674,23 @@ public class Management {
 					.toString()));// Integer.parseInt(pdLoginSession.get("fs_id").toString())
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			if(!cailiaoname.equals("请输入代理商") && !cailiaoname.equals("")) {
+				gems=SelectGems(cailiaoname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+	        if(!cailiaocity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(cailiaocity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        //判断是否选择时间
+	        if(!cailiaotime.equals("0")){
+	        	assess_fs.setTimedate(Integer.parseInt(cailiaotime));
+	        }else{
+	        	assess_fs.setTimedate(0);
+			}
 			List<HashMap> fund = kj_icbcService.SelectRecycle(assess_fs);// 后台获取查询数据
 			Object[][] Ofund = new Object[2][9];
 			if (fund.size() < 9) {
@@ -574,7 +729,7 @@ public class Management {
 	@RequestMapping("erp/Management/getNewOldCarsPathMap.do")
 	@ResponseBody
 	public String getNewOldCarsPathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String fangkuanname,String fangkuancity,String fangkuantime) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -583,6 +738,23 @@ public class Management {
 					.toString()));
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			if(!fangkuanname.equals("请输入代理商") && !fangkuanname.equals("")) {
+				gems=SelectGems(fangkuanname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+	        if(!fangkuancity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(fangkuancity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        //判断是否选择时间
+	        if(!fangkuantime.equals("0")){
+	        	assess_fs.setTimedate(Integer.parseInt(fangkuantime));
+	        }else{
+	        	assess_fs.setTimedate(0);
+			}
 			List<HashMap> newcars = kj_icbcService.SelectNewCars(assess_fs);// 后台获取查询数据
 			Object[][] Ofund = new Object[5][12];
 			if (newcars.size() < 12) {

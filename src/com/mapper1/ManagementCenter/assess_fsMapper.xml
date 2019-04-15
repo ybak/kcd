@@ -3,6 +3,15 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mapper1.ManagementCenter.assess_fsMapper" >
 
+<!-- 查询省份 -->
+ <select id="selectcity"  resultType="java.util.Map">
+ select id,name from comm_states
+ </select>
+<!--  查询代理商 -->
+ <select id="selectgemsid"  parameterType="assess_fs" resultType="String">
+ select id from assess_fs where name='${gems}'
+ </select>
+
   <!-- 每月总订单各代理商排名 -->
  <select id="selectgems"  parameterType="assess_fs" resultType="java.util.Map">
      select count(ki.gems_fs_id) gems,af.`name` name 
@@ -72,7 +81,7 @@
  </select>
 
  
-  <!-- 每月已放款未抵押单数，总金额            未完成-->
+  <!-- 每月已放款未抵押单数，总金额           -->
   <select id="selectfk" parameterType="assess_fs" resultType="java.util.Map" >
   	select count(icbc_id) amount,sum(fk_money) money from icbc_erp_kj_icbc_result  
 	where icbc_id in(select icbc_id from kj_icbc ki,icbc_erp_kj_icbc_result iekir 
@@ -80,7 +89,7 @@
  	and YEAR(iekir.fk_date)=year(SYSDATE()) 
  	and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
  	and iekir.`status` >= 72 
- 	and iekir.`status` &lt; 80  
+ 	and iekir.`status` &lt; 82  
  	and ki.id=iekir.icbc_id 
 	group by icbc_id) and `status`=62 and result_1_code=1 
  </select>
@@ -120,8 +129,19 @@
  <select id="selectchart"  parameterType="assess_fs" resultType="java.util.Map">
   	select year(dt_add) year,month(dt_add) month,count(*) total 
   	from kj_icbc 
-  	where year(SYSDATE())-year(dt_add) &lt; 2 
+  	where year(SYSDATE())-year(dt_add) &lt; 6 
   	and gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
+  	<if test="gems_id != -1">
+  	and	gems_fs_id=${gems_id}
+  	</if>
+  	<if test="city_id != 0">
+  	and id in(select icbc_id from kjs_icbc_kk 
+  		   where year(SYSDATE())-year(dt_add) &lt; 6 
+  		   and kk_loan_stateid=${city_id})
+  	</if>
+  	<if test="timedate != 0">
+  	and year(dt_add)=${timedate}
+  	</if>
   	GROUP BY year(dt_add),month(dt_add) 
   	ORDER BY dt_add DESC limit 9
   </select>
@@ -137,6 +157,17 @@
 		   and iekir.status = 62 
 		   and iekir.result_1_code=1  
 		   and iekir.icbc_id=ki.id 
+		   <if test="gems_id != -1">
+		  	and	ki.gems_fs_id=${gems_id}
+		  	</if>
+		  	<if test="city_id != 0">
+		  	and ki.id in(select icbc_id from kjs_icbc_kk 
+		  		   where year(SYSDATE())-year(dt_add) &lt; 6 
+		  		   and kk_loan_stateid=${city_id})
+		  	</if>
+		  	<if test="timedate != 0">
+		  	and year(ki.dt_add)=${timedate}
+		  	</if> 
 		   and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
   </select>
   <!-- 征信通过率查询    ok-->
@@ -144,7 +175,18 @@
   		select count(iekir.result_1_code) zxok,iekir.result_1_code zxok_tag 
   		from icbc_erp_kj_icbc_result iekir,kj_icbc ki 
   		where iekir.`status`=3 
-  		and ki.id=iekir.icbc_id 
+  		and ki.id=iekir.icbc_id
+  			<if test="gems_id != -1">
+		  	and	ki.gems_fs_id=${gems_id}
+		  	</if>
+		  	<if test="city_id != 0">
+		  	and ki.id in(select icbc_id from kjs_icbc_kk 
+		  		   where year(SYSDATE())-year(dt_add) &lt; 6 
+		  		   and kk_loan_stateid=${city_id})
+		  	</if>
+		  	<if test="timedate != 0">
+		  	and year(ki.dt_add)=${timedate}
+		  	</if>  
   		and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
   		GROUP BY iekir.result_1_code 
   		ORDER BY iekir.result_1_code LIMIT 0,2
@@ -180,26 +222,47 @@
   			where iekir.`status`=52 
   			and iekir.result_1_code=1 
   			and ki.id=iekir.icbc_id 
+  			<if test="city_id != 0">
+		  	and ki.id in(select icbc_id from kjs_icbc_kk 
+		  		   where year(SYSDATE())-year(dt_add) &lt; 6 
+		  		   and kk_loan_stateid=${city_id})
+		  	</if>
   			and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) ) dz_date,
   		(select iekir.icbc_id,iekir.fk_date 
   			from icbc_erp_kj_icbc_result iekir,kj_icbc ki 
   			where iekir.`status`=62 
   			and iekir.result_1_code=1 
   			and ki.id=iekir.icbc_id 
+  			<if test="city_id != 0">
+		  	and ki.id in(select icbc_id from kjs_icbc_kk 
+		  		   where year(SYSDATE())-year(dt_add) &lt; 6 
+		  		   and kk_loan_stateid=${city_id})
+		  	</if>
   			and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) ) yh_date 
   		where dz_date.icbc_id=yh_date.icbc_id 
   		GROUP BY year(yh_date.fk_date),month(yh_date.fk_date) 
   		ORDER BY yh_date.fk_date DESC limit 12
   </select>
-  <!-- 抵押材料回收情况              未完成  -->
+  <!-- 抵押材料回收情况               -->
   <select id="selectrecycle" parameterType="assess_fs" resultType="java.util.Map">
  		 select year(iekir.dt_sub) year,
  		 	month(iekir.dt_sub) month,
  		 	count(*) total from icbc_erp_kj_icbc_result iekir,kj_icbc ki 
  		 where iekir.status=81 
  		 and ki.id=iekir.icbc_id 
+ 		 	<if test="gems_id != -1">
+		  	and	ki.gems_fs_id=${gems_id}
+		  	</if>
+		  	<if test="city_id != 0">
+		  	and ki.id in(select icbc_id from kjs_icbc_kk 
+		  		   where year(SYSDATE())-year(dt_add) &lt; 6 
+		  		   and kk_loan_stateid=${city_id})
+		  	</if>
+		  	<if test="timedate != 0">
+		  	and year(ki.dt_add)=${timedate}
+		  	</if> 
   		 and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
-  		 and year(SYSDATE())-year(iekir.dt_sub) &lt; 2 
+  		 and year(SYSDATE())-year(iekir.dt_sub) &lt; 6 
   		 GROUP BY year(dt_sub),month(iekir.dt_sub) 
   		 ORDER BY iekir.dt_sub DESC limit 9
   </select>
@@ -214,9 +277,20 @@
   				from assess_cars ac,kj_icbc ki 
   				where ac.cars_type=2
   				and ki.id=ac.icbc_id 
+  				<if test="gems_id != -1">
+			  	and	ki.gems_fs_id=${gems_id}
+			  	</if>
+			  	<if test="city_id != 0">
+			  	and ki.id in(select icbc_id from kjs_icbc_kk 
+			  		   where year(SYSDATE())-year(dt_add) &lt; 6 
+			  		   and kk_loan_stateid=${city_id})
+			  	</if>
+			  	<if test="timedate != 0">
+			  	and year(ki.dt_add)=${timedate}
+			  	</if> 
   				and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})) 
   			and `status`=62 and result_1_code=1 
-  			and year(SYSDATE())-year(fk_date) &lt; 2 
+  			and year(SYSDATE())-year(fk_date) &lt; 6 
   			GROUP BY year(fk_date),month(fk_date) 
   			ORDER BY fk_date DESC limit 12) oldcars,
   		(select year(fk_date) year1,month(fk_date) month1,
@@ -226,9 +300,20 @@
   				from assess_cars ac,kj_icbc ki 
   				where ac.cars_type=1
   				and ki.id=ac.icbc_id 
+  				<if test="gems_id != -1">
+			  	and	ki.gems_fs_id=${gems_id}
+			  	</if>
+			  	<if test="city_id != 0">
+			  	and ki.id in(select icbc_id from kjs_icbc_kk 
+			  		   where year(SYSDATE())-year(dt_add) &lt; 6 
+			  		   and kk_loan_stateid=${city_id})
+			  	</if>
+			  	<if test="timedate != 0">
+			  	and year(ki.dt_add)=${timedate}
+			  	</if> 
   				and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})) 
   			and `status`=62 and result_1_code=1 
-  			and year(SYSDATE())-year(fk_date) &lt; 2 
+  			and year(SYSDATE())-year(fk_date) &lt; 6 
   			GROUP BY year(fk_date),month(fk_date) 
   			ORDER BY fk_date DESC limit 12) newcars 
 		where oldcars.year1=newcars.year1 
@@ -248,11 +333,33 @@ select sum(case when  to_days(pawn.d1) - to_days(pawn.d) &lt; 15 then 1 end) paw
 	   	from (select ieki.qryid,ieki.status,ieki.dt_sub 
 	   		from icbc_erp_kj_icbc_result ieki,kj_icbc ki 
 	   		where ieki.status=72  
+	   		<if test="gems_id != -1">
+		  	and	ki.gems_fs_id=${gems_id}
+		  	</if>
+		  	<if test="city_id != 0">
+		  	and ki.id in(select icbc_id from kjs_icbc_kk 
+		  		   where year(SYSDATE())-year(dt_add) &lt; 6 
+		  		   and kk_loan_stateid=${city_id})
+		  	</if>
+		  	<if test="timedate != 0">
+		  	and year(ki.dt_add)=${timedate}
+		  	</if> 
 	   		and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
 	   	and ki.id=ieki.icbc_id) iekir1,
 		(select ieki.qryid,ieki.status,ieki.dt_sub 
 			from icbc_erp_kj_icbc_result ieki,kj_icbc ki 
 			where ieki.status=81 
+			<if test="gems_id != -1">
+		  	and	ki.gems_fs_id=${gems_id}
+		  	</if>
+		  	<if test="city_id != 0">
+		  	and ki.id in(select icbc_id from kjs_icbc_kk 
+		  		   where year(SYSDATE())-year(dt_add) &lt; 6 
+		  		   and kk_loan_stateid=${city_id})
+		  	</if>
+		  	<if test="timedate != 0">
+		  	and year(ki.dt_add)=${timedate}
+		  	</if> 
 			and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
 		and ki.id=ieki.icbc_id) iekir2 
 	   where iekir1.qryid=iekir2.qryid ) pawn 
@@ -320,11 +427,21 @@ GROUP BY year(iekir.fk_date),month(iekir.fk_date) ORDER BY iekir.fk_date DESC li
  <!-- 汽车贷款折线图 -->
  <select id="selectcarchart"  parameterType="assess_fs" resultType="java.util.Map"><!-- 汽车   代理商OK  -->
  	select year(kic.dt_sub) year,month(kic.dt_sub) month,count(*) total 
- 	from kjs_icbc_cardk kic,kj_icbc ki 
+ 	from kjs_icbc_cardk kic
  	where kic.bc_status=3 
- 	and kic.icbc_id=ki.id 
- 	and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
-  	and year(SYSDATE())-year(kic.dt_sub) &lt; 2 
+ 	and kic.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
+  	and year(SYSDATE())-year(kic.dt_sub) &lt; 6
+  	<if test="gems_id != -1">
+  	and	kic.gems_fs_id=${gems_id}
+  	</if>
+  	<if test="city_id != 0">
+  	and kic.icbc_id in(select icbc_id from kjs_icbc_kk 
+  		   where year(SYSDATE())-year(dt_add) &lt; 6 
+  		   and kk_loan_stateid=${city_id})
+  	</if>
+  	<if test="timedate != 0">
+  	and year(kic.dt_add)=${timedate}
+  	</if> 
   	GROUP BY year(kic.dt_sub),month(kic.dt_sub) 
   	ORDER BY kic.dt_sub DESC limit 9
  </select>
@@ -342,6 +459,17 @@ GROUP BY year(iekir.fk_date),month(iekir.fk_date) ORDER BY iekir.fk_date DESC li
 			and ki.id=iekir.icbc_id 
 			and iekir.`status`=62 
 			and iekir.result_1_code=1 
+			<if test="gems_id != -1">
+		  	and	ki.gems_fs_id=${gems_id}
+		  	</if>
+		  	<if test="city_id != 0">
+		  	and ki.id in(select icbc_id from kjs_icbc_kk 
+		  		   where year(SYSDATE())-year(dt_add) &lt; 6 
+		  		   and kk_loan_stateid=${city_id})
+		  	</if>
+		  	<if test="timedate != 0">
+		  	and year(ki.dt_add)=${timedate}
+		  	</if> 
 		and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) ) 
 	GROUP BY ac.cars_type 
 	ORDER BY ac.cars_type
