@@ -27,7 +27,7 @@ public class icbczx_dsjController {
 	public final static String loginId = "kuaichedao";
 	public final static String accessKey = "5D883646019F232F9E528D21C0E4C353";
 	public final static String shopNumber = "QDS04477";
-	public final static String url = "https://www.qhrtcb.com/hbservice/risk/bodyguard";
+	public final static String url = "http://www.hibdata.com:7070/hbservice/risk/bodyguard";
 	@Autowired
 	private newicbcService newicbcService;
 	@Autowired
@@ -174,17 +174,19 @@ public class icbczx_dsjController {
 			result = (String) dsj.get("result1");
 			break;
 		case "2":
-			result = (String) dsj.get("result1");
+			result = (String) dsj.get("result2");
 			break;
 		case "3":
-			result = (String) dsj.get("result1");
+			result = (String) dsj.get("result3");
 			break;
 		case "4":
-			result = (String) dsj.get("result1");
+			result = (String) dsj.get("result4");
 			break;
 		}
 		if (result != null) {
-			JSONObject res = JSONObject.parseObject(result);
+			JSONObject res = JSONObject.parseObject(Tools.jsonDeCode(
+					result.replace(":\"{", ":{").replace("}\"", "}"))
+					.toString());
 			if (res.get("detail") != null && !res.get("detail").equals("")) {
 				JSONObject detail = JSONObject.parseObject(res
 						.getString("detail"));
