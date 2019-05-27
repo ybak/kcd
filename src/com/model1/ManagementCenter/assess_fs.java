@@ -7,6 +7,7 @@ public class assess_fs {
 	private int city_id;
 	private int timedate;
 	private int up_id;
+	private int car_type;
 	public int getId() {
 		return id;
 	}
@@ -43,6 +44,12 @@ public class assess_fs {
 	}
 	public void setUp_id(int up_id) {
 		this.up_id = up_id;
+	}
+	public int getCar_type() {
+		return car_type;
+	}
+	public void setCar_type(int car_type) {
+		this.car_type = car_type;
 	}
 
 }
