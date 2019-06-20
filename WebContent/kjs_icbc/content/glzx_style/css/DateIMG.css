@@ -195,6 +195,7 @@ li{
 }
 .graph_overdue_center th{
 	color:#d2d2d3;
+	text-align: center;
 }
 .graph_overdue_center td{
 	text-align: center;

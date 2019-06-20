@@ -16,15 +16,11 @@ public interface assess_fsMapper {
 	//每月总订单各代理商排名
 	public List<HashMap> selectgems(assess_fs ass_fs); 
 	
-	
 	//每月放款订单各代理商排名
 	public List<HashMap> selectloangems(assess_fs ass_fs); 
 	
-	
 	//每月汽车贷款各代理商全部件数及过件数
 	public List<HashMap> selectcarpassgems(assess_fs ass_fs);
-	
-	
 	
 	//每月报单总量
 	public List<HashMap> selectbill(assess_fs ass_fs);
@@ -38,11 +34,8 @@ public interface assess_fsMapper {
 	//每月总订单各省排名
 	public List<HashMap> selectstates(assess_fs ass_fs); 
 	
-	
 	//每月放款订单各省排名
 	public List<HashMap> selectloanstates(assess_fs ass_fs); 
-	
-
 	
 	//折线图数据
 	public List<HashMap> selectchart(assess_fs ass_fs);
@@ -69,18 +62,10 @@ public interface assess_fsMapper {
 	public List<HashMap> selectoldcars(assess_fs ass_fs);
 	
 	//新车每月放款单数和总金额
-	public List<HashMap> selectnewcars(assess_fs ass_fs);
-	
-	
-	//------------------------------------------------------------------------------------------------------
-	
+	public List<HashMap> selectnewcars(assess_fs ass_fs);	
 	
 	// 查询抵押完成天数情况，对0-15天，15-30天，30-45天，45-60天，60天以上的进行分组查询
-	public List<HashMap> selectresult(assess_fs ass_fs);
-	
-	
-	//------------------------------------------------------------------------------------------------------
-	
+	public List<HashMap> selectresult(assess_fs ass_fs);	
 	
 	//每月汽车贷款总订单数
 	public int countselect(assess_fs ass_fs);
@@ -91,11 +76,37 @@ public interface assess_fsMapper {
 	//每月汽车贷款各省市全部件数及过件数
 	public List<HashMap> selectcarpasscomm(assess_fs ass_fs);
 	
-
-	
 	//汽车贷款折线图
 	public List<HashMap> selectcarchart(assess_fs ass_fs);
 	
 	//汽车放款分布扇形图
 	public List<HashMap> selectcarfk(assess_fs ass_fs);
+	
+	
+	//逾期率代理商排名
+	public List<HashMap> selectyuqilv(assess_fs ass_fs);
+	
+	//逾期率M1，M2，M3查询 
+	public List<HashMap> selectoverdue(assess_fs ass_fs);
+	
+	//排名前五逾期省份 
+	public List<HashMap> selectstatefive(assess_fs ass_fs);
+	
+	//其他逾期省份
+	public List<HashMap> selectstateother(assess_fs ass_fs);
+	
+	//业务能力
+	public List<HashMap> selectywnl(assess_fs ass_fs);
+	
+	//进件效率
+	public List<HashMap> selectjjxl(assess_fs ass_fs);
+	
+	//风控能力
+	public List<HashMap> selectfknl(assess_fs ass_fs);
+	
+	//运营能力 
+	public List<HashMap> selectyynl(assess_fs ass_fs);
+	
+	//贷后能力
+	public List<HashMap> selectdhnl(assess_fs ass_fs);
 }

@@ -17,6 +17,7 @@
      select count(ki.gems_fs_id) gems,af.`name` name 
   		from kj_icbc ki,assess_fs af 
   		where ki.gems_fs_id=af.id 
+  		and ki.app=0 
   		and month(ki.dt_add)=MONTH(SYSDATE()) 
   		and YEAR(ki.dt_add)=year(SYSDATE()) 
 		and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id} ) 
@@ -29,6 +30,7 @@
     	select count(ki.gems_fs_id) gems,af.`name` name 
   		from kj_icbc ki,assess_fs af,icbc_erp_kj_icbc_result iekir 
   		where ki.gems_fs_id=af.id 
+  		and ki.app=0
   		and month(iekir.fk_date)=MONTH(SYSDATE()) 
   		and YEAR(iekir.fk_date)=year(SYSDATE()) 
   		and iekir.icbc_id=ki.id
@@ -43,8 +45,10 @@
  <select id="selectcarpassgems"  parameterType="assess_fs" resultType="java.util.Map"><!-- 汽车 -->
   	select round(other.gems/count(other.Oid),2) rate,other.`name` name from 
 		(select kic.gems_fs_id Oid,count(kic.gems_fs_id) gems,af.`name` 
-			from kjs_icbc_cardk kic,assess_fs af 
+			from kjs_icbc_cardk kic,assess_fs af,kj_icbc ki 
 			where kic.gems_fs_id=af.id 
+			and ki.id=kic.icbc_id 
+			and ki.app=0 
 			and month(kic.dt_sub)=MONTH(SYSDATE()) 
 			and YEAR(kic.dt_sub)=year(SYSDATE()) 
 			and kic.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id} ) 
@@ -65,6 +69,7 @@
 	select count(*) amount from kj_icbc 
 	where month(dt_add)=MONTH(SYSDATE()) 
 	and YEAR(dt_add)=year(SYSDATE()) 
+	and app=0 
 	and gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
 </select>
 
@@ -74,6 +79,7 @@
   	from kj_icbc ki,icbc_erp_kj_icbc_result iekir
  	where month(iekir.fk_date)=MONTH(SYSDATE()) 
  	and YEAR(iekir.fk_date)=year(SYSDATE()) 
+ 	and ki.app=0 
  	and iekir.`status`=62  
  	and iekir.result_1_code=1 
  	and ki.id=iekir.icbc_id 
@@ -87,6 +93,7 @@
 	where icbc_id in(select icbc_id from kj_icbc ki,icbc_erp_kj_icbc_result iekir 
  	where month(iekir.fk_date)=MONTH(SYSDATE()) 
  	and YEAR(iekir.fk_date)=year(SYSDATE()) 
+ 	and ki.app=0 
  	and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
  	and iekir.`status` >= 72 
  	and iekir.`status` &lt; 82  
@@ -101,6 +108,7 @@
  	from kj_icbc ki,comm_states cs,kjs_icbc_kk kik 
  	where kik.kk_loan_stateid=cs.id 
 	and kik.icbc_id=ki.id 
+	and ki.app=0 
  	and month(ki.dt_add)=MONTH(SYSDATE()) 
  	and YEAR(ki.dt_add)=year(SYSDATE()) 
  	and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
@@ -112,9 +120,11 @@
   <!-- 每月放款订单各省排名 -->
  <select id="selectloanstates"  parameterType="assess_fs" resultType="java.util.Map">
  	 	select count(kik.kk_loan_stateid) sell,cs.`name` name 
- 	from kjs_icbc_kk kik,comm_states cs,icbc_erp_kj_icbc_result iekir 
+ 	from kjs_icbc_kk kik,comm_states cs,icbc_erp_kj_icbc_result iekir,kj_icbc ki  
  	where kik.kk_loan_stateid=cs.id 
  	and iekir.icbc_id=kik.icbc_id 
+ 	and kik.icbc_id=ki.id 
+ 	and ki.app=0 
  	and month(iekir.fk_date)=MONTH(SYSDATE()) 
  	and YEAR(iekir.fk_date)=year(SYSDATE()) 
  	and iekir.status=62 
@@ -130,6 +140,7 @@
   	select year(dt_add) year,month(dt_add) month,count(*) total 
   	from kj_icbc 
   	where year(SYSDATE())-year(dt_add) &lt; 6 
+  	and app=0 
   	and gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
   	<if test="gems_id != -1">
   	and	gems_fs_id=${gems_id}
@@ -155,6 +166,7 @@
  		   where month(iekir.fk_date)=MONTH(SYSDATE()) 
  		   and YEAR(iekir.fk_date)=year(SYSDATE()) 
 		   and iekir.status = 62 
+		   and ki.app=0 
 		   and iekir.result_1_code=1  
 		   and iekir.icbc_id=ki.id 
 		   <if test="gems_id != -1">
@@ -175,6 +187,7 @@
   		select count(iekir.result_1_code) zxok,iekir.result_1_code zxok_tag 
   		from icbc_erp_kj_icbc_result iekir,kj_icbc ki 
   		where iekir.`status`=3 
+  		and ki.app=0 
   		and ki.id=iekir.icbc_id
   			<if test="gems_id != -1">
 		  	and	ki.gems_fs_id=${gems_id}
@@ -198,7 +211,8 @@
   				sum(case when cardage.card >= 40 and cardage.card &lt; 50 then 1 end) age3,
   				sum(case when cardage.card >= 50 then 1 end) age4 from 
   			(select (year(SYSDATE())-Mid(c_cardno,7,4)) card from kj_icbc 
-  			where gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) ) cardage
+  			where gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
+  			and app=0 ) cardage
   </select>
   <!-- 新车车龄查询统计  ok -->
   <select id="selectcarsage" parameterType="assess_fs" resultType="java.util.Map">
@@ -209,6 +223,7 @@
   			from (select (year(ki.dt_sub)-year(ac.cardt1)) age 
   				from assess_cars ac,kj_icbc ki 
   				where ki.id=ac.icbc_id 
+  				and ki.app=0
   				and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
   			and ac.cars_type=1) carage
   </select>
@@ -220,6 +235,7 @@
   		from (select iekir.icbc_id,iekir.dt_sub 
   			from icbc_erp_kj_icbc_result iekir,kj_icbc ki 
   			where iekir.`status`=52 
+  			and ki.app=0 
   			and iekir.result_1_code=1 
   			and ki.id=iekir.icbc_id 
   			<if test="city_id != 0">
@@ -233,6 +249,7 @@
   			where iekir.`status`=62 
   			and iekir.result_1_code=1 
   			and ki.id=iekir.icbc_id 
+  			andki.app=0 
   			<if test="city_id != 0">
 		  	and ki.id in(select icbc_id from kjs_icbc_kk 
 		  		   where year(SYSDATE())-year(dt_add) &lt; 6 
@@ -250,6 +267,7 @@
  		 	count(*) total from icbc_erp_kj_icbc_result iekir,kj_icbc ki 
  		 where iekir.status=81 
  		 and ki.id=iekir.icbc_id 
+ 		 and ki.app=0 
  		 	<if test="gems_id != -1">
 		  	and	ki.gems_fs_id=${gems_id}
 		  	</if>
@@ -276,6 +294,7 @@
   			where icbc_id in(select ac.icbc_id 
   				from assess_cars ac,kj_icbc ki 
   				where ac.cars_type=2
+  				and ki.app=0 
   				and ki.id=ac.icbc_id 
   				<if test="gems_id != -1">
 			  	and	ki.gems_fs_id=${gems_id}
@@ -300,6 +319,7 @@
   				from assess_cars ac,kj_icbc ki 
   				where ac.cars_type=1
   				and ki.id=ac.icbc_id 
+  				and ki.app=0 
   				<if test="gems_id != -1">
 			  	and	ki.gems_fs_id=${gems_id}
 			  	</if>
@@ -333,6 +353,7 @@ select sum(case when  to_days(pawn.d1) - to_days(pawn.d) &lt; 15 then 1 end) paw
 	   	from (select ieki.qryid,ieki.status,ieki.dt_sub 
 	   		from icbc_erp_kj_icbc_result ieki,kj_icbc ki 
 	   		where ieki.status=72  
+	   		and ki.app=0 
 	   		<if test="gems_id != -1">
 		  	and	ki.gems_fs_id=${gems_id}
 		  	</if>
@@ -349,6 +370,7 @@ select sum(case when  to_days(pawn.d1) - to_days(pawn.d) &lt; 15 then 1 end) paw
 		(select ieki.qryid,ieki.status,ieki.dt_sub 
 			from icbc_erp_kj_icbc_result ieki,kj_icbc ki 
 			where ieki.status=81 
+			and ki.app=0 
 			<if test="gems_id != -1">
 		  	and	ki.gems_fs_id=${gems_id}
 		  	</if>
@@ -379,6 +401,7 @@ GROUP BY year(iekir.fk_date),month(iekir.fk_date) ORDER BY iekir.fk_date DESC li
 	select count(*) from kjs_icbc_cardk kic,kj_icbc ki 
 	where month(kic.dt_sub)=MONTH(SYSDATE())
  	and YEAR(kic.dt_sub)=year(SYSDATE())
+ 	and ki.app=0 
  	and ki.id=kic.icbc_id 
  	and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
  </select>
@@ -387,6 +410,7 @@ GROUP BY year(iekir.fk_date),month(iekir.fk_date) ORDER BY iekir.fk_date DESC li
 	select count(*) from kjs_icbc_cardk kic,kj_icbc ki 
 	where month(kic.dt_sub)=MONTH(SYSDATE()) 
 	and YEAR(kic.dt_sub)=year(SYSDATE())
+	and ki.app=0 
  	and kic.bc_status=3 
  	and ki.id=kic.icbc_id 
  	and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
@@ -404,18 +428,22 @@ GROUP BY year(iekir.fk_date),month(iekir.fk_date) ORDER BY iekir.fk_date DESC li
 		select round(other.Osell/count(other.Oid),2) rate,other.`name` name from 
 		(select loan.kk_loan_stateid Oid,count(loan.kk_loan_stateid) Osell,cs.`name` 
 			from (select kik.kk_loan_stateid  
-				from kjs_icbc_cardk kic,kjs_icbc_kk kik 
+				from kjs_icbc_cardk kic,kjs_icbc_kk kik,kj_icbc ki  
 				where kik.icbc_id=kic.icbc_id 
 				and month(kic.dt_sub)=MONTH(SYSDATE()) 
 				and YEAR(kic.dt_sub)=year(SYSDATE()) 
+				and ki.app=0 
+				and ki.id=kic.icbc_id
 				and kic.bc_status=3 
 				and kik.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) ) loan,
 				comm_states cs where loan.kk_loan_stateid=cs.id 
 				GROUP BY loan.kk_loan_stateid 
 			ORDER BY count(loan.kk_loan_stateid) DESC) other,
 		(select kik.kk_loan_stateid Aid 
-			from kjs_icbc_cardk kic,kjs_icbc_kk kik 
+			from kjs_icbc_cardk kic,kjs_icbc_kk kik,kj_icbc ki  
 			where kik.icbc_id=kic.icbc_id 
+			and ki.app=0 
+			and ki.id=kic.icbc_id 
 			and kik.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id} ) 
 			and month(kic.dt_sub)=MONTH(SYSDATE()) 
 		and YEAR(kic.dt_sub)=year(SYSDATE())) amount 
@@ -427,8 +455,10 @@ GROUP BY year(iekir.fk_date),month(iekir.fk_date) ORDER BY iekir.fk_date DESC li
  <!-- 汽车贷款折线图 -->
  <select id="selectcarchart"  parameterType="assess_fs" resultType="java.util.Map"><!-- 汽车   代理商OK  -->
  	select year(kic.dt_sub) year,month(kic.dt_sub) month,count(*) total 
- 	from kjs_icbc_cardk kic
+ 	from kjs_icbc_cardk kic,kj_icbc ki
  	where kic.bc_status=3 
+ 	and ki.id=kic.icbc_id 
+ 	and ki.app=0 
  	and kic.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id}) 
   	and year(SYSDATE())-year(kic.dt_sub) &lt; 6
   	<if test="gems_id != -1">
@@ -458,6 +488,7 @@ GROUP BY year(iekir.fk_date),month(iekir.fk_date) ORDER BY iekir.fk_date DESC li
 			and YEAR(iekir.fk_date)=year(SYSDATE())
 			and ki.id=iekir.icbc_id 
 			and iekir.`status`=62 
+			and ki.app=0 
 			and iekir.result_1_code=1 
 			<if test="gems_id != -1">
 		  	and	ki.gems_fs_id=${gems_id}
@@ -474,5 +505,178 @@ GROUP BY year(iekir.fk_date),month(iekir.fk_date) ORDER BY iekir.fk_date DESC li
 	GROUP BY ac.cars_type 
 	ORDER BY ac.cars_type
 
+ </select>
+ 
+ <!-- 逾期率代理商排名 -->
+ <select id="selectyuqilv" parameterType="assess_fs" resultType="java.util.Map">
+ select round(m2.loan*100/m1.amount,2) yuqilv,m2.gid,m2.gname from   
+              (select count(di.gems_fs_id) amount,f.id gid,f.name gname   
+               from kj_icbc di,assess_fs f,icbc_erp_kj_icbc_result iekir    
+               where di.id=iekir.icbc_id     
+                 and f.id=di.gems_fs_id   
+                 and iekir.`status`=62  
+                 and di.app=0 
+ 				 and iekir.result_1_code=1
+                 and di.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
+                 GROUP BY di.gems_fs_id) m1,  
+              (select count(lol.gems_fs_id) loan,f.id gid,f.name gname   
+               from loan_overdue_list lol,assess_fs f,kj_icbc di  
+               where lol.type_id!=6   
+                 and f.id=lol.gems_fs_id   
+                 and di.app=0 
+                 and di.id=lol.icbc_id 
+                 and lol.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
+                 GROUP BY lol.gems_fs_id) m2   
+            where m1.gid=m2.gid ORDER BY yuqilv desc
+ </select>
+ <!-- 逾期率M1，M2，M3查询 -->
+ <select id="selectoverdue" parameterType="assess_fs" resultType="java.util.Map">
+ select m1.amount m1a,m1.money/10000 m1m, m2.amount m2a,m2.money/10000 m2m, m3.amount m3a,m3.money/10000 m3m  
+    from (select count(*) amount,sum(lol.overdue_amount) money   
+          from loan_overdue_list lol,kj_icbc di,assess_cars dic  
+            where lol.overdue_days &lt; 30   
+              and lol.type_id!=6 
+              and lol.icbc_id=di.id  
+              and di.app=0 
+              and dic.icbc_id=lol.icbc_id
+              <if test="gems_id != -1">
+ 	    	  and	di.gems_fs_id=${gems_id}
+ 	          </if>
+ 	          <if test="car_type == 1">
+	      	  	and dic.cars_type=1
+	      	  </if>
+	      	  <if test="car_type == 2">
+	      	  	and dic.cars_type=2
+	      	  </if>
+		 	  <if test="city_id != 0">
+		  	  and di.id in(select icbc_id from kjs_icbc_kk 
+   				where year(SYSDATE())-year(dt_add) &lt; 6 
+   				and kk_loan_stateid=${city_id})
+		  	  </if>
+		  	  and di.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
+		  ) m1,(select count(*) amount,sum(lol.overdue_amount) money   
+          from loan_overdue_list lol,kj_icbc di,assess_cars dic  
+            where lol.overdue_days &lt; 60   
+              and lol.overdue_days >= 30   
+              and lol.type_id!=6  
+              and di.app=0 
+              and lol.icbc_id=di.id  
+              and dic.icbc_id=lol.icbc_id
+              <if test="gems_id != -1">
+ 	    	  and di.gems_fs_id=${gems_id}
+ 	  		  </if>
+ 	          <if test="city_id != 0">
+  	 		  and di.id in(select icbc_id from kjs_icbc_kk 
+   				where year(SYSDATE())-year(dt_add) &lt; 6 
+   				and kk_loan_stateid=${city_id})
+              </if>
+              <if test="car_type == 1">
+	      	  	and dic.cars_type=1
+	      	  </if>
+	      	  <if test="car_type == 2">
+	      	  	and dic.cars_type=2
+	      	  </if>
+		  	  and di.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
+		  ) m2,(select count(*) amount,sum(lol.overdue_amount) money   
+          from loan_overdue_list lol,kj_icbc di,assess_cars dic  
+             where lol.overdue_days >= 60   
+               and lol.type_id!=6 
+               and lol.icbc_id=di.id  
+               and di.app=0 
+               and dic.icbc_id=lol.icbc_id  
+               <if test="gems_id != -1">
+   			   and di.gems_fs_id=${gems_id}
+  			  </if>
+	 	  	  <if test="city_id != 0">
+	  	 	  and di.id in(select icbc_id from kjs_icbc_kk 
+   				where year(SYSDATE())-year(dt_add) &lt; 6 
+   				and kk_loan_stateid=${city_id})
+	      	  </if>
+	      	  <if test="car_type == 1">
+	      	  	and dic.cars_type=1
+	      	  </if>
+	      	  <if test="car_type == 2">
+	      	  	and dic.cars_type=2
+	      	  </if>
+      		  and di.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
+          ) m3
+ </select>
+<!--  排名前五逾期省份 -->
+ <select id="selectstatefive" parameterType="assess_fs" resultType="java.util.Map">
+	 select count(cs.name) amount,sum(lol.overdue_amount) money,cs.name cname  
+	   from loan_overdue_list lol,kjs_icbc_kk kik,comm_states cs,kj_icbc ki   
+	   where kik.icbc_id=lol.icbc_id   
+	     and kik.kk_loan_stateid=cs.id  
+	     and ki.app=0 
+	     and ki.id=lol.icbc_id 
+	     and lol.type_id!=6   
+	     and lol.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
+	     GROUP BY cname   
+	     ORDER BY amount  
+	     limit 0,6
+ </select>
+ <!--  其他逾期省份 -->
+ <select id="selectstateother" parameterType="assess_fs" resultType="java.util.Map">
+	select sum(other.amount) Oamount,sum(other.money) Omoney 
+       from (select count(cs.name) amount,sum(lol.overdue_amount) money,cs.name cname  
+          from loan_overdue_list lol,kjs_icbc_kk kik,comm_states cs,kj_icbc ki   
+          where kik.icbc_id=lol.icbc_id   
+            and kik.kk_loan_stateid=cs.id  
+            and lol.type_id!=6   
+            and ki.app=0 
+	     	and ki.id=lol.icbc_id 
+            and lol.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
+            GROUP BY cname   
+            ORDER BY amount  
+            limit 5,30 ) other
+ </select>
+ <!-- 业务能力 -->
+ <select id="selectywnl" parameterType="assess_fs" resultType="java.util.Map">
+ 	select year(SYSDATE()) years,count(*) amount from kj_icbc  
+       where YEAR(dt_add)=year(SYSDATE()) 
+       and app=0 
+       and gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
+ </select>
+  <!-- 进件效率 -->
+ <select id="selectjjxl" parameterType="assess_fs" resultType="java.util.Map">
+ 	select round(avg(timestampdiff(day,ki.dt_add,iekir.fk_date)),2) da 
+       from kj_icbc ki,icbc_erp_kj_icbc_result iekir 
+       where iekir.status=62 
+ 	   and iekir.result_1_code=1  
+ 	   and ki.app=0 
+ 	   and year(SYSDATE())=year(ki.dt_add) 
+ 	   and ki.id=iekir.icbc_id 
+       and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
+ </select>
+  <!-- 风控能力 -->
+ <select id="selectfknl" parameterType="assess_fs" resultType="java.util.Map">
+ 	select count(*) amount 
+      from loan_overdue_list lol,kj_icbc ki 
+      where lol.overdue_days &lt; 30 
+        and lol.type_id!=6 
+        and ki.app=0 
+        and ki.id=lol.icbc_id 
+        and year(SYSDATE())=year(lol.dt_add)
+        and lol.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
+ </select>
+  <!-- 运营能力 -->
+ <select id="selectyynl" parameterType="assess_fs" resultType="java.util.Map">
+ 	select count(*) amount from kj_icbc ki,icbc_erp_kj_icbc_result iekir  
+      where iekir.status=81 
+      and ki.app=0 
+      and ki.id=iekir.icbc_id 
+      and year(SYSDATE())=year(ki.dt_add)
+      and ki.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
+ </select>
+  <!-- 贷后能力 -->
+ <select id="selectdhnl" parameterType="assess_fs" resultType="java.util.Map">
+ 	select count(*) amount  
+	     from loan_overdue_list lol,kj_icbc ki 
+	     where lol.overdue_days>=60 
+	       and lol.type_id!=6 
+	       and ki.app=0 
+           and ki.id=lol.icbc_id 
+	       and year(SYSDATE())=year(lol.dt_add) 
+	       and lol.gems_fs_id in(select id from assess_fs af where up_id=${up_id} or id =${id})
  </select>
 </mapper>
