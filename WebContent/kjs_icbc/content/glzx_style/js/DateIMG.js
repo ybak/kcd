@@ -931,12 +931,12 @@ option_yuqilv2= {
                 }
             },
             data:[
-                {value:data[0][0], name:data[0][2]},
+                {value:data[5][0], name:data[5][2]},
                 {value:data[1][0], name:data[1][2]},
                 {value:data[2][0], name:data[2][2]},
                 {value:data[3][0], name:data[3][2]},
                 {value:data[4][0], name:data[4][2]},
-                {value:data[5][0], name:data[5][2]}
+                {value:data[0][0], name:data[0][2]}
             ],          
         },
         {
@@ -945,12 +945,12 @@ option_yuqilv2= {
             minAngle: 2,
             radius: ['40%', '55%'],
             data:[
-              {value:data[0][1], name:data[0][2]},
+              {value:data[5][1], name:data[5][2]},
               {value:data[1][1], name:data[1][2]},
               {value:data[2][1], name:data[2][2]},
               {value:data[3][1], name:data[3][2]},
               {value:data[4][1], name:data[4][2]},
-              {value:data[5][1], name:data[5][2]},
+              {value:data[0][1], name:data[0][2]},
             ]
         }
     ],
