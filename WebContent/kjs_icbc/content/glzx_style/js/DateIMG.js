@@ -14,12 +14,20 @@ function graphTransform(){
   //通用样式
    var axistick="{lineStyle:{color:'white',type:'dashed'}}";//刻度
    var baodan = echarts.init(document.getElementById('baodan'));
-   
+   function baodanselect(){
+       var sel=document.getElementById("baodanval").value
+       var obj = document.getElementById('baodansel'); //定位id
+       var index = obj.selectedIndex; // 选中索引
+       var value = obj.options[index].value; // 选中值
+       var obj1 = document.getElementById('baodantime'); //定位id
+       var index1 = obj1.selectedIndex; // 选中索引
+       var time = obj1.options[index1].value; // 选中值
    //前台数据图后台获取数据绘制
    $.ajax({
  		dataType : "json",
  		type : "POST",
  		url : "Management/getPathMap.do",
+ 		data : {baodanname:sel,baodancity:value,baodantime:time},
  		success : function(data) {
  		   var summarydata = [];
  		   var timeline = [];
@@ -111,17 +119,27 @@ function graphTransform(){
  			console.log(type + "=报单统计=" + msg);
  		}
  	}) 
+  }	
 /*报单统计end*/
-//--------------------------------------------------------------------报单统计-------------------------------------
  	
+ //----------------------------------------------------------------------------汽车贷款过件率--------------------------------------
  	
 /*过件率(汽车贷款通过)start*/
    var guojianlv = echarts.init(document.getElementById('guojianlv'));
    //前台数据图后台获取数据绘制
+   function guojianselect() {
+	    var sel = document.getElementById("guojianval").value
+	    var obj = document.getElementById('guojiansel'); //定位id
+	    var index = obj.selectedIndex; // 选中索引
+	    var value = obj.options[index].value; // 选中值
+	    var obj1 = document.getElementById('guojiantime'); //定位id
+	    var index1 = obj1.selectedIndex; // 选中索引
+	    var time = obj1.options[index1].value; // 选中值
    $.ajax({
  		dataType : "json",
  		type : "POST",
  		url : "Management/getCarPathMap.do",
+ 		data : {guojianname:sel,guojiancity:value,guojiantime:time},
  		success : function(data) {
  		   var carpasstime = [];
  		   var carpassdata = [];
@@ -222,316 +240,340 @@ guojianlv.setOption(option_guojianlv);
  			console.log(type + "=汽车贷款过件=" + msg);
  		}
  	}) 
+   }	
 /*过件率(汽车贷款通过)end*/
-//----------------------------------------------------------------------------汽车贷款过件率--------------------------------------
+   
+//-----------------------------------------------------------------新旧车放款统计--------------------------------------------------
+  
 /*放款统计分析start*/
 /*left_top*/
 var fangkkuan_bar_1 = echarts.init(document.getElementById('fangkkuan_bar_1'));
-   //前台数据图后台获取数据绘制
-   $.ajax({
- 		dataType : "json",
- 		type : "POST",
- 		url : "Management/getCarFkPathMap.do",
- 		success : function(data) {
- 		   var newcar=data[0]=null?'0':data[0];
- 		   var oldcar=data[1]=null?'0':data[1];
-option_fangkkuan_bar_1 = {
-	title:{
-    	show:true,
-    	subtext:'新车二手车放款分布',
-    	left:'center',
-		subtextStyle :{
-    		fontSize:12,
-    		color:'#ffffff'
-    	},
-		padding:[
-    	           0, // 上
-    	           0, // 右
-    	           3, // 下
-    	           0, // 左
-    	]
-    },
-	legend: {
-        x : 'center',//图例组件离容器下侧的距离
-		bottom: '3',
-        data: [
-        {name:'新车'} ,
-        {name:'二手车'}
-        ],
-        itemWidth:20,//图例标记的图形宽度
-        itemHeight:9,//图例标记的图形高度
-        textStyle:{
-        	fontSize:11,
-        	color:'#fff'
-        },
-        bottom:-5
-    },
-    series : [
-        	{
-            name: '放款分布',
-            type: 'pie',
-            radius: '55%',//大小
-            data:[
-                {value:newcar, name:'新车',itemStyle:{color:'#ff8700'}},//放款分布
-                {value:oldcar, name:'二手车',itemStyle:{color:'#4667f2'}}
-            ],
-            //hoverAnimation:false,//是否开启 hover 在扇区上的放大动画效果。
-            hoverOffset:1,//高亮扇区的偏移距离。
-	        labelLine:{
-	        	length:10,//视觉引导线第一段的长度。
-	        	length2:5 //视觉引导项第二段的长度。
+function fangkuanselect() {
+    var sel = document.getElementById("fangkuanval").value
+    var obj = document.getElementById('fangkuansel'); //定位id
+    var index = obj.selectedIndex; // 选中索引
+    var value = obj.options[index].value; // 选中值
+    var obj1 = document.getElementById('fangkuantime'); //定位id
+    var index1 = obj1.selectedIndex; // 选中索引
+    var time = obj1.options[index1].value; // 选中值
+	   //前台数据图后台获取数据绘制
+	   $.ajax({
+	 		dataType : "json",
+	 		type : "POST",
+	 		url : "Management/getCarFkPathMap.do",
+	 		data: {fangkuanname: sel,fangkuancity:value,fangkuantime:time},
+	 		success : function(data) {
+	 		   var newcar=data[0]=null?'0':data[0];
+	 		   var oldcar=data[1]=null?'0':data[1];
+	option_fangkkuan_bar_1 = {
+		title:{
+	    	show:true,
+	    	subtext:'新车二手车放款分布',
+	    	left:'center',
+			subtextStyle :{
+	    		fontSize:12,
+	    		color:'#ffffff'
+	    	},
+			padding:[
+	    	           0, // 上
+	    	           0, // 右
+	    	           3, // 下
+	    	           0, // 左
+	    	]
+	    },
+		legend: {
+	        x : 'center',//图例组件离容器下侧的距离
+			bottom: '3',
+	        data: [
+	        {name:'新车'} ,
+	        {name:'二手车'}
+	        ],
+	        itemWidth:20,//图例标记的图形宽度
+	        itemHeight:9,//图例标记的图形高度
+	        textStyle:{
+	        	fontSize:11,
+	        	color:'#fff'
 	        },
-	        label: {
-                normal: {
-                    textStyle: {
-                        color: 'rgba(255, 255, 255, 0.3)',
-                        fontSize:9,
-                        color:'#ff8700'
-                    }
-                }
-            },
-        }
-    ],
-    tooltip : {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
-    }
-};
-fangkkuan_bar_1.setOption(option_fangkkuan_bar_1);
-//ajax结尾
- 		},
- 		error : function(e, type, msg) {
- 			console.log(type + "=车辆新旧=" + msg);
- 		}
- 	}) 
- 
-//-----------------------------------------------------------------新旧车放款统计--------------------------------------------------
-var fangkkuan_bar_2 = echarts.init(document.getElementById('fangkkuan_bar_2'));
+	        bottom:-5
+	    },
+	    series : [
+	        	{
+	            name: '放款分布',
+	            type: 'pie',
+	            radius: '55%',//大小
+	            minAngle: 2,
+	            data:[
+	                {value:newcar, name:'新车',itemStyle:{color:'#ff8700'}},//放款分布
+	                {value:oldcar, name:'二手车',itemStyle:{color:'#4667f2'}}
+	            ],
+	            //hoverAnimation:false,//是否开启 hover 在扇区上的放大动画效果。
+	            hoverOffset:1,//高亮扇区的偏移距离。
+		        labelLine:{
+		        	length:10,//视觉引导线第一段的长度。
+		        	length2:5 //视觉引导项第二段的长度。
+		        },
+		        label: {
+	                normal: {
+	                    textStyle: {
+	                        color: 'rgba(255, 255, 255, 0.3)',
+	                        fontSize:9,
+	                        color:'#ff8700'
+	                    }
+	                }
+	            },
+	        }
+	    ],
+	    tooltip : {
+	        trigger: 'item',
+	        formatter: "{a} <br/>{b} : {c} ({d}%)"
+	    }
+	};
+	fangkkuan_bar_1.setOption(option_fangkkuan_bar_1);
+	//ajax结尾
+	 		},
+	 		error : function(e, type, msg) {
+	 			console.log(type + "=车辆新旧=" + msg);
+	 		}
+	 	}) 
+	 
+	/*left_bottom-----------------------------------------------------放款金额分布统计---------------------------------------------*/
 
-   //前台数据图后台获取数据绘制
-   $.ajax({
- 		dataType : "json",
- 		type : "POST",
- 		url : "Management/getMoneyPathMap.do",
- 		success : function(data) {
- 		   var singular1=data[0]=null?'0':data[0];
- 		   var singular2=data[1]=null?'0':data[1];
- 		   var singular3=data[2]=null?'0':data[2];
-		   var singular4=data[3]=null?'0':data[3];
-option_fangkkuan_bar_2 = {
-    title:{
-    	show:true,
-    	subtext:'放贷金额的分布',
-    	left:'center',
-		subtextStyle :{
-    		fontSize:12,
-    		color:'#ffffff'
-    	},
-		padding:[
-    	           0, // 上
-    	           0, // 右
-    	           5, // 下
-    	           0, // 左
-    	]
-    },
-	legend: {
-        x : 'center',//图例组件离容器下侧的距离
-        data: ['3 - 10万','20-50万','10-20万','50万以上'],
-        itemWidth:15,//图例标记的图形宽度
-        itemHeight:7,//图例标记的图形高度
-        textStyle:{
-        	fontSize:9,
-        	color:'#fff'
-        },
-        itemGap:1,
-        bottom:-5
-    },
-    series : [
-        	{
-            name: '金额分布',
-            type: 'pie',
-            radius: '55%',
-            data:[
-                {value:singular1, name:'3 - 10万',itemStyle:{color:'#4667f2'}},//金额分布
-                {value:singular2, name:'20-50万',itemStyle:{color:'#ffffff'}},
-                {value:singular3, name:'10-20万',itemStyle:{color:'#ff8700'}},
-                {value:singular4, name:'50万以上',itemStyle:{color:'#6c79a0'}}
-            ],
-            hoverOffset:1,//高亮扇区的偏移距离。
-	        labelLine:{
-	        	length:1,//视觉引导线第一段的长度。
-	        	length2:5 //视觉引导项第二段的长度。
+	 	var fangkkuan_bar_2 = echarts.init(document.getElementById('fangkkuan_bar_2'));
+	
+	   //前台数据图后台获取数据绘制
+	   $.ajax({
+	 		dataType : "json",
+	 		type : "POST",
+	 		url : "Management/getMoneyPathMap.do",
+	 		data: {fangkuanname: sel,fangkuancity:value,fangkuantime:time},
+	 		success : function(data) {
+	 		   var singular1=data[0]=null?'0':data[0];
+	 		   var singular2=data[1]=null?'0':data[1];
+	 		   var singular3=data[2]=null?'0':data[2];
+			   var singular4=data[3]=null?'0':data[3];
+	option_fangkkuan_bar_2 = {
+	    title:{
+	    	show:true,
+	    	subtext:'放贷金额的分布',
+	    	left:'center',
+			subtextStyle :{
+	    		fontSize:12,
+	    		color:'#ffffff'
+	    	},
+			padding:[
+	    	           0, // 上
+	    	           0, // 右
+	    	           5, // 下
+	    	           0, // 左
+	    	]
+	    },
+		legend: {
+	        x : 'center',//图例组件离容器下侧的距离
+	        data: ['3 - 10万','20-50万','10-20万','50万以上'],
+	        itemWidth:15,//图例标记的图形宽度
+	        itemHeight:7,//图例标记的图形高度
+	        textStyle:{
+	        	fontSize:9,
+	        	color:'#fff'
 	        },
-	        label: {
-                normal: {
-                    textStyle: {
-                        color: 'rgba(255, 255, 255, 0.3)',
-                        fontSize:9,
-                        color:'#ff8700'
-                    }
-                }
-            },
-        }
-    ],
-    tooltip : {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
-    },
-};
- fangkkuan_bar_2.setOption(option_fangkkuan_bar_2);
- 
-//ajax结尾
-	},
-	error : function(e, type, msg) {
-		console.log(type + "=贷款金额=" + msg);
-	}
-}) 
- 
-/*left_bottom-----------------------------------------------------放款金额分布统计---------------------------------------------*/
-
-var fangkkuan_lineANDbar_3 = echarts.init(document.getElementById('fangkkuan_lineANDbar_3'));
-
-   $.ajax({
-		dataType : "json",
-		type : "POST",
-		url : "Management/getNewOldCarsPathMap.do",
-		success : function(data) {
-		   var carstime = [];
-		   var newcars = [];
-		   var newcarsmoney = [];
-		   var oldcars = [];
-		   var oldcarsmoney = [];
-		   var j;
-		   for(var i=0;i<12;i++){
-			 j=11-i;
-			 carstime[i]=data[0][j]=null?'2019-'+i:data[0][j];
-			 newcars[i]=data[1][j]=null?'0':data[1][j];
-			 newcarsmoney[i]=data[2][j]=null?'0':data[2][j];
-			 oldcars[i]=data[3][j]=null?'0':data[3][j];
-			 oldcarsmoney[i]=data[4][j]=null?'0':data[4][j];
-		   }
-option_fangkkuan_lineANDbar_3 = {
-    tooltip: { //提示框组件。 
-        trigger: 'axis',//触发类型:'axis'坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用。
-        axisPointer: { //坐标轴指示器配置项。
-            type: 'cross', //指示器类型。 'cross' 十字准星指示器
-            crossStyle: {
-                color: '#999' //交叉风格
-            }
-        }
-    },
-	legend: {
-        x : 'center',//图例组件离容器下侧的距离
-		width: 300,//图例组件的宽度
-        data:['新车放款订单数',' 新车放贷金额  ','二手车放款订单数','二手车放贷金额'],
-        itemWidth:15,//图例标记的图形宽度
-        itemHeight:10,//图例标记的图形高度
-        textStyle:{
-        	fontSize:12,
-        	color:'#4667f2'
-        },
-        itemGap:7,
-        bottom:-5
-    },
-    grid:{//直角坐标系内绘图网格
-        show:false,//是否显示直角坐标系网格。[ default: false ]
-        right:"12%"
-    },
-    xAxis: [
-        {	
-        	name:'时间',
-        	nameTextStyle:{//坐标轴名称的文字样式。
-        		padding: [27, 0, 0, -6]
-        	},
-            type: 'category',
-            data: carstime,
-            axisPointer: {//坐标轴指示器配置项。
-                type: 'shadow'
-            },
-             axisTick:axistick,
-			 axisLine :{symbolSize:['10', '13'],lineStyle:{color:'#4667f2'}}//轴线
-        }
-    ],
-    yAxis: [
-        {
-            type: 'value',
-            name: '总放款订单数量',
-            min: 0,
-            max: 250,
-            interval: 50,
-            axisLabel: {
-                formatter: '{value}'
-            },
-            nameTextStyle:{//坐标轴名称的文字样式。
-        		padding: [0, 0, 0, 20]
-        	},
-            splitLine:{show: false},//去除网格线
-            axisTick:axistick,
-			axisLine :{lineStyle:{color:'#4667f2'}}//轴线
-        },
-        {
-            type: 'value',
-            name: '总放款金额:万',
-            axisLabel: {
-                formatter: '{value} '
-            },
-            nameTextStyle:{//坐标轴名称的文字样式。
-        		padding: [0, 0, 0, -20]
-        	},
-            splitLine:{show: false},//去除网格线
-            axisTick:axistick,
-			axisLine :{lineStyle:{color:'#4667f2'}}//轴线
-        }
-    ],
-    series: [
-        {
-            name:'新车放款订单数',
-            type:'bar',
-            data:newcars
-        },
-        {
-            name:'二手车放款订单数',
-            type:'bar',
-            data:oldcars
-        },
-        {
-            name:' 新车放贷金额  ',
-            type:'line',
-            yAxisIndex: 1,
-            data:newcarsmoney
-        },
-        {
-            name:'二手车放贷金额',
-            type:'line',
-            yAxisIndex: 1,
-            data:oldcarsmoney
-        
-        }
-    ],
-    color:['#e07805','#344bb1'] //全局调色板  好用到爆炸
-};
- fangkkuan_lineANDbar_3.setOption(option_fangkkuan_lineANDbar_3);
-//ajax结尾
+	        itemGap:1,
+	        bottom:-5
+	    },
+	    series : [
+	        	{
+	            name: '金额分布',
+	            type: 'pie',
+	            radius: '55%',
+	            minAngle: 2,
+	            data:[
+	                {value:singular1, name:'3 - 10万',itemStyle:{color:'#4667f2'}},//金额分布
+	                {value:singular2, name:'20-50万',itemStyle:{color:'#ffffff'}},
+	                {value:singular3, name:'10-20万',itemStyle:{color:'#ff8700'}},
+	                {value:singular4, name:'50万以上',itemStyle:{color:'#6c79a0'}}
+	            ],
+	            hoverOffset:1,//高亮扇区的偏移距离。
+		        labelLine:{
+		        	length:1,//视觉引导线第一段的长度。
+		        	length2:5 //视觉引导项第二段的长度。
+		        },
+		        label: {
+	                normal: {
+	                    textStyle: {
+	                        color: 'rgba(255, 255, 255, 0.3)',
+	                        fontSize:9,
+	                        color:'#ff8700'
+	                    }
+	                }
+	            },
+	        }
+	    ],
+	    tooltip : {
+	        trigger: 'item',
+	        formatter: "{a} <br/>{b} : {c} ({d}%)"
+	    },
+	};
+	 fangkkuan_bar_2.setOption(option_fangkkuan_bar_2);
+	 
+	//ajax结尾
 		},
 		error : function(e, type, msg) {
-			console.log(type + "=新旧车放款金额曲线=" + msg);
+			console.log(type + "=贷款金额=" + msg);
 		}
 	}) 
- 
-/* ------------------------------------------------------新旧车放款统计，总订单数，总金额数------------------------------------------------------------*/
+	 
+	/* ------------------------------------------------------新旧车放款统计，总订单数，总金额数------------------------------------------------------------*/
+
+	var fangkkuan_lineANDbar_3 = echarts.init(document.getElementById('fangkkuan_lineANDbar_3'));
+	
+	   $.ajax({
+			dataType : "json",
+			type : "POST",
+			url : "Management/getNewOldCarsPathMap.do",
+			data: {fangkuanname: sel,fangkuancity:value,fangkuantime:time},
+			success : function(data) {
+			   var carstime = [];
+			   var newcars = [];
+			   var newcarsmoney = [];
+			   var oldcars = [];
+			   var oldcarsmoney = [];
+			   var j;
+			   for(var i=0;i<12;i++){
+				 j=11-i;
+				 carstime[i]=data[0][j]=null?'2019-'+i:data[0][j];
+				 newcars[i]=data[1][j]=null?'0':data[1][j];
+				 newcarsmoney[i]=data[2][j]=null?'0':data[2][j];
+				 oldcars[i]=data[3][j]=null?'0':data[3][j];
+				 oldcarsmoney[i]=data[4][j]=null?'0':data[4][j];
+			   }
+	option_fangkkuan_lineANDbar_3 = {
+	    tooltip: { //提示框组件。 
+	        trigger: 'axis',//触发类型:'axis'坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用。
+	        axisPointer: { //坐标轴指示器配置项。
+	            type: 'cross', //指示器类型。 'cross' 十字准星指示器
+	            crossStyle: {
+	                color: '#999' //交叉风格
+	            }
+	        }
+	    },
+		legend: {
+	        x : 'center',//图例组件离容器下侧的距离
+			width: 300,//图例组件的宽度
+	        data:['新车放款订单数',' 新车放贷金额  ','二手车放款订单数','二手车放贷金额'],
+	        itemWidth:15,//图例标记的图形宽度
+	        itemHeight:10,//图例标记的图形高度
+	        textStyle:{
+	        	fontSize:12,
+	        	color:'#4667f2'
+	        },
+	        itemGap:7,
+	        bottom:-5
+	    },
+	    grid:{//直角坐标系内绘图网格
+	        show:false,//是否显示直角坐标系网格。[ default: false ]
+	        right:"12%"
+	    },
+	    xAxis: [
+	        {	
+	        	name:'时间',
+	        	nameTextStyle:{//坐标轴名称的文字样式。
+	        		padding: [27, 0, 0, -6]
+	        	},
+	            type: 'category',
+	            data: carstime,
+	            axisPointer: {//坐标轴指示器配置项。
+	                type: 'shadow'
+	            },
+	             axisTick:axistick,
+				 axisLine :{symbolSize:['10', '13'],lineStyle:{color:'#4667f2'}}//轴线
+	        }
+	    ],
+	    yAxis: [
+	        {
+	            type: 'value',
+	            name: '总放款订单数量',
+	            min: 0,
+	            max: 250,
+	            interval: 50,
+	            axisLabel: {
+	                formatter: '{value}'
+	            },
+	            nameTextStyle:{//坐标轴名称的文字样式。
+	        		padding: [0, 0, 0, 20]
+	        	},
+	            splitLine:{show: false},//去除网格线
+	            axisTick:axistick,
+				axisLine :{lineStyle:{color:'#4667f2'}}//轴线
+	        },
+	        {
+	            type: 'value',
+	            name: '总放款金额:万',
+	            axisLabel: {
+	                formatter: '{value} '
+	            },
+	            nameTextStyle:{//坐标轴名称的文字样式。
+	        		padding: [0, 0, 0, -20]
+	        	},
+	            splitLine:{show: false},//去除网格线
+	            axisTick:axistick,
+				axisLine :{lineStyle:{color:'#4667f2'}}//轴线
+	        }
+	    ],
+	    series: [
+	        {
+	            name:'新车放款订单数',
+	            type:'bar',
+	            data:newcars
+	        },
+	        {
+	            name:'二手车放款订单数',
+	            type:'bar',
+	            data:oldcars
+	        },
+	        {
+	            name:' 新车放贷金额  ',
+	            type:'line',
+	            yAxisIndex: 1,
+	            data:newcarsmoney
+	        },
+	        {
+	            name:'二手车放贷金额',
+	            type:'line',
+	            yAxisIndex: 1,
+	            data:oldcarsmoney
+	        
+	        }
+	    ],
+	    color:['#e07805','#344bb1'] //全局调色板  好用到爆炸
+	};
+	 fangkkuan_lineANDbar_3.setOption(option_fangkkuan_lineANDbar_3);
+	//ajax结尾
+			},
+			error : function(e, type, msg) {
+				console.log(type + "=新旧车放款金额曲线=" + msg);
+			}
+		}) 
+}
 /*right*/
 
-/*---------------------------------------------------------------------放款统计分析end-------------------------------------------------------------*/
 
 
 /*抵押完成情况start*/
 var diyawancheng = echarts.init(document.getElementById('diyawancheng'));
 
 //前台数据图后台获取数据绘制
+function diyaselect() {
+    var sel = document.getElementById("diyaval").value
+    var obj = document.getElementById('diyasel'); //定位id
+    var index = obj.selectedIndex; // 选中索引
+    var value = obj.options[index].value; // 选中值
+    var obj1 = document.getElementById('diyatime'); //定位id
+    var index1 = obj1.selectedIndex; // 选中索引
+    var time = obj1.options[index1].value; // 选中值
 $.ajax({
 		dataType : "json",
 		type : "POST",
 		url : "Management/getPawnPathMap.do",
+		data: {diyaname: sel,diyacity:value,diyatime:time},
 		success : function(data) {
 		   var paw1=data[0]=null?'0':data[0];
 		   var paw2=data[1]=null?'0':data[1];
@@ -546,6 +588,7 @@ option_diyawancheng= {
             type: 'pie',
             radius: '80%',
             roseType: 'angle',
+            minAngle: 2,
             data:[
                 {value:paw5, name:'60天以上',itemStyle:{color:paw5>=max ? '#ff8700':'#4161f1' }},
                 {value:paw1, name:'0-15天',itemStyle:{color:paw1>=max ? '#ff8700':'#4161f1' }},
@@ -591,15 +634,25 @@ diyawancheng.setOption(option_diyawancheng);
 			console.log(type + "=抵押情况=" + msg);
 		}
 	}) 
+}	
 /*---------------------------------------------------------------抵押完成情况end------------------------------------------------------*/
 /*材料回收情况start*/
 var cailiaohuishou = echarts.init(document.getElementById('cailiaohuishou'));
 
 //前台数据图后台获取数据绘制
+function cailiaoselect() {
+    var sel = document.getElementById("cailiaoval").value
+    var obj = document.getElementById('cailiaosel'); //定位id
+    var index = obj.selectedIndex; // 选中索引
+    var value = obj.options[index].value; // 选中值
+    var obj1 = document.getElementById('cailiaotime'); //定位id
+    var index1 = obj1.selectedIndex; // 选中索引
+    var time = obj1.options[index1].value; // 选中值
 $.ajax({
 		dataType : "json",
 		type : "POST",
 		url : "Management/getRecyclePathMap.do",
+		data: {cailiaoname: sel,cailiaocity:value,cailiaotime:time},
 		success : function(data) {
 		   var recycletime = [];
 		   var recycledata = [];
@@ -685,16 +738,48 @@ option_cailiaohuishou= {
 cailiaohuishou.setOption(option_cailiaohuishou);
 //ajax结尾
 },
-error : function(e, type, msg) {
-	console.log(type + "=抵押材料情况=" + msg);
+	error : function(e, type, msg) {
+		console.log(type + "=抵押材料情况=" + msg);
+		}
+	}) 
 }
-}) 
 /*材料回收情况end*/
 
 /*-----------------------------------------------------------------------------逾期率start---------------------------------------------------------------------*/
 /*left*/
 var yuqilv1 = echarts.init(document.getElementById('yuqilv1'));
-option_yuqilv1 = {
+function yuqiselect() {
+    var sel = document.getElementById("yuqival").value
+    var obj = document.getElementById('yuqisel'); //定位id
+    var index = obj.selectedIndex; // 选中索引
+    var value = obj.options[index].value; // 选中值
+    $.ajax({
+        dataType: "json",
+        type: "POST",
+        url: "Management/getOverdueMap.do",
+        data: {yuqiname: sel,yuqicity:value},
+        success: function (data) {
+            var amount = [];
+            var newcars = [];
+            var oldcars = [];
+            var amountmoney = [];
+            var newcarsmoney = [];
+            var oldcarsmoney = [];
+            var j=0;
+            var o=1;
+            for(var i=0;i<3;i++){
+                amount[i]=data[0][j];
+                newcars[i]=data[1][j];
+                oldcars[i]=data[2][j];
+                j=j+2;
+            }
+            for(var i=0;i<3;i++){
+                amountmoney[i]=data[0][o];
+                newcarsmoney[i]=data[1][o];
+                oldcarsmoney[i]=data[2][o];
+                o=o+2;
+            }
+ option_yuqilv1 = {
     tooltip: { //提示框组件。 
         trigger: 'axis',//触发类型:'axis'坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用。
         axisPointer: { //坐标轴指示器配置项。
@@ -769,50 +854,62 @@ option_yuqilv1 = {
     ],
     series: [
         {
-            name:'订单总数量',
-            type:'bar',
-            data:[200, 156, 187],
-         	barWidth:9
+            name: '订单总数量',
+            type: 'bar',
+            data: amount,
+            barWidth: 16
         },
         {
-            name:'新车数量',
-            type:'bar',
-            data:[35, 56, 57],
-            barWidth:9
+            name: '新车数量',
+            type: 'bar',
+            data: newcars,
+            barWidth: 16
         },
         {
-            name:'二手车数量',
-            type:'bar',
-            data:[165, 100, 130],
-            barWidth:9
+            name: '二手车数量',
+            type: 'bar',
+            data: oldcars,
+            barWidth: 16
         },
         {
-            name:'订单总金额',
-            type:'line',
+            name: '订单总金额',
+            type: 'line',
             yAxisIndex: 1,
-            data:[140, 100, 132]
+            data: amountmoney
         },
         {
-            name:'新车金额',
-            type:'line',
+            name: '新车金额',
+            type: 'line',
             yAxisIndex: 1,
-            data:[40, 35, 72]
-        
+            data: newcarsmoney
+
         },
         {
-            name:'二手车金额',
-            type:'line',
+            name: '二手车金额',
+            type: 'line',
             yAxisIndex: 1,
-            data:[100, 65, 60]
-        
+            data: oldcarsmoney
+
         }
     ],
     color:['#666699','#344bb1','#e07805'] //全局调色板  好用到爆炸
 };
-yuqilv1.setOption(option_yuqilv1);
+            yuqilv1.setOption(option_yuqilv1);
+        },
+        error: function (e, type, msg) {
+        	console.log(type + "=逾期率M1，M2，M3查询=" + msg);
+        }
+    })
+
+}
 
 /*----------------------------------------------------------------------------right----------------------------------------------------------------*/
 var yuqilv2 = echarts.init(document.getElementById('yuqilv2'));
+$.ajax({
+    dataType : "json",
+    type : "POST",
+    url : "Management/getStateMap.do",
+    success : function(data){
 option_yuqilv2= {
     tooltip: {
         trigger: 'item',
@@ -824,6 +921,7 @@ option_yuqilv2= {
             type:'pie',
             selectedMode: 'single',
             radius: [0, '30%'],
+            minAngle: 2,
           	label: {
                 show:false
             },
@@ -833,149 +931,253 @@ option_yuqilv2= {
                 }
             },
             data:[
-                {value:52, name:'河南省'},
-                {value:36, name:'江西省'},
-                {value:78, name:'山东省'},
-                {value:68, name:'安徽省'},
-                {value:48, name:'河北省'},
-                {value:58, name:'其他'}
+                {value:data[5][0], name:data[5][2]},
+                {value:data[1][0], name:data[1][2]},
+                {value:data[2][0], name:data[2][2]},
+                {value:data[3][0], name:data[3][2]},
+                {value:data[4][0], name:data[4][2]},
+                {value:data[0][0], name:data[0][2]}
             ],          
         },
         {
             name:'省份逾期金额',
             type:'pie',
+            minAngle: 2,
             radius: ['40%', '55%'],
             data:[
-                {value:1640000, name:'河南省'},
-                {value:2040000, name:'江西省'},
-                {value:2640000, name:'山东省'},
-                {value:1855900, name:'安徽省'},
-                {value:2250800, name:'河北省'},
-                {value:1166900, name:'其他'},
+              {value:data[5][1], name:data[5][2]},
+              {value:data[1][1], name:data[1][2]},
+              {value:data[2][1], name:data[2][2]},
+              {value:data[3][1], name:data[3][2]},
+              {value:data[4][1], name:data[4][2]},
+              {value:data[0][1], name:data[0][2]},
             ]
         }
     ],
      color:['#666699','#fc4100','#ff8700','#47febf','#4667f2','#ffffff']
 };
 yuqilv2.setOption(option_yuqilv2);
+
+//ajax结尾
+    },
+    error : function(e, type, msg) {
+    	console.log(type + "=逾期省份=" + msg);
+    }
+})
 /*------------------------------------------------------------------逾期率end---------------------------------------------------------------------*/
 /*-----------------------------------------------------------------代理商综合能力分析start----------------------------------------------------------------*/
 var zonghenenglifenxi = echarts.init(document.getElementById('zonghenenglifenxi'));
-option_zonghenenglifenxi = {
-    tooltip: {
-        trigger: 'item',
-        show:true,
-       	formatter:function(params){
-    		var s='';
-    		s+=params.name+'\n';
-    		var values=params.value.toString().split(",");
-			s+='业务能力:'+values[0]+'\n';
-			s+='进件效率'+values[1]+'\n';
-			s+='运营能力'+values[2]+'\n';
-			s+='贷后能力'+values[3]+'\n';
-			s+='风控能力'+values[4]+'\n';
-    		//系列名称:seriesName: string  数据名，类目名 : name: string   传入的数据值:value: number|Array
-    		return s;
-	     },
-	     extraCssText:'width:120px; white-space:pre-wrap'//额外附加到浮层的 css 样式 pre-wrap:保留空白符序列，可是正常地进行换行。
-    },
-    visualMap: {
-    	show:false,
-        top: 'middle',
-        right: 10,
-        color: ['#d91564', '#c47332'],
-        calculable: true
-    },
-    radar: {
-       indicator : [
-           { text: '业务能力-报单量、放款量',max: 400},
-           { text: '进件效率-从征信提交-银行放款的时长', max: 400},
-           { text: '运营能力-材料回收情况、抵押完成情况', max: 400},
-           { text: '贷后能力-代偿情况、M3及以上逾期率', max: 400},
-           { text: '风控能力-M1、M2逾期率', max: 400}
-        ],
-        radius:'60%',
-        nameGap:-2,
-        name:{//这里以-分割
-        	formatter: function (value,indicator) {
-			    var values=value.split('-');
-			    var v='';
-			    v+='{a|'+values[0]+'}\n{b|'+values[1]+'}';
-			    if(!!values[2]){v+='\n{b|'+values[2]+'}'};
-			    return v;
-			},
-			width:100,
-        	rich:{//富文本标签
-        		a: {
-		            color: '#4667f2',
-		            lineHeight: 20,
-		            fontSize:12,
-		            align:'center'
-		        },
-		        b: {
-		          color: '#6c79a0',
-		          lineHeight: 15,
-		          fontSize:11,
-		          align:'center'
-		        }
-        	}
-        },
-        splitArea: {
-        	areaStyle: {
-                color: ['#222f70', '#222f70','#354cb2','#3a54c5'] //分隔区域的样式设置。
-            }
-        },
-        axisLine: {//坐标线 直接隐藏
-        	show:false
-        },
-        splitLine: {//区域中的分隔线。
-            show:true,
-             lineStyle: {
-			       color: ['#415fe0']
-			  }
-        }
-    },
-    series : (function (){
-        var series = [];
-        for (var i = 1; i <= 28; i++) {
-            series.push({
-                name:'代理商综合能力分析',
-                type: 'radar',
-                symbol: 'none',
-                lineStyle: {
-                    width: 1
-                },
-                emphasis: {
-                    areaStyle: {
-                        color: 'rgba(0,250,0,0.3)'
-                    }
-                },
-                data:[
-                  {
-                    value:[
-                        (40 - i) * 10,
-                        (38 - i) * 4 + 60,
-                        i * 5 + 10,
-                        i * 9,
-                        i * i /2
-                    ],
-                    name: i + 2000 + ''
-                  }
-                ]
-            });
-        }
-        return series;
-    })()
-};
-zonghenenglifenxi.setOption(option_zonghenenglifenxi);
-/*--------------------------------------------------------代理商综合能力分析end-------------------------------------*/
+function dailiselect() {
+	var sel = document.getElementById("dailival").value
+    var obj = document.getElementById('dailitime'); //定位id
+    var index = obj.selectedIndex; // 选中索引
+    var value = obj.options[index].value; // 选中值
+    var amount = [];
+    var max1;
+    var max2;
+    var max3;
+    var max4;
+    var max5;
+    $.ajax({
+        dataType: "json",
+        type: "POST",
+        url: "Management/getAgencyMap.do",
+        data: {dailiname: sel,dailitime:value},
+        success: function (data) {
+        	var year =data[0];
 
+            for(var i=1;i<6;i++){
+                amount[i-1]=data[i];
+            }
+            
+            //报单量数据上限计算绘图
+            if(data[1] < 100){
+                max1 = 100/data[1]/10+2
+            }else if(data[1] < 300){
+                max1 = 300/data[1]/10+1.7
+            }else if(data[1] < 600){
+                max1 = 600/data[1]/10+1.5
+            }else if(data[1] < 1200){
+                max1 = 1200/data[1]/10+1.3
+            }else if(data[1] < 2000){
+                max1 = 2000/data[1]/10+1.1
+            }else{
+                max1 = 1.1-(data[1]/2000)/100
+            }
+            //抵押完成上限计算绘图
+            if(data[3] < 80){
+                max3 = 80/data[3]/10+2
+            }else if(data[3] < 240){
+                max3 = 240/data[3]/10+1.7
+            }else if(data[3] < 480){
+                max3 = 480/data[3]/10+1.5
+            }else if(data[3] < 960){
+                max3 = 960/data[3]/10+1.3
+            }else if(data[3] < 1600){
+                max3 = 1600/data[3]/10+1.1
+            }else{
+                max3 = 1.1-(data[3]/1600)/100
+            }
+            //进件效率上限计算绘图
+            if(data[2] < 5){
+                max2 = 1.0+data[2]/20
+            }else if(data[2] < 10){
+                max2 = 1.2+data[2]/40
+            }else if(data[2] < 20){
+                max2 = 1.6+data[2]/50
+            }else if(data[2] < 40){
+                max2 = 1.8+data[2]/100
+            }else{
+                max2 = 2.0+data[2]/200
+            }
+            //M3逾期上限计算绘图
+            if(data[4] < 5){
+                max4 = 1.0+data[4]/20
+            }else if(data[4] < 10){
+                max4 = 1.2+data[4]/40
+            }else if(data[4] < 20){
+                max4 = 1.4+data[4]/50
+            }else if(data[4] < 40){
+                max4 = 1.6+data[4]/100
+            }else{
+                max4 = 1.8+data[4]/200
+            }
+            //M1逾期上限计算绘图
+            if(data[5] < 10){
+                max5 = 1.0+data[5]/40
+            }else if(data[5] < 20){
+                max5 = 1.2+data[5]/70
+            }else if(data[5] < 40){
+                max5 = 1.4+data[5]/100
+            }else if(data[5] < 60){
+                max5 = 1.6+data[5]/200
+            }else{
+                max5 = 1.9+data[5]/200
+            }
+	option_zonghenenglifenxi = {
+	    tooltip: {
+	        trigger: 'item',
+	        show:true,
+	       	formatter:function(params){
+	    		var s='';
+	    		s+=params.name+'\n';
+	    		var values=params.value.toString().split(",");
+				s+='业务能力:'+values[0]+'\n';
+				s+='进件效率'+values[1]+'\n';
+				s+='运营能力'+values[2]+'\n';
+				s+='贷后能力'+values[3]+'\n';
+				s+='风控能力'+values[4]+'\n';
+	    		//系列名称:seriesName: string  数据名，类目名 : name: string   传入的数据值:value: number|Array
+	    		return s;
+		     },
+		     extraCssText:'width:120px; white-space:pre-wrap'//额外附加到浮层的 css 样式 pre-wrap:保留空白符序列，可是正常地进行换行。
+	    },
+	    visualMap: {
+	    	show:false,
+	        top: 'middle',
+	        right: 10,
+	        color: ['#d91564', '#c47332'],
+	        calculable: true
+	    },
+	    radar: {
+	       indicator : [
+                {text : '业务能力-报单量',  max  : data[1] == 0?10:data[1] * max1},
+                {text : '进件效率-订单提交至-银行放款时长',  max : data[1] == 0?10:data[2] * max2},
+                {text : '运营能力-抵押完成情况', max  : data[1] == 0?10:data[3] * max3},
+                {text : '贷后能力-M3及以上逾期率', max : data[1] == 0?10:data[4] * max4},
+                {text : '风控能力-M1逾期率',  max : data[1] == 0?10:data[5] * max5}
+	        ],
+	        radius:'60%',
+	        nameGap:-2,
+	        name:{//这里以-分割
+	        	formatter: function (value,indicator) {
+				    var values=value.split('-');
+				    var v='';
+				    v+='{a|'+values[0]+'}\n{b|'+values[1]+'}';
+				    if(!!values[2]){v+='\n{b|'+values[2]+'}'};
+				    return v;
+				},
+				width:100,
+				lineStyle: {
+				   color: ['#415fe0']
+				},
+	        	rich:{//富文本标签
+	        		a: {
+			            color: '#4667f2',
+			            lineHeight: 20,
+			            fontSize:12,
+			            align:'center'
+			        },
+			        b: {
+			          color: '#6c79a0',
+			          lineHeight: 15,
+			          fontSize:11,
+			          align:'center'
+			        }
+	        	}
+	        },
+	        splitArea: {
+	        	areaStyle: {
+	                color: ['#222f70', '#222f70','#354cb2','#3a54c5'] //分隔区域的样式设置。
+	            }
+	        },
+	        axisLine: {//坐标线 直接隐藏
+	        	show:false
+	        },
+	        splitLine: {//区域中的分隔线。
+	            show:true,
+	             lineStyle: {
+				       color: ['#415fe0']
+				  }
+	        }
+	    },
+	    series : [
+			{
+			    type: 'radar',
+			    itemStyle: {
+			        normal: {
+			            areaStyle: {
+			                type: 'default'
+			            }
+			        }
+			    },
+			    data : [
+			        {
+			            value : amount,
+			            name : year+'年'
+			        },
+			    ],
+			    lineStyle : {
+                    color: '#FA4889',
+                    width: 2,
+                    type: 'solid'
+                },
+                itemStyle: {normal: {areaStyle: {type: 'default',color:'rgb(255,19,109)'}}},
+			}      
+	    ]
+	};
+	zonghenenglifenxi.setOption(option_zonghenenglifenxi);
+        },
+        error: function (e, type, msg) {
+            console.log(type + "=代理商综合能力分析=" + msg);
+        }
+    })
+}
 /*--------------------------------------------------------征信查询通过率start-------------------------------------------*/
 	var zhengxinchaxuntongguolv = echarts.init(document.getElementById('zhengxinchaxuntongguolv'));
+	function zhengxinselect() {
+	    var sel = document.getElementById("zhengxinval").value
+	    var obj = document.getElementById('zhengxinsel'); //定位id
+	    var index = obj.selectedIndex; // 选中索引
+	    var value = obj.options[index].value; // 选中值
+	    var obj1 = document.getElementById('zhengxintime'); //定位id
+	    var index1 = obj1.selectedIndex; // 选中索引
+	    var time = obj1.options[index1].value; // 选中值
 	$.ajax({
 		dataType : "json",
 		type : "POST",
 		url : "Management/getCreditPathMap.do",
+		data: {zhengxinname: sel,zhengxincity:value,zhengxintime:time},
 		success : function(data) {
 		   var credit1=data[0]=null?'0':data[0];
 		   var credit2=data[1]=null?'0':data[1];
@@ -1000,6 +1202,7 @@ zonghenenglifenxi.setOption(option_zonghenenglifenxi);
         	{
             name: '征信查询通过率',
             type: 'pie',
+            minAngle: 2,
             radius: '62%',//大小
             data:[
                 {value:credit2, name:'征信通过'},
@@ -1034,7 +1237,7 @@ zhengxinchaxuntongguolv.setOption(option_zhengxinchaxuntongguolv);
 			console.log(type + "=征信查询=" + msg);
 		}
 	}) 
-/*------------------------------------------------------------------征信查询通过率end-----------------------------------------------*/
+	}	
 
 /*---------------------------------------------------------------客户和车辆画像start---------------------------------------------------------*/
 /*left*/
@@ -1073,6 +1276,7 @@ series : [
         name: '客户年龄分布',
         type: 'pie',
         radius: '62%',//大小
+        minAngle: 2,
         data:[
             {value:age1, name:'18-30岁'},
             {value:age2, name:'30-40岁'},
@@ -1144,6 +1348,7 @@ series : [
     	{
         name: '车辆年龄分布',
         type: 'pie',
+        minAngle: 2,
         radius: '62%',//大小
         data:[
             {value:age1, name:'1-3年'},
@@ -1185,10 +1390,15 @@ cheliangnianling.setOption(option_cheliangnianling);
 
 /*资金周转率(垫资方)start*/
  var zijinzhouzhuanlv = echarts.init(document.getElementById('zijinzhouzhuanlv'));
+	function dianziselect(){
+	    var obj = document.getElementById('dianzisel'); //定位id
+	    var index = obj.selectedIndex; // 选中索引
+	    var value = obj.options[index].value; // 选中值
 	$.ajax({
 		dataType : "json",
 		type : "POST",
 		url : "Management/getAdvanceFundPathMap.do",
+		data: {dianzicity:value },
 		success : function(data) {
 		   var advancefundtime = [];
 		   var advancefunddata = [];
@@ -1302,4 +1512,5 @@ zijinzhouzhuanlv.setOption(option_zijinzhouzhuanlv);
 			console.log("=垫资失败=");
 		}
 	}) 
+	}	
 /*资金周转率(垫资方)end*/
