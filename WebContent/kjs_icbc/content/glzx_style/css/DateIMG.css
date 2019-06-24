@@ -8,9 +8,22 @@ p{
 	padding: 0;
 	margin: 0;
 }
+
+select {
+	border: 0 !important;  /*Removes border*/
+	appearance:none;
+	-webkit-appearance: none;  /*Removes default chrome and safari style*/
+	-moz-appearance: none; /* Removes Default Firefox style*/
+	background: #090917 no-repeat;  /*Adds background-image*/
+	/*My custom style for fonts*/
+	line-height: 15px;
+	color: #909DC9;
+}
+select::-ms-expand { display: none; }
+
 .graph_big{
 	width:100%;
-	height: 900px;
+	height: 888px;
 	background: #090917; 
 	padding:20px 35px;
 	margin: auto;
@@ -86,6 +99,8 @@ p{
     padding: 3px 8px;
 }
 /*Â±Ã­Â¸Ã±Â¿ÂªÃŠÂ¼*/
+
+
 .graph_table{
 	width: 90%;
 	margin: auto;
@@ -180,6 +195,7 @@ li{
 }
 .graph_overdue_center th{
 	color:#d2d2d3;
+	text-align: center;
 }
 .graph_overdue_center td{
 	text-align: center;
@@ -205,6 +221,11 @@ li{
 	font-size: 12px;
 	width: 24%;
 }
+
+
+/* ÓâÆÚÂÊÅÅĞĞ */
+
+
 /*Ã‡ÃÂ»Â»*/
 .graph_transform{
 	position: fixed;
@@ -219,4 +240,64 @@ li{
 	line-height: 27px; 
 	font-size: 16px;
 	color: #fff;
+}
+
+.paiming_table_style{
+	width: 90%;
+	margin: auto;
+
+}
+.paiming_table_style th{
+	font-size: 13px;
+	width: 100px;
+}
+.paiming_table_style tr{
+	height: 35px;
+}
+.paiming_table_style th:last-child,th:first-child{
+	
+	font-weight:400;
+}
+.paiming_table_style td:last-child,td:first-child{
+	font-size: 14px;
+}
+.paiming_table_style th:last-child,td:last-child{
+	text-align: left;
+}
+.paiming_table_style th:first-child,td:first-child{
+	text-align: right;
+}
+
+.paiming_table_style .font_color_1{
+	text-align: center;
+	width: 35px;
+}
+.paiming_table_style tr td:nth-child(3){
+	width: 32px;
+	text-align: center;
+}
+/* ÓâÆÚÂÊÅÅĞĞ */
+.yuqipaiming{
+	height: 60%;
+	width: 90%;
+	margin-left: 5%;
+	font-size: 13px;
+}
+.yuqipaiming th{
+	color:#424a66;
+	text-align: center;
+}
+.yuqigd td{
+	padding-top: 5px
+}
+.yuqipaiming td{
+	text-align: center;
+}
+.yuqipaiming td:first-child{
+	color: #6A5046;
+	padding-right: 2px;
+}
+.yuqipaiming td:last-child{
+	color: #ED2C39;
+	padding-left: 2px;
 }

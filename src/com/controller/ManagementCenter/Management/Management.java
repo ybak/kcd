@@ -1,6 +1,9 @@
 package com.controller.ManagementCenter.Management;
 
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.itextpdf.text.log.SysoCounter;
 import com.model1.ManagementCenter.assess_fs;
 import com.model1.icbc.erp.PageData;
 import com.service1.ManagementCenter.kj_icbcService;
@@ -22,8 +26,19 @@ import com.service1.ManagementCenter.kj_icbcService;
 public class Management {
 	@Autowired
 	private kj_icbcService kj_icbcService;
-
+	private String gems;
 	assess_fs assess_fs = new assess_fs();
+	
+	//查询代理商ID
+    private String SelectGems(String gems){
+        String s;
+        assess_fs.setGems(gems);
+        s = kj_icbcService.SelectGemsId(assess_fs);//数据库查询操作
+        if(s == null || s == ""){
+            s="0";
+        }
+        return s;
+    }
 
 	// 前台数据后台获取
 	public void management(HttpServletRequest request) {
@@ -103,6 +118,30 @@ public class Management {
 				cardpassgems.get(i).put("name", " ");
 			}
 		}
+		
+		//逾期率代理商排名 
+		List<HashMap> yuqilv = kj_icbcService.SelectYuqilv(assess_fs);
+		request.setAttribute("yuqilv",yuqilv );
+		
+		
+		
+		List<HashMap> comm_city=kj_icbcService.SelectCity();
+		request.setAttribute("comm_city",comm_city );//省份列表
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        int formatDate = Integer.parseInt(sdf.format(date));
+        int[] years=new int[5];
+        for(int i=0;i<5;i++){
+            years[i]=formatDate-i;
+        }
+        request.setAttribute("years",years );//年份列表
+
+        String[] count = new String[10];
+        for(int i=0;i<10;i++){
+            count[i]=i+"";
+        }
+        request.setAttribute("count",count );
 
 		request.setAttribute("billlist", kj_icbcService.SelectBill(assess_fs));// 每月报单总量
 																				// 0
@@ -126,7 +165,7 @@ public class Management {
 	@RequestMapping("erp/Management/getPathMap.do")
 	@ResponseBody
 	public String getPathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String baodanname,String baodancity,String baodantime) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -135,6 +174,23 @@ public class Management {
 					.toString()));
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			if(!baodanname.equals("请输入代理商") && !baodanname.equals("")) {
+				gems=SelectGems(baodanname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+	        if(!baodancity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(baodancity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        //判断是否选择时间
+	        if(!baodantime.equals("0")){
+	        	assess_fs.setTimedate(Integer.parseInt(baodantime));
+	        }else{
+	        	assess_fs.setTimedate(0);
+			}
 			List<HashMap> chart = kj_icbcService.SelectChart(assess_fs);// 后台获取查询数据
 			Object[][] Ochart = new Object[2][9];
 			if (chart.size() < 9) {
@@ -172,7 +228,7 @@ public class Management {
 	@RequestMapping("erp/Management/getCarPathMap.do")
 	@ResponseBody
 	public String getCarPathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String guojianname,String guojiancity,String guojiantime) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -181,6 +237,23 @@ public class Management {
 					.toString()));
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			if(!guojianname.equals("请输入代理商") && !guojianname.equals("")) {
+				gems=SelectGems(guojianname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+	        if(!guojiancity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(guojiancity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        //判断是否选择时间
+	        if(!guojiantime.equals("0")){
+	        	assess_fs.setTimedate(Integer.parseInt(guojiantime));
+	        }else{
+	        	assess_fs.setTimedate(0);
+			}
 			List<HashMap> chart = kj_icbcService.SelectCarChart(assess_fs);// 后台获取查询数据
 			Object[][] Ochart = new Object[2][9];
 			if (chart.size() < 9) {
@@ -218,7 +291,7 @@ public class Management {
 	@RequestMapping("erp/Management/getCarFkPathMap.do")
 	@ResponseBody
 	public String getCarFkPathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String fangkuanname,String fangkuancity,String fangkuantime) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -227,6 +300,23 @@ public class Management {
 					.toString()));
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			if(!fangkuanname.equals("请输入代理商") && !fangkuanname.equals("")) {
+				gems=SelectGems(fangkuanname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+	        if(!fangkuancity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(fangkuancity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        //判断是否选择时间
+	        if(!fangkuantime.equals("0")){
+	        	assess_fs.setTimedate(Integer.parseInt(fangkuantime));
+	        }else{
+	        	assess_fs.setTimedate(0);
+			}
 			List<HashMap> chart = kj_icbcService.SelectCarFk(assess_fs);// 后台获取查询数据
 			String[] s = new String[2];
 			if (chart.size() < 2) {
@@ -265,7 +355,7 @@ public class Management {
 	@RequestMapping("erp/Management/getMoneyPathMap.do")
 	@ResponseBody
 	public String getMoneyPathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String fangkuanname,String fangkuancity,String fangkuantime) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -274,6 +364,23 @@ public class Management {
 					.toString()));
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			if(!fangkuanname.equals("请输入代理商") && !fangkuanname.equals("")) {
+				gems=SelectGems(fangkuanname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+	        if(!fangkuancity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(fangkuancity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        //判断是否选择时间
+	        if(!fangkuantime.equals("0")){
+	        	assess_fs.setTimedate(Integer.parseInt(fangkuantime));
+	        }else{
+	        	assess_fs.setTimedate(0);
+			}
 			List<HashMap> chart = kj_icbcService
 					.SelectMoneyDistribute(assess_fs);// 后台获取查询数据
 			String[] s = new String[4];
@@ -307,7 +414,7 @@ public class Management {
 	@RequestMapping("erp/Management/getPawnPathMap.do")
 	@ResponseBody
 	public String getPawnPathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String diyaname,String diyacity,String diyatime) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -316,6 +423,23 @@ public class Management {
 					.toString()));// Integer.parseInt(pdLoginSession.get("fs_id").toString())
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			if(!diyaname.equals("请输入代理商") && !diyaname.equals("")) {
+				gems=SelectGems(diyaname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+	        if(!diyacity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(diyacity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        //判断是否选择时间
+	        if(!diyatime.equals("0")){
+	        	assess_fs.setTimedate(Integer.parseInt(diyatime));
+	        }else{
+	        	assess_fs.setTimedate(0);
+			}
 			List<HashMap> chart = kj_icbcService.SelectResult(assess_fs);// 后台获取查询数据
 
 			String[] s = new String[5];
@@ -349,7 +473,7 @@ public class Management {
 	@RequestMapping("erp/Management/getCreditPathMap.do")
 	@ResponseBody
 	public String getCreditPathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String zhengxinname,String zhengxincity,String zhengxintime) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -358,6 +482,23 @@ public class Management {
 					.toString()));
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			if(!zhengxinname.equals("请输入代理商") && !zhengxinname.equals("")) {
+				gems=SelectGems(zhengxinname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+	        if(!zhengxincity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(zhengxincity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        //判断是否选择时间
+	        if(!zhengxintime.equals("0")){
+	        	assess_fs.setTimedate(Integer.parseInt(zhengxintime));
+	        }else{
+	        	assess_fs.setTimedate(0);
+			}
 			List<HashMap> credit = kj_icbcService.SelectCredit(assess_fs);// 后台获取查询数据
 			String[] s = new String[2];
 			if (credit.size() < 2) {
@@ -479,7 +620,7 @@ public class Management {
 	@RequestMapping("erp/Management/getAdvanceFundPathMap.do")
 	@ResponseBody
 	public String getAdvanceFundPathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String dianzicity) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -488,6 +629,11 @@ public class Management {
 					.toString()));
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			 if(!dianzicity.equals("0")){
+		        	assess_fs.setCity_id(Integer.parseInt(dianzicity));
+		        }else{
+		        	assess_fs.setCity_id(0);
+				}
 			List<HashMap> fund = kj_icbcService.SelectAdvanceFund(assess_fs);// 后台获取查询数据
 			Object[][] Ofund = new Object[2][12];
 			if (fund.size() < 12) {
@@ -527,7 +673,7 @@ public class Management {
 	@RequestMapping("erp/Management/getRecyclePathMap.do")
 	@ResponseBody
 	public String getRecyclePathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String cailiaoname,String cailiaocity,String cailiaotime) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -536,6 +682,23 @@ public class Management {
 					.toString()));// Integer.parseInt(pdLoginSession.get("fs_id").toString())
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			if(!cailiaoname.equals("请输入代理商") && !cailiaoname.equals("")) {
+				gems=SelectGems(cailiaoname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+	        if(!cailiaocity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(cailiaocity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        //判断是否选择时间
+	        if(!cailiaotime.equals("0")){
+	        	assess_fs.setTimedate(Integer.parseInt(cailiaotime));
+	        }else{
+	        	assess_fs.setTimedate(0);
+			}
 			List<HashMap> fund = kj_icbcService.SelectRecycle(assess_fs);// 后台获取查询数据
 			Object[][] Ofund = new Object[2][9];
 			if (fund.size() < 9) {
@@ -574,7 +737,7 @@ public class Management {
 	@RequestMapping("erp/Management/getNewOldCarsPathMap.do")
 	@ResponseBody
 	public String getNewOldCarsPathMap(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response,String fangkuanname,String fangkuancity,String fangkuantime) {
 		try {
 			/*** 根据条件取值生成二维数据，并转成json ***/
 			PageData pdLoginSession = (PageData) request.getSession()
@@ -583,6 +746,24 @@ public class Management {
 					.toString()));
 			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
 					.toString()));
+			
+			if(!fangkuanname.equals("请输入代理商") && !fangkuanname.equals("")) {
+				gems=SelectGems(fangkuanname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+	        if(!fangkuancity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(fangkuancity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        //判断是否选择时间
+	        if(!fangkuantime.equals("0")){
+	        	assess_fs.setTimedate(Integer.parseInt(fangkuantime));
+	        }else{
+	        	assess_fs.setTimedate(0);
+			}
 			List<HashMap> newcars = kj_icbcService.SelectNewCars(assess_fs);// 后台获取查询数据
 			Object[][] Ofund = new Object[5][12];
 			if (newcars.size() < 12) {
@@ -625,4 +806,189 @@ public class Management {
 		}
 		return null;
 	}
+	
+	//逾期率M1，M2，M3分布图ajax前台获取   
+	@RequestMapping("erp/Management/getOverdueMap.do")
+	@ResponseBody
+	public String getOverdueMap(HttpServletRequest request,
+			HttpServletResponse response,String yuqiname,String yuqicity){
+		try {
+			PageData pdLoginSession = (PageData) request.getSession().getAttribute("pd"); //
+			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id").toString()));
+			//判断输入代理商
+			if(!yuqiname.equals("请输入代理商") && !yuqiname.equals("")) {
+				gems=SelectGems(yuqiname);
+				assess_fs.setGems_id(Integer.parseInt(gems));
+			}else{
+				assess_fs.setGems_id(-1);
+			}
+			//判断选择城市
+	        if(!yuqicity.equals("0")){
+	        	assess_fs.setCity_id(Integer.parseInt(yuqicity));
+	        }else{
+	        	assess_fs.setCity_id(0);
+			}
+	        assess_fs.setCar_type(0);
+	        List<HashMap> chart = kj_icbcService.SelectOverdue(assess_fs);// 后台获取查询数据
+	        assess_fs.setCar_type(1);
+	        List<HashMap> chart1 = kj_icbcService.SelectOverdue(assess_fs);// 后台获取查询数据
+	        assess_fs.setCar_type(2);
+	        List<HashMap> chart2 = kj_icbcService.SelectOverdue(assess_fs);// 后台获取查询数据
+	        
+	        Object[][] object = new Object[3][6];	        
+	        String []s={"m1a","m1m","m2a","m2m","m3a","m3m"};
+	        for(int i=0;i<6;i++){
+	            if(chart.get(0).get(s[i]) == "" && chart.get(0).get(s[i]).equals("")){
+	                object[0][i]="0";
+	            }else{
+	                object[0][i]=chart.get(0).get(s[i]);
+	            }
+	            if(chart1.get(0).get(s[i]) == "" && chart1.get(0).get(s[i]).equals("")){
+	                object[1][i]="0";
+	            }else {
+	                object[1][i] = chart1.get(0).get(s[i]);
+	            }
+	            if(chart2.get(0).get(s[i]) == "" && chart2.get(0).get(s[i]).equals("")){
+	                object[2][i]="0";
+	            }else{
+	                object[2][i]=chart2.get(0).get(s[i]);
+	            }
+	        }
+	        JSONArray jsonArray = JSONArray.fromObject(object);
+			response.setContentType("text/html;charset=UTF-8");
+			response.setContentType("application/json");
+			PrintWriter pw;
+			pw = response.getWriter();
+			pw.print(jsonArray); // 轨迹图条件，取少量数据
+			pw.flush();
+			pw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+		return null;
+	}
+	
+	//逾期省份分布图ajax前台获取
+	@RequestMapping("erp/Management/getStateMap.do")
+	@ResponseBody
+	public String getStateMap(HttpServletRequest request,
+			HttpServletResponse response){
+		try {
+			PageData pdLoginSession = (PageData) request.getSession()
+					.getAttribute("pd"); //
+			assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id")
+					.toString()));
+			assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
+					.toString()));
+			List<HashMap> chart = kj_icbcService.SelectStateFive(assess_fs);// 后台获取查询数据
+			
+			List<HashMap> chart1 = kj_icbcService.SelectStateOther(assess_fs);// 后台获取查询数据
+			
+			Object[][] object = new Object[6][3];
+			if(chart.size()<5){
+	            for(int i=0;i<chart.size();i++){
+	                object[i][0]=chart.get(i).get("amount");
+	                object[i][1]=chart.get(i).get("money");
+	                object[i][2]=chart.get(i).get("cname");
+	            }
+	            for(int i=chart.size();i<5;i++){
+	                object[i][0]="0";
+	                object[i][1]="0";
+	                object[i][2]="某某省"+i;
+	            }
+	        }else{
+	            for(int i=0;i<5;i++){
+	                object[i][0]=chart.get(i).get("amount");
+	                object[i][1]=chart.get(i).get("money");
+	                
+	                
+	                object[i][2]=chart.get(i).get("cname");
+	            }
+	        }
+	        if(chart.size()<6){
+	        	object[5][0]="0";
+	            object[5][1]="0";
+	            object[5][2]="其他省";
+	        }else{
+	            object[5][0]=chart1.get(0).get("Oamount");
+	            object[5][1]=chart1.get(0).get("Omoney");
+	            object[5][2]="其他省";
+	        }
+	        JSONArray jsonArray = JSONArray.fromObject(object);
+			response.setContentType("text/html;charset=UTF-8");
+			response.setContentType("application/json");
+			PrintWriter pw;
+			
+			pw = response.getWriter();
+			pw.print(jsonArray); // 轨迹图条件，取少量数据
+			pw.flush();
+			pw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	//代理商综合能力图ajax前台获取
+	@RequestMapping("erp/Management/getAgencyMap.do")
+	@ResponseBody
+	public String getAgencyMap(HttpServletRequest request,
+			HttpServletResponse response,String dailiname,String dailitime){
+			try{
+				PageData pdLoginSession = (PageData) request.getSession()
+						.getAttribute("pd"); //
+				assess_fs.setId(Integer.parseInt(pdLoginSession.get("fs_id")
+						.toString()));
+				assess_fs.setUp_id(Integer.parseInt(pdLoginSession.get("fs_id")
+						.toString()));
+				List<HashMap> chart1 = kj_icbcService.SelectYwnl(assess_fs);// 后台获取查询数据
+				List<HashMap> chart2 = kj_icbcService.SelectJjxl(assess_fs);// 后台获取查询数据
+				List<HashMap> chart3 = kj_icbcService.SelectFknl(assess_fs);// 后台获取查询数据
+				List<HashMap> chart4 = kj_icbcService.SelectYynl(assess_fs);// 后台获取查询数据
+				List<HashMap> chart5 = kj_icbcService.SelectDhnl(assess_fs);// 后台获取查询数据
+				if(!dailiname.equals("请输入代理商") && !dailiname.equals("")) {
+					gems=SelectGems(dailiname);
+					assess_fs.setGems_id(Integer.parseInt(gems));
+				}else{
+					assess_fs.setGems_id(-1);
+				}
+		        //判断是否选择时间
+		        if(!dailitime.equals("0")){
+		        	assess_fs.setTimedate(Integer.parseInt(dailitime));
+		        }else{
+		        	assess_fs.setTimedate(0);
+				}
+		        Object[] obj = new Object[6];
+		        obj[0] = chart1.get(0).get("years");
+		        obj[1] = chart1.get(0).get("amount");
+		        if(chart2.get(0).get("da").equals("")){
+		            obj[2] = "0";
+		        }else{
+		            obj[2] = chart2.get(0).get("da");
+		        }
+		        obj[3] = chart3.get(0).get("amount");
+		        obj[4] = chart4.get(0).get("amount");
+		        obj[5] = chart5.get(0).get("amount");
+		        JSONArray jsonArray = JSONArray.fromObject(obj);
+				response.setContentType("text/html;charset=UTF-8");
+				response.setContentType("application/json");
+				PrintWriter pw;
+				
+				pw = response.getWriter();
+				pw.print(jsonArray); // 轨迹图条件，取少量数据
+				pw.flush();
+				pw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
 }

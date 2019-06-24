@@ -18,7 +18,17 @@ public class kj_icbcServiceImpl implements kj_icbcService{
 
 	@Resource
 	private assess_fsMapper assess_fsmapper;
-	            
+	
+	//查询省份
+	@Override
+	public List<HashMap> SelectCity(){
+		return assess_fsmapper.selectcity();
+	} 	
+	//查询代理商
+	@Override
+	public String SelectGemsId(assess_fs ass_fs){
+		return assess_fsmapper.selectgemsid(ass_fs);
+	}	            
 	//每月报单总量
 	@Override
 	public List<HashMap> SelectBill(assess_fs ass_fs){
@@ -101,11 +111,7 @@ public class kj_icbcServiceImpl implements kj_icbcService{
 	@Override
 	public List<HashMap> SelectResult(assess_fs ass_fs) {	
 		return assess_fsmapper.selectresult(ass_fs);
-	}
-	
-	
-	
-	
+	}	
 	 //每月汽车贷款总订单数
 	@Override
 	public int CountSelect(assess_fs ass_fs){
@@ -136,5 +142,59 @@ public class kj_icbcServiceImpl implements kj_icbcService{
 	@Override
 	public List<HashMap> SelectCarPassGems(assess_fs ass_fs) {
 		return assess_fsmapper.selectcarpassgems(ass_fs);
+	}
+	
+	
+	
+	
+	//逾期率代理商排名
+	@Override
+	public List<HashMap> SelectYuqilv(assess_fs ass_fs){
+		return assess_fsmapper.selectyuqilv(ass_fs);
+	}
+	
+	//逾期率M1，M2，M3查询 
+	@Override
+	public List<HashMap> SelectOverdue(assess_fs ass_fs){
+		return assess_fsmapper.selectoverdue(ass_fs);
+	}
+	
+	//排名前五逾期省份 
+	@Override
+	public List<HashMap> SelectStateFive(assess_fs ass_fs){
+		return assess_fsmapper.selectstatefive(ass_fs);
+	}
+	//其他逾期省份
+	@Override
+	public List<HashMap> SelectStateOther(assess_fs ass_fs){
+		return assess_fsmapper.selectstateother(ass_fs);
+	}
+	//业务能力
+	@Override
+	public List<HashMap> SelectYwnl(assess_fs ass_fs){
+		return assess_fsmapper.selectywnl(ass_fs);
+	}
+	//进件效率
+	@Override
+	public List<HashMap> SelectJjxl(assess_fs ass_fs){
+		return assess_fsmapper.selectjjxl(ass_fs);
+	}
+	
+	//风控能力
+	@Override
+	public List<HashMap> SelectFknl(assess_fs ass_fs){
+		return assess_fsmapper.selectfknl(ass_fs);
+	}
+	
+	//运营能力 
+	@Override
+	public List<HashMap> SelectYynl(assess_fs ass_fs){
+		return assess_fsmapper.selectyynl(ass_fs);
+	}
+	
+	//贷后能力
+	@Override
+	public List<HashMap> SelectDhnl(assess_fs ass_fs){
+		return assess_fsmapper.selectdhnl(ass_fs);
 	}
 }

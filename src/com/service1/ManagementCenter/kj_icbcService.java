@@ -7,6 +7,13 @@ import com.model1.ManagementCenter.assess_fs;
 import com.model1.ManagementCenter.kj_icbc;
 
 public interface kj_icbcService {
+	
+	//查询省份
+	public List<HashMap> SelectCity(); 
+	
+	//查询代理商
+	public String SelectGemsId(assess_fs ass_fs); 
+	
 	//每月报单总量
 	public List<HashMap> SelectBill(assess_fs ass_fs);
 	
@@ -55,16 +62,8 @@ public interface kj_icbcService {
 	//新车每月放款单数和总金额
 	public List<HashMap> SelectNewCars(assess_fs ass_fs);
 	
-	
-	
-	
-	
 	// 查询抵押完成天数情况，对0-15天，15-30天，30-45天，45-60天，60天以上的进行分组查询
-	public List<HashMap> SelectResult(assess_fs ass_fs);
-	
-	
-	
-	
+	public List<HashMap> SelectResult(assess_fs ass_fs);	
 	
 	//每月汽车贷款总订单数
 	public int CountSelect(assess_fs ass_fs);
@@ -83,4 +82,33 @@ public interface kj_icbcService {
 	
 	//汽车放款分布扇形图
 	public List<HashMap> SelectCarFk(assess_fs ass_fs);
+	
+	
+	
+	//逾期率代理商排名
+	public List<HashMap> SelectYuqilv(assess_fs ass_fs);
+	
+	//逾期率M1，M2，M3查询 
+	public List<HashMap> SelectOverdue(assess_fs ass_fs);
+	
+	//排名前五逾期省份 
+	public List<HashMap> SelectStateFive(assess_fs ass_fs);
+	
+	//其他逾期省份
+	public List<HashMap> SelectStateOther(assess_fs ass_fs);
+	
+	//业务能力
+	public List<HashMap> SelectYwnl(assess_fs ass_fs);
+	
+	//进件效率
+	public List<HashMap> SelectJjxl(assess_fs ass_fs);
+	
+	//风控能力
+	public List<HashMap> SelectFknl(assess_fs ass_fs);
+	
+	//运营能力 
+	public List<HashMap> SelectYynl(assess_fs ass_fs);
+	
+	//贷后能力
+	public List<HashMap> SelectDhnl(assess_fs ass_fs);
 }
