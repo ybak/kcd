@@ -5,6 +5,8 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="UTF-8">
 <title>快金所管理系统</title>
+	<link rel="icon" href="${pageContext.request.contextPath }/cskjs_css/bitbug_favicon (1).ico" type="image/x-icon"/>
+
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/kjs_icbc/new_login/css/style2.0.css">
 <style type="text/css">
 	ul li{font-size: 30px;color:#2ec0f6;}
