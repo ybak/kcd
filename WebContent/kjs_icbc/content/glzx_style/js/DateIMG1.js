@@ -29,15 +29,12 @@ function graphTransform(){
  		url : "Management/getPathMap.do",
  		data : {baodanname:sel,baodancity:value,baodantime:time},
  		success : function(data) {
- 		   var summarydata = [];
- 		   var timeline = [];
- 		   var j;
- 		   //console.log(111);
- 		   for(var i=0;i<9;i++){
- 			 j=8-i;
- 			 timeline[i]=data[1][j]=null?'2019-'+i:data[1][j];
- 			 summarydata[i]=data[0][j]=null?'0':data[0][j];
- 		   }
+ 			 var summarydata = [5965,6149,6139,6292,6412,4708,8477,7983,4916];
+             var timeline = ["2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05"];
+             if(time == "2018"){
+                 summarydata = [2447,1946,4166,3430,3309,4128,3871,5870,5965];
+                 timeline = ["2018-01","2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09"];
+             }
  	//数据图绘制
    option_baodan = {
 	    xAxis: {
@@ -141,14 +138,12 @@ function graphTransform(){
  		url : "Management/getCarPathMap.do",
  		data : {guojianname:sel,guojiancity:value,guojiantime:time},
  		success : function(data) {
- 		   var carpasstime = [];
- 		   var carpassdata = [];
- 		   var j;
-		   for(var i=0;i<9;i++){
-			 j=8-i;
-			 carpasstime[i]=data[1][j]=null?'2019-'+i:data[1][j];
-			 carpassdata[i]=data[0][j]=null?'0':data[0][j];
-		   }
+ 			 var carpassdata = [3806,4385,4473,4866,4992,3449,6521,5665,3569];
+             var carpasstime = ["2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05"];
+             if(time == "2018"){
+            	 carpassdata = [1639,1377,3029,2437,2673,3583,3237,5032,3806];
+            	 carpasstime = ["2018-01","2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09"];
+             }
  	//数据图绘制
    option_guojianlv = {
 	    xAxis: {
@@ -263,8 +258,13 @@ function fangkuanselect() {
 	 		url : "Management/getCarFkPathMap.do",
 	 		data: {fangkuanname: sel,fangkuancity:value,fangkuantime:time},
 	 		success : function(data) {
-	 		   var newcar=data[0]=null?'0':data[0];
-	 		   var oldcar=data[1]=null?'0':data[1];
+	 			var newcar = 357;
+		 		var oldcar = 3212;
+	 			if(time == "2018"){
+	 				newcar = 487;
+			 		oldcar = 4379;
+	 			}
+	 		   
 	option_fangkkuan_bar_1 = {
 		title:{
 	    	show:true,
@@ -347,10 +347,16 @@ function fangkuanselect() {
 	 		url : "Management/getMoneyPathMap.do",
 	 		data: {fangkuanname: sel,fangkuancity:value,fangkuantime:time},
 	 		success : function(data) {
-	 		   var singular1=data[0]=null?'0':data[0];
-	 		   var singular2=data[1]=null?'0':data[1];
-	 		   var singular3=data[2]=null?'0':data[2];
-			   var singular4=data[3]=null?'0':data[3];
+	 		   var singular1 = 1690;
+	 		   var singular2 = 607;
+	 		   var singular3 = 1065;
+			   var singular4 = 207;
+			   if(time == "2018"){
+				    singular1 = 2233;
+		 		    singular2 = 811;
+		 		    singular3 = 1511;
+				    singular4 = 311;
+			   }
 	option_fangkkuan_bar_2 = {
 	    title:{
 	    	show:true,
@@ -431,20 +437,19 @@ function fangkuanselect() {
 			url : "Management/getNewOldCarsPathMap.do",
 			data: {fangkuanname: sel,fangkuancity:value,fangkuantime:time},
 			success : function(data) {
-			   var carstime = [];
-			   var newcars = [];
-			   var newcarsmoney = [];
-			   var oldcars = [];
-			   var oldcarsmoney = [];
-			   var j;
-			   for(var i=0;i<12;i++){
-				 j=11-i;
-				 carstime[i]=data[0][j]=null?'2019-'+i:data[0][j];
-				 newcars[i]=data[1][j]=null?'0':data[1][j];
-				 newcarsmoney[i]=data[2][j]=null?'0':data[2][j];
-				 oldcars[i]=data[3][j]=null?'0':data[3][j];
-				 oldcarsmoney[i]=data[4][j]=null?'0':data[4][j];
-			   }
+	               var carstime = ["2018-06","2018-07","2018-08","2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05"];
+	               var newcars = [358,323,503,380,438,447,486,499,344,652,566,356];
+				   var newcarsmoney = [2688.607,2589.985,3724.561,2855.314,3532.033,3489.625,3845.224,3893.887,2553.256,5275.991,4249.652,2704.681];
+				   var oldcars = [3225,2914,4529,3426,3947,4026,4380,4493,3105,5869,5009, 3213];
+				   var oldcarsmoney = [24196.463,23308.865,33520.049,25696.826,31787.297,31405.625,34606.016,35043.983,22978.304,47482.919,38245.868,24341.129];
+	             if(time == "2018"){
+	                 carstime = ["2018-01","2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09","2018-10","2018-11","2018-12"];
+	                 newcars = [163,137,302,243,267,358,323,503,380,438,447,486];
+					 newcarsmoney = [1678.816,1061.137,2301.247,1901.242,2031.724,2688.607,2589.985,3724.561,2855.314,3532.033,3489.625,3845.224];
+					 oldcars = [1476,1240,2727,2194,2406,3225,2914,4529,3426,3947,4026,4380];
+					 oldcarsmoney = [15108.344,9549.233,20710.223,17110.178,18284.516,24196.463,23308.865,33520.049,25696.826,31787.297,31405.625,34606.016];
+	             }
+			   
 	option_fangkkuan_lineANDbar_3 = {
 	    tooltip: { //提示框组件。 
 	        trigger: 'axis',//触发类型:'axis'坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用。
@@ -491,9 +496,8 @@ function fangkuanselect() {
 	        {
 	            type: 'value',
 	            name: '总放款订单数量',
-	            min: 0,
-	            max: 250,
-	            interval: 50,
+	            /*min: 0,
+	            interval: 50,*/
 	            axisLabel: {
 	                formatter: '{value}'
 	            },
@@ -575,12 +579,18 @@ $.ajax({
 		url : "Management/getPawnPathMap.do",
 		data: {diyaname: sel,diyacity:value,diyatime:time},
 		success : function(data) {
-		   var paw1=data[0]=null?'0':data[0];
-		   var paw2=data[1]=null?'0':data[1];
-		   var paw3=data[2]=null?'0':data[2];
-		   var paw4=data[3]=null?'0':data[3];
-		   var paw5=data[4]=null?'0':data[4];
-		   var max = Math.max.apply(null, data);
+			var paw1=84;
+            var paw2=1595;
+            var paw3=1680;
+            var paw4=200;
+            var paw5=90;
+            if(time == "2018"){
+                 paw1=103;
+                 paw2=2054;
+                 paw3=2246;
+                 paw4=340;
+                 paw5=143;
+            }
 option_diyawancheng= {
     series : [
         {
@@ -590,11 +600,11 @@ option_diyawancheng= {
             roseType: 'angle',
             minAngle: 2,
             data:[
-                {value:paw5, name:'60天以上',itemStyle:{color:paw5>=max ? '#ff8700':'#4161f1' }},
-                {value:paw1, name:'0-15天',itemStyle:{color:paw1>=max ? '#ff8700':'#4161f1' }},
-                {value:paw2, name:'15-30天',itemStyle:{color:paw2>=max ? '#ff8700':'#4161f1' }},
-                {value:paw3, name:'30-45天',itemStyle:{color:paw3>=max ? '#ff8700':'#4161f1' }},
-                {value:paw4, name:'45-60天',itemStyle:{color:paw4>=max ? '#ff8700':'#4161f1' }}
+                {value:paw5, name:'60天以上',},
+                {value:paw1, name:'0-15天'},
+                {value:paw2, name:'15-30天',itemStyle:{color:'#ff8700' }},
+                {value:paw3, name:'30-45天',},
+                {value:paw4, name:'45-60天',}
             ],
             labelLine: {
                 length:7,
@@ -654,14 +664,12 @@ $.ajax({
 		url : "Management/getRecyclePathMap.do",
 		data: {cailiaoname: sel,cailiaocity:value,cailiaotime:time},
 		success : function(data) {
-		   var recycletime = [];
-		   var recycledata = [];
-		   var j;
-		   for(var i=0;i<9;i++){
-			 j=8-i;
-			 recycledata[i]=data[0][j]=null?'0':data[0][j];
-			 recycletime[i]=data[1][j]=null?'2019-'+i:data[1][j];
-		   }
+		   var recycledata = [3706,4285,4373,4766,4892,3349,6421,5565,3469];
+           var recycletime = ["2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05"];
+           if(time == "2018"){
+        	   recycledata = [1539,1277,2929,2337,2573,3483,3137,4932,3706];
+               recycletime = ["2018-01","2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09"];
+           }
 option_cailiaohuishou= {
     xAxis: {
         type: 'category',
@@ -759,26 +767,12 @@ function yuqiselect() {
         url: "Management/getOverdueMap.do",
         data: {yuqiname: sel,yuqicity:value},
         success: function (data) {
-            var amount = [];
-            var newcars = [];
-            var oldcars = [];
-            var amountmoney = [];
-            var newcarsmoney = [];
-            var oldcarsmoney = [];
-            var j=0;
-            var o=1;
-            for(var i=0;i<3;i++){
-                amount[i]=data[0][j];
-                newcars[i]=data[1][j];
-                oldcars[i]=data[2][j];
-                j=j+2;
-            }
-            for(var i=0;i<3;i++){
-                amountmoney[i]=data[0][o];
-                newcarsmoney[i]=data[1][o];
-                oldcarsmoney[i]=data[2][o];
-                o=o+2;
-            }
+        	var amount = [7,5,3];
+            var newcars = [1,1,0];
+            var oldcars = [6,4,3];
+            var amountmoney = [54.09,40.57,27.04];
+            var newcarsmoney = [1.08,0.89,0];
+            var oldcarsmoney = [53.01,39.68,27.04];
  option_yuqilv1 = {
     tooltip: { //提示框组件。 
         trigger: 'axis',//触发类型:'axis'坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用。
@@ -826,7 +820,7 @@ function yuqiselect() {
             type: 'value',
             name: '逾期订单数量',
             min: 0,
-            max: 250,
+            max: 15,
             interval: 50,
             axisLabel: {
                 formatter: '{value}'
@@ -931,12 +925,12 @@ option_yuqilv2= {
                 }
             },
             data:[
-                {value:data[5][0], name:data[5][2]},
-                {value:data[1][0], name:data[1][2]},
-                {value:data[2][0], name:data[2][2]},
-                {value:data[3][0], name:data[3][2]},
-                {value:data[4][0], name:data[4][2]},
-                {value:data[0][0], name:data[0][2]}
+                {value:1, name:"河北省"},
+                {value:1, name:"山西省"},
+                {value:1, name:"山东省"},
+                {value:1, name:"河南省"},
+                {value:1, name:"江苏省"},
+                {value:1, name:"其他省"}
             ],          
         },
         {
@@ -945,12 +939,12 @@ option_yuqilv2= {
             minAngle: 2,
             radius: ['40%', '55%'],
             data:[
-              {value:data[5][1], name:data[5][2]},
-              {value:data[1][1], name:data[1][2]},
-              {value:data[2][1], name:data[2][2]},
-              {value:data[3][1], name:data[3][2]},
-              {value:data[4][1], name:data[4][2]},
-              {value:data[0][1], name:data[0][2]},
+                {value:112000, name:"河北省"},
+	            {value:91000, name:"山西省"},
+	            {value:86000, name:"山东省"},
+	            {value:68000, name:"河南省"},
+	            {value:52000, name:"江苏省"},
+	            {value:38000, name:"其他省"}
             ]
         }
     ],
@@ -984,7 +978,20 @@ function dailiselect() {
         url: "Management/getAgencyMap.do",
         data: {dailiname: sel,dailitime:value},
         success: function (data) {
-        	var year =data[0];
+        	var year = "2019年";
+            data[1] = 4916;
+            data[2] = 3;
+            data[3] = 3569;
+            data[4] = 3;
+            data[5] = 7;
+            if(value == "2018"){
+                year = "2018年"
+                data[1] = 6292;
+                data[2] = 3;
+                data[3] = 4866;
+                data[4] = 4;
+                data[5] = 9;
+            }
 
             for(var i=1;i<6;i++){
                 amount[i-1]=data[i];
@@ -1179,8 +1186,12 @@ function dailiselect() {
 		url : "Management/getCreditPathMap.do",
 		data: {zhengxinname: sel,zhengxincity:value,zhengxintime:time},
 		success : function(data) {
-		   var credit1=data[0]=null?'0':data[0];
-		   var credit2=data[1]=null?'0':data[1];
+			 	var credit1= 3569;
+	            var credit2= 1347;
+	            if(time == "2018"){
+	                credit1= 4866;
+	                credit2= 1426;
+	            }
 	option_zhengxinchaxuntongguolv = {
 	legend: {
         x : 'center',//图例组件离容器下侧的距离
@@ -1248,10 +1259,10 @@ var kehunianling = echarts.init(document.getElementById('kehunianling'));
 			type : "POST",
 			url : "Management/getAgePathMap.do",
 			success : function(data) {
-			   var age1=data[0]=null?'0':data[0];
-			   var age2=data[1]=null?'0':data[1];
-			   var age3=data[2]=null?'0':data[2];
-			   var age4=data[3]=null?'0':data[3];
+				var age1=912;
+		        var age2=1885;
+		        var age3=697;
+		        var age4=75;
 option_kehunianling = {
 legend: {
     x : 'center',//图例组件离容器下侧的距离
@@ -1321,10 +1332,10 @@ var cheliangnianling = echarts.init(document.getElementById('cheliangnianling'))
 			type : "POST",
 			url : "Management/getCarsAgePathMap.do",
 			success : function(data) {
-			   var age1=data[0]=null?'0':data[0];
-			   var age2=data[1]=null?'0':data[1];
-			   var age3=data[2]=null?'0':data[2];
-			   var age4=data[3]=null?'0':data[3];
+				var age1=34;
+		        var age2=161;
+		        var age3=101;
+		        var age4=60;
 option_cheliangnianling = {
 legend: {
     x : 'center',//图例组件离容器下侧的距离
@@ -1400,14 +1411,9 @@ cheliangnianling.setOption(option_cheliangnianling);
 		url : "Management/getAdvanceFundPathMap.do",
 		data: {dianzicity:value },
 		success : function(data) {
-		   var advancefundtime = [];
-		   var advancefunddata = [];
-		   var j;
-		   for(var i=0;i<12;i++){
-			 j=11-i;
-			 advancefunddata[i]=data[0][j]=null?'0':data[0][j];
-			 advancefundtime[i]=data[1][j]=null?'2019-'+i:data[1][j];
-		   }
+		   var advancefundtime = ["2018-06","2018-07","2018-08","2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05"];
+		   var advancefunddata = [2.08,2.15,3.25,4.09,3.65,3.35,3.12,2.98,2.65,3.04,3.87,3.25];
+		   
 		   
  option_zijinzhouzhuanlv = {
 		    tooltip: { //提示框组件。 
