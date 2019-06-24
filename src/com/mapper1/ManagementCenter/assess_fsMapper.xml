@@ -249,7 +249,7 @@
   			where iekir.`status`=62 
   			and iekir.result_1_code=1 
   			and ki.id=iekir.icbc_id 
-  			andki.app=0 
+  			and ki.app=0 
   			<if test="city_id != 0">
 		  	and ki.id in(select icbc_id from kjs_icbc_kk 
 		  		   where year(SYSDATE())-year(dt_add) &lt; 6 

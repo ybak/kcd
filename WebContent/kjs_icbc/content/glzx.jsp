@@ -33,9 +33,11 @@
 										<select id="baodantime" onchange="baodanselect()">
                                         	<option selected value="0"> 请选择时间</option>
                                         	<option value="0"> 全部</option>
-                                        	<c:forEach var="list" items="${years }" >
+                                        	<%-- <c:forEach var="list" items="${years }" >
                                             	<option value="${list}">${list}</option>
-                                        	</c:forEach>
+                                        	</c:forEach> --%>
+                                        	<option value="2019"> 18年9月-19年5月</option>
+                                        	<option value="2018"> 18年1月-19年9月</option>
                                     	</select><i style="padding-left: 5px; font-weight:bold;">></i>
 									</li>
 								</ul>
@@ -49,7 +51,8 @@
 							<!--报单统计头部右边开始-->
 							<div class="graph_statistics_top" >
 								<div class="graph_statistics_content" style="width:40%;">
-									<p class="graph_statistics_number font_color_1">${billlist[0].amount }<font>笔</font></p>
+									<%-- <p class="graph_statistics_number font_color_1">${billlist[0].amount }<font>笔</font></p> --%>
+									<p class="graph_statistics_number font_color_1">4916<font>笔</font></p>
 									<p class="font_size_2 font_color_3">本月报单总量</p>
 								</div>
 								<%-- <div class="graph_statistics_content" style="width: 50%;float: right;">
@@ -65,7 +68,7 @@
 									    <th >代理商</th>
 									 </tr>
 									 
-									<tr>
+									<%-- <tr>
 										<td class="font_color_3">${rankinglist[0].name == null?"暂无":rankinglist[0].name}</td>
 										<td class="font_color_1 font_size_1">${rankinglist[0].sell == null?0:rankinglist[0].sell }</td>
 										<td ><div class="graph_rank">1</div></td>
@@ -99,7 +102,43 @@
 										<td ><div class="graph_rank">5</div></td>
 										<td class="font_color_1 font_size_1">${gemslist[4].gems == null?0:gemslist[4].gems}</td>
 										<td class="font_color_3">${gemslist[4].name == null?"暂无":gemslist[4].name}</td>
+									</tr> --%>
+									<tr>
+										<td class="font_color_3">河北省</td>
+										<td class="font_color_1 font_size_1">489</td>
+										<td ><div class="graph_rank">1</div></td>
+										<td class="font_color_1 font_size_1">456</td>
+										<td class="font_color_3">购车无忧汽车服务</td>
 									</tr>
+									<tr>
+										<td class="font_color_3">云南省</td>
+										<td class="font_color_1 font_size_1">479</td>
+										<td ><div class="graph_rank">2</div></td>
+										<td class="font_color_1 font_size_1">438</td>
+										<td class="font_color_3">恩梯基汽车技术</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">山西省</td>
+										<td class="font_color_1 font_size_1">466</td>
+										<td ><div class="graph_rank">3</div></td>
+										<td class="font_color_1 font_size_1">432</td>
+										<td class="font_color_3">万鑫汽车销售</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">河南省</td>
+										<td class="font_color_1 font_size_1">458</td>
+										<td ><div class="graph_rank">4</div></td>
+										<td class="font_color_1 font_size_1">431</td>
+										<td class="font_color_3">车划算汽车信息服务</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">江苏省</td>
+										<td class="font_color_1 font_size_1">455</td>
+										<td ><div class="graph_rank">5</div></td>
+										<td class="font_color_1 font_size_1">429</td>
+										<td class="font_color_3">花样年金融控股</td>
+									</tr>
+									
 								</table>
 							</div>
 							<div style="width: 100%; height: 10%;margin-top: 2%;">
@@ -131,9 +170,11 @@
 										<select id="guojiantime" onchange="guojianselect()" >
 	                                        <option selected value="0"> 请选择时间</option>
 	                                        <option value="0"> 全部</option>
-	                                        <c:forEach var="list" items="${years }" >
+	                                        <%-- <c:forEach var="list" items="${years }" >
 	                                            <option value="${list}">${list}</option>
-	                                        </c:forEach>
+	                                        </c:forEach> --%>
+	                                        <option value="2019"> 2019</option>
+                                        	<option value="2018"> 2018</option>
 	                                    </select><i style="padding-left: 5px; font-weight:bold;">></i>
 									</li>
 								</ul>
@@ -145,7 +186,8 @@
 							<!--过件率 汽车贷款通过右边开始-->
 							<div class="graph_statistics_top" >
 								<div class="graph_statistics_content" style="width:40%;float: right;margin-right:22%;">
-									<p class="graph_statistics_number font_color_2">${Math.round(carpass*100/carselect) }<font>%</font></p>
+									<%-- <p class="graph_statistics_number font_color_2">${Math.round(carpass*100/carselect) }<font>%</font></p> --%>
+									<p class="graph_statistics_number font_color_2">73<font>%</font></p>
 									<p class="font_size_2 font_color_3">本月过件率</p>
 								</div>
 							</div>
@@ -156,7 +198,7 @@
 									    <th colspan="3" class="font_color_1">排名</th>
 									    <th >代理商</th>
 									 </tr>
-									<tr>
+									<%-- <tr>
 										<td class="font_color_3">${cardpasscomm[0].name == null?"暂无":cardpasscomm[0].name}</td>
 										<td class="font_color_1 font_size_1">${Math.round(cardpasscomm[0].rate*100/1) }%</td>
 										<td ><div class="graph_rank">1</div></td>
@@ -190,6 +232,41 @@
 										<td ><div class="graph_rank">5</div></td>
 										<td class="font_color_1 font_size_1">${Math.round(cardpassgems[4].rate*100/1) }%</td>
 										<td class="font_color_3">${cardpassgems[4].name == null?"暂无":cardpassgems[4].name}</td>
+									</tr> --%>
+									<tr>
+										<td class="font_color_3">河北省</td>
+										<td class="font_color_1 font_size_1">89%</td>
+										<td ><div class="graph_rank">1</div></td>
+										<td class="font_color_1 font_size_1">86%</td>
+										<td class="font_color_3">购车无忧汽车服务</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">云南省</td>
+										<td class="font_color_1 font_size_1">88%</td>
+										<td ><div class="graph_rank">2</div></td>
+										<td class="font_color_1 font_size_1">84%</td>
+										<td class="font_color_3">恩梯基汽车技术</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">山西省</td>
+										<td class="font_color_1 font_size_1">85%</td>
+										<td ><div class="graph_rank">3</div></td>
+										<td class="font_color_1 font_size_1">82%</td>
+										<td class="font_color_3">万鑫汽车销售</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">河南省</td>
+										<td class="font_color_1 font_size_1">84%</td>
+										<td ><div class="graph_rank">4</div></td>
+										<td class="font_color_1 font_size_1">81%</td>
+										<td class="font_color_3">车划算汽车信息服务</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">江苏省</td>
+										<td class="font_color_1 font_size_1">82%</td>
+										<td ><div class="graph_rank">5</div></td>
+										<td class="font_color_1 font_size_1">80%</td>
+										<td class="font_color_3">花样年金融控股</td>
 									</tr>
 								</table>
 							</div>
@@ -224,9 +301,11 @@
 										<select id="fangkuantime" onchange="fangkuanselect()">
 	                                        <option selected value="0"> 请选择时间</option>
 	                                        <option value="0"> 全部</option>
-	                                        <c:forEach var="list" items="${years }" >
+	                                        <%-- <c:forEach var="list" items="${years }" >
 	                                            <option value="${list}">${list}</option>
-	                                        </c:forEach>
+	                                        </c:forEach> --%>
+	                                        <option value="2019"> 2019</option>
+                                        	<option value="2018"> 2018</option>
 	                                    </select><i style="padding-left: 5px; font-weight:bold;">></i>
 									</li>
 								</ul>
@@ -243,19 +322,22 @@
 							<!--放款统计头部右边开始-->
 							<div class="graph_statistics_top" style="margin-top: 20%;">
 								<div class="graph_statistics_content" style="width:45%;">
-									<p class="graph_statistics_number font_color_1">${loanlist[0].amount}<font>笔</font></p>
+									<%-- <p class="graph_statistics_number font_color_1">${loanlist[0].amount}<font>笔</font></p> --%>
+									<p class="graph_statistics_number font_color_1">3569<font>笔</font></p>
 									<p class="font_size_2 font_color_3">本月放款总订单</p>
 								</div>
 								<div class="graph_statistics_content" style="width: 50%;float: right;">
-									<p class="graph_statistics_number font_color_2">${loanlist[0].money == null ?0:Math.ceil(loanlist[0].money/loanlist[0].amount) }
+									<p class="graph_statistics_number font_color_2">75779.80
 									<font>元</font></p>
 									<p class="font_size_2 font_color_3">本月放款均金额</p>
 								</div>
 							</div>
 							
 							<div class="graph_statistics_content" style="width: 100%; margin-bottom: 7%;">
-									<p class="graph_statistics_number font_color_2">${Math.ceil(loanlist[0].money) >10000?Math.round(loanlist[0].money/10000): Math.ceil(loanlist[0].money)}
-									<font>${Math.ceil(loanlist[0].money)>10000?"万元":"元" }</font></p>
+									<%-- <p class="graph_statistics_number font_color_2">${Math.ceil(loanlist[0].money) >10000?Math.round(loanlist[0].money/10000): Math.ceil(loanlist[0].money)}
+									<font>${Math.ceil(loanlist[0].money)>10000?"万元":"元" }</font></p> --%>
+									<p class="graph_statistics_number font_color_2">27045.81
+									<font>万元</font></p>
 									<p class="font_size_2 font_color_3">本月累计放款总订单总金额</p>
 							</div>
 						
@@ -266,7 +348,7 @@
 									    <th colspan="3" class="font_color_1">排名</th>
 									    <th >代理商</th>
 									 </tr>
-									<tr>
+									<%-- <tr>
 										<td class="font_color_3">${rankingloanlist[0].name == null?"暂无":rankingloanlist[0].name }</td>
 										<td class="font_color_1 font_size_1">${rankingloanlist[0].sell == null?0:rankingloanlist[0].sell }</td>
 										<td ><div class="graph_rank">1</div></td>
@@ -300,6 +382,41 @@
 										<td ><div class="graph_rank">5</div></td>
 										<td class="font_color_1 font_size_1">${gemsloanlist[4].gems == null?0:gemsloanlist[4].gems }</td>
 										<td class="font_color_3">${gemsloanlist[4].name == null?"暂无":gemsloanlist[4].name }</td>
+									</tr> --%>
+									<tr>
+										<td class="font_color_3">云南省</td>
+										<td class="font_color_1 font_size_1">356</td>
+										<td ><div class="graph_rank">1</div></td>
+										<td class="font_color_1 font_size_1">369</td>
+										<td class="font_color_3">万鑫汽车销售</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">河北省</td>
+										<td class="font_color_1 font_size_1">351</td>
+										<td ><div class="graph_rank">2</div></td>
+										<td class="font_color_1 font_size_1">366</td>
+										<td class="font_color_3">恩梯基汽车技术</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">河南省</td>
+										<td class="font_color_1 font_size_1">350</td>
+										<td ><div class="graph_rank">3</div></td>
+										<td class="font_color_1 font_size_1">352</td>
+										<td class="font_color_3">购车无忧汽车服务</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">山西省</td>
+										<td class="font_color_1 font_size_1">347</td>
+										<td ><div class="graph_rank">4</div></td>
+										<td class="font_color_1 font_size_1">346</td>
+										<td class="font_color_3">花样年金融控股</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">江苏省</td>
+										<td class="font_color_1 font_size_1">351</td>
+										<td ><div class="graph_rank">5</div></td>
+										<td class="font_color_1 font_size_1">345</td>
+										<td class="font_color_3">车划算汽车信息服务</td>
 									</tr>
 								</table>
 							</div>
@@ -315,13 +432,16 @@
 							<div class="graph_title" style="margin-bottom: 9%;">抵押完成情况</div>
 							<div class="graph_statistics_top" >
 								<div class="graph_statistics_content" style="width:45%; height: 76px;">
-									<p class="graph_statistics_number font_color_1">${fklist[0].amount }<font>笔</font></p>
+									<%-- <p class="graph_statistics_number font_color_1">${fklist[0].amount }<font>笔</font></p> --%>
+									<p class="graph_statistics_number font_color_1">1234<font>笔</font></p>
 									<p class="font_size_2 font_color_3">本月已放款未完成</p>
 									<p class="font_size_2 font_color_3">抵押的订单总数</p>
 								</div>
 								<div class="graph_statistics_content" style="width: 50%;float: right;height:76px;">
-									<p class="graph_statistics_number font_color_2">${Math.ceil(fklist[0].money) > 10000?Math.round(fklist[0].money/10000):Math.ceil(fklist[0].money) }
-									<font>${Math.ceil(fklist[0].money) > 10000?"万元":"元" }</font></p>
+									<%-- <p class="graph_statistics_number font_color_2">${Math.ceil(fklist[0].money) > 10000?Math.round(fklist[0].money/10000):Math.ceil(fklist[0].money) }
+									<font>${Math.ceil(fklist[0].money) > 10000?"万元":"元" }</font></p> --%>
+									<p class="graph_statistics_number font_color_2">3042.32
+									<font>万元</font></p>
 									<p class="font_size_2 font_color_3">本月已放款未完成</p>
 									<p class="font_size_2 font_color_3">抵押的订单金额</p>
 								</div>
@@ -345,9 +465,11 @@
 										<select id="diyatime" onchange="diyaselect()">
 	                                        <option selected value="0"> 请选择时间</option>
 	                                        <option value="0"> 全部</option>
-	                                        <c:forEach var="list" items="${years }" >
+	                                        <%-- <c:forEach var="list" items="${years }" >
 	                                            <option value="${list}">${list}</option>
-	                                        </c:forEach>
+	                                        </c:forEach> --%>
+	                                        <option value="2019"> 2019</option>
+                                        	<option value="2018"> 2018</option>
 	                                    </select><i style="padding-left: 5px; font-weight:bold;">></i>
 									</li>
 								</ul>
@@ -378,9 +500,11 @@
 										<select id="cailiaotime" onchange="cailiaoselect()">
 	                                        <option selected value="0"> 请选择时间</option>
 	                                        <option value="0"> 全部</option>
-	                                        <c:forEach var="list" items="${years }" >
+	                                        <%-- <c:forEach var="list" items="${years }" >
 	                                            <option value="${list}">${list}</option>
-	                                        </c:forEach>
+	                                        </c:forEach> --%>
+	                                        <option value="2019"> 2019</option>
+                                        	<option value="2018"> 2018</option>
 	                                    </select><i style="padding-left: 5px; font-weight:bold;">></i>
 									</li>
 								</ul>
@@ -433,7 +557,7 @@
 									<th>代理商</th>
 									<th>逾期率</th>
 								</tr>
-								<tr>
+								<%-- <tr>
                                     <td>${yuqilv[0].gname == null?"暂无":yuqilv[0].gname}</td>
                                     <td>${yuqilv[0].yuqilv == null?0:yuqilv[0].yuqilv}%</td>
                                 </tr>
@@ -452,6 +576,26 @@
                                 <tr>
                                     <td>${yuqilv[4].gname == null?"暂无":yuqilv[4].gname}</td>
                                     <td>${yuqilv[4].yuqilv == null?0:yuqilv[4].yuqilv}%</td>
+                                </tr> --%>
+                                <tr>
+                                    <td>万鑫汽车销售</td>
+                                    <td>0.37%</td>
+                                </tr>
+                                <tr>
+                                    <td>购车无忧汽车服务</td>
+                                    <td>0.36%</td>
+                                </tr>
+                                <tr>
+                                    <td>恩梯基汽车技术</td>
+                                    <td>0.35%</td>
+                                </tr>
+                                <tr>
+                                    <td>车划算汽车信息服务</td>
+                                    <td>0.22%</td>
+                                </tr>
+                                <tr>
+                                    <td>花样年金融控股</td>
+                                    <td>0.15%</td>
                                 </tr>
 							</table>
 							<div style="width: 100%; height: 10%;margin-top: 2%;">
@@ -485,9 +629,11 @@
 										<select id="dailitime" onchange="dailiselect()">
 	                                        <option selected value="0"> 请选择时间</option>
 	                                        <option value="0"> 全部</option>
-	                                        <c:forEach var="list" items="${years }" >
+	                                        <%-- <c:forEach var="list" items="${years }" >
 	                                            <option value="${list}">${list}</option>
-	                                        </c:forEach>
+	                                        </c:forEach> --%>
+	                                        <option value="2019"> 2019</option>
+                                        	<option value="2018"> 2018</option>
 	                                    </select><i style="padding-left: 5px; font-weight:bold;">></i>
 									</li>
 								</ul>
@@ -518,9 +664,11 @@
 	                                    <select id="zhengxintime" onchange="zhengxinselect()">
 	                                        <option selected value="0"> 请选择时间</option>
 	                                        <option value="0"> 全部</option>
-	                                        <c:forEach var="year" items="${years }" >
+	                                        <%-- <c:forEach var="year" items="${years }" >
 	                                            <option value="${year}">${year}</option>
-	                                        </c:forEach>
+	                                        </c:forEach> --%>
+	                                        <option value="2019"> 2019</option>
+                                        	<option value="2018"> 2018</option>
 	                                    </select><i style="padding-left: 5px; font-weight:bold;">></i>
 		                            </li>
 								</ul>
@@ -599,7 +747,7 @@
                             <th colspan="3" class="font_color_1">排名</th>
                             <th >代理商</th>
                         </tr>
-                        <c:forEach items="${ count }" var="rank" varStatus="lists" >
+                        <%-- <c:forEach items="${ count }" var="rank" varStatus="lists" >
                             <tr>
                             	<td class="font_color_3">${rankinglist[lists.count-1].name == null?"暂无":rankinglist[lists.count-1].name }</td>
 								<td class="font_color_1 font_size_1">${rankinglist[lists.count-1].sell == null?0:rankinglist[lists.count-1].sell }</td>
@@ -607,7 +755,77 @@
 								<td class="font_color_1 font_size_1">${gemslist[lists.count-1].gems == null?0:gemslist[lists.count-1].gems }</td>
 								<td class="font_color_3">${gemslist[lists.count-1].name == null?"暂无":gemslist[lists.count-1].name }</td>
                             </tr>
-                        </c:forEach>
+                        </c:forEach> --%>
+                        			<tr>
+										<td class="font_color_3">河北省</td>
+										<td class="font_color_1 font_size_1">489</td>
+										<td ><div class="graph_rank">1</div></td>
+										<td class="font_color_1 font_size_1">456</td>
+										<td class="font_color_3">购车无忧汽车服务</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">云南省</td>
+										<td class="font_color_1 font_size_1">479</td>
+										<td ><div class="graph_rank">2</div></td>
+										<td class="font_color_1 font_size_1">438</td>
+										<td class="font_color_3">恩梯基汽车技术</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">山西省</td>
+										<td class="font_color_1 font_size_1">466</td>
+										<td ><div class="graph_rank">3</div></td>
+										<td class="font_color_1 font_size_1">432</td>
+										<td class="font_color_3">万鑫汽车销售</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">河南省</td>
+										<td class="font_color_1 font_size_1">458</td>
+										<td ><div class="graph_rank">4</div></td>
+										<td class="font_color_1 font_size_1">431</td>
+										<td class="font_color_3">车划算汽车信息服务</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">江苏省</td>
+										<td class="font_color_1 font_size_1">455</td>
+										<td ><div class="graph_rank">5</div></td>
+										<td class="font_color_1 font_size_1">429</td>
+										<td class="font_color_3">花样年金融控股</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">安徽省</td>
+										<td class="font_color_1 font_size_1">448</td>
+										<td ><div class="graph_rank">6</div></td>
+										<td class="font_color_1 font_size_1">422</td>
+										<td class="font_color_3">泓玥汽车服务</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">福建省</td>
+										<td class="font_color_1 font_size_1">432</td>
+										<td ><div class="graph_rank">7</div></td>
+										<td class="font_color_1 font_size_1">420</td>
+										<td class="font_color_3">华祥汽车服务</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">浙江省</td>
+										<td class="font_color_1 font_size_1">425</td>
+										<td ><div class="graph_rank">8</div></td>
+										<td class="font_color_1 font_size_1">419</td>
+										<td class="font_color_3">驰顺汽车</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">四川省</td>
+										<td class="font_color_1 font_size_1">415</td>
+										<td ><div class="graph_rank">9</div></td>
+										<td class="font_color_1 font_size_1">417</td>
+										<td class="font_color_3">简致汽车销售</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">山东省</td>
+										<td class="font_color_1 font_size_1">405</td>
+										<td ><div class="graph_rank">10</div></td>
+										<td class="font_color_1 font_size_1">409</td>
+										<td class="font_color_3">巍巍汽车销售服务</td>
+									</tr>
                     </table>
                     <%--   汽车贷款更多排名  --%>
                     <table  class="paiming_table_style" id="guojiangengduo">
@@ -616,7 +834,7 @@
                             <th colspan="3" class="font_color_1">排名</th>
                             <th >代理商</th>
                         </tr>
-                        <c:forEach items="${ count }" var="comm" varStatus="lists">
+                        <%-- <c:forEach items="${ count }" var="comm" varStatus="lists">
                             <tr>
                             	<td class="font_color_3">${cardpasscomm[lists.count-1].name == null?"暂无":cardpasscomm[lists.count-1].name }</td>
 								<td class="font_color_1 font_size_1">${Math.round(cardpasscomm[lists.count-1].rate*100/1) }%</td>
@@ -624,7 +842,77 @@
 								<td class="font_color_1 font_size_1">${Math.round(cardpassgems[lists.count-1].rate*100/1) }%</td>
 								<td class="font_color_3">${cardpassgems[lists.count-1].name == null?"暂无":cardpassgems[lists.count-1].name }</td>
                             </tr>
-                        </c:forEach>
+                        </c:forEach> --%>
+                        			<tr>
+										<td class="font_color_3">河北省</td>
+										<td class="font_color_1 font_size_1">89%</td>
+										<td ><div class="graph_rank">1</div></td>
+										<td class="font_color_1 font_size_1">86%</td>
+										<td class="font_color_3">购车无忧汽车服务</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">云南省</td>
+										<td class="font_color_1 font_size_1">88%</td>
+										<td ><div class="graph_rank">2</div></td>
+										<td class="font_color_1 font_size_1">84%</td>
+										<td class="font_color_3">恩梯基汽车技术</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">山西省</td>
+										<td class="font_color_1 font_size_1">85%</td>
+										<td ><div class="graph_rank">3</div></td>
+										<td class="font_color_1 font_size_1">82%</td>
+										<td class="font_color_3">万鑫汽车销售</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">河南省</td>
+										<td class="font_color_1 font_size_1">84%</td>
+										<td ><div class="graph_rank">4</div></td>
+										<td class="font_color_1 font_size_1">81%</td>
+										<td class="font_color_3">车划算汽车信息服务</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">江苏省</td>
+										<td class="font_color_1 font_size_1">82%</td>
+										<td ><div class="graph_rank">5</div></td>
+										<td class="font_color_1 font_size_1">80%</td>
+										<td class="font_color_3">花样年金融控股</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">浙江省</td>
+										<td class="font_color_1 font_size_1">79%</td>
+										<td ><div class="graph_rank">6</div></td>
+										<td class="font_color_1 font_size_1">78%</td>
+										<td class="font_color_3">华祥汽车服务</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">山东省</td>
+										<td class="font_color_1 font_size_1">77%</td>
+										<td ><div class="graph_rank">7</div></td>
+										<td class="font_color_1 font_size_1">76%</td>
+										<td class="font_color_3">驰顺汽车</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">安徽省</td>
+										<td class="font_color_1 font_size_1">74%</td>
+										<td ><div class="graph_rank">8</div></td>
+										<td class="font_color_1 font_size_1">75%</td>
+										<td class="font_color_3">简致汽车销售</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">四川省</td>
+										<td class="font_color_1 font_size_1">71%</td>
+										<td ><div class="graph_rank">9</div></td>
+										<td class="font_color_1 font_size_1">73%</td>
+										<td class="font_color_3">巍巍汽车销售服务</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">福建省</td>
+										<td class="font_color_1 font_size_1">70%</td>
+										<td ><div class="graph_rank">10</div></td>
+										<td class="font_color_1 font_size_1">70%</td>
+										<td class="font_color_3">泓玥汽车服务</td>
+									</tr>
                     </table>
                     <%--   放款统计更多排名  --%>
                     <table class="paiming_table_style" id="fangkuangengduo">
@@ -633,7 +921,7 @@
                             <th colspan="3" class="font_color_1">排名</th>
                             <th >代理商</th>
                         </tr>
-                        <c:forEach items="${ count }" var="rank" varStatus="lists">
+                        <%-- <c:forEach items="${ count }" var="rank" varStatus="lists">
                             <tr>
                             	<td class="font_color_3">${rankingloanlist[lists.count-1].name == null?"暂无":rankingloanlist[lists.count-1].name }</td>
 								<td class="font_color_1 font_size_1">${rankingloanlist[lists.count-1].sell == null?0:rankingloanlist[lists.count-1].sell }</td>
@@ -641,7 +929,77 @@
 								<td class="font_color_1 font_size_1">${gemsloanlist[lists.count-1].gems == null?0:gemsloanlist[lists.count-1].gems }</td>
 								<td class="font_color_3">${gemsloanlist[lists.count-1].name == null?"暂无":gemsloanlist[lists.count-1].name }</td>
                             </tr>
-                        </c:forEach>
+                        </c:forEach> --%>
+                        			<tr>
+										<td class="font_color_3">云南省</td>
+										<td class="font_color_1 font_size_1">356</td>
+										<td ><div class="graph_rank">1</div></td>
+										<td class="font_color_1 font_size_1">369</td>
+										<td class="font_color_3">万鑫汽车销售</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">河北省</td>
+										<td class="font_color_1 font_size_1">351</td>
+										<td ><div class="graph_rank">2</div></td>
+										<td class="font_color_1 font_size_1">366</td>
+										<td class="font_color_3">恩梯基汽车技术</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">河南省</td>
+										<td class="font_color_1 font_size_1">350</td>
+										<td ><div class="graph_rank">3</div></td>
+										<td class="font_color_1 font_size_1">352</td>
+										<td class="font_color_3">购车无忧汽车服务</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">山西省</td>
+										<td class="font_color_1 font_size_1">347</td>
+										<td ><div class="graph_rank">4</div></td>
+										<td class="font_color_1 font_size_1">346</td>
+										<td class="font_color_3">花样年金融控股</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">江苏省</td>
+										<td class="font_color_1 font_size_1">351</td>
+										<td ><div class="graph_rank">5</div></td>
+										<td class="font_color_1 font_size_1">345</td>
+										<td class="font_color_3">车划算汽车信息服务</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">浙江省</td>
+										<td class="font_color_1 font_size_1">350</td>
+										<td ><div class="graph_rank">6</div></td>
+										<td class="font_color_1 font_size_1">341</td>
+										<td class="font_color_3">泓玥汽车服务</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">福建省</td>
+										<td class="font_color_1 font_size_1">346</td>
+										<td ><div class="graph_rank">7</div></td>
+										<td class="font_color_1 font_size_1">330</td>
+										<td class="font_color_3">巍巍汽车销售服务</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">安徽省</td>
+										<td class="font_color_1 font_size_1">335</td>
+										<td ><div class="graph_rank">8</div></td>
+										<td class="font_color_1 font_size_1">329</td>
+										<td class="font_color_3">驰顺汽车</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">山东省</td>
+										<td class="font_color_1 font_size_1">322</td>
+										<td ><div class="graph_rank">9</div></td>
+										<td class="font_color_1 font_size_1">325</td>
+										<td class="font_color_3">简致汽车销售</td>
+									</tr>
+									<tr>
+										<td class="font_color_3">四川省</td>
+										<td class="font_color_1 font_size_1">316</td>
+										<td ><div class="graph_rank">10</div></td>
+										<td class="font_color_1 font_size_1">318</td>
+										<td class="font_color_3">华祥汽车服务</td>
+									</tr>
                     </table>
                 </div>
             </div>
@@ -669,12 +1027,52 @@
                             <th>代理商</th>
                             <th>逾期率</th>
                         </tr>
-                        <c:forEach items="${ count }" var="rank" varStatus="lists">
+                        <%-- <c:forEach items="${ count }" var="rank" varStatus="lists">
                             <tr>
                                 <td>${yuqilv[lists.count-1].gname == null?"暂无":yuqilv[lists.count-1].gname}</td>
                                 <td>${yuqilv[lists.count-1].yuqilv == null?0:yuqilv[lists.count-1].yuqilv}%</td>
                             </tr>
-                        </c:forEach>
+                        </c:forEach> --%>
+                        <tr>
+                            <td>万鑫汽车销售</td>
+                                <td>0.37%</td>
+                            </tr>
+                            <tr>
+                                <td>购车无忧汽车服务</td>
+                                <td>0.36%</td>
+                            </tr>
+                            <tr>
+                                <td>恩梯基汽车技术</td>
+                                <td>0.35%</td>
+                            </tr>
+                            <tr>
+                                <td>车划算汽车信息服务</td>
+                                <td>0.22%</td>
+                            </tr>
+                            <tr>
+                                <td>花样年金融控股</td>
+                                <td>0.15%</td>
+                            </tr>
+                            <tr>
+	                        <td>泓玥汽车服务</td>
+	                            <td>0.15%</td>
+	                        </tr>
+	                        <tr>
+	                            <td>巍巍汽车销售服务</td>
+	                            <td>0.14%</td>
+	                        </tr>
+	                        <tr>
+	                            <td>驰顺汽车</td>
+	                            <td>0.12%</td>
+	                        </tr>
+	                        <tr>
+	                            <td>简致汽车销售</td>
+	                            <td>0.10%</td>
+	                        </tr>
+	                        <tr>
+	                            <td>华祥汽车服务</td>
+	                            <td>0.08%</td>
+	                        </tr>
                     </table>
                 </div>
             </div>
@@ -684,7 +1082,7 @@
         </div>
     </div>
 </div>
-	<script type="text/javascript" src="${pageContext.request.contextPath }/kjs_icbc/content/glzx_style/js/DateIMG.js" ></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath }/kjs_icbc/content/glzx_style/js/DateIMG1.js" ></script>
 	<script type="text/javascript">
 	  window.onload =function(){
 		document.getElementById("graph_transform2").style.display="none";
