@@ -29,11 +29,11 @@ function graphTransform(){
  		url : "Management/getPathMap.do",
  		data : {baodanname:sel,baodancity:value,baodantime:time},
  		success : function(data) {
- 			 var summarydata = [5965,6149,6139,6292,6412,4708,8477,7983,4916];
-             var timeline = ["2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05"];
+ 			 var summarydata = [6139,6292,6412,4708,8477,7983,4916,5102,124];
+             var timeline = ["2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07"];
              if(time == "2018"){
-                 summarydata = [2447,1946,4166,3430,3309,4128,3871,5870,5965];
-                 timeline = ["2018-01","2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09"];
+                 summarydata = [1946,4166,3430,3309,4128,3871,5870,5965,6149];
+                 timeline = ["2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09","2018-10"];
              }
  	//数据图绘制
    option_baodan = {
@@ -138,11 +138,11 @@ function graphTransform(){
  		url : "Management/getCarPathMap.do",
  		data : {guojianname:sel,guojiancity:value,guojiantime:time},
  		success : function(data) {
- 			 var carpassdata = [3806,4385,4473,4866,4992,3449,6521,5665,3569];
-             var carpasstime = ["2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05"];
+ 			 var carpassdata = [4473,4866,4992,3449,6521,5665,3569,3705,91];
+             var carpasstime = ["2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07"];
              if(time == "2018"){
-            	 carpassdata = [1639,1377,3029,2437,2673,3583,3237,5032,3806];
-            	 carpasstime = ["2018-01","2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09"];
+            	 carpassdata = [1377,3029,2437,2673,3583,3237,5032,3806,4385];
+            	 carpasstime = ["2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09","2018-10"];
              }
  	//数据图绘制
    option_guojianlv = {
@@ -258,8 +258,8 @@ function fangkuanselect() {
 	 		url : "Management/getCarFkPathMap.do",
 	 		data: {fangkuanname: sel,fangkuancity:value,fangkuantime:time},
 	 		success : function(data) {
-	 			var newcar = 357;
-		 		var oldcar = 3212;
+	 			var newcar = 12;
+		 		var oldcar = 79;
 	 			if(time == "2018"){
 	 				newcar = 487;
 			 		oldcar = 4379;
@@ -347,10 +347,10 @@ function fangkuanselect() {
 	 		url : "Management/getMoneyPathMap.do",
 	 		data: {fangkuanname: sel,fangkuancity:value,fangkuantime:time},
 	 		success : function(data) {
-	 		   var singular1 = 1690;
-	 		   var singular2 = 607;
-	 		   var singular3 = 1065;
-			   var singular4 = 207;
+	 		   var singular1 = 41;
+	 		   var singular2 = 18;
+	 		   var singular3 = 26;
+			   var singular4 = 6;
 			   if(time == "2018"){
 				    singular1 = 2233;
 		 		    singular2 = 811;
@@ -437,11 +437,11 @@ function fangkuanselect() {
 			url : "Management/getNewOldCarsPathMap.do",
 			data: {fangkuanname: sel,fangkuancity:value,fangkuantime:time},
 			success : function(data) {
-	               var carstime = ["2018-06","2018-07","2018-08","2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05"];
-	               var newcars = [358,323,503,380,438,447,486,499,344,652,566,356];
-				   var newcarsmoney = [2688.607,2589.985,3724.561,2855.314,3532.033,3489.625,3845.224,3893.887,2553.256,5275.991,4249.652,2704.681];
-				   var oldcars = [3225,2914,4529,3426,3947,4026,4380,4493,3105,5869,5009, 3213];
-				   var oldcarsmoney = [24196.463,23308.865,33520.049,25696.826,31787.297,31405.625,34606.016,35043.983,22978.304,47482.919,38245.868,24341.129];
+	               var carstime = ["2018-08","2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07"];
+	               var newcars = [503,380,438,447,486,499,344,652,566,356,309,12];
+				   var newcarsmoney = [3724.561,2855.314,3532.033,3489.625,3845.224,3893.887,2553.256,5275.991,4249.652,2704.681,2565.521,81.35];
+				   var oldcars = [4529,3426,3947,4026,4380,4493,3105,5869,5009, 3213,3396,79];
+				   var oldcarsmoney = [33520.049,25696.826,31787.297,31405.625,34606.016,35043.983,22978.304,47482.919,38245.868,24341.129,25599.71,641.97];
 	             if(time == "2018"){
 	                 carstime = ["2018-01","2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09","2018-10","2018-11","2018-12"];
 	                 newcars = [163,137,302,243,267,358,323,503,380,438,447,486];
@@ -579,11 +579,11 @@ $.ajax({
 		url : "Management/getPawnPathMap.do",
 		data: {diyaname: sel,diyacity:value,diyatime:time},
 		success : function(data) {
-			var paw1=84;
-            var paw2=1595;
-            var paw3=1680;
-            var paw4=200;
-            var paw5=90;
+			var paw1=14;
+            var paw2=58;
+            var paw3=6;
+            var paw4=0;
+            var paw5=0;
             if(time == "2018"){
                  paw1=103;
                  paw2=2054;
@@ -664,11 +664,11 @@ $.ajax({
 		url : "Management/getRecyclePathMap.do",
 		data: {cailiaoname: sel,cailiaocity:value,cailiaotime:time},
 		success : function(data) {
-		   var recycledata = [3706,4285,4373,4766,4892,3349,6421,5565,3469];
-           var recycletime = ["2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05"];
+		   var recycledata = [4373,4766,4892,3349,6421,5565,3469,3705,78];
+           var recycletime = ["2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07"];
            if(time == "2018"){
-        	   recycledata = [1539,1277,2929,2337,2573,3483,3137,4932,3706];
-               recycletime = ["2018-01","2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09"];
+        	   recycledata = [1277,2929,2337,2573,3483,3137,4932,3706,4285];
+               recycletime = ["2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09","2018-10"];
            }
 option_cailiaohuishou= {
     xAxis: {
@@ -767,12 +767,12 @@ function yuqiselect() {
         url: "Management/getOverdueMap.do",
         data: {yuqiname: sel,yuqicity:value},
         success: function (data) {
-        	var amount = [7,5,3];
-            var newcars = [1,1,0];
-            var oldcars = [6,4,3];
-            var amountmoney = [54.09,40.57,27.04];
-            var newcarsmoney = [1.08,0.89,0];
-            var oldcarsmoney = [53.01,39.68,27.04];
+        	var amount = [0.18,0.14,0.09];
+            var newcars = [0,0,0];
+            var oldcars = [0.18,0.14,0.09];
+            var amountmoney = [1.45,1.08,0.72];
+            var newcarsmoney = [0,0,0];
+            var oldcarsmoney = [1.45,1.08,0.72];
  option_yuqilv1 = {
     tooltip: { //提示框组件。 
         trigger: 'axis',//触发类型:'axis'坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用。
@@ -925,12 +925,12 @@ option_yuqilv2= {
                 }
             },
             data:[
-                {value:1, name:"河北省"},
-                {value:1, name:"山西省"},
-                {value:1, name:"山东省"},
-                {value:1, name:"河南省"},
-                {value:1, name:"江苏省"},
-                {value:1, name:"其他省"}
+                {value:0, name:"河北省"},
+                {value:0, name:"山西省"},
+                {value:0, name:"山东省"},
+                {value:0, name:"河南省"},
+                {value:0, name:"江苏省"},
+                {value:0, name:"其他省"}
             ],          
         },
         {
@@ -939,12 +939,12 @@ option_yuqilv2= {
             minAngle: 2,
             radius: ['40%', '55%'],
             data:[
-                {value:112000, name:"河北省"},
-	            {value:91000, name:"山西省"},
-	            {value:86000, name:"山东省"},
-	            {value:68000, name:"河南省"},
-	            {value:52000, name:"江苏省"},
-	            {value:38000, name:"其他省"}
+                {value:0, name:"河北省"},
+	            {value:0, name:"山西省"},
+	            {value:0, name:"山东省"},
+	            {value:0, name:"河南省"},
+	            {value:0, name:"江苏省"},
+	            {value:0, name:"其他省"}
             ]
         }
     ],
@@ -979,11 +979,11 @@ function dailiselect() {
         data: {dailiname: sel,dailitime:value},
         success: function (data) {
         	var year = "2019年";
-            data[1] = 4916;
-            data[2] = 3;
-            data[3] = 3569;
-            data[4] = 3;
-            data[5] = 7;
+            data[1] = 124;
+            data[2] = 4;
+            data[3] = 91;
+            data[4] = 0;
+            data[5] = 0;
             if(value == "2018"){
                 year = "2018年"
                 data[1] = 6292;
@@ -1186,8 +1186,8 @@ function dailiselect() {
 		url : "Management/getCreditPathMap.do",
 		data: {zhengxinname: sel,zhengxincity:value,zhengxintime:time},
 		success : function(data) {
-			 	var credit1= 3569;
-	            var credit2= 1347;
+			 	var credit1= 31;
+	            var credit2= 33;
 	            if(time == "2018"){
 	                credit1= 4866;
 	                credit2= 1426;
@@ -1259,10 +1259,10 @@ var kehunianling = echarts.init(document.getElementById('kehunianling'));
 			type : "POST",
 			url : "Management/getAgePathMap.do",
 			success : function(data) {
-				var age1=912;
-		        var age2=1885;
-		        var age3=697;
-		        var age4=75;
+				var age1=20;
+		        var age2=51;
+		        var age3=19;
+		        var age4=1;
 option_kehunianling = {
 legend: {
     x : 'center',//图例组件离容器下侧的距离
@@ -1332,10 +1332,10 @@ var cheliangnianling = echarts.init(document.getElementById('cheliangnianling'))
 			type : "POST",
 			url : "Management/getCarsAgePathMap.do",
 			success : function(data) {
-				var age1=34;
-		        var age2=161;
-		        var age3=101;
-		        var age4=60;
+				var age1=3;
+		        var age2=28;
+		        var age3=39;
+		        var age4=21;
 option_cheliangnianling = {
 legend: {
     x : 'center',//图例组件离容器下侧的距离
@@ -1411,8 +1411,8 @@ cheliangnianling.setOption(option_cheliangnianling);
 		url : "Management/getAdvanceFundPathMap.do",
 		data: {dianzicity:value },
 		success : function(data) {
-		   var advancefundtime = ["2018-06","2018-07","2018-08","2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05"];
-		   var advancefunddata = [2.08,2.15,3.25,4.09,3.65,3.35,3.12,2.98,2.65,3.04,3.87,3.25];
+		   var advancefundtime = ["2018-08","2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07",];
+		   var advancefunddata = [3.25,4.09,3.65,3.35,3.12,2.98,2.65,3.04,3.87,3.25,2.58,4.01];
 		   
 		   
  option_zijinzhouzhuanlv = {
