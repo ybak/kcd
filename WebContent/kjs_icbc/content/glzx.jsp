@@ -52,7 +52,7 @@
 							<div class="graph_statistics_top" >
 								<div class="graph_statistics_content" style="width:40%;">
 									<%-- <p class="graph_statistics_number font_color_1">${billlist[0].amount }<font>笔</font></p> --%>
-									<p class="graph_statistics_number font_color_1">186<font>笔</font></p>
+									<p class="graph_statistics_number font_color_1">231<font>笔</font></p>
 									<p class="font_size_2 font_color_3">本月报单总量</p>
 								</div>
 								<%-- <div class="graph_statistics_content" style="width: 50%;float: right;">
@@ -105,37 +105,37 @@
 									</tr> --%>
 									<tr>
 										<td class="font_color_3">河北省</td>
-										<td class="font_color_1 font_size_1">25</td>
+										<td class="font_color_1 font_size_1">28</td>
 										<td ><div class="graph_rank">1</div></td>
-										<td class="font_color_1 font_size_1">16</td>
+										<td class="font_color_1 font_size_1">21</td>
 										<td class="font_color_3">车划算汽车信息服务</td>
 									</tr>
 									<tr>
 										<td class="font_color_3">河南省</td>
-										<td class="font_color_1 font_size_1">23</td>
+										<td class="font_color_1 font_size_1">25</td>
 										<td ><div class="graph_rank">2</div></td>
-										<td class="font_color_1 font_size_1">15</td>
+										<td class="font_color_1 font_size_1">20</td>
 										<td class="font_color_3">购车无忧汽车服务</td>
 									</tr>
 									<tr>
 										<td class="font_color_3">江苏省</td>
-										<td class="font_color_1 font_size_1">19</td>
+										<td class="font_color_1 font_size_1">23</td>
 										<td ><div class="graph_rank">3</div></td>
-										<td class="font_color_1 font_size_1">13</td>
+										<td class="font_color_1 font_size_1">20</td>
 										<td class="font_color_3">恩梯基汽车技术</td>
 									</tr>
 									<tr>
 										<td class="font_color_3">云南省</td>
-										<td class="font_color_1 font_size_1">16</td>
+										<td class="font_color_1 font_size_1">21</td>
 										<td ><div class="graph_rank">4</div></td>
-										<td class="font_color_1 font_size_1">11</td>
+										<td class="font_color_1 font_size_1">18</td>
 										<td class="font_color_3">万鑫汽车销售</td>
 									</tr>
 									<tr>
 										<td class="font_color_3">山西省</td>
-										<td class="font_color_1 font_size_1">15</td>
+										<td class="font_color_1 font_size_1">18</td>
 										<td ><div class="graph_rank">5</div></td>
-										<td class="font_color_1 font_size_1">10</td>
+										<td class="font_color_1 font_size_1">17</td>
 										<td class="font_color_3">花样年金融控股</td>
 									</tr>
 									
@@ -187,7 +187,7 @@
 							<div class="graph_statistics_top" >
 								<div class="graph_statistics_content" style="width:40%;float: right;margin-right:22%;">
 									<%-- <p class="graph_statistics_number font_color_2">${Math.round(carpass*100/carselect) }<font>%</font></p> --%>
-									<p class="graph_statistics_number font_color_2">77<font>%</font></p>
+									<p class="graph_statistics_number font_color_2">78<font>%</font></p>
 									<p class="font_size_2 font_color_3">本月过件率</p>
 								</div>
 							</div>
@@ -324,11 +324,11 @@
 							<div class="graph_statistics_top" style="margin-top: 20%;">
 								<div class="graph_statistics_content" style="width:45%;">
 									<%-- <p class="graph_statistics_number font_color_1">${loanlist[0].amount}<font>笔</font></p> --%>
-									<p class="graph_statistics_number font_color_1">140<font>笔</font></p>
+									<p class="graph_statistics_number font_color_1">172<font>笔</font></p>
 									<p class="font_size_2 font_color_3">本月放款总订单</p>
 								</div>
 								<div class="graph_statistics_content" style="width: 50%;float: right;">
-									<p class="graph_statistics_number font_color_2">84659.29
+									<p class="graph_statistics_number font_color_2">78656.39
 									<font>元</font></p>
 									<p class="font_size_2 font_color_3">本月放款均金额</p>
 								</div>
@@ -337,7 +337,7 @@
 							<div class="graph_statistics_content" style="width: 100%; margin-bottom: 7%;">
 									<%-- <p class="graph_statistics_number font_color_2">${Math.ceil(loanlist[0].money) >10000?Math.round(loanlist[0].money/10000): Math.ceil(loanlist[0].money)}
 									<font>${Math.ceil(loanlist[0].money)>10000?"万元":"元" }</font></p> --%>
-									<p class="graph_statistics_number font_color_2">1185.23
+									<p class="graph_statistics_number font_color_2">1352.89
 									<font>万元</font></p>
 									<p class="font_size_2 font_color_3">本月累计放款总订单总金额</p>
 							</div>
@@ -386,16 +386,16 @@
 									</tr> --%>
 									<tr>
 										<td class="font_color_3">河北省</td>
-										<td class="font_color_1 font_size_1">21</td>
+										<td class="font_color_1 font_size_1">20</td>
 										<td ><div class="graph_rank">1</div></td>
-										<td class="font_color_1 font_size_1">14</td>
+										<td class="font_color_1 font_size_1">18</td>
 										<td class="font_color_3">车划算汽车信息服务</td>
 									</tr>
 									<tr>
 										<td class="font_color_3">河南省</td>
-										<td class="font_color_1 font_size_1">20</td>
+										<td class="font_color_1 font_size_1">18</td>
 										<td ><div class="graph_rank">2</div></td>
-										<td class="font_color_1 font_size_1">14</td>
+										<td class="font_color_1 font_size_1">15</td>
 										<td class="font_color_3">购车无忧汽车服务</td>
 									</tr>
 									<tr>
@@ -434,14 +434,14 @@
 							<div class="graph_statistics_top" >
 								<div class="graph_statistics_content" style="width:45%; height: 76px;">
 									<%-- <p class="graph_statistics_number font_color_1">${fklist[0].amount }<font>笔</font></p> --%>
-									<p class="graph_statistics_number font_color_1">14<font>笔</font></p>
+									<p class="graph_statistics_number font_color_1">16<font>笔</font></p>
 									<p class="font_size_2 font_color_3">本月已放款未完成</p>
 									<p class="font_size_2 font_color_3">抵押的订单总数</p>
 								</div>
 								<div class="graph_statistics_content" style="width: 50%;float: right;height:76px;">
 									<%-- <p class="graph_statistics_number font_color_2">${Math.ceil(fklist[0].money) > 10000?Math.round(fklist[0].money/10000):Math.ceil(fklist[0].money) }
 									<font>${Math.ceil(fklist[0].money) > 10000?"万元":"元" }</font></p> --%>
-									<p class="graph_statistics_number font_color_2">115.69
+									<p class="graph_statistics_number font_color_2">129.85
 									<font>万元</font></p>
 									<p class="font_size_2 font_color_3">本月已放款未完成</p>
 									<p class="font_size_2 font_color_3">抵押的订单金额</p>
@@ -759,65 +759,65 @@
                         </c:forEach> --%>
                         			<tr>
 										<td class="font_color_3">河北省</td>
-										<td class="font_color_1 font_size_1">25</td>
+										<td class="font_color_1 font_size_1">28</td>
 										<td ><div class="graph_rank">1</div></td>
-										<td class="font_color_1 font_size_1">16</td>
+										<td class="font_color_1 font_size_1">21</td>
 										<td class="font_color_3">车划算汽车信息服务</td>
 									</tr>
 									<tr>
 										<td class="font_color_3">河南省</td>
-										<td class="font_color_1 font_size_1">23</td>
+										<td class="font_color_1 font_size_1">25</td>
 										<td ><div class="graph_rank">2</div></td>
-										<td class="font_color_1 font_size_1">15</td>
+										<td class="font_color_1 font_size_1">20</td>
 										<td class="font_color_3">购车无忧汽车服务</td>
 									</tr>
 									<tr>
 										<td class="font_color_3">江苏省</td>
-										<td class="font_color_1 font_size_1">19</td>
+										<td class="font_color_1 font_size_1">23</td>
 										<td ><div class="graph_rank">3</div></td>
-										<td class="font_color_1 font_size_1">13</td>
+										<td class="font_color_1 font_size_1">20</td>
 										<td class="font_color_3">恩梯基汽车技术</td>
 									</tr>
 									<tr>
 										<td class="font_color_3">云南省</td>
-										<td class="font_color_1 font_size_1">16</td>
+										<td class="font_color_1 font_size_1">21</td>
 										<td ><div class="graph_rank">4</div></td>
-										<td class="font_color_1 font_size_1">11</td>
+										<td class="font_color_1 font_size_1">18</td>
 										<td class="font_color_3">万鑫汽车销售</td>
 									</tr>
 									<tr>
 										<td class="font_color_3">山西省</td>
-										<td class="font_color_1 font_size_1">15</td>
+										<td class="font_color_1 font_size_1">18</td>
 										<td ><div class="graph_rank">5</div></td>
-										<td class="font_color_1 font_size_1">10</td>
+										<td class="font_color_1 font_size_1">17</td>
 										<td class="font_color_3">花样年金融控股</td>
 									</tr>
 									<tr>
 										<td class="font_color_3">安徽省</td>
-										<td class="font_color_1 font_size_1">14</td>
+										<td class="font_color_1 font_size_1">16</td>
 										<td ><div class="graph_rank">6</div></td>
-										<td class="font_color_1 font_size_1">9</td>
+										<td class="font_color_1 font_size_1">15</td>
 										<td class="font_color_3">泓玥汽车服务</td>
 									</tr>
 									<tr>
 										<td class="font_color_3">福建省</td>
 										<td class="font_color_1 font_size_1">12</td>
 										<td ><div class="graph_rank">7</div></td>
-										<td class="font_color_1 font_size_1">8</td>
+										<td class="font_color_1 font_size_1">12</td>
 										<td class="font_color_3">华祥汽车服务</td>
 									</tr>
 									<tr>
 										<td class="font_color_3">浙江省</td>
 										<td class="font_color_1 font_size_1">11</td>
 										<td ><div class="graph_rank">8</div></td>
-										<td class="font_color_1 font_size_1">8</td>
+										<td class="font_color_1 font_size_1">10</td>
 										<td class="font_color_3">驰顺汽车</td>
 									</tr>
 									<tr>
 										<td class="font_color_3">四川省</td>
 										<td class="font_color_1 font_size_1">10</td>
 										<td ><div class="graph_rank">9</div></td>
-										<td class="font_color_1 font_size_1">6</td>
+										<td class="font_color_1 font_size_1">8</td>
 										<td class="font_color_3">简致汽车销售</td>
 									</tr>
 									<tr>
@@ -933,16 +933,16 @@
                         </c:forEach> --%>
                         			<tr>
 										<td class="font_color_3">河北省</td>
-										<td class="font_color_1 font_size_1">21</td>
+										<td class="font_color_1 font_size_1">20</td>
 										<td ><div class="graph_rank">1</div></td>
-										<td class="font_color_1 font_size_1">14</td>
+										<td class="font_color_1 font_size_1">18</td>
 										<td class="font_color_3">车划算汽车信息服务</td>
 									</tr>
 									<tr>
 										<td class="font_color_3">河南省</td>
-										<td class="font_color_1 font_size_1">20</td>
+										<td class="font_color_1 font_size_1">18</td>
 										<td ><div class="graph_rank">2</div></td>
-										<td class="font_color_1 font_size_1">14</td>
+										<td class="font_color_1 font_size_1">15</td>
 										<td class="font_color_3">购车无忧汽车服务</td>
 									</tr>
 									<tr>
