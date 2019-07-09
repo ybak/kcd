@@ -29,7 +29,7 @@ function graphTransform(){
  		url : "Management/getPathMap.do",
  		data : {baodanname:sel,baodancity:value,baodantime:time},
  		success : function(data) {
- 			 var summarydata = [6139,6292,6412,4708,8477,7983,4916,5102,231];
+ 			 var summarydata = [6139,6292,6412,4708,8477,7983,4916,5102,248];
              var timeline = ["2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07"];
              if(time == "2018"){
                  summarydata = [1946,4166,3430,3309,4128,3871,5870,5965,6149];
@@ -138,7 +138,7 @@ function graphTransform(){
  		url : "Management/getCarPathMap.do",
  		data : {guojianname:sel,guojiancity:value,guojiantime:time},
  		success : function(data) {
- 			 var carpassdata = [4473,4866,4992,3449,6521,5665,3569,3705,172];
+ 			 var carpassdata = [4473,4866,4992,3449,6521,5665,3569,3705,188];
              var carpasstime = ["2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07"];
              if(time == "2018"){
             	 carpassdata = [1377,3029,2437,2673,3583,3237,5032,3806,4385];
@@ -258,8 +258,8 @@ function fangkuanselect() {
 	 		url : "Management/getCarFkPathMap.do",
 	 		data: {fangkuanname: sel,fangkuancity:value,fangkuantime:time},
 	 		success : function(data) {
-	 			var newcar = 19;
-		 		var oldcar = 153;
+	 			var newcar = 21;
+		 		var oldcar = 162;
 	 			if(time == "2018"){
 	 				newcar = 487;
 			 		oldcar = 4379;
@@ -347,9 +347,9 @@ function fangkuanselect() {
 	 		url : "Management/getMoneyPathMap.do",
 	 		data: {fangkuanname: sel,fangkuancity:value,fangkuantime:time},
 	 		success : function(data) {
-	 		   var singular1 = 93;
-	 		   var singular2 = 31;
-	 		   var singular3 = 42;
+	 		   var singular1 = 103;
+	 		   var singular2 = 34;
+	 		   var singular3 = 45;
 			   var singular4 = 6;
 			   if(time == "2018"){
 				    singular1 = 2233;
@@ -438,10 +438,10 @@ function fangkuanselect() {
 			data: {fangkuanname: sel,fangkuancity:value,fangkuantime:time},
 			success : function(data) {
 	               var carstime = ["2018-08","2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07"];
-	               var newcars = [503,380,438,447,486,499,344,652,566,356,309,19];
-				   var newcarsmoney = [3724.561,2855.314,3532.033,3489.625,3845.224,3893.887,2553.256,5275.991,4249.652,2704.681,2565.521,131.69];
-				   var oldcars = [4529,3426,3947,4026,4380,4493,3105,5869,5009, 3213,3396,153];
-				   var oldcarsmoney = [33520.049,25696.826,31787.297,31405.625,34606.016,35043.983,22978.304,47482.919,38245.868,24341.129,25599.71,1221.20];
+	               var newcars = [503,380,438,447,486,499,344,652,566,356,309,21];
+				   var newcarsmoney = [3724.561,2855.314,3532.033,3489.625,3845.224,3893.887,2553.256,5275.991,4249.652,2704.681,2565.521,145.58];
+				   var oldcars = [4529,3426,3947,4026,4380,4493,3105,5869,5009, 3213,3396,162];
+				   var oldcarsmoney = [33520.049,25696.826,31787.297,31405.625,34606.016,35043.983,22978.304,47482.919,38245.868,24341.129,25599.71,1302.27];
 	             if(time == "2018"){
 	                 carstime = ["2018-01","2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09","2018-10","2018-11","2018-12"];
 	                 newcars = [163,137,302,243,267,358,323,503,380,438,447,486];
@@ -579,9 +579,9 @@ $.ajax({
 		url : "Management/getPawnPathMap.do",
 		data: {diyaname: sel,diyacity:value,diyatime:time},
 		success : function(data) {
-			var paw1=28;
-            var paw2=110;
-            var paw3=17;
+			var paw1=33;
+            var paw2=133;
+            var paw3=22;
             var paw4=0;
             var paw5=0;
             if(time == "2018"){
@@ -664,7 +664,7 @@ $.ajax({
 		url : "Management/getRecyclePathMap.do",
 		data: {cailiaoname: sel,cailiaocity:value,cailiaotime:time},
 		success : function(data) {
-		   var recycledata = [4373,4766,4892,3349,6421,5565,3469,3705,172];
+		   var recycledata = [4373,4766,4892,3349,6421,5565,3469,3705,188];
            var recycletime = ["2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07"];
            if(time == "2018"){
         	   recycledata = [1277,2929,2337,2573,3483,3137,4932,3706,4285];
@@ -767,12 +767,12 @@ function yuqiselect() {
         url: "Management/getOverdueMap.do",
         data: {yuqiname: sel,yuqicity:value},
         success: function (data) {
-        	var amount = [0.34,0.26,0.17];
+        	var amount = [0.38,0.28,0.19];
             var newcars = [0,0,0];
-            var oldcars = [0.34,0.26,0.17];
-            var amountmoney = [2.70,2.03,1.35];
+            var oldcars = [0.38,0.28,0.19];
+            var amountmoney = [2.90,2.17,1.45];
             var newcarsmoney = [0,0,0];
-            var oldcarsmoney = [2.70,2.03,1.35];
+            var oldcarsmoney = [2.90,2.17,1.45];
  option_yuqilv1 = {
     tooltip: { //提示框组件。 
         trigger: 'axis',//触发类型:'axis'坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用。
@@ -979,9 +979,9 @@ function dailiselect() {
         data: {dailiname: sel,dailitime:value},
         success: function (data) {
         	var year = "2019年";
-            data[1] = 231;
+            data[1] = 248;
             data[2] = 3;
-            data[3] = 172;
+            data[3] = 188;
             data[4] = 0;
             data[5] = 0;
             if(value == "2018"){
@@ -1186,8 +1186,8 @@ function dailiselect() {
 		url : "Management/getCreditPathMap.do",
 		data: {zhengxinname: sel,zhengxincity:value,zhengxintime:time},
 		success : function(data) {
-			 	var credit1= 59;
-	            var credit2= 172;
+			 	var credit1= 60;
+	            var credit2= 188;
 	            if(time == "2018"){
 	                credit1= 4866;
 	                credit2= 1426;
@@ -1260,7 +1260,7 @@ var kehunianling = echarts.init(document.getElementById('kehunianling'));
 			url : "Management/getAgePathMap.do",
 			success : function(data) {
 				var age1=37;
-		        var age2=108;
+		        var age2=109;
 		        var age3=41;
 		        var age4=1;
 option_kehunianling = {
@@ -1334,7 +1334,7 @@ var cheliangnianling = echarts.init(document.getElementById('cheliangnianling'))
 			success : function(data) {
 				var age1=3;
 		        var age2=47;
-		        var age3=91;
+		        var age3=97;
 		        var age4=41;
 option_cheliangnianling = {
 legend: {
@@ -1412,7 +1412,7 @@ cheliangnianling.setOption(option_cheliangnianling);
 		data: {dianzicity:value },
 		success : function(data) {
 		   var advancefundtime = ["2018-08","2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07",];
-		   var advancefunddata = [3.25,4.09,3.65,3.35,3.12,2.98,2.65,3.04,3.87,3.25,2.58,3.03];
+		   var advancefunddata = [3.25,4.09,3.65,3.35,3.12,2.98,2.65,3.04,3.87,3.25,2.58,3.13];
 		   
 		   
  option_zijinzhouzhuanlv = {
