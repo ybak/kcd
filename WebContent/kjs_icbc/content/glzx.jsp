@@ -52,7 +52,7 @@
 							<div class="graph_statistics_top" >
 								<div class="graph_statistics_content" style="width:40%;">
 									<%-- <p class="graph_statistics_number font_color_1">${billlist[0].amount }<font>笔</font></p> --%>
-									<p class="graph_statistics_number font_color_1">5013<font>笔</font></p>
+									<p class="graph_statistics_number font_color_1">4689<font>笔</font></p>
 									<p class="font_size_2 font_color_3">本月报单总量</p>
 								</div>
 								<%-- <div class="graph_statistics_content" style="width: 50%;float: right;">
@@ -324,11 +324,11 @@
 							<div class="graph_statistics_top" style="margin-top: 20%;">
 								<div class="graph_statistics_content" style="width:45%;">
 									<%-- <p class="graph_statistics_number font_color_1">${loanlist[0].amount}<font>笔</font></p> --%>
-									<p class="graph_statistics_number font_color_1">3608<font>笔</font></p>
+									<p class="graph_statistics_number font_color_1">3365<font>笔</font></p>
 									<p class="font_size_2 font_color_3">本月放款总订单</p>
 								</div>
 								<div class="graph_statistics_content" style="width: 50%;float: right;">
-									<p class="graph_statistics_number font_color_2">75002.33
+									<p class="graph_statistics_number font_color_2">76087.49
 									<font>元</font></p>
 									<p class="font_size_2 font_color_3">本月放款均金额</p>
 								</div>
@@ -337,7 +337,7 @@
 							<div class="graph_statistics_content" style="width: 100%; margin-bottom: 7%;">
 									<%-- <p class="graph_statistics_number font_color_2">${Math.ceil(loanlist[0].money) >10000?Math.round(loanlist[0].money/10000): Math.ceil(loanlist[0].money)}
 									<font>${Math.ceil(loanlist[0].money)>10000?"万元":"元" }</font></p> --%>
-									<p class="graph_statistics_number font_color_2">27060.84
+									<p class="graph_statistics_number font_color_2">25603.44
 									<font>万元</font></p>
 									<p class="font_size_2 font_color_3">本月累计放款总订单总金额</p>
 							</div>
@@ -434,14 +434,14 @@
 							<div class="graph_statistics_top" >
 								<div class="graph_statistics_content" style="width:45%; height: 76px;">
 									<%-- <p class="graph_statistics_number font_color_1">${fklist[0].amount }<font>笔</font></p> --%>
-									<p class="graph_statistics_number font_color_1">24<font>笔</font></p>
+									<p class="graph_statistics_number font_color_1">21<font>笔</font></p>
 									<p class="font_size_2 font_color_3">本月已放款未完成</p>
 									<p class="font_size_2 font_color_3">抵押的订单总数</p>
 								</div>
 								<div class="graph_statistics_content" style="width: 50%;float: right;height:76px;">
 									<%-- <p class="graph_statistics_number font_color_2">${Math.ceil(fklist[0].money) > 10000?Math.round(fklist[0].money/10000):Math.ceil(fklist[0].money) }
 									<font>${Math.ceil(fklist[0].money) > 10000?"万元":"元" }</font></p> --%>
-									<p class="graph_statistics_number font_color_2">187.23
+									<p class="graph_statistics_number font_color_2">156.78
 									<font>万元</font></p>
 									<p class="font_size_2 font_color_3">本月已放款未完成</p>
 									<p class="font_size_2 font_color_3">抵押的订单金额</p>
