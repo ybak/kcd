@@ -29,11 +29,11 @@ function graphTransform(){
  		url : "Management/getPathMap.do",
  		data : {baodanname:sel,baodancity:value,baodantime:time},
  		success : function(data) {
- 			 var summarydata = [6139,6292,6412,4708,8477,7983,4916,4811,4689];
-             var timeline = ["2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07"];
+ 			 var summarydata = [6292,6412,4708,8477,7983,4916,4811,4689,1494];
+             var timeline = ["2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07","2019-08"];
              if(time == "2018"){
-                 summarydata = [1946,4166,3430,3309,4128,3871,5870,5965,6149];
-                 timeline = ["2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09","2018-10"];
+                 summarydata = [4166,3430,3309,4128,3871,5870,5965,6149,6139];
+                 timeline = ["2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09","2018-10","2018-11"];
              }
  	//数据图绘制
    option_baodan = {
@@ -138,11 +138,11 @@ function graphTransform(){
  		url : "Management/getCarPathMap.do",
  		data : {guojianname:sel,guojiancity:value,guojiantime:time},
  		success : function(data) {
- 			 var carpassdata = [4473,4866,4992,3449,6521,5665,3569,3481,3365];
-             var carpasstime = ["2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07"];
+ 			 var carpassdata = [4866,4992,3449,6521,5665,3569,3481,3365,1060];
+             var carpasstime = ["2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07","2019-08"];
              if(time == "2018"){
-            	 carpassdata = [1377,3029,2437,2673,3583,3237,5032,3806,4385];
-            	 carpasstime = ["2018-02","2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09","2018-10"];
+            	 carpassdata = [3029,2437,2673,3583,3237,5032,3806,4385,4473];
+            	 carpasstime = ["2018-03","2018-04","2018-05","2018-06","2018-07","2018-08","2018-09","2018-10","2018-11"];
              }
  	//数据图绘制
    option_guojianlv = {
@@ -258,8 +258,8 @@ function fangkuanselect() {
 	 		url : "Management/getCarFkPathMap.do",
 	 		data: {fangkuanname: sel,fangkuancity:value,fangkuantime:time},
 	 		success : function(data) {
-	 			var newcar = 214;
-		 		var oldcar = 3151;
+	 			var newcar = 123;
+		 		var oldcar = 937;
 	 			if(time == "2018"){
 	 				newcar = 487;
 			 		oldcar = 4379;
@@ -437,7 +437,7 @@ function fangkuanselect() {
 			url : "Management/getNewOldCarsPathMap.do",
 			data: {fangkuanname: sel,fangkuancity:value,fangkuantime:time},
 			success : function(data) {
-	               var carstime = ["2018-08","2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07"];
+	               var carstime = ["2018-09","2018-10","2018-11","2018-12","2019-01","2019-02","2019-03","2019-04","2019-05","2019-06","2019-07","2019-08"];
 	               var newcars = [503,380,438,447,486,499,344,652,566,356,269,274];
 				   var newcarsmoney = [3724.561,2855.314,3532.033,3489.625,3845.224,3893.887,2553.256,5275.991,4249.652,2704.681,2265.521,2117.81];
 				   var oldcars = [4529,3426,3947,4026,4380,4493,3105,5869,5009, 3213,3212,3091];
